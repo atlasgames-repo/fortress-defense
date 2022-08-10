@@ -3,14 +3,16 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuHomeScene : MonoBehaviour {
-	public static MainMenuHomeScene Instance;
-	public GameObject MapUI;
+public class MainMenuHomeScene : MonoBehaviour
+{
+    public static MainMenuHomeScene Instance;
+    public GameObject MapUI;
     public GameObject ShopUI;
-	public GameObject Loading;
+    public GameObject Loading;
     public GameObject Settings;
-	public string facebookLink;
+    public string facebookLink;
     public string twitterLink = "https://twitter.com/";
+    public string playingLevelName = "Playing atlas";
 
     public Text[] coinTxt;
 
@@ -19,12 +21,13 @@ public class MainMenuHomeScene : MonoBehaviour {
     public Image musicImage;
     public Sprite soundImageOn, soundImageOff, musicImageOn, musicImageOff;
 
-    void Awake(){
-		Instance = this;
-		if (Loading != null)
-			Loading.SetActive (false);
-		if (MapUI != null)
-            MapUI.SetActive (false);
+    void Awake()
+    {
+        Instance = this;
+        if (Loading != null)
+            Loading.SetActive(false);
+        if (MapUI != null)
+            MapUI.SetActive(false);
         if (Settings)
             Settings.SetActive(false);
         if (ShopUI)
@@ -32,11 +35,12 @@ public class MainMenuHomeScene : MonoBehaviour {
 
     }
 
-	public void LoadScene(){
-		if (Loading != null)
-			Loading.SetActive (true);
-        
-        StartCoroutine(LoadAsynchronously("Playing"));
+    public void LoadScene()
+    {
+        if (Loading != null)
+            Loading.SetActive(true);
+
+        StartCoroutine(LoadAsynchronously(playingLevelName));
     }
 
     public void LoadScene(string sceneNamage)
@@ -46,9 +50,10 @@ public class MainMenuHomeScene : MonoBehaviour {
 
         StartCoroutine(LoadAsynchronously(sceneNamage));
     }
-    
-	IEnumerator Start () {
-		CheckSoundMusic();
+
+    IEnumerator Start()
+    {
+        CheckSoundMusic();
         if (GlobalValue.isFirstOpenMainMenu)
         {
             GlobalValue.isFirstOpenMainMenu = false;
@@ -60,19 +65,21 @@ public class MainMenuHomeScene : MonoBehaviour {
         }
     }
 
-    void Update() {
+    void Update()
+    {
         CheckSoundMusic();
 
         foreach (var ct in coinTxt)
         {
             ct.text = GlobalValue.SavedCoins + "";
         }
-	}
+    }
 
-	public void OpenMap(bool open){
+    public void OpenMap(bool open)
+    {
         SoundManager.Click();
         StartCoroutine(OpenMapCo(open));
-	}
+    }
 
     IEnumerator OpenMapCo(bool open)
     {
@@ -82,10 +89,11 @@ public class MainMenuHomeScene : MonoBehaviour {
         BlackScreenUI.instance.Hide(0.2f);
     }
 
-	public void Facebook(){
+    public void Facebook()
+    {
         SoundManager.Click();
-		Application.OpenURL (facebookLink);
-	}
+        Application.OpenURL(facebookLink);
+    }
 
     public void Twitter()
     {
@@ -123,7 +131,8 @@ public class MainMenuHomeScene : MonoBehaviour {
     }
     #endregion
 
-    private void CheckSoundMusic(){
+    private void CheckSoundMusic()
+    {
         soundImage.sprite = GlobalValue.isSound ? soundImageOn : soundImageOff;
         musicImage.sprite = GlobalValue.isMusic ? musicImageOn : musicImageOff;
         SoundManager.SoundVolume = GlobalValue.isSound ? 1 : 0;
@@ -136,10 +145,11 @@ public class MainMenuHomeScene : MonoBehaviour {
         ShopUI.SetActive(open);
     }
 
-    public void Tutorial(){
-		SoundManager.Click ();
-		SceneManager.LoadScene ("Tutorial");
-	}
+    public void Tutorial()
+    {
+        SoundManager.Click();
+        SceneManager.LoadScene("Tutorial");
+    }
 
     public Slider slider;
     public Text progressText;

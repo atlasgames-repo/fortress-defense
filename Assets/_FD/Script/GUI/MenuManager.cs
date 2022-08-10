@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject PauseUI;
     public GameObject LoadingUI;
     public GameObject HelperUI;
+    public string HomeMenuName = "Menu atlas";
 
     [Header("Sound and Music")]
     public Image soundImage;
@@ -86,7 +87,7 @@ public class MenuManager : MonoBehaviour, IListener
 
     public void IPlay()
     {
-       
+
     }
 
     public void ISuccess()
@@ -104,12 +105,12 @@ public class MenuManager : MonoBehaviour, IListener
 
     public void IPause()
     {
-      
+
     }
 
     public void IUnPause()
     {
-        
+
     }
 
     public void IGameOver()
@@ -127,20 +128,20 @@ public class MenuManager : MonoBehaviour, IListener
 
     public void IOnRespawn()
     {
-        
+
     }
 
     public void IOnStopMovingOn()
     {
-        
+
     }
 
     public void IOnStopMovingOff()
     {
-       
+
     }
 
-    
+
     #region Music and Sound
     public void TurnSound()
     {
@@ -163,7 +164,7 @@ public class MenuManager : MonoBehaviour, IListener
     public void LoadHomeMenuScene()
     {
         SoundManager.Click();
-        StartCoroutine(LoadAsynchronously("Menu"));
+        StartCoroutine(LoadAsynchronously(HomeMenuName));
     }
 
     public void RestarLevel()
