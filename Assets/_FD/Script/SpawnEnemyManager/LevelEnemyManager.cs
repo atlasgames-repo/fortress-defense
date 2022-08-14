@@ -7,6 +7,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public static LevelEnemyManager Instance;
     public Transform[] spawnPositions;
     public EnemyWave[] EnemyWaves;
+    public BossUIManager bossManeger;
     int currentWave = 0;
 
     List<GameObject> listEnemySpawned = new List<GameObject>();
@@ -53,8 +54,8 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                 yield return new WaitForSeconds(enemySpawn.wait);
                 for (int k = 0; k < enemySpawn.numberEnemy; k++)
                 {
-                    GameObject _temp = Instantiate(enemySpawn.enemy, (Vector2) spawnPositions[Random.Range(0,spawnPositions.Length)].position, Quaternion.identity) as GameObject;
-                    var isEnemy = (Enemy) _temp.GetComponent(typeof(Enemy));
+                    GameObject _temp = Instantiate(enemySpawn.enemy, (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position, Quaternion.identity) as GameObject;
+                    var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                     if (isEnemy != null)
                     {
                         if (enemySpawn.customHealth > 0)
@@ -72,6 +73,12 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                             var throwAttack = _temp.GetComponent<EnemyThrowAttack>();
                             if (throwAttack)
                                 throwAttack.damage = enemySpawn.customAttackDmg;
+                        }
+                        if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
+                        {
+                            bossManeger.enemy = _temp.GetComponent<Enemy>();
+                            bossManeger.bossType = enemySpawn.boosType;
+                            bossManeger.gameObject.SetActive(true);
                         }
                     }
 
@@ -101,7 +108,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
 
     bool isEnemyAlive()
     {
-        for(int i = 0; i< listEnemySpawned.Count;i++)
+        for (int i = 0; i < listEnemySpawned.Count; i++)
         {
             if (listEnemySpawned[i].gameObject != null && listEnemySpawned[i].activeInHierarchy)
                 return true;

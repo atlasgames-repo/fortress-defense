@@ -8,6 +8,8 @@ public class EnemySpawn
     public float wait = 3;      //delay for first enemy
     public GameObject enemy;    //enemy spawned
     public int numberEnemy = 5;     //the number of enemy need spawned
+    public enum isBoss { NONE, MINIBOSS, BOSS }; //is the enemy boos or not
+    public isBoss boosType = isBoss.NONE;
     public float rate = 1;  //time delay spawn next enemy
     [Header("CUSTOM VALUE FOR ENEMY: 0 = No set")]
     [Tooltip("0: no custom")]

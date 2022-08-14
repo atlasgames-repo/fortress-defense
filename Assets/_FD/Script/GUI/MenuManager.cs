@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject PauseUI;
     public GameObject LoadingUI;
     public GameObject HelperUI;
+    public GameObject Boss;
     public string HomeMenuName = "Menu atlas";
 
     [Header("Sound and Music")]
@@ -34,6 +35,7 @@ public class MenuManager : MonoBehaviour, IListener
         PauseUI.SetActive(false);
         LoadingUI.SetActive(false);
         HelperUI.SetActive(false);
+        Boss.SetActive(false);
         uiControl = gameObject.GetComponentInChildren<UI_UI>(true);
     }
 
