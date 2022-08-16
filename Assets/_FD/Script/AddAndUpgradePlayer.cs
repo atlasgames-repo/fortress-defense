@@ -13,6 +13,10 @@ public class AddAndUpgradePlayer : MonoBehaviour, IGetTouchEvent
 
     int currentPlayer = -1;
 
+    public Player_Archer GetcurrentPlayer
+    {
+        get { return currentPlayer >= 0 ? Players[currentPlayer] : Players[0]; }
+    }
     // Start is called before the first frame update
     void Start()
     {

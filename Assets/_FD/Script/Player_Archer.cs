@@ -55,6 +55,11 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
     [Header("New")]
     bool allowCheckAttack = true;
     bool isLoading = false;
+    bool _is_attacking = false;
+    public bool is_attacking
+    {
+        get { return _is_attacking; }
+    }
     // Start is called before the first frame update
     public override void Start()
     {
@@ -84,7 +89,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
             damageMin = weaponEffect.normalDamageMin + upgradedCharacterID.UpgradeRangeDamage;
             damageMax = weaponEffect.normalDamageMax + upgradedCharacterID.UpgradeRangeDamage;
 
-            criticalRate = upgradedCharacterID.UpgradeCriticalDamage /100f;
+            criticalRate = upgradedCharacterID.UpgradeCriticalDamage / 100f;
         }
         //arrowDamage = upgradedCharacterID.UpgradeRangeDamage;
     }
@@ -287,7 +292,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
             target = null;
             yield return null;
 
-            while (!checkTargetHelper.CheckTarget((isFacingRight() ? 1 : -1))) {yield return null; };
+            while (!checkTargetHelper.CheckTarget((isFacingRight() ? 1 : -1))) { yield return null; };
 
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 100, Vector2.zero, 0, GameManager.Instance.layerEnemy);
             if (hits.Length > 0)
@@ -296,27 +301,32 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
                 foreach (var obj in hits)
                 {
                     var checkEnemy = (ICanTakeDamage)obj.collider.gameObject.GetComponent(typeof(ICanTakeDamage));
-                    if (checkEnemy!=null)
+                    if (checkEnemy != null)
                     {
                         if (Mathf.Abs(obj.transform.position.x - transform.position.x) < closestDistance)
                         {
                             closestDistance = Mathf.Abs(obj.transform.position.x - transform.position.x);
-                            
+
                             target = obj.transform;
 
-                            var hit = Physics2D.Raycast(transform.position, (obj.point - (Vector2) transform.position), 100, GameManager.Instance.layerEnemy);
+                            var hit = Physics2D.Raycast(transform.position, (obj.point - (Vector2)transform.position), 100, GameManager.Instance.layerEnemy);
                             Debug.DrawRay(transform.position, (obj.point - (Vector2)transform.position) * 100, Color.red);
-                            
+
                             autoShootPoint = /*target.position + Vector3.up * Random.Range(0.2f, 0.6f);*/ hit.collider.gameObject.transform.position;
                             //autoShootPoint.y = Mathf.Max(autoShootPoint.y, firePostion.position.y - 0.1f);
                         }
                     }
                 }
-                
+
                 if (target)
                 {
                     Shoot();
+                    _is_attacking = true;
                     yield return new WaitForSeconds(0.2f);
+                }
+                else
+                {
+                    _is_attacking = false;
                 }
             }
         }
@@ -333,7 +343,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
             return;
 
         isTargetRight = autoShootPoint.x > transform.position.x;
-        
+
         if (onlyShootTargetInFront && ((isTargetRight && !isFacingRight()) || (isFacingRight() && !isTargetRight)))
             return;
 
@@ -362,7 +372,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
         float cloestAngleDistance = int.MaxValue;
 
         bool checkingPerAngle = true;
-        
+
         while (checkingPerAngle)
         {
             int k = 0;
@@ -407,7 +417,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
 
         yield return null;
         anim.SetTrigger("shoot");
-        
+
         bool isCritical = false;
         if (Random.Range(0f, 1f) < criticalRate)
         {
@@ -438,7 +448,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
 
         StartCoroutine(ReloadingCo());
     }
-    
+
 
     IEnumerator ReloadingCo()
     {
@@ -448,7 +458,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
         yield return new WaitForSeconds(0.1f);
         anim.SetBool("isLoading", true);
 
-        while ( Time.time < (lastShoot + shootRate)) { yield return null; }
+        while (Time.time < (lastShoot + shootRate)) { yield return null; }
 
         anim.SetBool("isLoading", false);
 
