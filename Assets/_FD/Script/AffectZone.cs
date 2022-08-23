@@ -31,6 +31,10 @@ public class AffectZone : MonoBehaviour
     // Start is called before the first frame update
     List<Enemy> listEnemyInZone;
     AffectZoneType zoneType;
+    public AffectZoneType getAffectZoneType
+    {
+        get { return zoneType; }
+    }
     Animator anim;
 
     private void Awake()
@@ -64,7 +68,7 @@ public class AffectZone : MonoBehaviour
                     StartCoroutine(StopActiveCo());
                     break;
             }
-           
+
         }
     }
 
@@ -141,7 +145,7 @@ public class AffectZone : MonoBehaviour
     IEnumerator StopActiveCo()
     {
         float delay = 0;
-        switch(zoneType)
+        switch (zoneType)
         {
             case AffectZoneType.Lighting:
                 delay = lightingActiveTime;

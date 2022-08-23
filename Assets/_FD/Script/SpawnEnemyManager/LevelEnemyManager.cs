@@ -22,8 +22,9 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     void Start()
     {
         if (GameLevelSetup.Instance)
+        {
             EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
-
+        }
         //calculate number of enemies
         totalEnemy = 0;
         for (int i = 0; i < EnemyWaves.Length; i++)
