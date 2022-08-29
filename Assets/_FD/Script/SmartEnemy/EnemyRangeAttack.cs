@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("ADDP/Enemy AI/Range Attack")]
-public class EnemyRangeAttack : MonoBehaviour {
-	public LayerMask enemyLayer;
-	public Transform checkPoint;
+public class EnemyRangeAttack : MonoBehaviour
+{
+    public LayerMask enemyLayer;
+    public Transform checkPoint;
 
     [Header("AIM TARGET")]
     public bool aimTarget = false;
@@ -13,41 +14,45 @@ public class EnemyRangeAttack : MonoBehaviour {
     [Space]
     public Transform firePoint;
     public AudioClip soundShoot;
-    [Range(0,1)]
+    [Range(0, 1)]
     public float soundShootVolume = 0.5f;
 
     public Transform shootingPoint;
-	public float damage = 30;
-	public float detectDistance = 5;
-	public Projectile bullet;
-	[HideInInspector] public float shootingRate = 1;
+    public float damage = 30;
+    public float detectDistance = 5;
+    public Projectile bullet;
+    [HideInInspector] public float shootingRate = 1;
     [HideInInspector] public int multiShoot = 1;
     [HideInInspector] public float multiShootRate = 0.2f;
-	float lastShoot = 0;
-	[HideInInspector] public GameObject GunObj;
-	Vector3 dir = Vector3.right;
-	public bool isAttacking { get; set; }
-    
+    float lastShoot = 0;
+    [HideInInspector] public GameObject GunObj;
+    Vector3 dir = Vector3.right;
+    public bool isAttacking { get; set; }
+
     WeaponEffect hasWeaponEffect;
-    void Start(){
+    void Start()
+    {
 
         if (GetComponent<Enemy>() && GetComponent<Enemy>().upgradedCharacterID)
             hasWeaponEffect = GetComponent<Enemy>().upgradedCharacterID.weaponEffect;
     }
 
-	public Vector3 firePosition(){
-			Vector3 _firePoint = firePoint.position;
-			return _firePoint;
-	}
+    public Vector3 firePosition()
+    {
+        Vector3 _firePoint = firePoint.position;
+        return _firePoint;
+    }
 
-	public bool AllowAction(){
-		return Time.time - lastShoot > shootingRate;
-	}
+    public bool AllowAction()
+    {
+        return Time.time - lastShoot > shootingRate;
+    }
 
     Vector3 _target;
-	// Update is called once per frame
-	public bool CheckPlayer (bool isFacingRight) {
-			dir = isFacingRight ? Vector2.right : Vector2.left;
+    // Update is called once per frame
+    public bool CheckPlayer(bool isFacingRight)
+    {
+        dir = isFacingRight ? Vector2.right : Vector2.left;
 
         //Debug.LogError(dir);
 
@@ -85,35 +90,39 @@ public class EnemyRangeAttack : MonoBehaviour {
 
     }
 
-	public void Action(){
-		isAttacking = true;
-		lastShoot = Time.time;
+    public void Action()
+    {
+        isAttacking = true;
+        lastShoot = Time.time;
 
-	}
+    }
 
-	/// <summary>
-	/// called by Enemy
-	/// </summary>
-	public void Shoot(bool isFacingRight){
-		StartCoroutine (ShootCo (isFacingRight));
-	}
+    /// <summary>
+    /// called by Enemy
+    /// </summary>
+    public void Shoot(bool isFacingRight)
+    {
+        StartCoroutine(ShootCo(isFacingRight));
+    }
 
-	IEnumerator ShootCo(bool isFacingRight){
-		for (int i = 0; i < multiShoot; i++) {
+    IEnumerator ShootCo(bool isFacingRight)
+    {
+        for (int i = 0; i < multiShoot; i++)
+        {
             SoundManager.PlaySfx(soundShoot, soundShootVolume);
 
-			float shootAngle = 0;
-			shootAngle = isFacingRight ? 0 : 180;
+            float shootAngle = 0;
+            shootAngle = isFacingRight ? 0 : 180;
 
-			var projectile = SpawnSystemHelper.GetNextObject (bullet.gameObject, false).GetComponent<Projectile> ();
-			projectile.transform.position = shootingPoint != null ? shootingPoint.position : firePosition ();
-			projectile.transform.rotation = Quaternion.Euler (0, 0, shootAngle);
+            var projectile = SpawnSystemHelper.GetNextObject(bullet.gameObject, false).GetComponent<Projectile>();
+            projectile.transform.position = shootingPoint != null ? shootingPoint.position : firePosition();
+            projectile.transform.rotation = Quaternion.Euler(0, 0, shootAngle);
 
             Vector3 _dir;
             if (aimTarget)
             {
                 _dir = _target - shootingPoint.position;
-                _dir += (Vector3) aimTargetOffset;
+                _dir += (Vector3)aimTargetOffset;
                 _dir.Normalize();
             }
             else
@@ -124,21 +133,24 @@ public class EnemyRangeAttack : MonoBehaviour {
                 projectile.Initialize(gameObject, _dir, Vector2.zero, false, damage * 0.9f, damage * 1.1f, 0, Vector2.zero, hasWeaponEffect);
             }
             else
-                projectile.Initialize (gameObject, _dir, Vector2.zero, false, damage*0.9f, damage*1.1f, 0);
-			projectile.gameObject.SetActive (true);
-			yield return new WaitForSeconds (multiShootRate);
-		}
+                projectile.Initialize(gameObject, _dir, Vector2.zero, false, damage * 0.9f, damage * 1.1f, 0);
 
-		CancelInvoke ();
-		Invoke ("EndAttack", 1);
-	}
+            projectile.gameObject.SetActive(true);
+            yield return new WaitForSeconds(multiShootRate);
+        }
 
-	void EndAttack(){
-		isAttacking = false;
-	}
+        CancelInvoke();
+        Invoke("EndAttack", 1);
+    }
 
-	void OnDrawGizmosSelected(){
-		Gizmos.color = Color.white;
-		Gizmos.DrawRay (checkPoint.position, dir* detectDistance);
-	}
+    void EndAttack()
+    {
+        isAttacking = false;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawRay(checkPoint.position, dir * detectDistance);
+    }
 }

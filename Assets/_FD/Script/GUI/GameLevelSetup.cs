@@ -15,7 +15,7 @@ public class GameLevelSetup : MonoBehaviour
 
     public EnemyWave[] GetLevelWave()
     {
-        foreach(var obj in levelWaves)
+        foreach (var obj in levelWaves)
         {
             if (obj.level == GlobalValue.levelPlaying)
                 return obj.Waves;
@@ -63,10 +63,10 @@ public class GameLevelSetup : MonoBehaviour
             var waves = transform.GetComponentsInChildren<LevelWave>();
             levelWaves = new List<LevelWave>(waves);
 
-            for(int i = 0; i<levelWaves.Count;i++)
+            for (int i = 0; i < levelWaves.Count; i++)
             {
                 levelWaves[i].level = i + 1;
-                levelWaves[i].gameObject.name = "Level " + levelWaves[i].level; 
+                levelWaves[i].gameObject.name = "Level " + levelWaves[i].level;
             }
         }
     }

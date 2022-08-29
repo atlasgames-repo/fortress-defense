@@ -182,9 +182,9 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
 
     void HandleAnimation()
     {
-        AnimSetFloat("speed", Mathf.Abs(velocity.x));
-        AnimSetBool("isRunning", Mathf.Abs(velocity.x) > walkSpeed);
-        AnimSetBool("isStunning", isStunning);
+        //AnimSetFloat("speed", Mathf.Abs(velocity.x));
+        //AnimSetBool("isRunning", Mathf.Abs(velocity.x) > walkSpeed);
+        //AnimSetBool("isStunning", isStunning);
     }
 
     public void SetForce(float x, float y)

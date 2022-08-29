@@ -5,6 +5,8 @@ using UnityEngine;
 public class LevelEnemyManager : MonoBehaviour, IListener
 {
     public static LevelEnemyManager Instance;
+    public GameObject FX_Smoke, FX_Blow;
+    public SimpleProjectile bullet;
     public Transform[] spawnPositions;
     public EnemyWave[] EnemyWaves;
     public BossUIManager bossManeger;
@@ -59,6 +61,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                     var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                     if (isEnemy != null)
                     {
+                        isEnemy.disableFX = FX_Smoke;
                         if (enemySpawn.customHealth > 0)
                             isEnemy.health = enemySpawn.customHealth;
                         if (enemySpawn.customSpeed > 0)
@@ -67,13 +70,27 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         {
                             var rangeAttack = _temp.GetComponent<EnemyRangeAttack>();
                             if (rangeAttack)
+                            {
                                 rangeAttack.damage = enemySpawn.customAttackDmg;
+                            }
                             var meleeAttack = _temp.GetComponent<EnemyMeleeAttack>();
                             if (meleeAttack)
                                 meleeAttack.dealDamage = enemySpawn.customAttackDmg;
                             var throwAttack = _temp.GetComponent<EnemyThrowAttack>();
                             if (throwAttack)
+                            {
                                 throwAttack.damage = enemySpawn.customAttackDmg;
+                            }
+                        }
+                        var rangeAttack1 = _temp.GetComponent<EnemyRangeAttack>();
+                        if (rangeAttack1)
+                            rangeAttack1.bullet = bullet;
+                        var meleeAttack1 = _temp.GetComponent<EnemyMeleeAttack>();
+                        var throwAttack1 = _temp.GetComponent<EnemyThrowAttack>();
+                        if (throwAttack1)
+                        {
+                            throwAttack1.FX_Blow = FX_Blow;
+                            throwAttack1.FX_Smoke = FX_Smoke;
                         }
                         if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
                         {

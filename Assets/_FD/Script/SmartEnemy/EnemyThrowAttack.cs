@@ -2,51 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 [AddComponentMenu("ADDP/Enemy AI/Throw Attack")]
-public class EnemyThrowAttack : MonoBehaviour {
-	[Header("Grenade")]
-	public float angleThrow = 60;		//the angle to throw the bomb
-	public float throwForceMin = 290;		//how strong?
+public class EnemyThrowAttack : MonoBehaviour
+{
+    [Header("Grenade")]
+    public float angleThrow = 60;       //the angle to throw the bomb
+    public float throwForceMin = 290;		//how strong?
     public float throwForceMax = 320;
-    public float addTorque = 100;		
-	public float throwRate = 0.5f;
+    public float addTorque = 100;
+    public float throwRate = 0.5f;
     public float damage = 30;
-	public Transform throwPosition;		//throw the bomb at this position
-	public GameObject _Grenade;		//the bomb prefab object
-	public AudioClip soundAttack;
-	float lastShoot = 0;
+    public Transform throwPosition;     //throw the bomb at this position
+    public GameObject _Grenade, FX_Blow, FX_Smoke;        //the bomb prefab object
+    public AudioClip soundAttack;
+    float lastShoot = 0;
 
-	public LayerMask targetPlayer;
+    public LayerMask targetPlayer;
     public bool onlyAttackTheFortrest = true;
-	public Transform checkPoint;
-	public float radiusDetectPlayer = 5;
-	public bool isAttacking { get; set; }
+    public Transform checkPoint;
+    public float radiusDetectPlayer = 5;
+    public bool isAttacking { get; set; }
 
-	public bool AllowAction(){
-		return Time.time - lastShoot > throwRate;
-	}
+    public bool AllowAction()
+    {
+        return Time.time - lastShoot > throwRate;
+    }
 
-//	public void Action(){
-//		if (_Grenade == null)
-//			return;
-//
-//		lastShoot = Time.time;
-//		SoundManager.PlaySfx (soundAttack);
-//	}
+    //	public void Action(){
+    //		if (_Grenade == null)
+    //			return;
+    //
+    //		lastShoot = Time.time;
+    //		SoundManager.PlaySfx (soundAttack);
+    //	}
 
-	public void Throw(bool isFacingRight){
-		Vector3 throwPos = throwPosition.position;
-		GameObject obj = Instantiate (_Grenade, throwPos, Quaternion.identity) as GameObject;
-        obj.GetComponent<Projectile>().NewDamage = (float) damage;
+    public void Throw(bool isFacingRight)
+    {
+        Vector3 throwPos = throwPosition.position;
+        GameObject obj = Instantiate(_Grenade, throwPos, Quaternion.identity) as GameObject;
+        obj.GetComponent<Projectile>().NewDamage = (float)damage;
+        obj.GetComponent<SimpleProjectile>().ExplosionObj = FX_Blow;
+        obj.GetComponent<SimpleProjectile>().DestroyEffect = FX_Smoke;
 
-        float angle; 
-		angle = isFacingRight ? angleThrow : 135;
+        float angle;
+        angle = isFacingRight ? angleThrow : 135;
 
-		obj.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle));
+        obj.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-		obj.GetComponent<Rigidbody2D>().AddRelativeForce(obj.transform.right * Random.Range(throwForceMin, throwForceMax));
-		obj.GetComponent<Rigidbody2D> ().AddTorque (obj.transform.right.x * addTorque);
+        obj.GetComponent<Rigidbody2D>().AddRelativeForce(obj.transform.right * Random.Range(throwForceMin, throwForceMax));
+        obj.GetComponent<Rigidbody2D>().AddTorque(obj.transform.right.x * addTorque);
 
-	}
+    }
 
 
 
@@ -72,15 +77,17 @@ public class EnemyThrowAttack : MonoBehaviour {
         return false;
     }
 
-	public void Action(){
-		if (_Grenade == null)
-			return;
-		lastShoot = Time.time;
+    public void Action()
+    {
+        if (_Grenade == null)
+            return;
+        lastShoot = Time.time;
 
-	}
+    }
 
-	void OnDrawGizmosSelected(){
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawWireSphere (checkPoint.position, radiusDetectPlayer);
-	}
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(checkPoint.position, radiusDetectPlayer);
+    }
 }

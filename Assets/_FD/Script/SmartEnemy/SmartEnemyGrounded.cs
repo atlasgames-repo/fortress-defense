@@ -3,59 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("ADDP/Enemy AI/Smart Enemy Ground Control")]
-[RequireComponent (typeof (Controller2D))]
-public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
-    
-	public bool isSocking{ get; set; }
-	public bool isDead{ get; set; }
+[RequireComponent(typeof(Controller2D))]
+public class SmartEnemyGrounded : Enemy, ICanTakeDamage
+{
 
-	[HideInInspector]
-	public Vector3 velocity;
-	private Vector2 _direction;
-	[HideInInspector]
-	public Controller2D controller;
+    public bool isSocking { get; set; }
+    public bool isDead { get; set; }
 
-	float velocityXSmoothing = 0;
-	Vector2 pushForce;
-	private float _directionFace;
-    
+    [HideInInspector]
+    public Vector3 velocity;
+    private Vector2 _direction;
+    [HideInInspector]
+    public Controller2D controller;
+
+    float velocityXSmoothing = 0;
+    Vector2 pushForce;
+    private float _directionFace;
+
     [Header("New")]
 
-	bool allowCheckAttack = true;
+    bool allowCheckAttack = true;
 
-	EnemyRangeAttack rangeAttack;
-	EnemyMeleeAttack meleeAttack;
-	EnemyThrowAttack throwAttack;
-	EnemyCallMinion callMinion;
+    EnemyRangeAttack rangeAttack;
+    EnemyMeleeAttack meleeAttack;
+    EnemyThrowAttack throwAttack;
+    EnemyCallMinion callMinion;
     SpawnItemHelper spawnItem;
-    
-	public override void Start ()
-	{
-		base.Start ();
 
-		controller = GetComponent<Controller2D> ();
-			_direction = isFacingRight() ? Vector2.right : Vector2.left;
+    public override void Start()
+    {
+        base.Start();
 
-        if((_direction == Vector2.right && startBehavior == STARTBEHAVIOR.WALK_LEFT) || (_direction == Vector2.left && startBehavior == STARTBEHAVIOR.WALK_RIGHT))
+        controller = GetComponent<Controller2D>();
+        _direction = isFacingRight() ? Vector2.right : Vector2.left;
+
+        if ((_direction == Vector2.right && startBehavior == STARTBEHAVIOR.WALK_LEFT) || (_direction == Vector2.left && startBehavior == STARTBEHAVIOR.WALK_RIGHT))
         {
             Flip();
         }
-		isPlaying = true;
-		isSocking = false;
+        isPlaying = true;
+        isSocking = false;
 
-		controller.collisions.faceDir = 1;
+        controller.collisions.faceDir = 1;
 
-		rangeAttack = GetComponent<EnemyRangeAttack> ();
-		meleeAttack = GetComponent<EnemyMeleeAttack> ();
-		throwAttack = GetComponent<EnemyThrowAttack> ();
-		callMinion = GetComponent<EnemyCallMinion> ();
+        rangeAttack = GetComponent<EnemyRangeAttack>();
+        meleeAttack = GetComponent<EnemyMeleeAttack>();
+        throwAttack = GetComponent<EnemyThrowAttack>();
+        callMinion = GetComponent<EnemyCallMinion>();
 
         if (rangeAttack && rangeAttack.GunObj)
-			rangeAttack.GunObj.SetActive (attackType == ATTACKTYPE.RANGE);
-		if (meleeAttack && meleeAttack.MeleeObj)
-			meleeAttack.MeleeObj.SetActive (attackType == ATTACKTYPE.MELEE);
+            rangeAttack.GunObj.SetActive(attackType == ATTACKTYPE.RANGE);
+        if (meleeAttack && meleeAttack.MeleeObj)
+            meleeAttack.MeleeObj.SetActive(attackType == ATTACKTYPE.MELEE);
 
-		spawnItem = GetComponent<SpawnItemHelper> ();
+        spawnItem = GetComponent<SpawnItemHelper>();
 
 
         //Do Get Upgrade
@@ -72,11 +73,11 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
             }
         }
     }
-    
-	public override void Update ()
-	{
-		base.Update ();
-		HandleAnimation ();
+
+    public override void Update()
+    {
+        base.Update();
+        HandleAnimation();
 
         if (enemyState != ENEMYSTATE.WALK || GameManager.Instance.State != GameManager.GameState.Playing)
         {
@@ -87,8 +88,9 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
         if (checkTarget.CheckTarget(isFacingRight() ? 1 : -1))
             DetectPlayer(delayChasePlayerWhenDetect);
     }
-    
-    public virtual void LateUpdate(){
+
+    public virtual void LateUpdate()
+    {
         if (GameManager.Instance.State != GameManager.GameState.Playing)
             return;
         else if (!isPlaying || isSocking || enemyEffect == ENEMYEFFECT.SHOKING)
@@ -97,8 +99,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
             return;
         }
 
-		float targetVelocityX = _direction.x * moveSpeed;
-        if (isSocking  || enemyEffect == ENEMYEFFECT.SHOKING)
+        float targetVelocityX = _direction.x * moveSpeed;
+        if (isSocking || enemyEffect == ENEMYEFFECT.SHOKING)
         {
             targetVelocityX = 0;
         }
@@ -109,29 +111,30 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
         if (isStopping || isStunning)
             targetVelocityX = 0;
 
-        velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? 0.1f : 0.2f);
-        
-		velocity.y += -gravity * Time.deltaTime;
-        
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? 0.1f : 0.2f);
+
+        velocity.y += -gravity * Time.deltaTime;
+
         if ((_direction.x > 0 && controller.collisions.right) || (_direction.x < 0 && controller.collisions.left))
             velocity.x = 0;
-        
-		controller.Move (velocity * Time.deltaTime * multipleSpeed, false, isFacingRight ());
 
-		if (controller.collisions.above || controller.collisions.below)
-			velocity.y = 0;
+        controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
+
+        if (controller.collisions.above || controller.collisions.below)
+            velocity.y = 0;
 
         if (isPlaying && isPlayerDetected && allowCheckAttack && enemyEffect != ENEMYEFFECT.FREEZE)
         {
             CheckAttack();
         }
-	}
+    }
 
-	void Flip(){
-		_direction = -_direction;
-		transform.rotation = Quaternion.Euler (new Vector3 (transform.rotation.x, isFacingRight () ? 0 : 180, transform.rotation.z));
-	}
-    
+    void Flip()
+    {
+        _direction = -_direction;
+        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, isFacingRight() ? 0 : 180, transform.rotation.z));
+    }
+
     public override void Stun(float time = 2)
     {
         base.Stun(time);
@@ -156,144 +159,168 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
     {
         isStunning = false;
     }
-    
+
     public override void DetectPlayer(float delayChase = 0)
     {
         base.DetectPlayer(delayChase);
     }
-    
-	public void CallMinion(){
-		AnimSetTrigger ("callMinion");
-		SetEnemyState (ENEMYSTATE.ATTACK);
-		allowCheckAttack = false;
-	}
 
-	void CheckAttack(){
-		//CHECK AND CALL MINION IF THIS ENEMY HAS SCRIPT CALLMINION
-			switch (attackType) {
-			case ATTACKTYPE.RANGE:
-				if (rangeAttack.AllowAction ()) {
-					SetEnemyState (ENEMYSTATE.ATTACK);
-
-					if (rangeAttack.CheckPlayer (isFacingRight ())) {
-						rangeAttack.Action ();
-						AnimSetTrigger ("shoot");
-						DetectPlayer ();
-					} else if (!rangeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK) {
-						SetEnemyState (ENEMYSTATE.WALK);
-					}
-				}
-
-				break;
-			case ATTACKTYPE.MELEE:
-				if (meleeAttack.AllowAction ()) {
-					if (meleeAttack.CheckPlayer (isFacingRight ())) {
-						SetEnemyState (ENEMYSTATE.ATTACK);
-						meleeAttack.Action ();
-						AnimSetTrigger ("melee");
-					} else if (!meleeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK) {
-						SetEnemyState (ENEMYSTATE.WALK);
-					}
-				}
-				break;
-
-			case ATTACKTYPE.THROW:
-				if (throwAttack.AllowAction ()) {
-					SetEnemyState (ENEMYSTATE.ATTACK);
-
-					if (throwAttack.CheckPlayer ()) {
-						throwAttack.Action ();
-						AnimSetTrigger ("throw");
-					} else if (!throwAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK) {
-						SetEnemyState (ENEMYSTATE.WALK);
-					}
-				}
-				break;
-			default:
-				break;
-		}
-	}
-
-	void AllowCheckAttack(){
-		allowCheckAttack = true;
-	}
-
-	void HandleAnimation(){
-		AnimSetFloat ("speed", Mathf.Abs (velocity.x));
-		AnimSetBool ("isRunning", Mathf.Abs (velocity.x) > walkSpeed);
-        AnimSetBool("isStunning", isStunning);
+    public void CallMinion()
+    {
+        AnimSetTrigger("callMinion");
+        SetEnemyState(ENEMYSTATE.ATTACK);
+        allowCheckAttack = false;
     }
 
-	public void SetForce(float x, float y){
-		velocity = new Vector3 (x, y, 0);
-	} 
-    
-	public void AnimMeleeAttackStart(){
-		meleeAttack.Check4Hit ();
-	}
+    void CheckAttack()
+    {
+        //CHECK AND CALL MINION IF THIS ENEMY HAS SCRIPT CALLMINION
+        switch (attackType)
+        {
+            case ATTACKTYPE.RANGE:
+                if (rangeAttack.AllowAction())
+                {
+                    SetEnemyState(ENEMYSTATE.ATTACK);
 
-	public void AnimMeleeAttackEnd(){
-		meleeAttack.EndCheck4Hit ();
-	}
+                    if (rangeAttack.CheckPlayer(isFacingRight()))
+                    {
+                        rangeAttack.Action();
+                        AnimSetTrigger("shoot");
+                        DetectPlayer();
+                    }
+                    else if (!rangeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
+                    {
+                        SetEnemyState(ENEMYSTATE.WALK);
+                    }
+                }
 
-	public void AnimThrow(){
-		throwAttack.Throw (isFacingRight());
-	}
+                break;
+            case ATTACKTYPE.MELEE:
+                if (meleeAttack.AllowAction())
+                {
+                    if (meleeAttack.CheckPlayer(isFacingRight()))
+                    {
+                        SetEnemyState(ENEMYSTATE.ATTACK);
+                        meleeAttack.Action();
+                        AnimSetTrigger("melee");
+                    }
+                    else if (!meleeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
+                    {
+                        SetEnemyState(ENEMYSTATE.WALK);
+                    }
+                }
+                break;
 
-	public void AnimShoot(){
-		rangeAttack.Shoot (isFacingRight ());
-	}
+            case ATTACKTYPE.THROW:
+                if (throwAttack.AllowAction())
+                {
+                    SetEnemyState(ENEMYSTATE.ATTACK);
 
-	public void AnimCallMinion(){
-		callMinion.CallMinion (isFacingRight ());
-		Invoke ("AllowCheckAttack", 2);
-	}
+                    if (throwAttack.CheckPlayer())
+                    {
+                        throwAttack.Action();
+                        AnimSetTrigger("throw");
+                    }
+                    else if (!throwAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
+                    {
+                        SetEnemyState(ENEMYSTATE.WALK);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
-	public override void Die ()
-	{
-		if (isDead)
-			return;
+    void AllowCheckAttack()
+    {
+        allowCheckAttack = true;
+    }
 
-		base.Die ();
+    void HandleAnimation()
+    {
+        AnimSetFloat("speed", Mathf.Abs(velocity.x));
+        //AnimSetBool ("isRunning", Mathf.Abs (velocity.x) > walkSpeed);
+        //AnimSetBool("isStunning", isStunning);
+    }
 
-		isDead = true;
+    public void SetForce(float x, float y)
+    {
+        velocity = new Vector3(x, y, 0);
+    }
 
-		CancelInvoke ();
+    public void AnimMeleeAttackStart()
+    {
+        meleeAttack.Check4Hit();
+    }
 
-		var cols= GetComponents<BoxCollider2D>();
-		foreach (var col in cols)
-			col.enabled = false;
+    public void AnimMeleeAttackEnd()
+    {
+        meleeAttack.EndCheck4Hit();
+    }
 
-		if (spawnItem && spawnItem.spawnWhenDie)
-			spawnItem.Spawn ();
-        
+    public void AnimThrow()
+    {
+        throwAttack.Throw(isFacingRight());
+    }
+
+    public void AnimShoot()
+    {
+        rangeAttack.Shoot(isFacingRight());
+    }
+
+    public void AnimCallMinion()
+    {
+        callMinion.CallMinion(isFacingRight());
+        Invoke("AllowCheckAttack", 2);
+    }
+
+    public override void Die()
+    {
+        if (isDead)
+            return;
+
+        base.Die();
+
+        isDead = true;
+
+        CancelInvoke();
+
+        var cols = GetComponents<BoxCollider2D>();
+        foreach (var col in cols)
+            col.enabled = false;
+
+        if (spawnItem && spawnItem.spawnWhenDie)
+            spawnItem.Spawn();
+
         AnimSetBool("isDead", true);
 
         if (enemyEffect == ENEMYEFFECT.BURNING)
-			return;
+            return;
 
-		if (enemyEffect == ENEMYEFFECT.EXPLOSION || dieBehavior == DIEBEHAVIOR.DESTROY) {
-			gameObject.SetActive (false);
-			return;
-		}
-        
-		StopAllCoroutines ();
-            StartCoroutine(DisableEnemy(AnimationHelper.getAnimationLength(anim, "Die") + 2f));
+        if (enemyEffect == ENEMYEFFECT.EXPLOSION || dieBehavior == DIEBEHAVIOR.DESTROY)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(DisableEnemy(AnimationHelper.getAnimationLength(anim, "Die") + 2f));
     }
 
-	public override void Hit (Vector2 force, bool pushBack = false, bool knockDownRagdoll = false, bool shock = false)
-	{
-		if (!isPlaying || isStunning)
-			return;
+    public override void Hit(Vector2 force, bool pushBack = false, bool knockDownRagdoll = false, bool shock = false)
+    {
+        if (!isPlaying || isStunning)
+            return;
 
-		base.Hit (force, pushBack, knockDownRagdoll, shock);
-		if (isDead)
-			return;
+        base.Hit(force, pushBack, knockDownRagdoll, shock);
+        if (isDead)
+            return;
 
         AnimSetTrigger("hit");
 
         if (spawnItem && spawnItem.spawnWhenHit)
-			spawnItem.Spawn ();
+            spawnItem.Spawn();
 
         if (knockDownRagdoll)
             ;
@@ -305,21 +332,23 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
             ;
     }
 
-	public override void KnockBack (Vector2 force, float stunningTime = 0)
-	{
-		base.KnockBack (force);
+    public override void KnockBack(Vector2 force, float stunningTime = 0)
+    {
+        base.KnockBack(force);
 
         SetForce(force.x, force.y);
     }
 
-	public IEnumerator PushBack(Vector2 force){
-		SetForce (force.x, force.y);
+    public IEnumerator PushBack(Vector2 force)
+    {
+        SetForce(force.x, force.y);
 
-		if (isDead) {
-			Die ();
-			yield break;
-		}
-	}
+        if (isDead)
+        {
+            Die();
+            yield break;
+        }
+    }
 
     public IEnumerator Shock()
     {
@@ -330,10 +359,11 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage {
         }
     }
 
-    IEnumerator DisableEnemy(float delay){
-		yield return new WaitForSeconds (delay);
+    IEnumerator DisableEnemy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         if (disableFX)
             SpawnSystemHelper.GetNextObject(disableFX, true).transform.position = spawnDisableFX != null ? spawnDisableFX.position : transform.position;
-        gameObject.SetActive (false);
-	}
+        gameObject.SetActive(false);
+    }
 }

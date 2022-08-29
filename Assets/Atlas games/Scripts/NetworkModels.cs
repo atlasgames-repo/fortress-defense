@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 
 public class BaseModel
@@ -11,7 +12,21 @@ public class BaseModel
     }
 
 }
+[Serializable]
+public class AssetBundleUpdateResponse : BaseModel
+{
+    public string[] list;
 
+}
+
+[Serializable]
+public class AssetBundleGenerator
+{
+    public string name;
+    public Transform root;
+    public bool is_root_world = false, has_depends = false;
+    public MonoBehaviour depends_type;
+}
 [Serializable]
 public class ErrorResponse : BaseModel
 {
