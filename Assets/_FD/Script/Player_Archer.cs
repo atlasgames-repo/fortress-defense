@@ -9,6 +9,11 @@ using UnityEngine;
 public class Player_Archer : Enemy, ICanTakeDamage, IListener
 {
     public CheckTargetHelper checkTargetHelper;
+    [Header("MANUAL ARROW SHOOT")]
+    [ReadOnly]
+    public bool is_manual_enable = false;
+    [ReadOnly]
+    public GameObject manual_targeted_enemy;
     [Header("ARROW SETUP")]
     public NumberArrow numberArrow = NumberArrow.Single;
     public float shootRate = 1;
@@ -303,17 +308,41 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
                     var checkEnemy = (ICanTakeDamage)obj.collider.gameObject.GetComponent(typeof(ICanTakeDamage));
                     if (checkEnemy != null)
                     {
-                        if (Mathf.Abs(obj.transform.position.x - transform.position.x) < closestDistance)
+
+                        if (is_manual_enable)
                         {
-                            closestDistance = Mathf.Abs(obj.transform.position.x - transform.position.x);
+                            //Debug.LogError("MANUAL ARCHER ATTACK");
+                            //Debug.LogError(obj.transform.GetComponent<Enemy>().attackType);
+                            if (manual_targeted_enemy && GameObject.ReferenceEquals(manual_targeted_enemy, obj.transform.gameObject))
+                            {
+                                target = obj.transform;
+                                obj.transform.GetComponent<SmartEnemyGrounded>().is_targeted = true;
+                                var hit = Physics2D.Raycast(transform.position, (obj.point - (Vector2)transform.position), 100, GameManager.Instance.layerEnemy);
+                                Debug.DrawRay(transform.position, (obj.point - (Vector2)transform.position) * 100, Color.red);
 
-                            target = obj.transform;
+                                autoShootPoint = /*target.position + Vector3.up * Random.Range(0.2f, 0.6f);*/ hit.collider.gameObject.transform.position;
+                                //autoShootPoint.y = Mathf.Max(autoShootPoint.y, firePostion.position.y - 0.1f);
+                            }
+                            else
+                            {
+                                obj.transform.GetComponent<SmartEnemyGrounded>().is_targeted = false;
+                            }
+                        }
+                        else
+                        {
+                            if (Mathf.Abs(obj.transform.position.x - transform.position.x) < closestDistance)
+                            {
+                                closestDistance = Mathf.Abs(obj.transform.position.x - transform.position.x);
 
-                            var hit = Physics2D.Raycast(transform.position, (obj.point - (Vector2)transform.position), 100, GameManager.Instance.layerEnemy);
-                            Debug.DrawRay(transform.position, (obj.point - (Vector2)transform.position) * 100, Color.red);
+                                target = obj.transform;
 
-                            autoShootPoint = /*target.position + Vector3.up * Random.Range(0.2f, 0.6f);*/ hit.collider.gameObject.transform.position;
-                            //autoShootPoint.y = Mathf.Max(autoShootPoint.y, firePostion.position.y - 0.1f);
+                                var hit = Physics2D.Raycast(transform.position, (obj.point - (Vector2)transform.position), 100, GameManager.Instance.layerEnemy);
+                                Debug.DrawRay(transform.position, (obj.point - (Vector2)transform.position) * 100, Color.red);
+
+                                autoShootPoint = /*target.position + Vector3.up * Random.Range(0.2f, 0.6f);*/ hit.collider.gameObject.transform.position;
+                                //autoShootPoint.y = Mathf.Max(autoShootPoint.y, firePostion.position.y - 0.1f);
+                            }
+
                         }
                     }
                 }

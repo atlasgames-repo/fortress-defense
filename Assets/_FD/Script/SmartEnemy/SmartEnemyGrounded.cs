@@ -4,7 +4,7 @@ using UnityEngine;
 
 [AddComponentMenu("ADDP/Enemy AI/Smart Enemy Ground Control")]
 [RequireComponent(typeof(Controller2D))]
-public class SmartEnemyGrounded : Enemy, ICanTakeDamage
+public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 {
 
     public bool isSocking { get; set; }
@@ -20,6 +20,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage
     Vector2 pushForce;
     private float _directionFace;
 
+    [Header("Manul options")]
+    public bool is_targeted;
     [Header("New")]
 
     bool allowCheckAttack = true;
@@ -365,5 +367,13 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage
         if (disableFX)
             SpawnSystemHelper.GetNextObject(disableFX, true).transform.position = spawnDisableFX != null ? spawnDisableFX.position : transform.position;
         gameObject.SetActive(false);
+    }
+    public void TouchEvent()
+    {
+        GameObject[] archers = GameObject.FindGameObjectsWithTag("Player");
+        foreach (var archer in archers)
+        {
+            archer.GetComponent<Player_Archer>().manual_targeted_enemy = this.gameObject;
+        }
     }
 }
