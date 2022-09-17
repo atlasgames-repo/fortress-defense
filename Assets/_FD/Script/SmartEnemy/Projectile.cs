@@ -1,38 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Projectile : MonoBehaviour {
+public abstract class Projectile : MonoBehaviour
+{
     public float Speed = 3;
 
-	public LayerMask LayerCollision;
+    public LayerMask LayerCollision;
 
-	public GameObject Owner{ get; private set; }
-	public Vector2 Direction{ get; private set; }
-	public Vector2 InitialVelocity{ get; private set; }
-	public bool CanGoBackOwner{ get; private set; }
-	public float NewDamage{ get; set; }
+    public GameObject Owner { get; set; }
+    public Vector2 Direction { get; private set; }
+    public Vector2 InitialVelocity { get; private set; }
+    public bool CanGoBackOwner { get; private set; }
+    public float NewDamage { get; set; }
 
-	[HideInInspector]
-	public bool Explosion;
+    [HideInInspector]
+    public bool Explosion;
 
     //protected float Damage;
     protected Vector2 force;
     protected WeaponEffect weaponEffect;
 
     // Use this for initialization
-    public void Initialize (GameObject owner, Vector2 direction, Vector2 initialVelocity,bool isExplosion = false, bool canGoBackToOwner = false, float _newDamage = 0, WeaponEffect _weaponEffect = null) {
-		transform.right = direction;	//turn the X asix to the direction
-		Owner = owner;
-		Direction = direction;
-		InitialVelocity = initialVelocity;
-		CanGoBackOwner = canGoBackToOwner && isExplosion;
-		NewDamage = _newDamage;
+    public void Initialize(GameObject owner, Vector2 direction, Vector2 initialVelocity, bool isExplosion = false, bool canGoBackToOwner = false, float _newDamage = 0, WeaponEffect _weaponEffect = null)
+    {
+        transform.right = direction;    //turn the X asix to the direction
+        Owner = owner;
+        Direction = direction;
+        InitialVelocity = initialVelocity;
+        CanGoBackOwner = canGoBackToOwner && isExplosion;
+        NewDamage = _newDamage;
         weaponEffect = _weaponEffect;
 
         Explosion = isExplosion;
 
-		OnInitialized ();
-	}
+        OnInitialized();
+    }
 
     public void Initialize(GameObject owner, Vector2 direction, Vector2 initialVelocity, bool isExplosion = false, float Mindamage = 0, float MaxDamage = 0, float critPercent = 0, Vector2 _force = default(Vector2), WeaponEffect _weaponEffect = null)
     {
@@ -48,9 +50,10 @@ public abstract class Projectile : MonoBehaviour {
         OnInitialized();
     }
 
-    public virtual void OnInitialized(){
-	}
-    
+    public virtual void OnInitialized()
+    {
+    }
+
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.LogError(other.gameObject);
@@ -68,7 +71,7 @@ public abstract class Projectile : MonoBehaviour {
             return;
         }
 
-        
+
 
         var takeDamage = (ICanTakeDamage)other.gameObject.GetComponent(typeof(ICanTakeDamage));
         if (takeDamage != null)
@@ -98,14 +101,15 @@ public abstract class Projectile : MonoBehaviour {
         }
     }
 
-	protected virtual void OnNotCollideWith(Collider2D other){
-	}
+    protected virtual void OnNotCollideWith(Collider2D other)
+    {
+    }
 
-	protected virtual void OnCollideOwner (){}
+    protected virtual void OnCollideOwner() { }
 
-	protected virtual void OnCollideTakeDamage(Collider2D other, ICanTakeDamage takedamage){}
+    protected virtual void OnCollideTakeDamage(Collider2D other, ICanTakeDamage takedamage) { }
 
     protected virtual void OnCollideTakeDamageBodyPart(Collider2D other, ICanTakeDamageBodyPart takedamage) { }
 
-    protected virtual void OnCollideOther(Collider2D other){}
+    protected virtual void OnCollideOther(Collider2D other) { }
 }

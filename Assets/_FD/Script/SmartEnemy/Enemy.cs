@@ -701,6 +701,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         if (enemyState == ENEMYSTATE.DEATH)
             return;
 
+        Player_Archer owner = instigator.GetComponent<Player_Archer>();
         if (isStopping)
             return;
         //store parameters
@@ -733,6 +734,15 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
             if (isExplosion || dieBehavior == DIEBEHAVIOR.BLOWUP)
             {
                 SetEnemyEffect(ENEMYEFFECT.EXPLOSION);
+            }
+            if (owner)
+            {
+                if (owner.criticalRateTemp + 0.2f <= 1f && owner.is_manual_enable)
+                {
+                    owner.criticalRateTemp += 0.2f;
+                }
+                if (owner.criticalRateTemp >= 0.8f)
+                    owner.criticalRateTemp = owner.criticalRate;
             }
 
             Die();

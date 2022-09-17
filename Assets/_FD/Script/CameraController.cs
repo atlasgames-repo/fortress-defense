@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class CameraController : MonoBehaviour
     bool isDragging = false;
     Vector3 target = new Vector3(-1, 0, 0);
     bool allowWorking = false;
+    public Vector3 target_right = new Vector3(-10, 0, 0);
+    public Vector3 target_left = new Vector3(-1, 0, 0);
+    public bool allowTouch = false, is_left = true;
+    public Image CameraMove;
+    public Sprite Left, Right;
 
     IEnumerator Start()
     {
@@ -23,12 +29,31 @@ public class CameraController : MonoBehaviour
         target.x = Mathf.Clamp(transform.position.x, limitLeft + CameraHalfWidth, limitRight - CameraHalfWidth);
         allowWorking = true;
     }
-    
+
+    public void Move()
+    {
+        if (is_left)
+        {
+            target = target_right;
+            CameraMove.sprite = Left;
+            is_left = false;
+        }
+        else
+        {
+            target = target_left;
+            CameraMove.sprite = Right;
+            is_left = true;
+        }
+    }
     void Update()
     {
+        if (!allowTouch)
+        {
+            transform.position = Vector3.Lerp(transform.position, target, moveSpeed * Time.fixedDeltaTime);
+            return;
+        }
         if (!allowWorking)
             return;
-
         transform.position = Vector3.Lerp(transform.position, target, moveSpeed * Time.fixedDeltaTime);
         if (GameManager.Instance.State != GameManager.GameState.Playing)
             return;
@@ -43,7 +68,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if(Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 isDragging = false;
             }

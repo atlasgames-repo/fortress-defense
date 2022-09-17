@@ -32,6 +32,9 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
     public ArrowProjectile arrow;
     [Range(0, 1)]
     public float criticalRate = 0.1f;
+    public float criticalRateTemp = 0.1f;
+    [ReadOnly]
+    public float criticalMultiplier = 1.2f;
     public Transform firePostion;
     [Space]
     [Header("Sound")]
@@ -448,9 +451,15 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
         anim.SetTrigger("shoot");
 
         bool isCritical = false;
-        if (Random.Range(0f, 1f) < criticalRate)
+        if (Random.Range(0f, 1f) < criticalRateTemp)
         {
             isCritical = true;
+            criticalMultiplier += 0.2f;
+
+        }
+        else
+        {
+            criticalMultiplier = 1.2f;
         }
         //Fire number arrow
         ArrowProjectile _tempArrow;
@@ -462,14 +471,14 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
         {
             case NumberArrow.Double:
                 _tempArrow = Instantiate(arrow, fromPosition, Quaternion.identity);
-                _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle + 1.5f), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y);
+                _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle + 1.5f), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y, criticalMultiplier, this.gameObject);
                 //shot second arrow
                 _tempArrow = Instantiate(arrow, fromPosition, Quaternion.identity);
-                _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle - 1.5f), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y);
+                _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle - 1.5f), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y, criticalMultiplier, this.gameObject);
                 break;
             default:
                 _tempArrow = Instantiate(arrow, fromPosition, Quaternion.identity);
-                _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y);
+                _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y, criticalMultiplier, this.gameObject);
                 break;
         }
 
@@ -485,11 +494,11 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
         lastShoot = Time.time;
         isLoading = true;
         yield return new WaitForSeconds(0.1f);
-        anim.SetBool("isLoading", true);
+        // anim.SetBool("isLoading", true);
 
         while (Time.time < (lastShoot + shootRate)) { yield return null; }
 
-        anim.SetBool("isLoading", false);
+        // anim.SetBool("isLoading", false);
 
         yield return new WaitForSeconds(0.2f);
 

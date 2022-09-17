@@ -7,7 +7,8 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
     public Sprite hitImageBlood;
     public SpriteRenderer arrowImage;
     Vector2 oldPos;
-     int Damage = 30;
+    int Damage = 30;
+    float critMulti = 1.2f;
     public GameObject DestroyEffect;
     public int pointToGivePlayer;
     public float timeToLive = 3;
@@ -38,12 +39,14 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         rig.isKinematic = false;
     }
 
-    public void Init(int damageMin, int damageMax, Vector2 velocityForce, float gravityScale, bool isCritical, WeaponEffect _arrowEffect, WEAPON_EFFECT _forceEffect = WEAPON_EFFECT.NONE, float _disableAtYPos = - 1)
+    public void Init(int damageMin, int damageMax, Vector2 velocityForce, float gravityScale, bool isCritical, WeaponEffect _arrowEffect, WEAPON_EFFECT _forceEffect = WEAPON_EFFECT.NONE, float _disableAtYPos = -1, float _critMulti = 1.2f, GameObject _owner = null)
     {
         arrowEffect = _arrowEffect;
         forceEffect = _forceEffect;
-        Damage = Random.Range(damageMin, damageMax);
+        Damage = (int)(Random.Range(damageMin, damageMax) * critMulti);
         criticalDamage = isCritical;
+        critMulti = _critMulti;
+        Owner = _owner;
         rig = GetComponent<Rigidbody2D>();
         rig.gravityScale = gravityScale;
         rig.velocity = velocityForce;
@@ -57,7 +60,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         GameManager.Instance.listeners.Add(this);
     }
 
-    public Vector2 checkTargetDistanceOffset = new Vector2(-0.25f,0);
+    public Vector2 checkTargetDistanceOffset = new Vector2(-0.25f, 0);
     public float checkTargetDistance = 1;
 
     // Update is called once per frame
@@ -86,7 +89,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
             DestroyProjectile();
         }
 
-        if(disableAtYPos != -1)
+        if (disableAtYPos != -1)
         {
             if (transform.position.y < disableAtYPos)
             {
@@ -106,19 +109,19 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
- 
+
     }
 
     void Hit(RaycastHit2D other)
     {
         transform.position = other.point + (Vector2)(transform.position - transform.Find("head").position);
-        
+
         var takeDamage = (ICanTakeDamage)other.collider.gameObject.GetComponent(typeof(ICanTakeDamage));
         if (takeDamage != null)
         {
             OnCollideTakeDamage(other.collider, takeDamage);
             if (criticalDamage)
-                FloatingTextManager.Instance.ShowText("CRIT!", Vector2.up, Color.yellow, other.collider.gameObject.transform.position, 30);
+                FloatingTextManager.Instance.ShowText($"CRITICAL X{critMulti.ToString("0.0")}", Vector2.up, Color.yellow, other.collider.gameObject.transform.position, 30);
 
         }
         else
@@ -142,6 +145,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         }
 
         gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     public void TakeDamage(float damage, Vector2 force, Vector2 hitPoint, GameObject instigator, BODYPART bodyPart = BODYPART.NONE)
@@ -164,7 +168,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         //Debug.LogError(other.name);
         base.OnCollideTakeDamage(other, takedamage);
 
-        takedamage.TakeDamage(Damage, Vector2.zero, transform.position, Owner,BODYPART.NONE, arrowEffect, forceEffect);
+        takedamage.TakeDamage(Damage * critMulti, Vector2.zero, transform.position, Owner, BODYPART.NONE, arrowEffect, forceEffect);
         SoundManager.PlaySfx(soundHitEnemy, soundHitEnemyVolume);
         StartCoroutine(DestroyProjectile(0));
 
@@ -179,10 +183,10 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
     protected override void OnCollideTakeDamageBodyPart(Collider2D other, ICanTakeDamageBodyPart takedamage)
     {
-        
+
         base.OnCollideTakeDamageBodyPart(other, takedamage);
         WeaponEffect weaponEffect = new WeaponEffect();
-        takedamage.TakeDamage(Damage, force, transform.position, Owner);
+        takedamage.TakeDamage(Damage * critMulti, force, transform.position, Owner);
         StartCoroutine(DestroyProjectile(0));
 
         if (parentToHitObject)
