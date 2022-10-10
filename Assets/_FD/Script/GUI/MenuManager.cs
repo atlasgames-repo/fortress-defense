@@ -126,6 +126,19 @@ public class MenuManager : MonoBehaviour, IListener
 
         yield return new WaitForSeconds(1.5f);
         FailUI.SetActive(true);
+        if (GlobalValue.Life <= 0)
+            FailUI.transform.GetChild(1).GetChild(1).GetComponent<Button>().interactable = false;
+
+        
+        if (GlobalValue.Life > 0){
+            // remove a life from player
+            GlobalValue.Life -= 1;
+        }else{
+            // reset the level reached to the first of world
+            GlobalValue.LevelPass = GlobalValue.WorldPass*10 - 10;
+            GlobalValue.Life = 2;
+            Debug.LogError(GlobalValue.LevelPass);
+        }
     }
 
     public void IOnRespawn()

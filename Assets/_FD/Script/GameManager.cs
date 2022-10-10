@@ -146,6 +146,8 @@ public class GameManager: MonoBehaviour {
         //save level and save star
         if (GlobalValue.levelPlaying > GlobalValue.LevelPass)
             GlobalValue.LevelPass = GlobalValue.levelPlaying;
+            GlobalValue.WorldPass = (int)(GlobalValue.LevelPass/10)+1;
+            Debug.LogError(GlobalValue.WorldPass);
 
         //if (point >= levelmanager.instance.point3stars)
         //    globalvalue.levelstar(scenemanager.getactivescene().name, 3);
@@ -205,9 +207,9 @@ public class GameManager: MonoBehaviour {
             AdsManager.Instance.ShowNormalAd(GameState.GameOver);
 
         //Debug.LogError("CALL");
-
         foreach (var item in listeners)
 			item.IGameOver ();
+
 	}
 
     [HideInInspector]

@@ -13,6 +13,7 @@ public class MapControllerUI : MonoBehaviour {
     public Text worldTxt;
 	int currentPos = 0;
 	public AudioClip music;
+    public GameObject[] lifes;
 	// Use this for initialization
 	void Start () {
         //SetDots();
@@ -36,9 +37,17 @@ public class MapControllerUI : MonoBehaviour {
     //}
 
     void OnEnable(){
+        foreach (var item in lifes)
+        {
+            item.SetActive(false);
+        }
+        Debug.LogError(GlobalValue.Life);
 		SoundManager.PlayMusic (music);
 		Debug.LogWarning ("ON ENALBE");
-
+        // show how much life a player have
+        for (int i = 0; i < GlobalValue.Life+1;i++){
+            lifes[i].SetActive(true);
+        }
 	}
 
 	void OnDisable(){

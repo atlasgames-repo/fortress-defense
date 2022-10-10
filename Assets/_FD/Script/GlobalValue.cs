@@ -53,7 +53,16 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("LevelReached", 0); }
         set { PlayerPrefs.SetInt("LevelReached", value); }
     }
-
+    public static int WorldPass
+    {
+        get { return PlayerPrefs.GetInt("WorldReached", 1); }
+        set { PlayerPrefs.SetInt("WorldReached", value); }
+    }
+    public static int Life
+    {
+        get { return PlayerPrefs.GetInt("life", 2); }
+        set { PlayerPrefs.SetInt("life", value); }
+    }
     public static void LevelStar(int level, int stars)
     {
         PlayerPrefs.SetInt("LevelStars" + level, stars);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameLevelSetup : MonoBehaviour
 {
     public static GameLevelSetup Instance;
-    [ReadOnly] public List<LevelWave> levelWaves = new List<LevelWave>();
+    public List<LevelWave> levelWaves = new List<LevelWave>();
 
     private void Awake()
     {
