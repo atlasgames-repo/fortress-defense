@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+public class MapControllerUI : MonoBehaviour
+{
+    //	public Transform BlockLevel;
+    public RectTransform BlockLevel;
+    public int howManyBlocks = 3;
 
-public class MapControllerUI : MonoBehaviour {
-//	public Transform BlockLevel;
-	public RectTransform BlockLevel;
-	public int howManyBlocks = 3;
+    public float step = 720f;
 
-	public float step = 720f;
-    
-	private float newPosX = 0;
+    private float newPosX = 0;
     public Text worldTxt;
-	int currentPos = 0;
-	public AudioClip music;
+    int currentPos = 0;
+    public AudioClip music;
     public GameObject[] lifes;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         //SetDots();
         SetWorldNumber();
     }
@@ -36,23 +37,40 @@ public class MapControllerUI : MonoBehaviour {
     //    Dots[currentPos].rectTransform.sizeDelta = new Vector2(38, 38);
     //}
 
-    void OnEnable(){
+    void OnEnable()
+    {
+        SoundManager.PlayMusic(music);
+        UpdateLifes();
+
+    }
+    void UpdateLifes()
+    {
         foreach (var item in lifes)
         {
             item.SetActive(false);
         }
-        Debug.LogError(GlobalValue.Life);
-		SoundManager.PlayMusic (music);
-		Debug.LogWarning ("ON ENALBE");
         // show how much life a player have
-        for (int i = 0; i < GlobalValue.Life+1;i++){
+        for (int i = 0; i <= LifeTTRSource.Life; i++)
+        {
             lifes[i].SetActive(true);
         }
-	}
-
-	void OnDisable(){
-		SoundManager.PlayMusic (SoundManager.Instance.musicsGame);
-	}
+        if (APIManager.instance.lifeTTR.TTL() > 0)
+        {
+            lifes[LifeTTRSource.Life + 1].SetActive(true);
+        }
+    }
+    void Update()
+    {
+        if (APIManager.instance.lifeTTR.TTL() > 0)
+        {
+            lifes[LifeTTRSource.Life + 1].GetComponent<Image>().fillAmount = 1 - APIManager.instance.lifeTTR.TTLPercent;
+            UpdateLifes();
+        }
+    }
+    void OnDisable()
+    {
+        SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
+    }
 
     public void SetCurrentWorld(int world)
     {
@@ -92,7 +110,7 @@ public class MapControllerUI : MonoBehaviour {
 
             newPosX -= step;
             newPosX = Mathf.Clamp(newPosX, -step * (howManyBlocks - 1), 0);
-            
+
         }
         else
         {
@@ -165,9 +183,10 @@ public class MapControllerUI : MonoBehaviour {
 
     }
 
-	public void UnlockAllLevels(){
-		GlobalValue.LevelPass = (GlobalValue.LevelPass + 1000);
-		UnityEngine.SceneManagement.SceneManager.LoadScene (UnityEngine.SceneManagement.SceneManager.GetActiveScene ().buildIndex);
-		SoundManager.Click ();
-	}
+    public void UnlockAllLevels()
+    {
+        GlobalValue.LevelPass = (GlobalValue.LevelPass + 1000);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        SoundManager.Click();
+    }
 }

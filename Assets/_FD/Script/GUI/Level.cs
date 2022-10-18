@@ -98,7 +98,8 @@ public class Level : MonoBehaviour
         GlobalValue.levelPlaying = level;
         SoundManager.Click();
 
-        MainMenuHomeScene.Instance.LoadScene();
+        if (LifeTTRSource.Life > 0)
+            MainMenuHomeScene.Instance.LoadScene();
 
     }
 
@@ -113,7 +114,8 @@ public class Level : MonoBehaviour
         //else
         //{
         GlobalValue.levelPlaying = level;
-        MainMenuHomeScene.Instance.LoadScene(_levelSceneName);
+        if (LifeTTRSource.Life > 0)
+            MainMenuHomeScene.Instance.LoadScene(_levelSceneName);
         //}
     }
 }

@@ -16,11 +16,16 @@ public class APIManager : MonoBehaviour
     public GameObject status;
     public float status_destroy;
     CancellationTokenSource tokenSource;
+    [ReadOnly] public LifeTTR lifeTTR;
+    public int lifeTTL = 30;
     void Awake()
     {
         instance = this;
+        lifeTTR = new LifeTTR(lifeTTL);
+        lifeTTR.Inintilize();
         tokenSource = new CancellationTokenSource();
         DontDestroyOnLoad(gameObject);
+
     }
     // Start is called before the first frame update
     void RunStatus(string message)
