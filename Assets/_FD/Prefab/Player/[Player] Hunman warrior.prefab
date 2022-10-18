@@ -45,6 +45,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -312,6 +314,7 @@ MonoBehaviour:
   delayChasePlayerWhenDetect: 0
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
+  is_targeted: 0
 --- !u!114 &4269282523560146207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,8 +398,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af11ea3b84b0b7d40ba7855f48cd56db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expMin: 2
-  expMax: 4
+  expMin: 3
+  expMax: 5
 --- !u!1 &7410894355869459245
 GameObject:
   m_ObjectHideFlags: 0

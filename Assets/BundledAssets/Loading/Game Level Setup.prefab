@@ -702,22 +702,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 8
-  defaultExp: 300
+  defaultExp: 70
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
   - wait: 0
     enemySpawns:
     - wait: 1
-      enemy: {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2,
-        type: 3}
-      numberEnemy: 15
-      boosType: 0
-      rate: 0.5
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-    - wait: 5
-      enemy: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
+      enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
         type: 3}
       numberEnemy: 5
       boosType: 0
@@ -726,11 +717,20 @@ MonoBehaviour:
       customSpeed: 0
       customAttackDmg: 0
     - wait: 1
-      enemy: {fileID: 6095283598343155490, guid: 1d22479a8a9a454499d8b5f1c77eea2d,
+      enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
+        type: 3}
+      numberEnemy: 10
+      boosType: 0
+      rate: 0.5
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+    - wait: 1
+      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
       numberEnemy: 5
       boosType: 0
-      rate: 1
+      rate: 0
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 6
-  defaultExp: 150
+  defaultExp: 60
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
   - wait: 0
@@ -793,11 +793,20 @@ MonoBehaviour:
       customSpeed: 0
       customAttackDmg: 0
     - wait: 1
-      enemy: {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2,
+      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
-      numberEnemy: 10
+      numberEnemy: 3
       boosType: 0
-      rate: 0.5
+      rate: 1.5
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+    - wait: 0
+      enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
+        type: 3}
+      numberEnemy: 5
+      boosType: 0
+      rate: 2
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
@@ -845,7 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 5
-  defaultExp: 150
+  defaultExp: 50
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
   - wait: 0
@@ -859,17 +868,19 @@ MonoBehaviour:
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
+  - wait: 5
+    enemySpawns:
+    - wait: 0
+      enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
+        type: 3}
+      numberEnemy: 1
+      boosType: 1
+      rate: 0
+      customHealth: 500
+      customSpeed: 0.8
+      customAttackDmg: 50
     - wait: 1
       enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
-        type: 3}
-      numberEnemy: 5
-      boosType: 0
-      rate: 1
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-    - wait: 1
-      enemy: {fileID: 6095283598343155490, guid: 1d22479a8a9a454499d8b5f1c77eea2d,
         type: 3}
       numberEnemy: 3
       boosType: 0
@@ -877,17 +888,6 @@ MonoBehaviour:
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
-  - wait: 10
-    enemySpawns:
-    - wait: 1
-      enemy: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
-        type: 3}
-      numberEnemy: 1
-      boosType: 1
-      rate: 0
-      customHealth: 500
-      customSpeed: 0.8
-      customAttackDmg: 40
 --- !u!1 &7476770315985315485
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,24 +932,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 3
-  defaultExp: 100
+  defaultExp: 30
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
-  - wait: 0
+  - wait: 1
     enemySpawns:
     - wait: 1
       enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
         type: 3}
-      numberEnemy: 5
+      numberEnemy: 1
       boosType: 0
-      rate: 1
+      rate: 0
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
     - wait: 1
       enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
-      numberEnemy: 5
+      numberEnemy: 1
       boosType: 0
       rate: 1
       customHealth: 0
@@ -1005,52 +1005,43 @@ MonoBehaviour:
   - wait: 0
     enemySpawns:
     - wait: 0
-      enemy: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
-        type: 3}
-      numberEnemy: 6
-      boosType: 0
-      rate: 2
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-    - wait: 5
-      enemy: {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2,
-        type: 3}
-      numberEnemy: 12
-      boosType: 0
-      rate: 0.5
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-    - wait: 5
       enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
         type: 3}
-      numberEnemy: 15
+      numberEnemy: 6
       boosType: 0
       rate: 1
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
     - wait: 0
-      enemy: {fileID: 3924842065213229019, guid: e9c59e2fd78df8346a4f538953463f51,
+      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
-      numberEnemy: 2
+      numberEnemy: 5
       boosType: 0
-      rate: 0
+      rate: 0.5
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
   - wait: 0
     enemySpawns:
     - wait: 0
-      enemy: {fileID: 7750709616934011868, guid: 867afff3257836d4083e111950f04e86,
+      enemy: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
         type: 3}
       numberEnemy: 1
       boosType: 2
       rate: 0
-      customHealth: 5000
-      customSpeed: 0.7
+      customHealth: 1000
+      customSpeed: 0.8
       customAttackDmg: 60
+    - wait: 1
+      enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
+        type: 3}
+      numberEnemy: 5
+      boosType: 0
+      rate: 0
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
 --- !u!1 &7476770316178594205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,31 +1086,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 9
-  defaultExp: 300
+  defaultExp: 70
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
   - wait: 0
     enemySpawns:
     - wait: 0
-      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
-        type: 3}
-      numberEnemy: 6
-      boosType: 0
-      rate: 0.5
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-    - wait: 0
       enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
         type: 3}
-      numberEnemy: 12
+      numberEnemy: 10
       boosType: 0
-      rate: 0.5
+      rate: 1
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
     - wait: 2
-      enemy: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
+      enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
         type: 3}
       numberEnemy: 5
       boosType: 0
@@ -1127,12 +1109,12 @@ MonoBehaviour:
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
-    - wait: 1
-      enemy: {fileID: 5848783413869001439, guid: 47a3389ea7fcd80408b82752901fef1c,
+    - wait: 0
+      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
-      numberEnemy: 1
+      numberEnemy: 5
       boosType: 0
-      rate: 1
+      rate: 0
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
@@ -1180,7 +1162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 4
-  defaultExp: 100
+  defaultExp: 50
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
   - wait: 0
@@ -1188,7 +1170,7 @@ MonoBehaviour:
     - wait: 0
       enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
         type: 3}
-      numberEnemy: 8
+      numberEnemy: 3
       boosType: 0
       rate: 1
       customHealth: 0
@@ -1197,18 +1179,9 @@ MonoBehaviour:
     - wait: 1
       enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
-      numberEnemy: 5
+      numberEnemy: 2
       boosType: 0
       rate: 1
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-    - wait: 1
-      enemy: {fileID: 6095283598343155490, guid: 1d22479a8a9a454499d8b5f1c77eea2d,
-        type: 3}
-      numberEnemy: 1
-      boosType: 0
-      rate: 0
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
@@ -1256,15 +1229,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
-  defaultExp: 50
+  defaultExp: 5
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
-  - wait: 3
+  - wait: 1
     enemySpawns:
     - wait: 0
       enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
         type: 3}
-      numberEnemy: 5
+      numberEnemy: 1
       boosType: 0
       rate: 3
       customHealth: 0
@@ -1314,26 +1287,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 2
-  defaultExp: 50
+  defaultExp: 25
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
-  - wait: 0
+  - wait: 1
     enemySpawns:
     - wait: 0
       enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
         type: 3}
-      numberEnemy: 6
-      boosType: 0
-      rate: 3
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-    - wait: 3
-      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
-        type: 3}
       numberEnemy: 1
       boosType: 0
-      rate: 1
+      rate: 3
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
@@ -1381,33 +1345,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 7
-  defaultExp: 200
+  defaultExp: 70
   backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
   Waves:
   - wait: 0
     enemySpawns:
     - wait: 0
-      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
+      enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
         type: 3}
       numberEnemy: 10
       boosType: 0
-      rate: 2
+      rate: 1
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
-    - wait: 3
-      enemy: {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2,
+    - wait: 2
+      enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
-      numberEnemy: 12
+      numberEnemy: 3
       boosType: 0
-      rate: 0.5
+      rate: 0
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
     - wait: 1
-      enemy: {fileID: 3924842065213229019, guid: e9c59e2fd78df8346a4f538953463f51,
+      enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
         type: 3}
-      numberEnemy: 2
+      numberEnemy: 3
       boosType: 0
       rate: 1
       customHealth: 0
