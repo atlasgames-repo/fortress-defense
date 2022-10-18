@@ -126,7 +126,7 @@ public class MenuManager : MonoBehaviour, IListener
 
         yield return new WaitForSeconds(1.5f);
         FailUI.SetActive(true);
-        if (LifeTTRSource.Life <= 0)
+        if (LifeTTRSource.Life <= 1)
             FailUI.transform.GetChild(1).GetChild(1).GetComponent<Button>().interactable = false;
 
 
@@ -136,7 +136,7 @@ public class MenuManager : MonoBehaviour, IListener
             APIManager.instance.lifeTTR.addLifeTTR(LifeTTRSource.Life);
             LifeTTRSource.Life -= 1;
         }
-        else
+        if (LifeTTRSource.Life <= 0)
         {
             // reset the level reached to the first of world
             GlobalValue.LevelPass = GlobalValue.WorldPass * 10 - 10;

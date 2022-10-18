@@ -182,7 +182,7 @@ public class LifeTTR
         foreach (var item in ItemToRemove)
         {
             LifeTTRSource.Remove(item.Key);
-            if (LifeTTRSource.Life < 5)
+            if (LifeTTRSource.Life < 6)
                 LifeTTRSource.Life += 1;
         }
         if (ItemToRemove.Length > 0)
@@ -234,7 +234,7 @@ public class LifeTTRSource : MonoBehaviour
     }
     public static int Life
     {
-        get { return PlayerPrefs.GetInt("life", 5); }
+        get { return PlayerPrefs.GetInt("life", 6); }
         set { PlayerPrefs.SetInt("life", value); }
     }
 

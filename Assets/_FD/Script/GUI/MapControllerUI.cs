@@ -40,6 +40,8 @@ public class MapControllerUI : MonoBehaviour
     void OnEnable()
     {
         SoundManager.PlayMusic(music);
+        Debug.LogError(LifeTTRSource.Life);
+        Debug.LogError(LifeTTRSource.Json);
         UpdateLifes();
 
     }
@@ -50,20 +52,20 @@ public class MapControllerUI : MonoBehaviour
             item.SetActive(false);
         }
         // show how much life a player have
-        for (int i = 0; i <= LifeTTRSource.Life; i++)
+        for (int i = 1; i <= LifeTTRSource.Life; i++)
         {
-            lifes[i].SetActive(true);
+            lifes[i - 1].SetActive(true);
         }
         if (APIManager.instance.lifeTTR.TTL() > 0)
         {
-            lifes[LifeTTRSource.Life + 1].SetActive(true);
+            lifes[LifeTTRSource.Life].SetActive(true);
         }
     }
     void Update()
     {
         if (APIManager.instance.lifeTTR.TTL() > 0)
         {
-            lifes[LifeTTRSource.Life + 1].GetComponent<Image>().fillAmount = 1 - APIManager.instance.lifeTTR.TTLPercent;
+            lifes[LifeTTRSource.Life].GetComponent<Image>().fillAmount = 1 - APIManager.instance.lifeTTR.TTLPercent;
             UpdateLifes();
         }
     }
