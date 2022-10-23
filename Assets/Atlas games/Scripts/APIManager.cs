@@ -135,6 +135,7 @@ public class APIManager : MonoBehaviour
 
         using (UnityWebRequest req = UnityWebRequest.Get(BASE_URL + route + parameters))
         {
+            Debug.LogError(BASE_URL + route + parameters);
             foreach (KeyValuePair<string, string> item in headers)
             {
                 req.SetRequestHeader(item.Key, item.Value);
