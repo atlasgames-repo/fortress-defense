@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,6 +13,7 @@ public class DownloadManager : MonoBehaviour
     public string CONNECTING, CHECKING_FOR_DOWNLOAD, DOWNLOADING;
     public Slider downloadSlider;
     public TextMeshProUGUI downloading;
+    [ReadOnly] public string pattern = @"/(.[a-zA-Z0-9]+.assetbundle)";
     private int itter = 0;
 
     async void Start()
@@ -26,12 +28,20 @@ public class DownloadManager : MonoBehaviour
             downloading.text = DOWNLOADING;
         });
         downloading.text = CHECKING_FOR_DOWNLOAD;
+        RegexOptions options = RegexOptions.Multiline;
+
         foreach (var item in assets.list)
         {
             itter++;
-            if (!File.Exists(APIManager.instance.GetFilePath(item)))
+            string file_path = "";
+            foreach (Match m in Regex.Matches(item, pattern, options))
             {
-                await APIManager.instance.DownloadUpdate(item, progress);
+                file_path = m.Groups[1].Value;
+            }
+            Debug.LogError(file_path);
+            if (!File.Exists(APIManager.instance.GetFilePath(file_path)))
+            {
+                await APIManager.instance.DownloadUpdate(file_path, item, progress);
             }
         }
         StartCoroutine(APIManager.instance.LoadAsynchronously());

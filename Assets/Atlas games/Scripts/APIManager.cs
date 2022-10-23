@@ -13,10 +13,12 @@ public class APIManager : MonoBehaviour
 {
     public static APIManager instance;
     public string BASE_URL = "https://hokm-url.herokuapp.com", assetbundle_dir = "DownloadedBundles";
+    [ReadOnly] private string API_KEY = "8eVhWlWOWXoAKqxBM5qUrXvvImOcZ4L6";
     public GameObject status;
     public float status_destroy;
     CancellationTokenSource tokenSource;
     [ReadOnly] public LifeTTR lifeTTR;
+
     public int lifeTTL = 30;
     void Awake()
     {
@@ -53,25 +55,35 @@ public class APIManager : MonoBehaviour
     public async Task<AssetBundleUpdateResponse> check_for_updates(string type = null)
     {
         string param = type != null ? $"?type={type}" : "";
-        return await get<AssetBundleUpdateResponse>($"/updates{param}");
+        Dictionary<string, string> header = new Dictionary<string, string>();
+        header.Add("x-api-key", API_KEY);
+        return await get<AssetBundleUpdateResponse>(route: $"/updates{param}", headers: header);
     }
 
-    public async Task DownloadUpdate(string name, IProgress<float> progress)
+    public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
-        await getAssetBundle(name, progress);
+        await getAssetBundle(name, address, progress);
     }
     public async Task<AuthenticationResponse> authenticate(Authentication auth)
     {
         Dictionary<string, string> header = new Dictionary<string, string>();
-        header.Add("token", auth.token);
-        AuthenticationResponse res = await post<AuthenticationResponse>("/user/authenticate", data: auth.ToJson, headers: header);
+        header.Add("x-api-key", API_KEY);
+        Debug.LogError(auth.ToParams);
+        AuthenticationResponse res = await get<AuthenticationResponse>(route: "/user/login", parameters: auth.ToParams, headers: header);
+        return res;
+    }
+    public async Task<UserResponse> check_token()
+    {
+        Dictionary<string, string> header = new Dictionary<string, string>();
+        header.Add("x-api-key", API_KEY);
+        UserResponse res = await get<UserResponse>(route: "/user/details", headers: header, auth_token: GlobalValue.token);
         return res;
     }
 
     #endregion
 
     #region Private API calls
-    private async Task getAssetBundle(string name, IProgress<float> progress, Dictionary<string, string> headers = null)
+    private async Task getAssetBundle(string name, string adress, IProgress<float> progress, Dictionary<string, string> headers = null)
     {
         if (headers == null)
         {
@@ -82,7 +94,7 @@ public class APIManager : MonoBehaviour
         // {
         //     throw new Exception(message: "file already downloaded");
         // }
-        using (UnityWebRequest req = UnityWebRequestAssetBundle.GetAssetBundle(BASE_URL + $"/static/{name}"))
+        using (UnityWebRequest req = UnityWebRequestAssetBundle.GetAssetBundle($"{adress}"))
         {
             foreach (KeyValuePair<string, string> item in headers)
             {
@@ -116,19 +128,18 @@ public class APIManager : MonoBehaviour
             }
         }
     }
-    private async Task<T> get<T>(string route, Dictionary<string, string> headers = null)
+    private async Task<T> get<T>(string route, string parameters = null, Dictionary<string, string> headers = null, string auth_token = "null")
     {
         if (headers == null)
-        {
             headers = new Dictionary<string, string>();
-        }
 
-        using (UnityWebRequest req = UnityWebRequest.Get(BASE_URL + route))
+        using (UnityWebRequest req = UnityWebRequest.Get(BASE_URL + route + parameters))
         {
             foreach (KeyValuePair<string, string> item in headers)
             {
                 req.SetRequestHeader(item.Key, item.Value);
             }
+            req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
             var opration = req.SendWebRequest();
 
             while (!opration.isDone)

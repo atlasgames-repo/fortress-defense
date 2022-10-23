@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using System;
+using System.Text.RegularExpressions;
+
 public class AssetBundleManager : MonoBehaviour
 {
     public AssetBundleGenerator[] bundles;
@@ -29,9 +31,10 @@ public class AssetBundleManager : MonoBehaviour
     public async Task LoadFromFile(int i)
     {
         var updates = await APIManager.instance.check_for_updates(type: bundles[i].name);
-        if (File.Exists(APIManager.instance.GetFilePath(updates.list[0])))
+        string file_name = address_to_name(updates.list[0]);
+        if (File.Exists(APIManager.instance.GetFilePath(file_name)))
         {
-            AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(APIManager.instance.GetFilePath(updates.list[0]));
+            AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(APIManager.instance.GetFilePath(file_name));
 
             while (!bundle.isDone)
             {
@@ -62,6 +65,17 @@ public class AssetBundleManager : MonoBehaviour
         {
             Application.Quit(); // TODO: Show an proper error and than exit the game
         }
+    }
+    public string address_to_name(string address)
+    {
+        string file_name = "";
+        RegexOptions options = RegexOptions.Multiline;
+        string pattern = @"/(.[a-zA-Z0-9]+.assetbundle)";
+        foreach (Match m in Regex.Matches(address, pattern, options))
+        {
+            file_name = m.Groups[1].Value;
+        }
+        return file_name;
     }
 
 }
