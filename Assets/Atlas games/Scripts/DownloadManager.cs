@@ -22,6 +22,8 @@ public class DownloadManager : MonoBehaviour
         itter = 0;
         await Task.Delay(100);
         var assets = await APIManager.instance.check_for_updates();
+        if (assets.list.Length <= 0)
+            Application.Quit();
         var progress = new Progress<float>(value =>
         {
             downloadSlider.value = (value + (float)itter) / (float)assets.list.Length;

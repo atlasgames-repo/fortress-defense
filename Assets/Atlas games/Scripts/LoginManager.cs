@@ -17,6 +17,10 @@ public class LoginManager : MonoBehaviour
         await Task.Delay(1);
         await auth_with_token();
     }
+    public void OpenSignUpLink()
+    {
+        Application.OpenURL("https://persiancatsclan.com/");
+    }
     async void submitListener()
     {
         await auth_with_userpass();

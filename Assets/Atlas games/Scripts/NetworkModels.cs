@@ -30,7 +30,7 @@ public class BaseModel
 [Serializable]
 public class AssetBundleUpdateResponse : BaseModel
 {
-    public string[] list;
+    public string[] list = new string[0];
 
 }
 
