@@ -21,7 +21,18 @@ public class DownloadManager : MonoBehaviour
         downloading.text = CONNECTING;
         itter = 0;
         await Task.Delay(100);
-        var assets = await APIManager.instance.check_for_updates();
+        AssetBundleUpdateResponse assets = null;
+        try
+        {
+            assets = await APIManager.instance.check_for_updates();
+        }
+        catch (System.Exception e)
+        {
+            APIManager.instance.RunStatus(e.Message);
+            GlobalValue.token = "";
+            await Task.Delay(3 * 1000);
+            APIManager.instance.LoadAsynchronously("Login");
+        }
         if (assets.list.Length <= 0)
             Application.Quit();
         var progress = new Progress<float>(value =>
@@ -40,7 +51,6 @@ public class DownloadManager : MonoBehaviour
             {
                 file_path = m.Groups[1].Value;
             }
-            Debug.LogError(file_path);
             if (!File.Exists(APIManager.instance.GetFilePath(file_path)))
             {
                 await APIManager.instance.DownloadUpdate(file_path, item, progress);

@@ -40,8 +40,6 @@ public class MapControllerUI : MonoBehaviour
     void OnEnable()
     {
         SoundManager.PlayMusic(music);
-        Debug.LogError(LifeTTRSource.Life);
-        Debug.LogError(LifeTTRSource.Json);
         UpdateLifes();
 
     }

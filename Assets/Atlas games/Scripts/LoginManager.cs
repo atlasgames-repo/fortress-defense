@@ -16,10 +16,11 @@ public class LoginManager : MonoBehaviour
         submit.onClick.AddListener(submitListener);
         await Task.Delay(1);
         await auth_with_token();
+        // StartCoroutine(LoadAsynchronously("Download"));
     }
     public void OpenSignUpLink()
     {
-        Application.OpenURL("https://persiancatsclan.com/");
+        Application.OpenURL("https://atlasgames.org/");
     }
     async void submitListener()
     {
@@ -27,7 +28,6 @@ public class LoginManager : MonoBehaviour
     }
     public async Task auth_with_token()
     {
-        Debug.LogError(GlobalValue.token);
         UserResponse auth_result = null;
         try
         {
@@ -40,13 +40,12 @@ public class LoginManager : MonoBehaviour
         if (auth_result != null)
         {
             GlobalValue.user = auth_result;
-            StartCoroutine(LoadAsynchronously("Download"));
+            StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
         }
     }
     public async Task auth_with_userpass()
     {
         submit.interactable = false;
-        Debug.LogError($"Username:{username.text}\nPassword:{password.text}");
         Authentication auth = new Authentication { username = username.text, password = password.text };
         AuthenticationResponse auth_result = null;
         try
@@ -61,19 +60,9 @@ public class LoginManager : MonoBehaviour
         if (auth_result != null)
         {
             GlobalValue.token = auth_result.token;
-            Debug.LogError(auth_result.ToJson);
             await auth_with_token();
         }
     }
-    IEnumerator LoadAsynchronously(string name)
-    {
-        yield return new WaitForSeconds(0.1f);
-        AsyncOperation operation = SceneManager.LoadSceneAsync(name);
-        while (!operation.isDone)
-        {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            yield return null;
-        }
-    }
+
 
 }

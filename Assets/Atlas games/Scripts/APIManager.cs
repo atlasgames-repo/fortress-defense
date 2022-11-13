@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public class APIManager : MonoBehaviour
 {
     public static APIManager instance;
     public string BASE_URL = "https://hokm-url.herokuapp.com", assetbundle_dir = "DownloadedBundles";
-    [ReadOnly] private string API_KEY = "8eVhWlWOWXoAKqxBM5qUrXvvImOcZ4L6";
+    public bool IS_DEBUG = true;
+    public string DEBUG_BASE_URL = "http://localhost:8080";
     public GameObject status;
     public float status_destroy;
     CancellationTokenSource tokenSource;
     [ReadOnly] public LifeTTR lifeTTR;
+
+    private string pattern = @"{.*}";
 
     public int lifeTTL = 30;
     void Awake()
@@ -27,10 +31,21 @@ public class APIManager : MonoBehaviour
         lifeTTR.Inintilize();
         tokenSource = new CancellationTokenSource();
         DontDestroyOnLoad(gameObject);
+        UnityWebRequest.ClearCookieCache();
 
     }
+    public IEnumerator LoadAsynchronously(string name)
+    {
+        yield return new WaitForSeconds(0.01f);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(name);
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            yield return null;
+        }
+    }
     // Start is called before the first frame update
-    void RunStatus(string message)
+    public void RunStatus(string message)
     {
         Transform root = GameObject.FindGameObjectWithTag("Canves").transform;
         GameObject obj = Instantiate(status, root, false);
@@ -55,9 +70,7 @@ public class APIManager : MonoBehaviour
     public async Task<AssetBundleUpdateResponse> check_for_updates(string type = null)
     {
         string param = type != null ? $"?type={type}" : "";
-        Dictionary<string, string> header = new Dictionary<string, string>();
-        header.Add("x-api-key", API_KEY);
-        return await get<AssetBundleUpdateResponse>(route: $"/updates{param}", headers: header);
+        return await get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: GlobalValue.token);
     }
 
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
@@ -66,17 +79,12 @@ public class APIManager : MonoBehaviour
     }
     public async Task<AuthenticationResponse> authenticate(Authentication auth)
     {
-        Dictionary<string, string> header = new Dictionary<string, string>();
-        header.Add("x-api-key", API_KEY);
-        Debug.LogError(auth.ToParams);
-        AuthenticationResponse res = await get<AuthenticationResponse>(route: "/user/login", parameters: auth.ToParams, headers: header);
+        AuthenticationResponse res = await get<AuthenticationResponse>(route: "/user/login", parameters: auth.ToParams);
         return res;
     }
     public async Task<UserResponse> check_token()
     {
-        Dictionary<string, string> header = new Dictionary<string, string>();
-        header.Add("x-api-key", API_KEY);
-        UserResponse res = await get<UserResponse>(route: "/user/details", headers: header, auth_token: GlobalValue.token);
+        UserResponse res = await get<UserResponse>(route: "/user/details", auth_token: GlobalValue.token);
         return res;
     }
 
@@ -132,10 +140,10 @@ public class APIManager : MonoBehaviour
     {
         if (headers == null)
             headers = new Dictionary<string, string>();
-
-        using (UnityWebRequest req = UnityWebRequest.Get(BASE_URL + route + parameters))
+        if (auth_token == "")
+            auth_token = "null";
+        using (UnityWebRequest req = UnityWebRequest.Get(base_url + route + parameters))
         {
-            Debug.LogError(BASE_URL + route + parameters);
             foreach (KeyValuePair<string, string> item in headers)
             {
                 req.SetRequestHeader(item.Key, item.Value);
@@ -147,7 +155,6 @@ public class APIManager : MonoBehaviour
             {
                 await Task.Yield();
             }
-
             if (req.responseCode != 200)
             {
                 RunStatus(req.error);
@@ -158,10 +165,11 @@ public class APIManager : MonoBehaviour
                 T res;
                 try
                 {
-                    res = JsonUtility.FromJson<T>(req.downloadHandler.text);
+                    res = JsonUtility.FromJson<T>(clean_json(req.downloadHandler.text));
                 }
-                catch (System.Exception)
+                catch (System.Exception e)
                 {
+                    RunStatus(e.Message);
                     throw;
                 }
                 if (tokenSource.IsCancellationRequested)
@@ -179,7 +187,7 @@ public class APIManager : MonoBehaviour
             headers = new Dictionary<string, string>();
         }
 
-        using (UnityWebRequest req = UnityWebRequest.Post(uri: BASE_URL + route, postData: data))
+        using (UnityWebRequest req = UnityWebRequest.Post(uri: base_url + route, postData: data))
         {
             foreach (KeyValuePair<string, string> item in headers)
             {
@@ -201,7 +209,7 @@ public class APIManager : MonoBehaviour
                 T res;
                 try
                 {
-                    res = JsonUtility.FromJson<T>(req.downloadHandler.text);
+                    res = JsonUtility.FromJson<T>(clean_json(req.downloadHandler.text));
                 }
                 catch (System.Exception)
                 {
@@ -234,4 +242,20 @@ public class APIManager : MonoBehaviour
         }
         return SavePath;
     }
+    public string base_url
+    {
+        get { return (IS_DEBUG ? DEBUG_BASE_URL : BASE_URL); }
+    }
+    private string clean_json(string data)
+    {
+        RegexOptions options = RegexOptions.Multiline;
+        string value = "{}";
+        foreach (Match m in Regex.Matches(data, pattern, options))
+        {
+            value = m.Value;
+        }
+
+        return value;
+    }
 }
+
