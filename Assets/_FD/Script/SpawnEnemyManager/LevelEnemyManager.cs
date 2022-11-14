@@ -95,6 +95,8 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
                         {
                             bossManeger.enemy = _temp.GetComponent<Enemy>();
+                            if (enemySpawn.BossScale > 1)
+                                bossManeger.enemy.gameObject.transform.localScale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
                             bossManeger.bossType = enemySpawn.boosType;
                             bossManeger.gameObject.SetActive(true);
                         }
