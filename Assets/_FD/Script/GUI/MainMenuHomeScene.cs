@@ -8,6 +8,9 @@ public class MainMenuHomeScene : MonoBehaviour
     public static MainMenuHomeScene Instance;
     public GameObject MapUI;
     public GameObject ShopUI;
+    public GameObject TrophyUI;
+    public GameObject EventUI;
+
     public GameObject Loading;
     public GameObject Settings;
     public string facebookLink;
@@ -143,6 +146,16 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         SoundManager.Click();
         ShopUI.SetActive(open);
+    }
+    public void OpenTrophy(bool open)
+    {
+        SoundManager.Click();
+        TrophyUI.SetActive(open);
+    }
+    public void OpenEvent(bool open)
+    {
+        SoundManager.Click();
+        EventUI.SetActive(open);
     }
 
     public void Tutorial()
