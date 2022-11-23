@@ -9,18 +9,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-public class GameManager: MonoBehaviour {
-	public static GameManager Instance{ get; private set;}
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance { get; private set; }
     public bool isWatchingAd { get; set; }
 
 
-    public enum GameState{Menu,Playing, GameOver, Success, Pause};
-	public GameState State{ get; set; }
-    
+    public enum GameState { Menu, Playing, GameOver, Success, Pause };
+    public GameState State { get; set; }
+
     [ReadOnly] public int levelStarGot;
     public LayerMask layerGround, layerEnemy, layerPlayer;
     [HideInInspector]
-	public List<IListener> listeners;
+    public List<IListener> listeners;
 
     //add listener called by late actived object
     public void AddListener(IListener _listener)
@@ -37,7 +38,7 @@ public class GameManager: MonoBehaviour {
 
     #region EXP
     [ReadOnly] public int currentExp = 9999;
-    
+
     public void AddExp(int _amount, Transform instigator)
     {
         currentExp += _amount;
@@ -45,19 +46,21 @@ public class GameManager: MonoBehaviour {
     }
 
     #endregion
-    void Awake(){
-		Instance = this;
-		State = GameState.Menu;
-		listeners = new List<IListener> ();
+    void Awake()
+    {
+        Instance = this;
+        State = GameState.Menu;
+        listeners = new List<IListener>();
 
         //if (testLevel)
         //    Debug.LogError("TESTING LEVEL");
         //else
         //Instantiate(gameLevels[GlobalValue.levelPlaying - 1], Vector2.zero, Quaternion.identity);
-	}
+    }
 
-	IEnumerator Start(){
-		yield return new WaitForEndOfFrame ();
+    IEnumerator Start()
+    {
+        yield return new WaitForEndOfFrame();
 
         //menuManager = FindObjectOfType<MenuManager> ();
 
@@ -75,7 +78,7 @@ public class GameManager: MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
-        if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
         {
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -93,42 +96,48 @@ public class GameManager: MonoBehaviour {
             SceneManager.LoadScene(0);
         }
     }
-    
+
     //called by MenuManager
-    public void StartGame(){
-		State = GameState.Playing;
+    public void StartGame()
+    {
+        State = GameState.Playing;
 
-		//Get all objects that have IListener
+        //Get all objects that have IListener
 
-		var listener_ = FindObjectsOfType<MonoBehaviour>().OfType<IListener>();
-		foreach (var _listener in listener_) {
-			listeners.Add (_listener);
-		}
+        var listener_ = FindObjectsOfType<MonoBehaviour>().OfType<IListener>();
+        foreach (var _listener in listener_)
+        {
+            listeners.Add(_listener);
+        }
 
-		foreach (var item in listeners) {
-			item.IPlay ();
-		}
-	}
+        foreach (var item in listeners)
+        {
+            item.IPlay();
+        }
+    }
 
-	public void Gamepause(){
-		State = GameState.Pause;
-		foreach (var item in listeners)
-			item.IPause ();
-	}
+    public void Gamepause()
+    {
+        State = GameState.Pause;
+        foreach (var item in listeners)
+            item.IPause();
+    }
 
-	public void UnPause(){
-		State = GameState.Playing;
-		foreach (var item in listeners)
-			item.IUnPause ();
-	}
+    public void UnPause()
+    {
+        State = GameState.Playing;
+        foreach (var item in listeners)
+            item.IUnPause();
+    }
 
-	public void Victory(){
+    public void Victory()
+    {
         //Debug.LogError("Victory");
 
         if (State == GameState.Success)
             return;
 
-        
+
 
         Time.timeScale = 1;
         SoundManager.Instance.PauseMusic(true);
@@ -139,15 +148,11 @@ public class GameManager: MonoBehaviour {
 
         foreach (var item in listeners)
         {
-            if (item != null) 
+            if (item != null)
                 item.ISuccess();
         }
-        
-        //save level and save star
-        if (GlobalValue.levelPlaying > GlobalValue.LevelPass)
-            GlobalValue.LevelPass = GlobalValue.levelPlaying;
-            GlobalValue.WorldPass = (int)(GlobalValue.LevelPass/10)+1;
-            Debug.LogError(GlobalValue.WorldPass);
+
+
 
         //if (point >= levelmanager.instance.point3stars)
         //    globalvalue.levelstar(scenemanager.getactivescene().name, 3);
@@ -155,14 +160,32 @@ public class GameManager: MonoBehaviour {
         //    globalvalue.levelstar(scenemanager.getactivescene().name, 2);
         //else
         //    globalvalue.LevelStar(SceneManager.GetActiveScene().name, 1);
-        if (State == GameState.Success)
-            GlobalValue.LevelStar(GlobalValue.levelPlaying, levelStarGot);
+
+        // Victory stuff for events and missions
+        switch (GlobalValue.levelType)
+        {
+            case Level.LeveType.MISSION:
+                //save level and save star
+                if (GlobalValue.levelPlaying > GlobalValue.LevelPass)
+                    GlobalValue.LevelPass = GlobalValue.levelPlaying;
+                GlobalValue.WorldPass = (int)(GlobalValue.LevelPass / 10) + 1;
+                Debug.LogError(GlobalValue.WorldPass);
+                GlobalValue.LevelStar(GlobalValue.levelPlaying, levelStarGot);
+                break;
+            case Level.LeveType.EVENT:
+                _Event.CompleteLevel();
+                GlobalValue.SavedCoins += _Event.getCurrentEvent.price;
+                break;
+            default:
+                break;
+        }
+
     }
-   
+
     private void OnDisable()
     {
-        
-        
+
+
     }
 
     //IEnumerator GameFinishCo()
@@ -192,25 +215,26 @@ public class GameManager: MonoBehaviour {
         //    GlobalValue.LevelPass = GlobalValue.levelPlaying;
     }
 
-    public void GameOver(){
-       
+    public void GameOver()
+    {
+
 
         Time.timeScale = 1;
         SoundManager.Instance.PauseMusic(true);
         //Debug.LogError("GameOver");
         if (State == GameState.GameOver)
             return;
-		
-		State = GameState.GameOver;
+
+        State = GameState.GameOver;
 
         if (AdsManager.Instance)
             AdsManager.Instance.ShowNormalAd(GameState.GameOver);
 
         //Debug.LogError("CALL");
         foreach (var item in listeners)
-			item.IGameOver ();
+            item.IGameOver();
 
-	}
+    }
 
     [HideInInspector]
     public List<GameObject> enemyAlives;

@@ -102,6 +102,7 @@ public class MenuManager : MonoBehaviour, IListener
         UI.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         VictotyUI.SetActive(true);
+
     }
 
 

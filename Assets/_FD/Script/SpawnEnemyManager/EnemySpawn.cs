@@ -21,6 +21,6 @@ public class EnemySpawn
     public isBoss boosType = isBoss.NONE;
     public enum isBoss { NONE, MINIBOSS, BOSS }; //is the enemy boos or not
     [Tooltip("0: no custom")]
-    [Range(0, 2)]
+    [Range(1, 4)]
     public float BossScale = 1;
 }
