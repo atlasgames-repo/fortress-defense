@@ -43,16 +43,17 @@ public class TrophyManager : MonoBehaviour
         Trophy.self.Trophies.TryGetValue(key, out trophy);
         if (trophy != null)
         {
-            obj.transform.GetChild(0).GetComponent<Image>().sprite = trophy.image;
+            obj.transform.GetChild(1).GetComponent<Image>().sprite = trophy.image;
             if (trophy.is_achived)
             {
-                obj.transform.GetChild(0).GetComponent<Image>().color = Enable;
+                obj.transform.GetChild(1).GetComponent<Image>().color = Enable;
             }
             else
             {
-                obj.transform.GetChild(0).GetComponent<Image>().color = Disable;
+                obj.transform.GetChild(1).GetComponent<Image>().color = Disable;
             }
-            obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = trophy.name;
+            obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = trophy.name;
+            obj.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = trophy.details;
         }
     }
 }

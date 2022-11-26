@@ -40,6 +40,11 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("lastDayShowNativeAd2", value); }
     }
 
+    public static int KillCount
+    {
+        get { return PlayerPrefs.GetInt("killcount", 0); }
+        set { PlayerPrefs.SetInt("killcount", value); }
+    }
     public static int lastDayShowNativeAd3
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd3", 0); }

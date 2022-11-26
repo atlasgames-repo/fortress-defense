@@ -480,6 +480,66 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1381291580894641846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8485712226827870367}
+  - component: {fileID: 8708368365468921350}
+  m_Layer: 5
+  m_Name: Achivements
+  m_TagString: Achivement
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8485712226827870367
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381291580894641846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8742136853618234704}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8708368365468921350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381291580894641846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 20
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_StartCorner: 0
+  m_StartAxis: 1
+  m_CellSize: {x: 570, y: 130}
+  m_Spacing: {x: 30, y: 15}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &2169562295766418816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,6 +1184,76 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &3030887830067209159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4995216544985141555}
+  - component: {fileID: 5263100729954096517}
+  m_Layer: 5
+  m_Name: Trophy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4995216544985141555
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3030887830067209159}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8742136853618234704}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5263100729954096517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3030887830067209159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c12c174fc98d2438936ca033ae3328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Trophies:
+  - name: First step
+    _id: 1
+    image: {fileID: 21300000, guid: 88e3001632334644da1b5943ee6c55e0, type: 3}
+    details: Passed the first level
+    Statement: {fileID: 11500000, guid: c4167112d87c0ca4c9b5571c36b119fe, type: 3}
+    is_achived: 0
+    is_served: 0
+  - name: First world
+    _id: 2
+    image: {fileID: 21300000, guid: 1edf9a085d2b93f4f933ac35940e38ed, type: 3}
+    details: Passed the first world
+    Statement: {fileID: 0}
+    is_achived: 0
+    is_served: 0
+  - name: First kill
+    _id: 3
+    image: {fileID: 21300000, guid: e7d492affaa168b418ec61b9c43d5fb4, type: 3}
+    details: Get the first kill
+    Statement: {fileID: 0}
+    is_achived: 0
+    is_served: 0
 --- !u!1 &3926072011411041856
 GameObject:
   m_ObjectHideFlags: 0
@@ -4863,75 +4993,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &6242850783618285107
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3874835973608326303}
-  - component: {fileID: 7983895317250607871}
-  m_Layer: 5
-  m_Name: Trophy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &3874835973608326303
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6242850783618285107}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8742136853618234704}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0019531, y: -778}
-  m_SizeDelta: {x: 174.428, y: 174.428}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7983895317250607871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6242850783618285107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8c12c174fc98d2438936ca033ae3328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Trophies:
-  - name: Big guy
-    _id: 1
-    image: {fileID: 21300000, guid: 3467ac296b35b864ca943aab0befc413, type: 3}
-    is_achived: 0
-  - name: The eye
-    _id: 2
-    image: {fileID: 21300000, guid: 6f8cc81efc7dd6243bc3b65a8f3a85a9, type: 3}
-    is_achived: 0
-  - name: The giant
-    _id: 3
-    image: {fileID: 21300000, guid: 85adeee7c2c2eb54f8434775c5ead006, type: 3}
-    is_achived: 0
-  - name: Old man
-    _id: 4
-    image: {fileID: 21300000, guid: 59efc72ab21edff4d97f809aecf960c8, type: 3}
-    is_achived: 0
-  - name: Rhino
-    _id: 5
-    image: {fileID: 21300000, guid: 2ceb6dfa0a1fcc94f82a62583255215a, type: 3}
-    is_achived: 0
 --- !u!1 &6359602519582935630
 GameObject:
   m_ObjectHideFlags: 0
@@ -7831,7 +7892,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8742136853618234704}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8174,8 +8235,9 @@ RectTransform:
   - {fileID: 3184012754894270380}
   - {fileID: 8742136855155906047}
   - {fileID: 7297575336064221492}
+  - {fileID: 8485712226827870367}
   - {fileID: 8742136853536148137}
-  - {fileID: 3874835973608326303}
+  - {fileID: 4995216544985141555}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
