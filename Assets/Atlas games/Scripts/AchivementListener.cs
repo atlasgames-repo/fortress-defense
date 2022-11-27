@@ -10,21 +10,12 @@ public class AchivementListener : MonoBehaviour
     {
         self = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         StartCoroutine(Listener());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     IEnumerator Listener()
     {
+        yield return new WaitForSeconds(5);
         while (true)
         {
             yield return new WaitForSeconds(1);

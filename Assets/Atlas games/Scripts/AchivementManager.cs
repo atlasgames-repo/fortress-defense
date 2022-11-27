@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class AchivementManager : MonoBehaviour
 {
+    public static AchivementManager self;
     public GameObject DialogBox;
     public float Destroy_delay;
-
+    void Awake()
+    {
+        self = this;
+    }
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         StartCoroutine(StartEnum());
     }
@@ -18,7 +22,7 @@ public class AchivementManager : MonoBehaviour
     // Update is called once per frame
     IEnumerator StartEnum()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         foreach (KeyValuePair<string, _Trophy> entety in Trophy.self.Trophies)
         {
             yield return new WaitForSeconds(0.1f);
