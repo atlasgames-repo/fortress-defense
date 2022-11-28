@@ -149,13 +149,33 @@ MonoBehaviour:
   - {fileID: 3558667912981391227}
   - {fileID: 1327776267969963442}
   EnemyWaves:
-  - wait: 1
+  - wait: 0
     enemySpawns:
-    - wait: 0
-      enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
+    - wait: 1
+      enemy: {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2,
         type: 3}
-      numberEnemy: 1
-      rate: 3
+      numberEnemy: 10
+      rate: 0.5
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1
+    - wait: 5
+      enemy: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
+        type: 3}
+      numberEnemy: 5
+      rate: 1
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1
+    - wait: 1
+      enemy: {fileID: 3505094654918231060, guid: 93b3a96647087d54085a68ddee065188,
+        type: 3}
+      numberEnemy: 5
+      rate: 1
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
