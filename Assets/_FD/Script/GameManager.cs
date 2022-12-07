@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     public void AddExp(int _amount, Transform instigator)
     {
         currentExp += _amount;
-        //FloatingTextManager.Instance.ShowText(_amount + "XP", new Vector2(0, 0.5f), Color.blue, instigator.position);
+        FloatingTextManager.Instance.ShowText(_amount + "XP", new Vector2(0, 0.5f), Color.blue, instigator.position);
     }
 
     #endregion
@@ -154,12 +154,11 @@ public class GameManager : MonoBehaviour
 
 
 
-        //if (point >= levelmanager.instance.point3stars)
-        //    globalvalue.levelstar(scenemanager.getactivescene().name, 3);
-        //else if (point >= levelmanager.instance.point2stars)
-        //    globalvalue.levelstar(scenemanager.getactivescene().name, 2);
-        //else
-        //    globalvalue.LevelStar(SceneManager.GetActiveScene().name, 1);
+        // Gold and xp conversion
+        // for now a 1 to 1 conversion
+        GlobalValue.SavedCoins += currentExp;
+        // TODO: Exp to gold convertion effects 
+
 
         // Victory stuff for events and missions
         switch (GlobalValue.levelType)

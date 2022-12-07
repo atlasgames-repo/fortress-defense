@@ -13,27 +13,17 @@ MonoBehaviour:
   m_Name: LevelGenerator
   m_EditorClassIdentifier: 
   levels:
-  - level: 3
-    defaultExp: 25
+  - level: 1
+    defaultExp: 0
     backgroundSprite: {fileID: 21300000, guid: 5be1e0fc71c022242992f95a2e6ef815, type: 3}
     Waves:
     - wait: 1
       enemySpawns:
-      - wait: 1
+      - wait: 0
         enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
           type: 3}
         numberEnemy: 1
-        rate: 0
-        customHealth: 0
-        customSpeed: 0
-        customAttackDmg: 0
-        boosType: 0
-        BossScale: 1
-      - wait: 1
-        enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
-          type: 3}
-        numberEnemy: 1
-        rate: 1
+        rate: 3
         customHealth: 0
         customSpeed: 0
         customAttackDmg: 0

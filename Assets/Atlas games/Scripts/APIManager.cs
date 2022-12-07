@@ -88,6 +88,13 @@ public class APIManager : MonoBehaviour
         return res;
     }
 
+    public async Task<Sprite> get_rofile_picture(string url)
+    {
+        Texture2D texture = await getTexture(url);
+        Rect rec = new Rect(0, 0, texture.width, texture.height);
+        return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
+    }
+
     #endregion
 
     #region Private API calls
@@ -225,7 +232,41 @@ public class APIManager : MonoBehaviour
         }
     }
     #endregion
+    private async Task<Texture2D> getTexture(string route)
+    {
+        using (UnityWebRequest req = UnityWebRequestTexture.GetTexture(uri: route))
+        {
+            var opration = req.SendWebRequest();
+            while (!opration.isDone)
+            {
+                await Task.Yield();
 
+            }
+            if (req.responseCode != 200)
+            {
+                RunStatus(req.error);
+                throw new System.Net.WebException(message: req.error);
+            }
+            else
+            {
+                Texture2D res;
+                try
+                {
+                    res = DownloadHandlerTexture.GetContent(req);
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
+                if (tokenSource.IsCancellationRequested)
+                {
+                    throw new System.Exception(message: "Task cancelled");
+                }
+                return res;
+
+            }
+        }
+    }
     public string GetFilePath(string name)
     {
 #if UNITY_EDITOR
