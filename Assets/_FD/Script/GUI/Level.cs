@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class Level : MonoBehaviour
 {
     public enum isBoss { NONE, MINIBOSS, BOSS }; //is the level has boos or not
-
+    public enum LeveType { MISSION, EVENT };
     public int world = 1;
     public int level = 1;
     public bool isUnlock = false;
@@ -29,8 +29,44 @@ public class Level : MonoBehaviour
     public bool loadSceneManual = false;
     public string loadSceneName = "story1";
 
-    // Use this for initialization
+    public LeveType levelType = LeveType.MISSION;
+    public Events _event;
     void Start()
+    {
+        switch (levelType)
+        {
+            case LeveType.MISSION:
+                StartMission();
+                break;
+            case LeveType.EVENT:
+                StartEvent();
+                break;
+            default:
+                break;
+        }
+    }
+    void StartEvent()
+    {
+        imgLock.SetActive(false);
+        imgOpen.SetActive(false);
+        imgPass.SetActive(false);
+        //check if this level is completed
+        Events evnt = _Event.getEvent(_event.level);
+        var openLevel = evnt == null ? true : !evnt.is_passed;
+        if (openLevel)
+        {
+            imgOpen.SetActive(false);
+        }
+        else
+        {
+            imgPass.SetActive(true);
+
+        }
+        GetComponent<Button>().interactable = openLevel;
+
+    }
+    // Use this for initialization
+    void StartMission()
     {
 
         //check if this level > allowing level then disable it
@@ -96,9 +132,16 @@ public class Level : MonoBehaviour
     public void Play()
     {
         GlobalValue.levelPlaying = level;
+        GlobalValue.levelType = levelType;
+        if (levelType == LeveType.EVENT)
+        {
+            _Event.Add(_event.level, _event);
+            _Event.CurrentEventPlaying = _event.level;
+        }
         SoundManager.Click();
 
-        MainMenuHomeScene.Instance.LoadScene();
+        if (LifeTTRSource.Life > 0)
+            MainMenuHomeScene.Instance.LoadScene();
 
     }
 
@@ -113,7 +156,15 @@ public class Level : MonoBehaviour
         //else
         //{
         GlobalValue.levelPlaying = level;
-        MainMenuHomeScene.Instance.LoadScene(_levelSceneName);
+        GlobalValue.levelType = levelType;
+        if (levelType == LeveType.EVENT)
+        {
+            _Event.Add(_event.level, _event);
+            _Event.CurrentEventPlaying = _event.level;
+        }
+        if (LifeTTRSource.Life > 0)
+            MainMenuHomeScene.Instance.LoadScene(_levelSceneName);
         //}
     }
 }
+

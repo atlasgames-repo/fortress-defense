@@ -359,6 +359,8 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         else
             SoundManager.PlaySfx(soundDie, soundDieVol);
 
+        GlobalValue.KillCount += 1;
+
     }
 
     private void CheckDamagePerFrame(float _damage)

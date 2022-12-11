@@ -87,7 +87,8 @@ public class GameMode : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.U))
         {
-            GlobalValue.LevelPass = 999;
+            GlobalValue.LevelPass = 16;
+            GlobalValue.WorldPass = 2;
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
 

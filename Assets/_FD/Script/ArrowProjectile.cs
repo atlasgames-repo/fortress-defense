@@ -78,8 +78,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         RaycastHit2D hit = Physics2D.Linecast(oldPos, transform.position, LayerCollision);
         if (hit)
         {
-            Hit(hit);
-            isHit = true;
+            isHit = Hit(hit);
         }
 
         oldPos = transform.position;
@@ -112,10 +111,18 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
     }
 
-    void Hit(RaycastHit2D other)
+    bool Hit(RaycastHit2D other)
     {
+        Player_Archer target = null;
+        if (Owner)
+            target = (Player_Archer)Owner.GetComponent(typeof(Player_Archer));
+        bool trg = target != null ? target.is_manual_enable : false;
+        int trgID = target != null ? target.manual_targeted_enemy.GetInstanceID() : 0;
+        if (target != null && target.is_manual_enable && target.manual_targeted_enemy.gameObject.GetInstanceID() != other.collider.gameObject.GetInstanceID())
+        {
+            return false;
+        }
         transform.position = other.point + (Vector2)(transform.position - transform.Find("head").position);
-
         var takeDamage = (ICanTakeDamage)other.collider.gameObject.GetComponent(typeof(ICanTakeDamage));
         if (takeDamage != null)
         {
@@ -127,6 +134,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         else
             OnCollideOther(other.collider);
         //}
+        return true;
     }
 
     IEnumerator DestroyProjectile(float delay = 0)

@@ -351,7 +351,7 @@ MonoBehaviour:
   numberArrow: 0
   shootRate: 1.5
   force: 25
-  aimOffset: {x: 0.1, y: 0.1}
+  aimOffset: {x: 0, y: 0}
   iconIce: {fileID: 2554269302728083863}
   iconPoison: {fileID: 30945755872305218}
   iconDoubleArrow: {fileID: 6217879827067633661}
@@ -372,6 +372,8 @@ MonoBehaviour:
   onlyShootTargetInFront: 1
   arrow: {fileID: 8701037159925218743, guid: 3d1828eff8ccd364f8cd8b686cf5b392, type: 3}
   criticalRate: 0.1
+  criticalRateTemp: 0.1
+  criticalMultiplier: 1.2
   firePostion: {fileID: 8347042775575853172}
   soundShootVolume: 0.5
   soundShoot:
@@ -675,12 +677,12 @@ PrefabInstance:
     - target: {fileID: 2543715691591615574, guid: efacf387578783643b6811e1103ffd36,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.529
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2543715691591615574, guid: efacf387578783643b6811e1103ffd36,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.119
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 2543715691591615574, guid: efacf387578783643b6811e1103ffd36,
         type: 3}

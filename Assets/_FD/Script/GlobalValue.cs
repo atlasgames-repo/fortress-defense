@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GlobalValue : MonoBehaviour
 {
     public static bool isFirstOpenMainMenu = true;
     public static int worldPlaying = 1;
     public static int levelPlaying = 1;
+    public static Level.LeveType levelType = Level.LeveType.MISSION;
     //public static int finishGameAtLevel = 50;
 
     public static string WorldReached = "WorldReached";
     public static bool isSound = true;
     public static bool isMusic = true;
 
-    public static UserResponse user;
 
+    public static UserResponse user
+    {
+        get { return JsonUtility.FromJson<UserResponse>(PlayerPrefs.GetString("user", "{}")); }
+        set { PlayerPrefs.SetString("user", JsonUtility.ToJson(value)); }
+    }
     public static bool isNewGame
     {
         get { return PlayerPrefs.GetInt("isNewGame", 0) == 0; }
@@ -28,7 +32,7 @@ public class GlobalValue : MonoBehaviour
     public static string token
     {
         get { return PlayerPrefs.GetString("token", null); }
-        set { PlayerPrefs.GetString("token", value); }
+        set { PlayerPrefs.SetString("token", value); }
     }
     public static int lastDayShowNativeAd2
     {
@@ -36,6 +40,11 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("lastDayShowNativeAd2", value); }
     }
 
+    public static int KillCount
+    {
+        get { return PlayerPrefs.GetInt("killcount", 0); }
+        set { PlayerPrefs.SetInt("killcount", value); }
+    }
     public static int lastDayShowNativeAd3
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd3", 0); }
@@ -52,6 +61,11 @@ public class GlobalValue : MonoBehaviour
     {
         get { return PlayerPrefs.GetInt("LevelReached", 0); }
         set { PlayerPrefs.SetInt("LevelReached", value); }
+    }
+    public static int WorldPass
+    {
+        get { return PlayerPrefs.GetInt("WorldReached", 1); }
+        set { PlayerPrefs.SetInt("WorldReached", value); }
     }
 
     public static void LevelStar(int level, int stars)
@@ -107,3 +121,5 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetFloat("StrongWallExtra", value); }
     }
 }
+
+
