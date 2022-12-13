@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
-    public enum isBoss { NONE, MINIBOSS, BOSS }; //is the level has boos or not
+    public enum IsBoss { NONE, MINIBOSS, BOSS }; //is the level has boos or not
     public enum LeveType { MISSION, EVENT };
     public int world = 1;
     public int level = 1;
@@ -24,7 +24,7 @@ public class Level : MonoBehaviour
     public GameObject bossGroup;
     public GameObject miniBoss;
     public GameObject boss;
-    public isBoss is_boss = isBoss.NONE;
+    public IsBoss is_boss = IsBoss.NONE;
 
     public bool loadSceneManual = false;
     public string loadSceneName = "story1";
@@ -51,7 +51,7 @@ public class Level : MonoBehaviour
         imgOpen.SetActive(false);
         imgPass.SetActive(false);
         //check if this level is completed
-        Events evnt = _Event.getEvent(_event.level);
+        Events evnt = _Event.GetEvent(_event.level);
         var openLevel = evnt == null ? true : !evnt.is_passed;
         if (openLevel)
         {
@@ -109,15 +109,15 @@ public class Level : MonoBehaviour
         else
             imgLock.SetActive(true);
 
-        if (is_boss != isBoss.NONE)
+        if (is_boss != IsBoss.NONE)
         {
             bossGroup.SetActive(true);
             switch (is_boss)
             {
-                case isBoss.MINIBOSS:
+                case IsBoss.MINIBOSS:
                     miniBoss.SetActive(true);
                     break;
-                case isBoss.BOSS:
+                case IsBoss.BOSS:
                     boss.SetActive(true);
                     break;
                 default:

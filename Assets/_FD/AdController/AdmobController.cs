@@ -151,13 +151,13 @@ public class AdmobController : MonoBehaviour
 
     public void HandleOnAdOpening(object sender, EventArgs args)
     {
-        GameManager.Instance.isWatchingAd = true;
+        GameManager.Instance.IsWatchingAd = true;
     }
 
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
         LoadInterstitial();
-        GameManager.Instance.isWatchingAd = false;
+        GameManager.Instance.IsWatchingAd = false;
     }
 
 

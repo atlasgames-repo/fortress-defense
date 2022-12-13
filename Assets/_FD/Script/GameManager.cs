@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public bool isWatchingAd { get; set; }
+    public bool IsWatchingAd { get; set; }
 
 
     public enum GameState { Menu, Playing, GameOver, Success, Pause };
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region EXP
-    [ReadOnly] public int currentExp = 9999;
+    [ReadOnly] public int currentExp = 200;
 
     public void AddExp(int _amount, Transform instigator)
     {
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 
         // Gold and xp conversion
         // for now a 1 to 1 conversion
-        GlobalValue.SavedCoins += currentExp;
+        //GlobalValue.SavedCoins += currentExp;
         // TODO: Exp to gold convertion effects 
 
 
@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
                 break;
             case Level.LeveType.EVENT:
                 _Event.CompleteLevel();
-                GlobalValue.SavedCoins += _Event.getCurrentEvent.price;
+                GlobalValue.SavedCoins += _Event.GetCurrentEvent.price;
                 break;
             default:
                 break;

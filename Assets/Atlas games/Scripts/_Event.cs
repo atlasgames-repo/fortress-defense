@@ -7,24 +7,22 @@ public class _Event : MonoBehaviour
 {
     public static int CurrentEventPlaying = 0;
 
-    public static Events getCurrentEvent
+    public static Events GetCurrentEvent
     {
         get
         {
             
             var dict = _eventPrefs;
-            Events events = null;
-            bool is_event = dict.TryGetValue(CurrentEventPlaying, out events);
+            bool is_event = dict.TryGetValue(CurrentEventPlaying, out Events events);
             if (is_event)
                 return events;
             return null;
         }
     }
-    public static Events getEvent(int key)
+    public static Events GetEvent(int key)
     {
         var dict = _eventPrefs;
-        Events events = null;
-        bool is_event = dict.TryGetValue(key, out events);
+        bool is_event = dict.TryGetValue(key, out Events events);
         if (is_event)
             return events;
         return null;
@@ -47,8 +45,7 @@ public class _Event : MonoBehaviour
     public static void CompleteLevel()
     {
         var dict = _eventPrefs;
-        Events events = null;
-        bool is_event = dict.TryGetValue(CurrentEventPlaying, out events);
+        bool is_event = dict.TryGetValue(CurrentEventPlaying, out Events events);
         if (is_event)
             events.is_passed = true;
         if (events != null)
