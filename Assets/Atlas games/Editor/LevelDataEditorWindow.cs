@@ -15,13 +15,13 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
     LevelWave Level;
     Vector2 scrollPos;
     static LevelDataEditorWindow window;
-    string AtlasScenePath = "Assets/Atlas games/Scene/Playing atlas.unity";
+    string AtlasScenePath = "Assets/GeneratedLevels/Playing atlas Test.unity";
 
     public static void Open(LevelData level)
     {
         window = GetWindow<LevelDataEditorWindow>("Level editor");
         window.serializedObject = new SerializedObject(level);
-
+        window.maxSize = new Vector2(500, 600);
     }
     private void OnGUI()
     {
@@ -31,7 +31,7 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
         DrawProperties(serializedProperty, true);
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndScrollView();
-        EditorGUILayout.LabelField("Edits and saves");
+        EditorGUILayout.LabelField("\n\n\n\t\t\t\t Edits and saves \n\n\n");
         EditorGUILayout.BeginHorizontal("box");
         Level = (LevelWave)EditorGUILayout.ObjectField(Level, typeof(LevelWave), true);
         if (GUILayout.Button("Load level data"))
@@ -84,10 +84,10 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
             var obj = GameObject.FindGameObjectWithTag("EditorLEM");
             if (!obj)
             {
-                bool res = EditorUtility.DisplayDialog("Playing Status", "Open 'Playing atlas' scene first!", "Ok", "Exit");
+                bool res = EditorUtility.DisplayDialog("Playing Status", "Open 'Playing atlas test' scene first!", "Ok", "Exit");
                 if (res)
                 {
-                    UnityEditor.SceneManagement.EditorSceneManager.OpenScene(AtlasScenePath);
+                    EditorSceneManager.OpenScene(AtlasScenePath);
                     return;
                 }
                 else

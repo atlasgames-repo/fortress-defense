@@ -115,10 +115,19 @@ public class ExtendedEditorWindow : EditorWindow
     protected void RunTestScene(LevelEnemyManager LEM)
     {
         Apply();
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        SpriteRenderer background = GameObject.FindGameObjectWithTag("BackGroundLEM").GetComponent<SpriteRenderer>();
         LevelData obj = serializedObject.targetObject as LevelData;
+
         LEM.EnemyWaves = obj.levels[0].Waves;
+        gameManager.currentExp = obj.levels[0].defaultExp;
+        background.sprite = obj.levels[0].backgroundSprite;
         PrefabUtility.RecordPrefabInstancePropertyModifications(LEM.gameObject);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(gameManager.gameObject);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(background.gameObject);
         PrefabUtility.ApplyPrefabInstance(LEM.gameObject, InteractionMode.AutomatedAction);
+        PrefabUtility.ApplyPrefabInstance(gameManager.gameObject, InteractionMode.AutomatedAction);
+        PrefabUtility.ApplyPrefabInstance(background.gameObject, InteractionMode.AutomatedAction);
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
     }
 

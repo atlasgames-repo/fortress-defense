@@ -71,6 +71,9 @@ public class GameManager : MonoBehaviour
         if (GameLevelSetup.Instance)
             currentExp = GameLevelSetup.Instance.GetCurrentLevelExp();
 
+
+
+
     }
 
     void Update()
