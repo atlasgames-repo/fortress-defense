@@ -22,6 +22,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
     [Header("Manul options")]
     public bool is_targeted;
+
+
     [Header("New")]
 
     bool allowCheckAttack = true;
@@ -188,6 +190,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                     {
                         rangeAttack.Action();
                         AnimSetTrigger("shoot");
+                        SetSkeletonAnimation(ANIMATION_STATE.ATTACK, true);
                         DetectPlayer();
                     }
                     else if (!rangeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
@@ -205,6 +208,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                         SetEnemyState(ENEMYSTATE.ATTACK);
                         meleeAttack.Action();
                         AnimSetTrigger("melee");
+                        SetSkeletonAnimation(ANIMATION_STATE.ATTACK, true);
                     }
                     else if (!meleeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
                     {
@@ -222,6 +226,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                     {
                         throwAttack.Action();
                         AnimSetTrigger("throw");
+                        SetSkeletonAnimation(ANIMATION_STATE.ATTACK, true);
                     }
                     else if (!throwAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
                     {
@@ -296,7 +301,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             spawnItem.Spawn();
 
         AnimSetBool("isDead", true);
-
+        SetSkeletonAnimation(ANIMATION_STATE.DEAD);
         if (enemyEffect == ENEMYEFFECT.BURNING)
             return;
 

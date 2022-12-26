@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Spine.Unity;
 public enum ATTACKTYPE
 {
     RANGE,
@@ -10,7 +10,13 @@ public enum ATTACKTYPE
     //CALLMINION,
     NONE
 }
-
+public static class ANIMATION_STATE
+{
+    public static readonly string DEAD = "Dead";
+    public static readonly string ATTACK = "Attack";
+    public static readonly string IDLE = "Idle";
+    public static readonly string WALK = "Walk";
+}
 public enum ENEMYSTATE
 {
     SPAWNING,
@@ -149,10 +155,15 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     protected HealthBarEnemyNew healthBar;
     protected Animator anim;
+
     protected float moveSpeed;
     [ReadOnlyAttribute] public CheckTargetHelper checkTarget;
     [ReadOnly] public bool isPlayerDetected;
     [HideInInspector] public float delayChasePlayerWhenDetect = 1;
+
+    [Header("Spine options")]
+    public bool is_spine;
+    public SkeletonAnimation skeletonAnimation;
 
     public bool isFacingRight()
     {
@@ -182,6 +193,8 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         healthBar.Init(transform, (Vector3)healthBarOffset);
 
         anim = GetComponent<Animator>();
+        if (is_spine)
+            transform.GetChild(0).TryGetComponent(out skeletonAnimation);
         checkTarget = GetComponent<CheckTargetHelper>();
 
         switch (startBehavior)
@@ -191,6 +204,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
                 SetEnemyState(ENEMYSTATE.SPAWNING);
                 AnimSetTrigger("spawn");
+
                 Invoke("FinishSpawning", spawnDelay);
                 break;
             case STARTBEHAVIOR.NONE:
@@ -204,6 +218,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
                 break;
 
         }
+        SetSkeletonAnimation(ANIMATION_STATE.WALK, true);
 
     }
 
@@ -211,6 +226,12 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     {
         if (enemyState == ENEMYSTATE.SPAWNING && isPlaying)
             SetEnemyState(ENEMYSTATE.WALK);
+    }
+
+    public void SetSkeletonAnimation(string name, bool looped = false, int trackIndex = 0)
+    {
+        if (is_spine && skeletonAnimation != null)
+            skeletonAnimation.AnimationState.SetAnimation(trackIndex, name, looped);
     }
 
     public void AnimSetTrigger(string name)
@@ -442,7 +463,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     IEnumerator UnFreezeCo(float time)
     {
         AnimSetBool("isFreezing", true);
-
+        SetSkeletonAnimation(ANIMATION_STATE.IDLE, true);
         if (enemyEffect != ENEMYEFFECT.FREEZE)
             yield break;
 
@@ -457,6 +478,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
         enemyEffect = ENEMYEFFECT.NONE;
         AnimSetBool("isFreezing", false);
+        SetSkeletonAnimation(ANIMATION_STATE.WALK, true);
     }
 
     #endregion
@@ -483,6 +505,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     IEnumerator UnLightingCo(float time)
     {
         AnimSetBool("isLighting", true);
+        SetSkeletonAnimation(ANIMATION_STATE.IDLE, true);
 
         if (enemyEffect != ENEMYEFFECT.FREEZE)
             yield break;
@@ -498,6 +521,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
         enemyEffect = ENEMYEFFECT.NONE;
         AnimSetBool("isLighting", false);
+        SetSkeletonAnimation(ANIMATION_STATE.WALK, true);
     }
 
     #endregion
