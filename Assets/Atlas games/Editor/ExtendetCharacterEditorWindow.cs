@@ -78,7 +78,8 @@ public class ExtendetCharacterEditorWindow : EditorWindow
                 break;
         }
         obj.enemyName = enemy.name;
-
+        obj.expMin = player.GetComponent<GiveExpWhenDie>().expMin;
+        obj.expMax = player.GetComponent<GiveExpWhenDie>().expMax;
         obj.smartEnemyGrounded.attackType = player.attackType;
         obj.smartEnemyGrounded.gravity = player.gravity;
         obj.smartEnemyGrounded.health = player.health;
@@ -137,7 +138,8 @@ public class ExtendetCharacterEditorWindow : EditorWindow
         }
 
         enemy.name = obj.enemyName;
-
+        player.GetComponent<GiveExpWhenDie>().expMin = obj.expMin;
+        player.GetComponent<GiveExpWhenDie>().expMax = obj.expMax;
         player.attackType = obj.smartEnemyGrounded.attackType;
         player.gravity = obj.smartEnemyGrounded.gravity;
         player.health = obj.smartEnemyGrounded.health;

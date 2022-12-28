@@ -20,8 +20,6 @@ public class CharacterDataEditorWindow : ExtendetCharacterEditorWindow
     {
         window = GetWindow<CharacterDataEditorWindow>("Level editor");
         window.serializedObject = new SerializedObject(level);
-        window.maxSize = new Vector2(500, 600);
-        // window.minSize = new Vector2(500, 600);
     }
     private void OnGUI()
     {
@@ -34,24 +32,24 @@ public class CharacterDataEditorWindow : ExtendetCharacterEditorWindow
         switch (serializedProperty.enumValueIndex)
         {
             case 1:
-                serializedProperty = serializedObject.FindProperty("enemyMeleeAttack");
-                DrawProperties(serializedProperty, true);
+                DrawProperties(serializedObject.FindProperty("enemyMeleeAttack"), true);
                 break;
             case 2:
-                serializedProperty = serializedObject.FindProperty("enemyThrowAttack");
-                DrawProperties(serializedProperty, true);
+                DrawProperties(serializedObject.FindProperty("enemyThrowAttack"), true);
                 break;
             case 0:
-                serializedProperty = serializedObject.FindProperty("enemyRangeAttack");
-                DrawProperties(serializedProperty, true);
+                DrawProperties(serializedObject.FindProperty("enemyRangeAttack"), true);
                 break;
             default:
                 break;
         }
+
         EditorGUILayout.EndVertical();
 
         serializedProperty = serializedObject.FindProperty("smartEnemyGrounded");
         DrawProperties(serializedProperty, true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("expMin"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("expMax"));
         EditorGUILayout.EndScrollView();
         EditorGUILayout.LabelField("\n\n\n\t\t\t\t Edits and saves \n\n\n");
         EditorGUILayout.BeginHorizontal("box");

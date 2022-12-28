@@ -12,6 +12,7 @@ public class CharacterData : ScriptableObject
     public EnemyMeleeAttackProp enemyMeleeAttack;
     public EnemyRangeAttackProp enemyRangeAttack;
     public EnemyThrowAttackProp enemyThrowAttack;
+    public int expMin, expMax;
 }
 [System.Serializable]
 public class SmartEnemyGroundedProp

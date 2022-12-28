@@ -21,7 +21,6 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
     {
         window = GetWindow<LevelDataEditorWindow>("Level editor");
         window.serializedObject = new SerializedObject(level);
-        window.maxSize = new Vector2(500, 600);
     }
     private void OnGUI()
     {
@@ -32,6 +31,20 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndScrollView();
         EditorGUILayout.LabelField("\n\n\n\t\t\t\t Edits and saves \n\n\n");
+        LevelData levelData = serializedObject.targetObject as LevelData;
+        int ExpMin = 0, ExpMax = 0;
+        foreach (EnemyWave waves in levelData.levels[0].Waves)
+        {
+            foreach (EnemySpawn spawn in waves.enemySpawns)
+            {
+                int expMin = spawn.enemy.GetComponent<GiveExpWhenDie>().expMin;
+                int expMax = spawn.enemy.GetComponent<GiveExpWhenDie>().expMax;
+                ExpMin += expMin;
+                ExpMax += expMax;
+            }
+        }
+        EditorGUILayout.LabelField($"Total Exp: {(int)ExpMin}-{(int)ExpMax}");
+
         EditorGUILayout.BeginHorizontal("box");
         Level = (LevelWave)EditorGUILayout.ObjectField(Level, typeof(LevelWave), true);
         if (GUILayout.Button("Load level data"))
