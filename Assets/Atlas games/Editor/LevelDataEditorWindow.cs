@@ -37,6 +37,7 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
         {
             foreach (EnemySpawn spawn in waves.enemySpawns)
             {
+                if (spawn.enemy == null) continue;
                 int expMin = spawn.enemy.GetComponent<GiveExpWhenDie>().expMin;
                 int expMax = spawn.enemy.GetComponent<GiveExpWhenDie>().expMax;
                 ExpMin += expMin;
