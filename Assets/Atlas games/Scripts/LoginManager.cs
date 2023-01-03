@@ -8,12 +8,15 @@ using TMPro;
 public class LoginManager : MonoBehaviour
 {
     public TMP_InputField username, password;
-    public Button submit;
+    public Button submit, showPassword;
+    public Toggle rememberMe;
+    public Sprite On, Off;
     public GameObject login;
     // Start is called before the first frame update
     async void Start()
     {
         submit.onClick.AddListener(submitListener);
+        showPassword.onClick.AddListener(showPasswordListener);
         await Task.Delay(1);
         await auth_with_token();
         // StartCoroutine(LoadAsynchronously("Download"));
@@ -21,6 +24,20 @@ public class LoginManager : MonoBehaviour
     public void OpenSignUpLink()
     {
         Application.OpenURL("https://atlasgames.org/");
+    }
+    void showPasswordListener()
+    {
+        if (password.contentType == TMP_InputField.ContentType.Standard)
+        {
+            password.contentType = TMP_InputField.ContentType.Password;
+            showPassword.image.sprite = On;
+        }
+        else
+        {
+            password.contentType = TMP_InputField.ContentType.Standard;
+            showPassword.image.sprite = Off;
+        }
+        password.ForceLabelUpdate();
     }
     async void submitListener()
     {
@@ -59,8 +76,13 @@ public class LoginManager : MonoBehaviour
         submit.interactable = true;
         if (auth_result != null)
         {
-            GlobalValue.token = auth_result.token;
-            await auth_with_token();
+            if (!rememberMe.isOn)
+                StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
+            else
+            {
+                GlobalValue.token = auth_result.token;
+                await auth_with_token();
+            }
         }
     }
 
