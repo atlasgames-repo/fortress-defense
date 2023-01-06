@@ -23,4 +23,6 @@ public class EnemySpawn
     [Tooltip("0: no custom")]
     [Range(1, 4)]
     public float BossScale = 1;
+    public int BossMinExp = 10;
+    public int BossMaxExp = 20;
 }

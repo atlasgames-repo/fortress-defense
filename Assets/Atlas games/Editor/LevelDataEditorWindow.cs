@@ -40,6 +40,11 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
                 if (spawn.enemy == null) continue;
                 int expMin = spawn.enemy.GetComponent<GiveExpWhenDie>().expMin;
                 int expMax = spawn.enemy.GetComponent<GiveExpWhenDie>().expMax;
+                if (spawn.boosType != EnemySpawn.isBoss.NONE)
+                {
+                    expMin = spawn.BossMinExp;
+                    expMax = spawn.BossMaxExp;
+                }
                 ExpMin += expMin;
                 ExpMax += expMax;
             }

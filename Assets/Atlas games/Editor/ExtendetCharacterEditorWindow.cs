@@ -87,7 +87,10 @@ public class ExtendetCharacterEditorWindow : EditorWindow
         obj.smartEnemyGrounded.startBehavior = player.startBehavior;
         obj.smartEnemyGrounded.useGravity = player.useGravity;
         obj.smartEnemyGrounded.walkSpeed = player.walkSpeed;
-
+        obj.smartEnemyGrounded.weakness = player.weakness;
+        obj.smartEnemyGrounded.strength = player.strength;
+        obj.smartEnemyGrounded.weaknessMultiplier = player.weaknessMultiplier;
+        obj.smartEnemyGrounded.strengthMultiplier = player.strengthMultiplier;
 
         obj.attakType = player.attackType;
 
@@ -147,8 +150,10 @@ public class ExtendetCharacterEditorWindow : EditorWindow
         player.startBehavior = obj.smartEnemyGrounded.startBehavior;
         player.useGravity = obj.smartEnemyGrounded.useGravity;
         player.walkSpeed = obj.smartEnemyGrounded.walkSpeed;
-
-
+        player.weakness = obj.smartEnemyGrounded.weakness;
+        player.strength = obj.smartEnemyGrounded.strength;
+        player.weaknessMultiplier = obj.smartEnemyGrounded.weaknessMultiplier;
+        player.strengthMultiplier = obj.smartEnemyGrounded.strengthMultiplier;
 
         player.attackType = obj.attakType;
         Apply();

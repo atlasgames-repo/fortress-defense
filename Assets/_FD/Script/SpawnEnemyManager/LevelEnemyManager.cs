@@ -98,6 +98,8 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                             if (enemySpawn.BossScale > 1)
                                 bossManeger.enemy.gameObject.transform.localScale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
                             bossManeger.bossType = enemySpawn.boosType;
+                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin = enemySpawn.BossMinExp;
+                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax = enemySpawn.BossMaxExp;
                             bossManeger.gameObject.SetActive(true);
                         }
                     }

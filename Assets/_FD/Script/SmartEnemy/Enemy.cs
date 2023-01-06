@@ -106,6 +106,14 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     protected ENEMYEFFECT enemyEffect;
     [Space]
 
+    [Header("WEAKNESS AND STRENGTH")]
+    [Range(1, 10)]
+    public float weaknessMultiplier = 1f;
+    [Range(0, 1)]
+    public float strengthMultiplier = 1f;
+    public WEAPON_EFFECT weakness = WEAPON_EFFECT.NONE;
+    public WEAPON_EFFECT strength = WEAPON_EFFECT.NONE;
+
     [Header("Freeze Option")]
     [HideInInspector] public bool canBeFreeze = true;
     //public float timeFreeze = 5;
@@ -262,7 +270,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     public virtual void Update()
     {
 
-        //Debug.LogError(enemyState);
+        //Debug.LogError(enemyEffect);
         if (enemyEffect == ENEMYEFFECT.BURNING)
             CheckDamagePerFrame(damageBurningPerFrame);
 
@@ -388,7 +396,6 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     {
         if (enemyState == ENEMYSTATE.DEATH)
             return;
-
         currentHealth -= (int)_damage;
         if (healthBar)
             healthBar.UpdateValue(currentHealth / (float)health);
@@ -466,8 +473,8 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         SetSkeletonAnimation(ANIMATION_STATE.IDLE, true);
         if (enemyEffect != ENEMYEFFECT.FREEZE)
             yield break;
-
-        yield return new WaitForSeconds(time);
+        float _time = weakness == WEAPON_EFFECT.FREEZE ? time * weaknessMultiplier : strength == WEAPON_EFFECT.FREEZE ? time * strengthMultiplier : time;
+        yield return new WaitForSeconds(_time);
         UnFreeze();
     }
 
@@ -619,8 +626,14 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         {
             yield return new WaitForSeconds(1);
             //Debug.LogError(damagePoisonPerSecond);
-            int _damage = (int)(damagePoisonPerSecond * Random.Range(90 - resistPoisonPercent, 100f - resistPoisonPercent) * 0.01f);
-            currentHealth -= _damage;
+            float _damage = damagePoisonPerSecond * Random.Range(90 - resistPoisonPercent, 100f - resistPoisonPercent) * 0.01f;
+            // POISON is active
+            if (weakness == WEAPON_EFFECT.POISON)
+                _damage *= weaknessMultiplier;
+            if (strength == WEAPON_EFFECT.POISON)
+                _damage *= strengthMultiplier;
+
+            currentHealth -= (int)_damage;
             if (healthBar)
                 healthBar.UpdateValue(currentHealth / (float)health);
 
@@ -736,9 +749,13 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         _damage = damage;
         hitPos = hitPoint;
         bool isExplosion = false;
-
-        currentHealth -= (int)damage;
-        FloatingTextManager.Instance.ShowText("" + (int)damage, healthBarOffset, Color.red, transform.position);
+        WEAPON_EFFECT effect = weaponEffect != null ? forceEffect != WEAPON_EFFECT.NONE ? forceEffect : weaponEffect.effectType : WEAPON_EFFECT.NONE;
+        if (effect == weakness)
+            _damage *= weaknessMultiplier;
+        if (effect == strength)
+            _damage *= strengthMultiplier;
+        currentHealth -= (int)_damage;
+        FloatingTextManager.Instance.ShowText("" + (int)_damage, healthBarOffset, Color.red, transform.position);
 
         //if (_bodyPart == BODYPART.HEAD)
         //    FloatingTextManager.Instance.ShowText("HEAD SHOT", healthBarOffset, Color.black, transform.position, 24);

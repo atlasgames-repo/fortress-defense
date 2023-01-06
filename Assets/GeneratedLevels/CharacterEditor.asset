@@ -12,24 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f3fcf54867e524aabbeb4290896422, type: 3}
   m_Name: CharacterEditor
   m_EditorClassIdentifier: 
-  enemyName: '[ Enemy ] 12 Viking Chief'
+  enemyName: '[Enemy] Test Enemy'
   smartEnemyGrounded:
     useGravity: 0
-    gravity: 35
-    walkSpeed: 1
+    gravity: 50
+    walkSpeed: 1.5
     attackType: 1
     startBehavior: 3
     spawnDelay: 1
-    health: 250
+    health: 40
+    weaknessMultiplier: 10
+    strengthMultiplier: 0.113
+    weakness: 3
+    strength: 2
   attakType: 1
   enemyMeleeAttack:
     targetLayer:
       serializedVersion: 2
       m_Bits: 256
-    radiusCheck: 0.6
+    radiusCheck: 1
     dealDamage: 20
     criticalPercent: 10
-    meleeRate: 3
+    meleeRate: 1.5
   enemyRangeAttack:
     aimTarget: 0
     aimTargetOffset: {x: 0, y: 0.5}
@@ -47,3 +51,5 @@ MonoBehaviour:
     damage: 30
     radiusDetectPlayer: 5
     onlyAttackTheFortrest: 1
+  expMin: 5
+  expMax: 8

@@ -12,6 +12,7 @@ public class CharacterData : ScriptableObject
     public EnemyMeleeAttackProp enemyMeleeAttack;
     public EnemyRangeAttackProp enemyRangeAttack;
     public EnemyThrowAttackProp enemyThrowAttack;
+    [Space]
     public int expMin, expMax;
 }
 [System.Serializable]
@@ -28,6 +29,13 @@ public class SmartEnemyGroundedProp
     [Header("HEALTH")]
     [Range(0, 5000)]
     public int health = 100;
+    [Header("WEAKNESS AND STRENGTH")]
+    [Range(1, 10)]
+    public float weaknessMultiplier = 1f;
+    [Range(0, 1)]
+    public float strengthMultiplier = 1f;
+    public WEAPON_EFFECT weakness = WEAPON_EFFECT.NONE;
+    public WEAPON_EFFECT strength = WEAPON_EFFECT.NONE;
 }
 [System.Serializable]
 public class EnemyMeleeAttackProp
