@@ -70,7 +70,7 @@ public class APIManager : MonoBehaviour
     public async Task<AssetBundleUpdateResponse> check_for_updates(string type = null)
     {
         string param = type != null ? $"?type={type}" : "";
-        return await get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: GlobalValue.token);
+        return await get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: User.Token);
     }
 
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
@@ -84,8 +84,16 @@ public class APIManager : MonoBehaviour
     }
     public async Task<UserResponse> check_token()
     {
-        UserResponse res = await get<UserResponse>(route: "/user/details", auth_token: GlobalValue.token);
+        UserResponse res = await get<UserResponse>(route: "/user/details", auth_token: User.Token);
         return res;
+    }
+
+    public async Task<UserResponse> UpdateUser(UserUpdate userdata)
+    {
+        return await post<UserResponse>(
+        route: "/user/update",
+        data: userdata.ToJson,
+        headers: new Dictionary<string, string> { { "Authorization", $"Bearer {User.Token}" } });
     }
 
     public async Task<Sprite> get_rofile_picture(string url)

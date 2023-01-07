@@ -15,24 +15,13 @@ public class ProfileManager : MonoBehaviour
 
     public void logout()
     {
-        GlobalValue.token = "";
+        User.Token = "";
         APIManager.instance.LoadAsynchronously("Login");
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //fetchData(GlobalValue.user);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void fetchData()
     {
-        fetchData(GlobalValue.user);
+        fetchData(User.UserProfile);
     }
     public async void fetchData(UserResponse user)
     {

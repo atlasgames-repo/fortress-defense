@@ -29,7 +29,7 @@ public class DownloadManager : MonoBehaviour
         catch (System.Exception e)
         {
             APIManager.instance.RunStatus(e.Message);
-            GlobalValue.token = "";
+            User.Token = "";
             await Task.Delay(3 * 1000);
             APIManager.instance.LoadAsynchronously("Login");
         }

@@ -13,11 +13,6 @@ public class GlobalValue : MonoBehaviour
     public static bool isMusic = true;
 
 
-    public static UserResponse user
-    {
-        get { return JsonUtility.FromJson<UserResponse>(PlayerPrefs.GetString("user", "{}")); }
-        set { PlayerPrefs.SetString("user", JsonUtility.ToJson(value)); }
-    }
     public static bool isNewGame
     {
         get { return PlayerPrefs.GetInt("isNewGame", 0) == 0; }
@@ -28,11 +23,6 @@ public class GlobalValue : MonoBehaviour
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd1", 0); }
         set { PlayerPrefs.SetInt("lastDayShowNativeAd1", value); }
-    }
-    public static string token
-    {
-        get { return PlayerPrefs.GetString("token", null); }
-        set { PlayerPrefs.SetString("token", value); }
     }
     public static int lastDayShowNativeAd2
     {

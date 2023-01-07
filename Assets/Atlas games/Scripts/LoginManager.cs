@@ -56,7 +56,7 @@ public class LoginManager : MonoBehaviour
         }
         if (auth_result != null)
         {
-            GlobalValue.user = auth_result;
+            User.UserProfile = auth_result;
             StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
         }
     }
@@ -80,7 +80,7 @@ public class LoginManager : MonoBehaviour
                 StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
             else
             {
-                GlobalValue.token = auth_result.token;
+                User.Token = auth_result.token;
                 await auth_with_token();
             }
         }

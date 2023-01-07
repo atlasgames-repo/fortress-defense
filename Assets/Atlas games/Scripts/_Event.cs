@@ -11,7 +11,7 @@ public class _Event : MonoBehaviour
     {
         get
         {
-            
+
             var dict = _eventPrefs;
             bool is_event = dict.TryGetValue(CurrentEventPlaying, out Events events);
             if (is_event)
