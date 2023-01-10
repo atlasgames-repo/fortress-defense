@@ -9,7 +9,7 @@ public class MainMenuHomeScene : MonoBehaviour
     public GameObject MapUI;
     public GameObject ShopUI;
     public GameObject TrophyUI;
-    public GameObject EventUI;
+    public GameObject EventUI, CoinShopUI;
 
     public GameObject Loading;
     public GameObject Settings;
@@ -156,6 +156,11 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         SoundManager.Click();
         EventUI.SetActive(open);
+    }
+    public void OpenCoinShop(bool open)
+    {
+        SoundManager.Click();
+        CoinShopUI.SetActive(open);
     }
 
     public void Tutorial()

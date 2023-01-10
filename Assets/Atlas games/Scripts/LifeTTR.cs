@@ -16,11 +16,13 @@ public class LifeTTR
     {
         coroutine = Tickes();
         minutes = 30;
+        LifeTTRSource.max_life = 10;
     }
-    public LifeTTR(int _minutes)
+    public LifeTTR(int _minutes = 30, int _maxLife = 10)
     {
         coroutine = Tickes();
         minutes = _minutes;
+        LifeTTRSource.max_life = _maxLife;
     }
     public void Inintilize()
     {
@@ -69,7 +71,7 @@ public class LifeTTR
         foreach (var item in ItemToRemove)
         {
             LifeTTRSource.Remove(item.Key);
-            if (LifeTTRSource.Life < 6)
+            if (LifeTTRSource.Life < LifeTTRSource.max_life)
                 LifeTTRSource.Life += 1;
         }
         if (ItemToRemove.Length > 0)
@@ -92,6 +94,7 @@ public class LifeTTR
 
 public class LifeTTRSource : MonoBehaviour
 {
+    public static int max_life = 10;
     public static void Add(int key, DateTime value)
     {
         var dict = LifeTTRv2;
@@ -127,7 +130,7 @@ public class LifeTTRSource : MonoBehaviour
     }
     public static int Life
     {
-        get { return PlayerPrefs.GetInt("life", 6); }
+        get { return PlayerPrefs.GetInt("life", max_life); }
         set { PlayerPrefs.SetInt("life", value); }
     }
 

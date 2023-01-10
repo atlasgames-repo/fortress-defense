@@ -24,10 +24,11 @@ public class APIManager : MonoBehaviour
     private string pattern = @"{.*}";
 
     public int lifeTTL = 30;
+    public int maxLife = 5;
     void Awake()
     {
         instance = this;
-        lifeTTR = new LifeTTR(lifeTTL);
+        lifeTTR = new LifeTTR(lifeTTL, maxLife);
         lifeTTR.Inintilize();
         tokenSource = new CancellationTokenSource();
         DontDestroyOnLoad(gameObject);

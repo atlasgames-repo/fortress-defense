@@ -13,6 +13,8 @@ public class MapControllerUI : MonoBehaviour
     public Text worldTxt;
     int currentPos = 0;
     public AudioClip music;
+    public GameObject life_prefab;
+    public Transform life_parent;
     public GameObject[] lifes;
     // Use this for initialization
     void Start()
@@ -36,10 +38,24 @@ public class MapControllerUI : MonoBehaviour
     //    Dots[currentPos].color = Color.yellow;
     //    Dots[currentPos].rectTransform.sizeDelta = new Vector2(38, 38);
     //}
+    void createLifes()
+    {
+        foreach (Transform obj in life_parent)
+        {
+            Destroy(obj.gameObject);
+        }
+        lifes = new GameObject[LifeTTRSource.max_life];
+        for (int i = 0; i < lifes.Length; i++)
+        {
+            GameObject obj = Instantiate(life_prefab, life_parent, false);
+            lifes[i] = obj;
+        }
 
+    }
     void OnEnable()
     {
         SoundManager.PlayMusic(music);
+        createLifes();
         UpdateLifes();
 
     }
