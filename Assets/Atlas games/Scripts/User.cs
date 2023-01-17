@@ -40,9 +40,9 @@ public class User : MonoBehaviour
     {
         get
         {
-            int next_level = Level + 1;
-            int this_level_uxp = (int)Mathf.Pow(Level, 2f);
-            int next_level_uxp = (int)Mathf.Pow(next_level, 2);
+            float next_level = Level + 1f;
+            float this_level_uxp = Mathf.Pow(Level, 2f);
+            float next_level_uxp = Mathf.Pow(next_level, 2);
             return (UserProfile.uxp - this_level_uxp) / (next_level_uxp - this_level_uxp);
         }
     }

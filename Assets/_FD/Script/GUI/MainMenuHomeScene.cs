@@ -9,7 +9,7 @@ public class MainMenuHomeScene : MonoBehaviour
     public GameObject MapUI;
     public GameObject ShopUI;
     public GameObject TrophyUI;
-    public GameObject EventUI, CoinShopUI;
+    public GameObject EventUI, CoinShopUI, UpgradeUI;
 
     public GameObject Loading;
     public GameObject Settings;
@@ -114,6 +114,11 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         SoundManager.Click();
         Settings.SetActive(open);
+    }
+    public void OpenUpgradeUI(bool open)
+    {
+        SoundManager.Click();
+        UpgradeUI.SetActive(open);
     }
 
     #region Music and Sound
