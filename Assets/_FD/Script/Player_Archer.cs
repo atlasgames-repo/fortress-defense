@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(CheckTargetHelper))]
@@ -315,10 +316,12 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
                         if (is_manual_enable)
                         {
                             //Debug.LogError("MANUAL ARCHER ATTACK");
+                            // GlobalValue.Debug("Manual ARCHER ATTACK");
                             //Debug.LogError(obj.transform.GetComponent<Enemy>().attackType);
                             if (manual_targeted_enemy && GameObject.ReferenceEquals(manual_targeted_enemy, obj.transform.gameObject))
                             {
                                 target = obj.transform;
+                                // GlobalValue.Debug($"{target.name} is selected - Manual");
                                 obj.transform.GetComponent<SmartEnemyGrounded>().is_targeted = true;
                                 var hit = Physics2D.Raycast(transform.position, (obj.point - (Vector2)transform.position), 100, GameManager.Instance.layerEnemy);
                                 Debug.DrawRay(transform.position, (obj.point - (Vector2)transform.position) * 100, Color.red);
@@ -333,11 +336,13 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
                         }
                         else
                         {
+                            // GlobalValue.Debug("Auto ARCHER ATTACK");
                             if (Mathf.Abs(obj.transform.position.x - transform.position.x) < closestDistance)
                             {
                                 closestDistance = Mathf.Abs(obj.transform.position.x - transform.position.x);
 
                                 target = obj.transform;
+                                // GlobalValue.Debug($"{target.name} is selected - Automatic");
 
                                 var hit = Physics2D.Raycast(transform.position, (obj.point - (Vector2)transform.position), 100, GameManager.Instance.layerEnemy);
                                 Debug.DrawRay(transform.position, (obj.point - (Vector2)transform.position) * 100, Color.red);

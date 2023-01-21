@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System;
 public class GlobalValue : MonoBehaviour
 {
     public static bool isFirstOpenMainMenu = true;
@@ -12,7 +12,20 @@ public class GlobalValue : MonoBehaviour
     public static bool isSound = true;
     public static bool isMusic = true;
 
-
+    public static void Debug(object message)
+    {
+        var textobj = GameObject.FindGameObjectWithTag("DebugText");
+        if (textobj == null)
+        {
+            UnityEngine.Debug.LogError($"[{DateTime.Now}]: {message}\n");
+            return;
+        }
+        textobj.TryGetComponent(out UnityEngine.UI.Text text);
+        if (text != null)
+            text.text += $"[{DateTime.Now}]: {message}\n";
+        else
+            UnityEngine.Debug.LogError($"[{DateTime.Now}]: {message}\n");
+    }
     public static bool isNewGame
     {
         get { return PlayerPrefs.GetInt("isNewGame", 0) == 0; }

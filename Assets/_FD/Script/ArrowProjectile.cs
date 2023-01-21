@@ -76,6 +76,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
         //check hit target
         RaycastHit2D hit = Physics2D.Linecast(oldPos, transform.position, LayerCollision);
+
         if (hit)
         {
             isHit = Hit(hit);
@@ -113,17 +114,19 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
     bool Hit(RaycastHit2D other)
     {
-        Player_Archer target = null;
+        Player_Archer _owner = null;
         if (Owner)
-            target = (Player_Archer)Owner.GetComponent(typeof(Player_Archer));
-        bool trg = target != null ? target.is_manual_enable : false;
-        int trgID = target != null ? target.manual_targeted_enemy.GetInstanceID() : 0;
-        if (target != null && target.is_manual_enable && target.manual_targeted_enemy.gameObject.GetInstanceID() != other.collider.gameObject.GetInstanceID())
-        {
+            _owner = (Player_Archer)Owner.GetComponent(typeof(Player_Archer));
+
+        bool trg = _owner != null && _owner.is_manual_enable;
+        int trgID = trg ? _owner.manual_targeted_enemy.GetInstanceID() : 0;
+
+        if (_owner != null && trg && trgID != other.collider.gameObject.GetInstanceID())
             return false;
-        }
+
         transform.position = other.point + (Vector2)(transform.position - transform.Find("head").position);
         var takeDamage = (ICanTakeDamage)other.collider.gameObject.GetComponent(typeof(ICanTakeDamage));
+        GlobalValue.Debug($"Can take damage: {takeDamage}");
         if (takeDamage != null)
         {
             OnCollideTakeDamage(other.collider, takeDamage);
