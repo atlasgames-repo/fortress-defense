@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     //public ENEMYKIND enemyKind;
     public UpgradedCharacterParameter upgradedCharacterID;
     [HideInInspector] public ENEMYTYPE enemyType;
-
+    public bool is_boss = false;
     [Header("Setup")]
     public bool useGravity = false;
     [ReadOnly] public float gravity = 35f;
@@ -150,9 +150,11 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     [Range(0, 1)]
     public float soundDieBlowVol = 0.5f;
     public AudioClip[] soundDieBlow;
+    public AudioClip BossMusic;
     [Range(0, 1)]
     [HideInInspector] public float soundSpawnVol = 0.5f;
     [HideInInspector] public AudioClip[] soundSpawn;
+
 
     [ReadOnly] public int currentHealth;
     Vector2 hitPos;
@@ -387,6 +389,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         }
         else
             SoundManager.PlaySfx(soundDie, soundDieVol);
+
+        if (is_boss)
+            SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
 
         GlobalValue.KillCount += 1;
 

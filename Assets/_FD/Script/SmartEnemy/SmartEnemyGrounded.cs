@@ -310,7 +310,6 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             gameObject.SetActive(false);
             return;
         }
-
         StopAllCoroutines();
         StartCoroutine(DisableEnemy(AnimationHelper.getAnimationLength(anim, "Die") + 2f));
     }

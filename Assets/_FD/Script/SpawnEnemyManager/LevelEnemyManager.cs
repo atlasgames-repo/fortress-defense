@@ -101,6 +101,9 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                             bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin = enemySpawn.BossMinExp;
                             bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax = enemySpawn.BossMaxExp;
                             bossManeger.gameObject.SetActive(true);
+                            bossManeger.enemy.is_boss = true;
+                            AudioClip bossMusic = bossManeger.enemy.BossMusic != null ? bossManeger.enemy.BossMusic : SoundManager.Instance.BossMusicClip;
+                            SoundManager.PlayMusic(bossMusic, 0.5f);
                         }
                     }
 

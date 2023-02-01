@@ -126,7 +126,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
         transform.position = other.point + (Vector2)(transform.position - transform.Find("head").position);
         var takeDamage = (ICanTakeDamage)other.collider.gameObject.GetComponent(typeof(ICanTakeDamage));
-        GlobalValue.Debug($"Can take damage: {takeDamage}");
+        // GlobalValue.Debug($"Can take damage: {takeDamage}");
         if (takeDamage != null)
         {
             OnCollideTakeDamage(other.collider, takeDamage);

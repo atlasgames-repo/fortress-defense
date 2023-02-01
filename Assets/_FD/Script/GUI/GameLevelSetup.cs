@@ -58,16 +58,16 @@ public class GameLevelSetup : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (levelWaves.Count != transform.childCount)
-        {
-            var waves = transform.GetComponentsInChildren<LevelWave>();
-            levelWaves = new List<LevelWave>(waves);
+        // if (levelWaves.Count != transform.childCount)
+        // {
+        //     var waves = transform.GetComponentsInChildren<LevelWave>();
+        //     levelWaves = new List<LevelWave>(waves);
 
-            for (int i = 0; i < levelWaves.Count; i++)
-            {
-                levelWaves[i].level = i + 1;
-                levelWaves[i].gameObject.name = "Level " + levelWaves[i].level;
-            }
-        }
+        //     for (int i = 0; i < levelWaves.Count; i++)
+        //     {
+        //         levelWaves[i].level = i + 1;
+        //         levelWaves[i].gameObject.name = "Level " + levelWaves[i].level;
+        //     }
+        // }
     }
 }

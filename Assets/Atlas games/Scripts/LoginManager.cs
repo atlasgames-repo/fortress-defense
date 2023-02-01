@@ -12,6 +12,7 @@ public class LoginManager : MonoBehaviour
     public Toggle rememberMe;
     public Sprite On, Off;
     public GameObject login;
+    public GameObject loading;
     // Start is called before the first frame update
     async void Start()
     {
@@ -43,8 +44,14 @@ public class LoginManager : MonoBehaviour
     {
         await auth_with_userpass();
     }
+    private void loadingUI(bool isLoading)
+    {
+        submit.interactable = !isLoading;
+        loading.SetActive(isLoading);
+    }
     public async Task auth_with_token()
     {
+        loadingUI(true);
         UserResponse auth_result = null;
         try
         {
@@ -53,6 +60,7 @@ public class LoginManager : MonoBehaviour
         catch (System.Net.WebException)
         {
             login.SetActive(true);
+            loadingUI(false);
         }
         if (auth_result != null)
         {
@@ -62,6 +70,7 @@ public class LoginManager : MonoBehaviour
     }
     public async Task auth_with_userpass()
     {
+        loadingUI(true);
         submit.interactable = false;
         Authentication auth = new Authentication { username = username.text, password = password.text };
         AuthenticationResponse auth_result = null;
