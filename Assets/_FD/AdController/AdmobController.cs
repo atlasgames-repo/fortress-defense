@@ -59,7 +59,7 @@ public class AdmobController : MonoBehaviour
 #elif UNITY_IPHONE
                     string appId = iosID;
 #else
-                    string appId = "unexpected_platform";
+        // string appId = "unexpected_platform";
 #endif
 #if UNITY_ANDROID || UNITY_IOS
         //Initialize the Google Mobile Ads SDK.
@@ -81,7 +81,7 @@ public class AdmobController : MonoBehaviour
 #elif UNITY_IPHONE
         string appId = iosBanner;
 #else
-        string appId = "unexpected_platform";
+        // string appId = "unexpected_platform";
 #endif
 
 #if UNITY_ANDROID || UNITY_IOS
@@ -122,7 +122,7 @@ public class AdmobController : MonoBehaviour
 #elif UNITY_IPHONE
             string appId = iosInters;
 #else
-            string appId = "unexpected_platform";
+        // string appId = "unexpected_platform";
 #endif
 #if UNITY_ANDROID || UNITY_IOS
         // Initialize an InterstitialAd.
@@ -216,7 +216,7 @@ public class AdmobController : MonoBehaviour
 #elif UNITY_IPHONE
             string appId = iosVideo;
 #else
-            string appId = "unexpected_platform";
+        // string appId = "unexpected_platform";
 #endif
 #if UNITY_ANDROID || UNITY_IOS
         // Initialize an InterstitialAd.

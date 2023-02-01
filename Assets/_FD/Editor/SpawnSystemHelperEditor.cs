@@ -9,6 +9,7 @@ using System.Collections;
 [CustomEditor(typeof(SpawnSystemHelper))]
 public class SpawnSystemHelperEditor : Editor
 {
+
     public override void OnInspectorGUI()
     {
         (this.target as SpawnSystemHelper).hideObjectsInHierarchy = GUILayout.Toggle((this.target as SpawnSystemHelper).hideObjectsInHierarchy, "Hide Preloaded Objects in Hierarchy");
@@ -38,8 +39,7 @@ public class SpawnSystemHelperEditor : Editor
             {
                 Object preloadedObject = (this.target as SpawnSystemHelper).objectsToPreload[i];
                 string objectName = (preloadedObject == null) ? "" : preloadedObject.name;
-                Undo.RegisterUndo(target, string.Format("Remove {0} from Spawn System", objectName));
-
+                Undo.RegisterCompleteObjectUndo(target, string.Format("Remove {0} from Spawn System", objectName));
                 ArrayUtility.RemoveAt<GameObject>(ref (this.target as SpawnSystemHelper).objectsToPreload, i);
                 ArrayUtility.RemoveAt<int>(ref (this.target as SpawnSystemHelper).objectsToPreloadTimes, i);
 
@@ -72,7 +72,7 @@ public class SpawnSystemHelperEditor : Editor
 
                         if (!already)
                         {
-                            Undo.RegisterUndo(target, string.Format("Add {0} to Spawn System", o.name));
+                            Undo.RegisterCompleteObjectUndo(target, string.Format("Add {0} to Spawn System", o.name));
 
                             ArrayUtility.Add<GameObject>(ref (this.target as SpawnSystemHelper).objectsToPreload, (GameObject)o);
                             ArrayUtility.Add<int>(ref (this.target as SpawnSystemHelper).objectsToPreloadTimes, 1);

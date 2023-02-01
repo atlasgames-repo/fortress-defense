@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Advertisements;
 
-public enum WatchAdResult { Finished, Failed, Skipped}
+public enum WatchAdResult { Finished, Failed, Skipped }
 public class UnityAds : MonoBehaviour
 {
     //delegate   ()
@@ -23,7 +23,7 @@ public class UnityAds : MonoBehaviour
         if (UnityAds.Instance != null)
         {
             Destroy(gameObject);
-            return; 
+            return;
         }
         else
         {
@@ -76,11 +76,13 @@ public class UnityAds : MonoBehaviour
         return Advertisement.IsReady("rewardedVideo");
     }
 
+    [System.Obsolete]
     public void ShowRewardVideo()
     {
         ShowRewardedAd();
     }
 
+    [System.Obsolete]
     private void ShowRewardedAd()
     {
         if (!allowWatch)
@@ -88,12 +90,12 @@ public class UnityAds : MonoBehaviour
 
         if (Advertisement.IsReady("rewardedVideo"))
         {
-                var options = new ShowOptions { resultCallback = HandleShowResult };
-                if (!Advertisement.isShowing)
-                    Advertisement.Show("rewardedVideo", options);
+            var options = new ShowOptions { resultCallback = HandleShowResult };
+            if (!Advertisement.isShowing)
+                Advertisement.Show("rewardedVideo", options);
 
-                allowWatch = false;
-            
+            allowWatch = false;
+
         }
     }
 
