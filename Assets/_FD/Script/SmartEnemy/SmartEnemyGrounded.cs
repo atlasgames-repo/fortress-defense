@@ -329,13 +329,13 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             spawnItem.Spawn();
 
         if (knockDownRagdoll)
-            ;
+            print("");
         else if (pushBack)
             StartCoroutine(PushBack(force));
         else if (shock)
             StartCoroutine(Shock());
         else
-            ;
+            print("");
     }
 
     public override void KnockBack(Vector2 force, float stunningTime = 0)
