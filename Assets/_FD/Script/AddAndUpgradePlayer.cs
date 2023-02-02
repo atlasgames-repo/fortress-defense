@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddAndUpgradePlayer : MonoBehaviour, IGetTouchEvent
+public class AddAndUpgradePlayer : MonoBehaviour, IGetTouchEvent, IKeyboardCall
 {
+    public void KeyDown(KeyCode keyCode)
+    {
+        TouchEvent();
+    }
+    public KeyCode[] KeyType { get { return new KeyCode[] { Key }; } }
+    public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
+    public KeyCode Key;
     public int beginPlayer = 0;
     public GameObject addIcon, upgradeIcon;
     public GameObject upgradeFX;

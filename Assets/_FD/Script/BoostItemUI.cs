@@ -3,8 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BoostItemUI : MonoBehaviour
+public class BoostItemUI : MonoBehaviour, IKeyboardCall
 {
+    public void KeyDown(KeyCode data)
+    {
+        if (data == KeyCode.M)
+            ActiveDoubleArror();
+        if (data == KeyCode.N)
+            ActiveFrezzeArrow();
+        if (data == KeyCode.B)
+            ActivePoisonArrow();
+    }
+    public KeyCode[] KeyType { get { return new KeyCode[] { KeyCode.M, KeyCode.N, KeyCode.B }; } }
+    public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
     public static BoostItemUI Instance;
     [ReadOnly] public WEAPON_EFFECT currentEffect = WEAPON_EFFECT.NONE;
     [ReadOnly] public NumberArrow currentNumberOfArrows = NumberArrow.Single;
@@ -118,7 +129,7 @@ public class BoostItemUI : MonoBehaviour
     //    TA_Button.interactable = false;     //only active per game level
     //    DA_Button.interactable = false;
     //    ArcherForceEffect.Instance.SetNumberArrow(ARCHER_FIRE_ARROWS.TRIPLE);
-        
+
     //    RunTimerAutoHideBoostPanel();
 
     //    if (DoubleArrowTimerCoDo != null)
@@ -148,11 +159,12 @@ public class BoostItemUI : MonoBehaviour
     //#endregion
 
     #region Poison Arrow
-    public void ActivePoisonArrow() {
+    public void ActivePoisonArrow()
+    {
         SoundManager.PlaySfx(SoundManager.Instance.BTsoundUseBoost);
         GlobalValue.ItemPoison--;
         PA_remainTxt.text = "x" + GlobalValue.ItemPoison;
-        PA_Button.interactable = false; 
+        PA_Button.interactable = false;
         FA_Button.interactable = false;
         currentEffect = WEAPON_EFFECT.POISON;
 
@@ -163,13 +175,13 @@ public class BoostItemUI : MonoBehaviour
     IEnumerator PoisonArrowTimerCo()
     {
         PA_Icon.SetActive(true);
-       
+
         PA_TimeCounter = (float)PA_Time;
         while (PA_TimeCounter > 0)
         {
             PA_TimeCounter -= Time.deltaTime;
             PA_timerTxt.text = (int)PA_TimeCounter + "";
-           yield return null;
+            yield return null;
         }
 
         PA_Icon.SetActive(false);
@@ -180,7 +192,8 @@ public class BoostItemUI : MonoBehaviour
     #endregion
 
     #region Freeze Arrow
-    public void ActiveFrezzeArrow() {
+    public void ActiveFrezzeArrow()
+    {
         SoundManager.PlaySfx(SoundManager.Instance.BTsoundUseBoost);
         GlobalValue.ItemFreeze--;
         FA_remainTxt.text = "x" + GlobalValue.ItemFreeze;
@@ -197,7 +210,7 @@ public class BoostItemUI : MonoBehaviour
     {
         FA_Icon.SetActive(true);
         FA_TimeCounter = (float)FA_Time;
-        while(FA_TimeCounter > 0)
+        while (FA_TimeCounter > 0)
         {
             FA_TimeCounter -= Time.deltaTime;
             FA_timerTxt.text = (int)FA_TimeCounter + "";

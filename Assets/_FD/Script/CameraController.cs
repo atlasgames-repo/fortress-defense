@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, IKeyboardCall
 {
+    public void KeyDown(KeyCode keyCode)
+    {
+        Move();
+    }
+    public KeyCode[] KeyType { get { return new KeyCode[] { KeyCode.Space }; } }
+    public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
     public float limitLeft = -6;
     public float limitRight = 1000;
 

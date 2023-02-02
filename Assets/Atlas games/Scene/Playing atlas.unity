@@ -539,6 +539,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5233113077639169449, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      propertyPath: Key
+      value: 53
+      objectReference: {fileID: 0}
     - target: {fileID: 5343908541588617782, guid: d1f8bad16af5bd6408637fda60294854,
         type: 3}
       propertyPath: m_Name
@@ -808,6 +813,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233113077639169449, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      propertyPath: Key
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 5343908541588617782, guid: d1f8bad16af5bd6408637fda60294854,
         type: 3}
@@ -2462,6 +2472,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5233113077639169449, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      propertyPath: Key
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 5343908541588617782, guid: d1f8bad16af5bd6408637fda60294854,
         type: 3}
       propertyPath: m_Name
@@ -2782,6 +2797,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130384438}
   m_CullTransparentMesh: 1
+--- !u!1 &1137417140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1137417142}
+  - component: {fileID: 1137417141}
+  m_Layer: 0
+  m_Name: Keyboard Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1137417141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137417140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25cb5bc42be414940918cb320992033d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Key: 0
+  EventLoopMilliseconds: 2
+--- !u!4 &1137417142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137417140}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 264.0015, y: 317.69125, z: -162.96655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1140672439
 GameObject:
   m_ObjectHideFlags: 0
@@ -4215,6 +4275,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5233113077639169449, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      propertyPath: Key
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 5343908541588617782, guid: d1f8bad16af5bd6408637fda60294854,
         type: 3}
       propertyPath: m_Name
@@ -5646,6 +5711,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233113077639169449, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      propertyPath: Key
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 5343908541588617782, guid: d1f8bad16af5bd6408637fda60294854,
         type: 3}
@@ -7811,6 +7881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 120
   affectType: 2
   ownBtn: {fileID: 0}
   delayOnStart: 5
@@ -9494,6 +9565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b26a8cc76953e419a91cce5b7b24ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Key: 41
   timeSpeedUp: 2
   blinkingObj: {fileID: 2840579089220216803}
   speedTxt: {fileID: 6938511239251144656}
@@ -11858,6 +11930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 99
   affectType: 0
   ownBtn: {fileID: 0}
   delayOnStart: 5
@@ -11904,6 +11977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 122
   affectType: 1
   ownBtn: {fileID: 0}
   delayOnStart: 5

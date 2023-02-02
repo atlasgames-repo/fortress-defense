@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IncreaseGameSpeed : MonoBehaviour
+public class IncreaseGameSpeed : MonoBehaviour, IKeyboardCall
 {
+    public void KeyDown(KeyCode keyCode)
+    {
+        ChangeSpeed();
+    }
+    public KeyCode[] KeyType { get { return new KeyCode[] { Key }; } }
+    public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
+    public KeyCode Key;
     public float timeSpeedUp = 2;
     public GameObject blinkingObj;
     public Text speedTxt;
@@ -18,7 +25,7 @@ public class IncreaseGameSpeed : MonoBehaviour
 
     void ShowHelper()
     {
-         if (PlayerPrefs.GetInt("IncreaseGameSpeedDontShowAgain", 0) == 0)
+        if (PlayerPrefs.GetInt("IncreaseGameSpeedDontShowAgain", 0) == 0)
             helperObj.SetActive(true);
     }
 

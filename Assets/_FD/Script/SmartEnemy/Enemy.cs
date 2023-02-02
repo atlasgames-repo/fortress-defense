@@ -73,6 +73,7 @@ public enum ENEMYTYPE
 
 public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 {
+
     //public ENEMYKIND enemyKind;
     public UpgradedCharacterParameter upgradedCharacterID;
     [HideInInspector] public ENEMYTYPE enemyType;
@@ -191,9 +192,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     public virtual void Start()
     {
+
         if (!useGravity)
             gravity = 0;
-
         currentHealth = health;
         moveSpeed = walkSpeed;
 

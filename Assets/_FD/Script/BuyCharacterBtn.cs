@@ -4,8 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyCharacterBtn : MonoBehaviour
+public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
 {
+    public void KeyDown(KeyCode code)
+    {
+        OnBtnClick();
+    }
+    public KeyCode[] KeyType { get { return new KeyCode[] { KeyCode.E }; } }
+    public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
     public UpgradedCharacterParameter characterID;
     public int price = 888;
     public int max = 5;
@@ -47,7 +53,7 @@ public class BuyCharacterBtn : MonoBehaviour
 
         //if (GlobalValue.levelPlaying >= characterID.unlockAtLevel)
         //{
-            isUnlocked = true;
+        isUnlocked = true;
         //}
 
         if (isUnlocked)
@@ -125,7 +131,7 @@ public class BuyCharacterBtn : MonoBehaviour
         {
             //SoundManager.PlaySfx(SoundManager.Instance.buyCharacter);
             CharacterManager.Instance.SpawnCharacter(this);
-            
+
         }
     }
 

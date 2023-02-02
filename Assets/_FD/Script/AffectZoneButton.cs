@@ -4,8 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class AffectZoneButton : MonoBehaviour
+public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 {
+    public void KeyDown(KeyCode keyCode)
+    {
+        OnBtnClick();
+    }
+    public KeyCode[] KeyType { get { return new KeyCode[] { key }; } }
+    public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
+    public KeyCode key;
     public AffectZoneType affectType;
     public Button ownBtn;
 
@@ -64,19 +71,19 @@ public class AffectZoneButton : MonoBehaviour
         canvasGroup.interactable = canUse;
     }
 
-     void ActiveLighting()
+    void ActiveLighting()
     {
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Lighting, this);
         SoundManager.Click();
     }
 
-     void ActiveFrozen()
+    void ActiveFrozen()
     {
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Frozen, this);
         SoundManager.Click();
     }
 
-     void ActivePoison()
+    void ActivePoison()
     {
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Poison, this);
         SoundManager.Click();
@@ -113,6 +120,6 @@ public class AffectZoneButton : MonoBehaviour
 
         allowWork = false;
         allowCounting = false;
-        
+
     }
 }

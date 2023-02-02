@@ -11,7 +11,7 @@ public class AdsManager : MonoBehaviour
     //event  
     public static event RewardedAdResult AdResult;
 
-    public enum AD_NETWORK { Unity, Admob}
+    public enum AD_NETWORK { Unity, Admob }
 
     [Header("REWARDED VIDEO AD")]
     public AD_NETWORK rewardedUnit;
@@ -22,7 +22,7 @@ public class AdsManager : MonoBehaviour
     [Header("SHOW AD VICTORY/GAMEOVER")]
     public AD_NETWORK adGameOverUnit;
     public int showAdGameOverCounter = 1;
-     int counter_gameOver = 0;
+    int counter_gameOver = 0;
 
     private void Awake()
     {
@@ -69,25 +69,25 @@ public class AdsManager : MonoBehaviour
     IEnumerator ShowNormalAdCo(GameManager.GameState state, float delay)
     {
         yield return new WaitForSeconds(delay);
-            counter_gameOver++;
-            if (counter_gameOver >= showAdGameOverCounter)
+        counter_gameOver++;
+        if (counter_gameOver >= showAdGameOverCounter)
+        {
+            if (adGameOverUnit == AD_NETWORK.Unity)
             {
-                if (adGameOverUnit == AD_NETWORK.Unity)
+                //try show Unity video
+                if (UnityAds.Instance.ForceShowNormalAd())
                 {
-                    //try show Unity video
-                    if (UnityAds.Instance.ForceShowNormalAd())
-                    {
-                        counter_gameOver = 0;
-                    }
+                    counter_gameOver = 0;
                 }
-                else if (adGameOverUnit == AD_NETWORK.Admob)
+            }
+            else if (adGameOverUnit == AD_NETWORK.Admob)
+            {
+                if (AdmobController.Instance.ForceShowInterstitialAd())
                 {
-                    if (AdmobController.Instance.ForceShowInterstitialAd())
-                    {
-                        counter_gameOver = 0;
-                    }
+                    counter_gameOver = 0;
                 }
-            }   
+            }
+        }
         //}
     }
 
@@ -113,9 +113,10 @@ public class AdsManager : MonoBehaviour
 
     }
 
+    [System.Obsolete]
     public void ShowRewardedAds()
     {
-        if(rewardedUnit == AD_NETWORK.Unity)
+        if (rewardedUnit == AD_NETWORK.Unity)
         {
             UnityAds.AdResult += UnityAds_AdResult;
             UnityAds.Instance.ShowRewardVideo();
