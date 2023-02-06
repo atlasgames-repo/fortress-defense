@@ -12,7 +12,7 @@ public class ProfileManager : MonoBehaviour
     public Image avatar;
     public TextMeshProUGUI username, gold, life, gem, uxp;
     public Slider Level;
-    public float updateDelay = 1f;
+    public float updateDelay = 2f;
 
     public void logout()
     {
@@ -40,8 +40,8 @@ public class ProfileManager : MonoBehaviour
         username.text = user.display_name;
         life.text = $"{LifeTTRSource.Life}/{LifeTTRSource.max_life}";
         gold.text = $"{GlobalValue.SavedCoins}";
-        gem.text = $"{user.gem}";
-        avatar.sprite = await APIManager.instance.get_rofile_picture(user.avatar);
+        gem.text = $"{(await APIManager.instance.Request_Gem()).gem}";
+        avatar.sprite = await APIManager.instance.Get_rofile_picture(user.avatar);
         uxp.text = $"{User.Level}";
         Level.value = User.Next_Level_Progression;
     }

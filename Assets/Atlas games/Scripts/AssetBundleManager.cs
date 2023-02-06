@@ -30,8 +30,8 @@ public class AssetBundleManager : MonoBehaviour
     }
     public async Task LoadFromFile(int i)
     {
-        var updates = await APIManager.instance.check_for_updates(type: bundles[i].name);
-        string file_name = address_to_name(updates.list[0]);
+        var updates = await APIManager.instance.Check_for_updates(type: bundles[i].name);
+        string file_name = Address_to_name(updates.list[0]);
         if (File.Exists(APIManager.instance.GetFilePath(file_name)))
         {
             AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(APIManager.instance.GetFilePath(file_name));
@@ -66,7 +66,7 @@ public class AssetBundleManager : MonoBehaviour
             Application.Quit(); // TODO: Show an proper error and than exit the game
         }
     }
-    public string address_to_name(string address)
+    public string Address_to_name(string address)
     {
         string file_name = "";
         RegexOptions options = RegexOptions.Multiline;

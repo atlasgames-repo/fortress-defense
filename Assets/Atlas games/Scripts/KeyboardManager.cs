@@ -22,11 +22,11 @@ public class KeyboardManager : MonoBehaviour, IKeyboardCall
     {
         calls.Remove(call.KeyObjectID);
     }
-    private void Awake()
+    public void Awake()
     {
         self = this;
     }
-    private async void Start()
+    public void Start()
     {
         var ikeyboardcalls = FindObjectsOfType<MonoBehaviour>().OfType<IKeyboardCall>();
         foreach (IKeyboardCall caller in ikeyboardcalls)

@@ -16,7 +16,7 @@ public class DownloadManager : MonoBehaviour
     [ReadOnly] public string pattern = @"/(.[a-zA-Z0-9]+.assetbundle)";
     private int itter = 0;
 
-    async void Start()
+    public async void Start()
     {
         downloading.text = CONNECTING;
         itter = 0;
@@ -24,11 +24,11 @@ public class DownloadManager : MonoBehaviour
         AssetBundleUpdateResponse assets = null;
         try
         {
-            assets = await APIManager.instance.check_for_updates();
+            assets = await APIManager.instance.Check_for_updates();
         }
         catch (System.Exception e)
         {
-            APIManager.instance.RunStatus(e.Message);
+            APIManager.instance.RunStatus(e.Message, APIManager.instance.ErrorColor);
             User.Token = "";
             await Task.Delay(3 * 1000);
             APIManager.instance.LoadAsynchronously("Login");

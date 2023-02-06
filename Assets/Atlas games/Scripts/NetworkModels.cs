@@ -51,13 +51,43 @@ public class ErrorResponse : BaseModel
         message = _message;
     }
 }
-
 [Serializable]
-public class AuthenticationResponse : BaseModel
+public class Data : BaseModel
+{
+    public int status;
+
+}
+[Serializable]
+public class GemResponseModel : CommonErrorResponse
+{
+    public int gem, rank;
+}
+[Serializable]
+public class GemRequestModel : BaseModel
+{
+    public string amount = null;
+    public string game_id = "442";
+    public string date = null;
+    public GemRequestModel() { }
+    public GemRequestModel(string _game_id = null, string _amount = null, string _date = null)
+    {
+        amount = _amount;
+        game_id = _game_id == null ? _game_id : "442";
+        date = _date;
+    }
+}
+[Serializable]
+public class AuthenticationResponse : CommonErrorResponse
 {
     public string token;
+}
+[Serializable]
+public class CommonErrorResponse : BaseModel
+{
     public string message;
+    public string code;
     public bool result;
+    public Data data;
 }
 [Serializable]
 public class Authentication : BaseModel

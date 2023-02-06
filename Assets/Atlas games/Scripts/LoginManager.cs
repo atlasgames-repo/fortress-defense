@@ -42,7 +42,7 @@ public class LoginManager : MonoBehaviour
     }
     async void submitListener()
     {
-        await auth_with_userpass();
+        await Auth_with_userpass();
     }
     private void loadingUI(bool isLoading)
     {
@@ -55,7 +55,7 @@ public class LoginManager : MonoBehaviour
         UserResponse auth_result = null;
         try
         {
-            auth_result = await APIManager.instance.check_token();
+            auth_result = await APIManager.instance.Check_token();
         }
         catch (System.Net.WebException)
         {
@@ -68,7 +68,7 @@ public class LoginManager : MonoBehaviour
             StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
         }
     }
-    public async Task auth_with_userpass()
+    public async Task Auth_with_userpass()
     {
         loadingUI(true);
         submit.interactable = false;
@@ -76,7 +76,7 @@ public class LoginManager : MonoBehaviour
         AuthenticationResponse auth_result = null;
         try
         {
-            auth_result = await APIManager.instance.authenticate(auth);
+            auth_result = await APIManager.instance.Authenticate(auth);
         }
         catch (System.Net.WebException)
         {

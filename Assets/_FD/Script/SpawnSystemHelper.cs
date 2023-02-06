@@ -185,7 +185,7 @@ public class SpawnSystemHelper : MonoBehaviour
     }
     public async Task LoadFromFile(string name, int poolSize)
     {
-        var updates = await APIManager.instance.check_for_updates(type: name);
+        var updates = await APIManager.instance.Check_for_updates(type: name);
         if (File.Exists(APIManager.instance.GetFilePath(updates.list[0])))
         {
             AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(APIManager.instance.GetFilePath(updates.list[0]));
