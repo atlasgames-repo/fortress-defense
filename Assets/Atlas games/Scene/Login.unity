@@ -983,7 +983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BASE_URL: https://atlasgames.org/wp-json/atlasgames/v1
   assetbundle_dir: DownloadedBundles
-  IS_DEBUG: 0
+  IS_DEBUG: 1
   DEBUG_BASE_URL: http://localhost:8080
   status: {fileID: 9152960870657643182, guid: 4ffbe2656262599458d41b7615172b1f, type: 3}
   status_destroy: 3
@@ -1059,6 +1059,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &374382811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 374382812}
+  - component: {fileID: 374382813}
+  m_Layer: 0
+  m_Name: LuaManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &374382812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374382811}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 375.6611, y: 185.91699, z: -85.0422}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &374382813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374382811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84864c6209b065b49b51e7e4428007b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scripts:
+  - {fileID: 4900000, guid: 12a07377c99790a4db2b0acd877fbe17, type: 3}
 --- !u!1 &378219134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,7 +1143,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25330237}
   m_AnchorMax: {x: 1, y: 0.25330237}
-  m_AnchoredPosition: {x: 2.5811157, y: 283.92}
+  m_AnchoredPosition: {x: 2.5810547, y: 283.92}
   m_SizeDelta: {x: -1440.449, y: 567.848}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &442678924
@@ -1135,7 +1180,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 29.2, y: 15.6}
+  m_AnchoredPosition: {x: 29.199951, y: 15.599998}
   m_SizeDelta: {x: 31, y: -62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &442678926
