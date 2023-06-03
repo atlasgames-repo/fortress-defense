@@ -9,7 +9,7 @@ public class BaseModel
 {
     public string ToJson
     {
-        get { return JsonUtility.ToJson(this); }
+        get { return JsonConvert.SerializeObject(this, Formatting.Indented); }
     }
 
     public string ToParams
@@ -133,7 +133,14 @@ public class Message : BaseModel
     public string auth = "";
 
 }
+[Serializable]
+public class Achivement : BaseModel
+{
+    public string _id = "";
+    public string name = "";
+    public int gem = 0;
 
+}
 
 public class NetworkModels : BaseModel
 {
