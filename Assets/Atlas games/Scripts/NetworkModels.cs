@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 using Newtonsoft.Json;
 
 public class BaseModel
 {
     public string ToJson
     {
-        get { return JsonConvert.SerializeObject(this, Formatting.Indented); }
+        get { return JsonUtility.ToJson(this); }
     }
 
     public string ToParams
@@ -77,6 +78,14 @@ public class GemRequestModel : BaseModel
     }
 }
 [Serializable]
+public class SetAchivementModel : BaseModel
+{
+    public string id = "";
+    public bool is_achived = false;
+    public bool is_served = false;
+
+}
+[Serializable]
 public class AuthenticationResponse : CommonErrorResponse
 {
     public string token;
@@ -134,12 +143,63 @@ public class Message : BaseModel
 
 }
 [Serializable]
+public class Achivements : BaseModel
+{
+    public Achivement[] list;
+
+    public Achivement this[int index]
+    {
+        get { return list[index]; }
+        set { list[index] = value; }
+    }
+    public Achivements(Achivement[] achivements)
+    {
+        list = achivements;
+    }
+
+    public Achivement Get(string id)
+    {
+        return list.Where(ach => ach._id == id).FirstOrDefault();
+    }
+    public bool Has(string id) => list.First(ach => ach._id == id) != null;
+    public string Serve_by_id
+    {
+        set
+        {
+            Get(value).is_served = true;
+        }
+    }
+    public int Serve_by_index
+    {
+        set
+        {
+            list[value].is_served = true;
+        }
+    }
+    public string Achive_by_id
+    {
+        set
+        {
+            Get(value).is_achived = true;
+        }
+    }
+    public int Achive_by_index
+    {
+        set
+        {
+            list[value].is_achived = true;
+        }
+    }
+}
+
+[Serializable]
 public class Achivement : BaseModel
 {
     public string _id = "";
     public string name = "";
-    public int gem = 0;
-
+    public int reward = 0;
+    public bool is_served = false;
+    public bool is_achived = false;
 }
 
 public class NetworkModels : BaseModel

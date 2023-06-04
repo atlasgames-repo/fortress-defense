@@ -9,6 +9,7 @@ using System.Threading;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 public class APIManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class APIManager : MonoBehaviour
     public string BASE_URL = "https://hokm-url.herokuapp.com", assetbundle_dir = "DownloadedBundles";
     public static readonly string GAME_ID = "442";
     public bool IS_DEBUG = true;
+    public int TimeOut = 5;
     public string DEBUG_BASE_URL = "http://localhost:8080";
     public GameObject status;
     public float status_destroy;
@@ -120,6 +122,21 @@ public class APIManager : MonoBehaviour
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
         auth_token: User.Token);
     }
+    public async Task<Achivement[]> Get_Achivements()
+    {
+        return await Get<Achivement[]>(
+            route: "/achivements",
+            auth_token: User.Token
+        );
+    }
+    public async Task Set_Achivements(SetAchivementModel parames)
+    {
+        await Get<Achivement>(
+                route: "/achivements/add",
+                parameters: parames.ToParams,
+                auth_token: User.Token
+            );
+    }
     #endregion
 
     #region Private API calls
@@ -183,23 +200,25 @@ public class APIManager : MonoBehaviour
         req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
         var opration = req.SendWebRequest();
 
+        DateTime start = DateTime.Now.AddSeconds(TimeOut);
         while (!opration.isDone)
         {
             await Task.Yield();
+            if (DateTime.Now > start) break;
         }
         if (req.responseCode != 200)
         {
             CommonErrorResponse error_response = null;
             try
             {
-                error_response = JsonUtility.FromJson<CommonErrorResponse>(Clean_json(req.downloadHandler.text));
+                error_response = JsonConvert.DeserializeObject<CommonErrorResponse>(req.downloadHandler.text);
             }
             catch (System.Exception)
             {
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(error_response?.message);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -207,7 +226,7 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(req.downloadHandler.text);
             }
             catch (System.Exception e)
             {
@@ -236,23 +255,25 @@ public class APIManager : MonoBehaviour
         req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
         var opration = req.SendWebRequest();
 
+        DateTime start = DateTime.Now.AddSeconds(TimeOut);
         while (!opration.isDone)
         {
             await Task.Yield();
+            if (DateTime.Now > start) break;
         }
         if (req.responseCode != 200)
         {
             CommonErrorResponse error_response = null;
             try
             {
-                error_response = JsonUtility.FromJson<CommonErrorResponse>(Clean_json(req.downloadHandler.text));
+                error_response = JsonConvert.DeserializeObject<CommonErrorResponse>(req.downloadHandler.text);
             }
             catch (System.Exception)
             {
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(error_response?.message);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -260,7 +281,7 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(req.downloadHandler.text);
             }
             catch (System.Exception)
             {
@@ -279,24 +300,25 @@ public class APIManager : MonoBehaviour
     {
         using UnityWebRequest req = UnityWebRequestTexture.GetTexture(uri: route);
         var opration = req.SendWebRequest();
+        DateTime start = DateTime.Now.AddSeconds(TimeOut * 2);
         while (!opration.isDone)
         {
             await Task.Yield();
-
+            if (DateTime.Now > start) break;
         }
         if (req.responseCode != 200)
         {
             CommonErrorResponse error_response = null;
             try
             {
-                error_response = JsonUtility.FromJson<CommonErrorResponse>(Clean_json(req.downloadHandler.text));
+                error_response = JsonConvert.DeserializeObject<CommonErrorResponse>(req.downloadHandler.text);
             }
             catch (System.Exception)
             {
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(error_response?.message);
             throw new System.Net.WebException(message: req.error);
         }
         else
