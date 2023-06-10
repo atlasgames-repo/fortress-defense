@@ -19,6 +19,20 @@ function FirstKill()
     return true
 end
 
+function First10Kill()
+    FirstKillId = "3"
+    if Achivement.Get(FirstKillId).is_achived then
+        return false
+    end
+    if GlobalValue.KillCount > 10 then
+        Achivement.Get(FirstKillId).is_achived = true
+        Action.Invoke(FirstKillId);
+        return true
+    end
+    return true
+end
+
 function Update()
     FirstKill()
+    First10Kill()
 end

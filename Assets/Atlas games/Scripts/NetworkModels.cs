@@ -197,6 +197,7 @@ public class Achivement : BaseModel
 {
     public string _id = "";
     public string name = "";
+    public string description = "";
     public int reward = 0;
     public bool is_served = false;
     public bool is_achived = false;
