@@ -25,7 +25,7 @@ public class TrophyManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach (var key in Trophy.self.Trophies.Keys)
+        foreach (Achivement key in AchivementManager.self.achivements.list)
         {
             yield return new WaitForEndOfFrame();
             Add(key);
@@ -36,24 +36,19 @@ public class TrophyManager : MonoBehaviour
     {
 
     }
-    void Add(string key)
+    async void Add(Achivement key)
     {
         GameObject obj = Instantiate(rootObject, parent, false);
-        _Trophy trophy = null;
-        Trophy.self.Trophies.TryGetValue(key, out trophy);
-        if (trophy != null)
+        obj.transform.GetChild(1).GetComponent<Image>().sprite = await key.Get_Sprite();
+        if (key.is_achived)
         {
-            obj.transform.GetChild(1).GetComponent<Image>().sprite = trophy.image;
-            if (trophy.is_achived)
-            {
-                obj.transform.GetChild(1).GetComponent<Image>().color = Enable;
-            }
-            else
-            {
-                obj.transform.GetChild(1).GetComponent<Image>().color = Disable;
-            }
-            obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = trophy.name;
-            obj.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = trophy.details;
+            obj.transform.GetChild(1).GetComponent<Image>().color = Enable;
         }
+        else
+        {
+            obj.transform.GetChild(1).GetComponent<Image>().color = Disable;
+        }
+        obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = key.name;
+        obj.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = key.description;
     }
 }

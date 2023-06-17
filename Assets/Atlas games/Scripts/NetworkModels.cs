@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 public class BaseModel
 {
@@ -133,8 +135,82 @@ public class Message : BaseModel
     public string auth = "";
 
 }
+[Serializable]
+public class Achivements : BaseModel
+{
+    public Achivement[] list;
+
+    public Achivement this[int index]
+    {
+        get { return list[index]; }
+        set { list[index] = value; }
+    }
+    public Achivements(Achivement[] achivements)
+    {
+        list = achivements;
+    }
+
+    public Achivement Get(string id)
+    {
+        return list.Where(ach => ach._id == id).FirstOrDefault();
+    }
+    public bool Has(string id) => list.First(ach => ach._id == id) != null;
+    public string Serve_by_id
+    {
+        set
+        {
+            Get(value).is_served = true;
+        }
+    }
+    public int Serve_by_index
+    {
+        set
+        {
+            list[value].is_served = true;
+        }
+    }
+    public string Achive_by_id
+    {
+        set
+        {
+            Get(value).is_achived = true;
+        }
+    }
+    public int Achive_by_index
+    {
+        set
+        {
+            list[value].is_achived = true;
+        }
+    }
+}
+
+[Serializable]
+public class Achivement : BaseModel
+{
+    public string _id = "";
+    public string name = "";
+    public string description = "";
+    public int reward = 0;
+    public string image = null;
+    public bool is_served = false;
+    public bool is_achived = false;
 
 
+    public async Task<Sprite> Get_Sprite()
+    {
+        return await APIManager.instance.Get_rofile_picture(image);
+    }
+
+}
+[Serializable]
+public class SetAchivementModel : BaseModel
+{
+    public string id = "";
+    public bool is_achived = false;
+    public bool is_served = false;
+
+}
 public class NetworkModels : BaseModel
 {
 

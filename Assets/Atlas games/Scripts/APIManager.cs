@@ -9,7 +9,7 @@ using System.Threading;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
-
+using Newtonsoft.Json;
 public class APIManager : MonoBehaviour
 {
     public static APIManager instance;
@@ -23,7 +23,7 @@ public class APIManager : MonoBehaviour
     public Color ErrorColor, WarningColor;
     [ReadOnly] public LifeTTR lifeTTR;
 
-    private string pattern = @"{.*}";
+    private readonly string pattern = @"{.*}", patternList = @"\[.*\]";
 
     public int lifeTTL = 30;
     public int maxLife = 5;
@@ -120,6 +120,21 @@ public class APIManager : MonoBehaviour
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
         auth_token: User.Token);
     }
+    public async Task<Achivement[]> Get_Achivements()
+    {
+        return await Get<Achivement[]>(
+            route: "/achivements",
+            auth_token: User.Token
+        );
+    }
+    public async Task Set_Achivements(SetAchivementModel parames)
+    {
+        await Get<Achivement>(
+                route: "/achivements/add",
+                parameters: parames.ToParams,
+                auth_token: User.Token
+            );
+    }
     #endregion
 
     #region Private API calls
@@ -207,7 +222,8 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                // res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(Clean_json(req.downloadHandler.text));
             }
             catch (System.Exception e)
             {
@@ -260,7 +276,8 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                // res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(Clean_json(req.downloadHandler.text));
             }
             catch (System.Exception)
             {
@@ -339,6 +356,10 @@ public class APIManager : MonoBehaviour
     {
         RegexOptions options = RegexOptions.Multiline;
         string value = "{}";
+        MatchCollection Listmatches = Regex.Matches(data, patternList, options);
+        if (Listmatches.Count > 0)
+            return data;
+
         foreach (Match m in Regex.Matches(data, pattern, options))
         {
             value = m.Value;

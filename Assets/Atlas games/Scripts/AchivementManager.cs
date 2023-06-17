@@ -7,6 +7,7 @@ public class AchivementManager : MonoBehaviour
 {
     public static AchivementManager self;
     public GameObject DialogBox;
+    public Achivements achivements;
     public float Destroy_delay;
     void Awake()
     {
@@ -14,8 +15,9 @@ public class AchivementManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    public void Start()
+    private async void Start()
     {
+        achivements = new Achivements(await APIManager.instance.Get_Achivements());
         StartCoroutine(StartEnum());
     }
 
@@ -23,23 +25,24 @@ public class AchivementManager : MonoBehaviour
     IEnumerator StartEnum()
     {
         yield return new WaitForSeconds(5f);
-        foreach (KeyValuePair<string, _Trophy> entety in Trophy.self.Trophies)
+        foreach (Achivement entety in achivements.list)
         {
             yield return new WaitForSeconds(0.1f);
-            if (entety.Value.is_achived && entety.Value.is_served == false)
+            if (entety.is_achived && entety.is_served == false)
             {
                 // show the achivement dialog and save the trophy is is_served
-                RunStatus(entety.Value);
-                Trophy.Serve(entety.Value._id);
+                RunStatus(entety);
+                // Trophy.Serve(entety.Value._id);
             }
         }
     }
-    void RunStatus(_Trophy trophy)
+
+    private async void RunStatus(Achivement entety)
     {
         Transform root = GameObject.FindGameObjectWithTag("Achivement").transform;
         GameObject obj = Instantiate(DialogBox, root, false);
-        obj.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = trophy.details;
-        obj.transform.GetChild(2).GetComponent<Image>().sprite = trophy.image;
+        obj.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = entety.description;
+        obj.transform.GetChild(2).GetComponent<Image>().sprite = await entety.Get_Sprite();
         obj.GetComponent<Animator>().SetTrigger("In");
         Destroy(obj, Destroy_delay);
     }

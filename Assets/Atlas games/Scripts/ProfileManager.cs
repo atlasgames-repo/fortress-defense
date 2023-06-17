@@ -12,7 +12,7 @@ public class ProfileManager : MonoBehaviour
     public Image avatar;
     public TextMeshProUGUI username, gold, life, gem, uxp;
     public Slider Level;
-    public float updateDelay = 2f;
+    public float updateDelay = 10f;
 
     public void logout()
     {
