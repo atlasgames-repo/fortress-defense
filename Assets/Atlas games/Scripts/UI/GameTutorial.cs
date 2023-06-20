@@ -83,9 +83,10 @@ public class GameTutorial : MonoBehaviour
                     Time.unscaledDeltaTime * speed);
                 appliedScale = Mathf.Lerp(mask.localScale.x, scale[_tipOrder], Time.unscaledDeltaTime * speed);
             }
-            catch (Exception e)
+            catch 
             {
-                Console.WriteLine(e);
+                _maskPosition = Vector3.Lerp(mask.position, uiParts[0].position,
+                    Time.unscaledDeltaTime * speed);
             }
         }
         else
