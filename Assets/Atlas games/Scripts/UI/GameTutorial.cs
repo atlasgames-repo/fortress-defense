@@ -12,8 +12,7 @@ public class GameTutorial : MonoBehaviour
     public GameObject darkBackground;
     private int _tipIndex;
     private int _tipOrder;
-    public float speed = 60;
-
+    public float speed = 30f;
 
     // start game and open tutorial automatically if never watched 
     void Start()
@@ -47,9 +46,11 @@ public class GameTutorial : MonoBehaviour
     public void NextTip()
     {
         _tipOrder++;
+        print(_tipOrder);
 
         if (_tipOrder <= tips.Length - 1)
         {
+            StartCoroutine(SmoothTransition(uiParts[_tipOrder].transform.position, scale[_tipOrder]));
             tips[_tipOrder].GetComponent<Animator>().SetTrigger("Open");
         }
         else
@@ -67,34 +68,19 @@ public class GameTutorial : MonoBehaviour
         }
     }
 
-    Vector3 _maskPosition;
 
-    void Update()
+    IEnumerator SmoothTransition(Vector3 targetPosition, float targetScale)
     {
-        // set mask position on UI element 
-        // scale circle mask based on UI component for tutorial 
-        float appliedScale = 0;
-
-        if (_tipIndex != -1)
+        float appliedScale = mask.localScale.x;
+        Vector3 maskPosition = mask.position;
+        while (Vector3.Distance(mask.position,uiParts[_tipOrder].position)>0.01f)
         {
-            try
-            {
-                _maskPosition = Vector3.Lerp(mask.position, uiParts[_tipOrder].position,
-                    Time.unscaledDeltaTime * speed);
-                appliedScale = Mathf.Lerp(mask.localScale.x, scale[_tipOrder], Time.unscaledDeltaTime * speed);
-            }
-            catch 
-            {
-                _maskPosition = Vector3.Lerp(mask.position, uiParts[0].position,
-                    Time.unscaledDeltaTime * speed);
-            }
+            maskPosition = Vector3.Lerp(mask.position, uiParts[_tipOrder].position, Time.unscaledDeltaTime * speed);
+            appliedScale = Mathf.Lerp(mask.localScale.x, scale[_tipOrder], Time.unscaledDeltaTime * speed);
+            mask.localScale = new Vector3(appliedScale, appliedScale, appliedScale);
+            mask.position = maskPosition;
+            yield return null;
         }
-        else
-        {
-            _maskPosition = Vector3.Lerp(mask.position, uiParts[0].position, Time.unscaledDeltaTime * speed);
-        }
-
-        mask.localScale = new Vector3(appliedScale, appliedScale, appliedScale);
-        mask.position = _maskPosition;
     }
+
 }
