@@ -21,18 +21,18 @@ public class GameTutorial : MonoBehaviour
         _tipIndex = uiParts.Length;
         _tipOrder = -1;
 
-        if (PlayerPrefs.GetInt("GameTutorialOpened") != 1)
+        if (GlobalValue.GameTutorialOpened != 1)
         {
             StartCoroutine(OpenTutorialAtStart());
         }
     }
 
-// open tutorial
+// open tutorial if never watched
     IEnumerator OpenTutorialAtStart()
     {
         yield return new WaitForSeconds(1.5f);
         StartTutorial();
-        PlayerPrefs.SetInt("GameTutorialOpened", 1);
+        GlobalValue.GameTutorialOpened = 1;
     }
 
 // start tutorial with first tip and pause game 
@@ -54,7 +54,6 @@ public class GameTutorial : MonoBehaviour
         }
         else
         {
-            print("end");
             darkBackground.SetActive(false);
             Time.timeScale = 1;
             _tipOrder = -1;
