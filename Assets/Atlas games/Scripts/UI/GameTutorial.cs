@@ -46,7 +46,6 @@ public class GameTutorial : MonoBehaviour
     public void NextTip()
     {
         _tipOrder++;
-        print(_tipOrder);
 
         if (_tipOrder <= tips.Length - 1)
         {
