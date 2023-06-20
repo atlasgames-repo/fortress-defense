@@ -7,13 +7,15 @@ public class GameTutorial : MonoBehaviour
 {
     public Transform[] uiParts;
     public Transform mask;
-    public GameObject[] Tips;
+    public GameObject[] tips;
     public float[] scale;
     public GameObject darkBackground;
     private int _tipIndex;
     private int _tipOrder;
     public float speed = 60;
 
+
+    // start game and open tutorial automatically if never watched 
     void Start()
     {
         _tipIndex = uiParts.Length;
@@ -25,6 +27,7 @@ public class GameTutorial : MonoBehaviour
         }
     }
 
+// open tutorial
     IEnumerator OpenTutorialAtStart()
     {
         yield return new WaitForSeconds(1.5f);
@@ -32,6 +35,7 @@ public class GameTutorial : MonoBehaviour
         PlayerPrefs.SetInt("GameTutorialOpened", 1);
     }
 
+// start tutorial with first tip and pause game 
     public void StartTutorial()
     {
         NextTip();
@@ -39,57 +43,58 @@ public class GameTutorial : MonoBehaviour
         darkBackground.SetActive(true);
     }
 
+// go to next tip and animate enter/exit states of tips 
     public void NextTip()
     {
         _tipOrder++;
 
-          if (_tipOrder <= Tips.Length-1)
+        if (_tipOrder <= tips.Length - 1)
         {
-            Tips[_tipOrder].GetComponent<Animator>().SetTrigger("Open");
-        } else
-          {
-              print("end");
-              darkBackground.SetActive(false);
-              Time.timeScale = 1;
-              _tipOrder = -1;
-              Tips[Tips.Length-1].GetComponent<Animator>().SetTrigger("Close");
+            tips[_tipOrder].GetComponent<Animator>().SetTrigger("Open");
+        }
+        else
+        {
+            print("end");
+            darkBackground.SetActive(false);
+            Time.timeScale = 1;
+            _tipOrder = -1;
+            tips[tips.Length - 1].GetComponent<Animator>().SetTrigger("Close");
+        }
 
-          }
-
-      
 
         if (_tipOrder > 0)
         {
-            Tips[_tipOrder - 1].GetComponent<Animator>().SetTrigger("Close");
+            tips[_tipOrder - 1].GetComponent<Animator>().SetTrigger("Close");
         }
     }
 
-    Vector3 _mask_position;
+    Vector3 _maskPosition;
 
     void Update()
     {
-        float _appliedScale = 0;
-        
+        // set mask position on UI element 
+        // scale circle mask based on UI component for tutorial 
+        float appliedScale = 0;
+
         if (_tipIndex != -1)
         {
             try
             {
-                _mask_position = Vector3.Lerp(mask.position, uiParts[_tipOrder].position, Time.unscaledDeltaTime * speed);
-                _appliedScale = Mathf.Lerp(mask.localScale.x, scale[_tipOrder], Time.unscaledDeltaTime * speed);
+                _maskPosition = Vector3.Lerp(mask.position, uiParts[_tipOrder].position,
+                    Time.unscaledDeltaTime * speed);
+                appliedScale = Mathf.Lerp(mask.localScale.x, scale[_tipOrder], Time.unscaledDeltaTime * speed);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-               
             }
         }
         else
         {
-            _mask_position = Vector3.Lerp(mask.position, uiParts[0].position, Time.unscaledDeltaTime * speed);
-
+            _maskPosition = Vector3.Lerp(mask.position, uiParts[0].position, Time.unscaledDeltaTime * speed);
         }
 
-        mask.localScale = new Vector3(_appliedScale, _appliedScale, _appliedScale);
-        mask.position = _mask_position;
+        mask.localScale = new Vector3(appliedScale, appliedScale, appliedScale);
+        mask.position = _maskPosition;
     }
 }
