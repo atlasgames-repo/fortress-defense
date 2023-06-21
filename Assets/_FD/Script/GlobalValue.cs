@@ -123,6 +123,11 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetFloat("StrongWallExtra", 0); }
         set { PlayerPrefs.SetFloat("StrongWallExtra", value); }
     }
+    public static int GameTutorialOpened
+    {
+        get { return PlayerPrefs.GetInt("GameTutorialOpened", 0); }
+        set { PlayerPrefs.SetInt("GameTutorialOpened", value); }
+    }
 }
 
 

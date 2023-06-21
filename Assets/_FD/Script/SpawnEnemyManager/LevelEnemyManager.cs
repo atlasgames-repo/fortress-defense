@@ -11,7 +11,6 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public EnemyWave[] EnemyWaves;
     public BossUIManager bossManeger;
     int currentWave = 0;
-
     public List<GameObject> listEnemySpawned = new List<GameObject>();
 
     private void Awake()
