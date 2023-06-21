@@ -13,6 +13,7 @@ public class GameTutorial : MonoBehaviour
     private int _tipIndex;
     private int _tipOrder;
     public float speed = 30f;
+    private float _maxDistance = 0.01f;
 
     // start game and open tutorial automatically if never watched 
     void Start()
@@ -68,11 +69,13 @@ public class GameTutorial : MonoBehaviour
     }
 
 
+    // set position and scale of mask based on the part of the tutorial
+
     IEnumerator SmoothTransition(Vector3 targetPosition, float targetScale)
     {
         float appliedScale = mask.localScale.x;
         Vector3 maskPosition = mask.position;
-        while (Vector3.Distance(mask.position,uiParts[_tipOrder].position)>0.01f)
+        while (Vector3.Distance(mask.position,uiParts[_tipOrder].position)>_maxDistance)
         {
             maskPosition = Vector3.Lerp(mask.position, uiParts[_tipOrder].position, Time.unscaledDeltaTime * speed);
             appliedScale = Mathf.Lerp(mask.localScale.x, scale[_tipOrder], Time.unscaledDeltaTime * speed);
@@ -81,5 +84,4 @@ public class GameTutorial : MonoBehaviour
             yield return null;
         }
     }
-
 }
