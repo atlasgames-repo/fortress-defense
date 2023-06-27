@@ -4812,14 +4812,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7250284865073649028}
-  - component: {fileID: 3793894234665527687}
+  - component: {fileID: 1134486916078192587}
   m_Layer: 5
   m_Name: Trophy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7250284865073649028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4843,7 +4843,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3793894234665527687
+--- !u!114 &1134486916078192587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4852,14 +4852,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2227841157094790013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1237dbaa1102f5b438a54a731c1e1290, type: 3}
+  m_Script: {fileID: 11500000, guid: c951e6306b208694a84c00db9d4aff2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 4233417279023034789}
-  rootObject: {fileID: 2116249141085459806, guid: 252320fc582cbdf478b062ba9ac8465d,
+  rootObject: {fileID: 383264566993778375, guid: bb91634d2556d00478961a3066f787fd,
     type: 3}
   Enable: {r: 1, g: 1, b: 1, a: 1}
-  Disable: {r: 1, g: 1, b: 1, a: 0.09803922}
+  Disable: {r: 1, g: 1, b: 1, a: 0.33333334}
 --- !u!1 &2447751964513761251
 GameObject:
   m_ObjectHideFlags: 0
@@ -6192,7 +6192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4995216544985141555}
-  - component: {fileID: 5263100729954096517}
+  - component: {fileID: 3840147858682606202}
   m_Layer: 5
   m_Name: Trophy
   m_TagString: Untagged
@@ -6219,7 +6219,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5263100729954096517
+--- !u!114 &3840147858682606202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6228,28 +6228,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 3030887830067209159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8c12c174fc98d2438936ca033ae3328, type: 3}
+  m_Script: {fileID: 11500000, guid: 52899a0ca7bc16149a8e43a2a927051c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Start_delay: 1
+  DefaultSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   _Trophies:
-  - name: First step
+  - name: PassedFirstLevel
     _id: 1
-    image: {fileID: 21300000, guid: 88e3001632334644da1b5943ee6c55e0, type: 3}
-    details: Passed the first level
-    is_achived: 0
-    is_served: 0
-  - name: First world
+    imageURL: https://media.discordapp.net/attachments/871799970951475283/1051505668730916965/147142.png
+    details: Get passed the first level
+    price: 100
+    status: 0
+  - name: PassedFirstWorld
     _id: 2
-    image: {fileID: 21300000, guid: 1edf9a085d2b93f4f933ac35940e38ed, type: 3}
-    details: Passed the first world
-    is_achived: 0
-    is_served: 0
-  - name: First kill
+    imageURL: https://media.discordapp.net/attachments/871799970951475283/1051505668730916965/147142.png
+    details: Get passed the first World
+    price: 150
+    status: 0
+  - name: GetFirstKill
     _id: 3
-    image: {fileID: 21300000, guid: e7d492affaa168b418ec61b9c43d5fb4, type: 3}
+    imageURL: https://media.discordapp.net/attachments/871799970951475283/1051505668730916965/147142.png
     details: Get the first kill
-    is_achived: 0
-    is_served: 0
+    price: 250
+    status: 0
 --- !u!1 &3031275897092369605
 GameObject:
   m_ObjectHideFlags: 0
@@ -16431,7 +16433,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3793894234665527687}
+      - m_Target: {fileID: 1134486916078192587}
         m_TargetAssemblyTypeName: TrophyManager, Assembly-CSharp
         m_MethodName: ReloadPage
         m_Mode: 1
@@ -19662,7 +19664,7 @@ Animator:
   m_GameObject: {fileID: 8045491222733409079}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 317f3ea6c136e1b49b8b2e79915d4952, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
