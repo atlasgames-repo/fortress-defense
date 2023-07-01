@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EndlessWaveGenerator : MonoBehaviour
 {
-    [HideInInspector]public EnemyWave _wave;
+    [HideInInspector]public EnemyWave wave;
     [HideInInspector] public List<EnemySpawn> _enemySpawn;
     public GameObject[] enemies;
     public float increaseDifficultyRate = 0.4f;
@@ -19,7 +19,7 @@ public class EndlessWaveGenerator : MonoBehaviour
         _enemyCounts = new float[enemies.Length];
     }
     // generate a new wave harder than last
-    public EnemyWave GenerateWave()
+    public void GenerateWave()
     {
         _enemySpawn.Clear();
         
@@ -49,8 +49,8 @@ public class EndlessWaveGenerator : MonoBehaviour
             newSpawn.customSpeed = Convert.ToInt32(Mathf.Round(enemies[i].GetComponent<SmartEnemyGrounded>().walkSpeed * _currentDifficultyRate));
 
             #region SettingAttackDamage
-
-//this code currently doesn't work 
+            
+            //this code currently doesn't work 
             // var rangeAttack = enemies[i].GetComponent<EnemyRangeAttack>();
             // if (rangeAttack)
             // {
@@ -68,7 +68,6 @@ public class EndlessWaveGenerator : MonoBehaviour
             //     newSpawn.customAttackDmg =     throwAttack.damage;
             // }
             //            newSpawn.customAttackDmg = Convert.ToInt32(Mathf.Round(newSpawn.customAttackDmg * _currentDifficultyRate));
-
             #endregion
 
 
@@ -78,8 +77,8 @@ public class EndlessWaveGenerator : MonoBehaviour
         // set wave data ready for usage in LevelEnemyManager.cs for creation
         _waveCount++;
         _currentDifficultyRate = _waveCount * increaseDifficultyRate;
-        _wave.wait = InitialWaitAmount;
-        _wave.enemySpawns = _enemySpawn.ToArray();
-        return _wave;
+        wave.wait = InitialWaitAmount;
+        wave.enemySpawns = _enemySpawn.ToArray();
     }
+    
 }
