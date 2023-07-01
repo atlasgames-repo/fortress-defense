@@ -21,16 +21,28 @@ public class TrophyManager : MonoBehaviour
     }
     IEnumerator StartEnum()
     {
-        yield return new WaitForSeconds(5f);
-        foreach (Transform child in parent)
+        Transform[] children = parent.GetComponentsInChildren<Transform>();
+        for (int i = 0; i < children.Length; i++)
         {
-            yield return new WaitForEndOfFrame();
-            Destroy(child.gameObject);
+            try
+            {
+                Destroy(children[i].gameObject);
+            }
+            catch (System.Exception)
+            {
+                APIManager.instance.RunStatus("Operation Failed", Color.red);
+            }
+
         }
+        // foreach (Transform child in children)
+        // {
+        //     Destroy(child.gameObject);
+        //     yield return null;
+        // }
         foreach (var key in Trophy.Trophies.Keys)
         {
-            yield return new WaitForEndOfFrame();
             Add(key);
+            yield return null;
         }
     }
     // Update is called once per frame

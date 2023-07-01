@@ -44,8 +44,8 @@ public class AchivementManager : MonoBehaviour
     {
         Transform root = GameObject.FindGameObjectWithTag("Achivement").transform;
         GameObject obj = Instantiate(DialogBox, root, false);
-        obj.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = trophy.details;
-        obj.transform.GetChild(1).GetComponent<Image>().sprite = Trophy.self.GetSprite(trophy._id);
+        obj.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = trophy.details;
+        obj.transform.GetChild(2).GetComponent<Image>().sprite = Trophy.self.GetSprite(trophy._id);
         obj.GetComponent<Animator>().SetTrigger("In");
         Destroy(obj, Destroy_delay);
     }
