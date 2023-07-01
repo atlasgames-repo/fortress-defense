@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 public class TrophyManager : MonoBehaviour
 {
-    public Transform parent;
+    public RectTransform parent;
     public GameObject rootObject;
 
     public Color Enable, Disable;
@@ -21,25 +22,22 @@ public class TrophyManager : MonoBehaviour
     }
     IEnumerator StartEnum()
     {
-        Transform[] children = parent.GetComponentsInChildren<Transform>();
-        for (int i = 0; i < children.Length; i++)
+        // Get all child objects
+        GameObject[] children = new GameObject[parent.transform.childCount];
+        for (int i = 0; i < parent.transform.childCount; i++)
         {
-            try
-            {
-                Destroy(children[i].gameObject);
-            }
-            catch (System.Exception)
-            {
-                APIManager.instance.RunStatus("Operation Failed", Color.red);
-            }
-
+            children[i] = parent.transform.GetChild(i).gameObject;
+            yield return null;
         }
-        // foreach (Transform child in children)
-        // {
-        //     Destroy(child.gameObject);
-        //     yield return null;
-        // }
-        foreach (var key in Trophy.Trophies.Keys)
+
+        // Delete child objects
+        foreach (GameObject child in children)
+        {
+            Destroy(child);
+            yield return null;
+        }
+
+        foreach (string key in Trophy.Keys)
         {
             Add(key);
             yield return null;
@@ -50,23 +48,26 @@ public class TrophyManager : MonoBehaviour
     {
 
     }
-    void Add(string key)
+    async void Add(string key)
     {
         GameObject obj = Instantiate(rootObject, parent, false);
-        Trophy.Trophies.TryGetValue(key, out _Trophy trophy);
+        Trophy.TryGetTrophy(key, out _Trophy trophy);
         if (trophy != null)
         {
-            obj.transform.GetChild(1).GetComponent<Image>().sprite = Trophy.self.GetSprite(key);
+            obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = trophy.name;
+            obj.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = trophy.details;
+            Image image = obj.transform.GetChild(1).GetComponent<Image>();
+
+            image.sprite = await APIManager.instance.Get_rofile_picture(trophy.imageURL);
             if ((int)trophy.status > (int)TrophyStatus.ACHIEVED)
             {
-                obj.transform.GetChild(1).GetComponent<Image>().color = Enable;
+                image.color = Enable;
             }
             else
             {
-                obj.transform.GetChild(1).GetComponent<Image>().color = Disable;
+                image.color = Disable;
             }
-            obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = trophy.name;
-            obj.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = trophy.details;
+
         }
     }
 }

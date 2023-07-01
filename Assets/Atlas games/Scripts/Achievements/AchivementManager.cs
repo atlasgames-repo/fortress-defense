@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,12 +41,15 @@ public class AchivementManager : MonoBehaviour
             }
         }
     }
-    void RunStatus(_Trophy trophy)
+    async void RunStatus(_Trophy trophy)
     {
         Transform root = GameObject.FindGameObjectWithTag("Achivement").transform;
         GameObject obj = Instantiate(DialogBox, root, false);
         obj.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = trophy.details;
-        obj.transform.GetChild(2).GetComponent<Image>().sprite = Trophy.self.GetSprite(trophy._id);
+        // Task.Run(async () =>
+        // {
+        // });
+        obj.transform.GetChild(2).GetComponent<Image>().sprite = await APIManager.instance.Get_rofile_picture(trophy.imageURL);
         obj.GetComponent<Animator>().SetTrigger("In");
         Destroy(obj, Destroy_delay);
     }

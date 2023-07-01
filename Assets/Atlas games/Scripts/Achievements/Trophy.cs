@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Threading.Tasks;
 
 [Serializable]
 public class _Trophy
@@ -47,11 +48,10 @@ public class Trophy : MonoBehaviour
     // Update is called once per frame
     IEnumerator StartEnum()
     {
-        Dictionary<string, _Trophy> dict = Trophies;
         yield return new WaitForSeconds(Start_delay);
         foreach (_Trophy item in _Trophies)
         {
-            bool is_exists = dict.TryGetValue(item._id, out _Trophy trophy);
+            bool is_exists = TryGetTrophy(item._id, out _Trophy trophy);
             if (!is_exists)
                 Add = item;
         }
@@ -61,8 +61,7 @@ public class Trophy : MonoBehaviour
     {
         set
         {
-            Dictionary<string, _Trophy> dict = Trophies;
-            bool is_exist = dict.TryGetValue(value, out _Trophy trophy);
+            bool is_exist = TryGetTrophy(value, out _Trophy trophy);
             if (is_exist)
             {
                 if ((int)trophy.status < (int)TrophyStatus.RECIVED)
@@ -73,22 +72,12 @@ public class Trophy : MonoBehaviour
     }
     public static void SetStatus(string id, TrophyStatus status)
     {
-        Dictionary<string, _Trophy> dict = Trophies;
-        bool is_exist = dict.TryGetValue(id, out _Trophy trophy);
+        bool is_exist = TryGetTrophy(id, out _Trophy trophy);
         if (is_exist)
         {
             trophy.status = status;
             Update = trophy;
         }
-    }
-    public Sprite GetSprite(string Id)
-    {
-        Trophies.TryGetValue(Id, out _Trophy trophy);
-        if (trophy != null)
-            return APIManager.instance.Get_rofile_picture(trophy.imageURL).GetAwaiter().GetResult();
-        else
-            return DefaultSprite;
-
     }
     public static _Trophy Add
     {
@@ -106,8 +95,7 @@ public class Trophy : MonoBehaviour
     {
         set
         {
-            Dictionary<string, _Trophy> dict = Trophies;
-            bool is_exist = dict.TryGetValue(value._id, out _Trophy trophy);
+            bool is_exist = TryGetTrophy(value._id, out _Trophy trophy);
             if (is_exist)
             {
                 Remove = value._id;
@@ -132,6 +120,21 @@ public class Trophy : MonoBehaviour
     {
         get { return JsonConvert.DeserializeObject<Dictionary<string, _Trophy>>(PlayerPrefs.GetString("Trophies", "{}")); }
         set { PlayerPrefs.SetString("Trophies", JsonConvert.SerializeObject(value)); }
+    }
+    public static string[] Keys
+    {
+        get
+        {
+            Dictionary<string, _Trophy> dict = Trophies;
+            return dict.Keys.ToArray();
+        }
+    }
+    public static bool TryGetTrophy(string key, out _Trophy value)
+    {
+        Dictionary<string, _Trophy> dict = Trophies;
+        bool is_exist = dict.TryGetValue(key, out _Trophy trophy);
+        if (trophy != null) { value = trophy; return true; }
+        else { value = null; return false; }
     }
     public static _Trophy[] TrophiesArray
     {

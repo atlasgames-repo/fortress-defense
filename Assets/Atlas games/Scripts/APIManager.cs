@@ -113,6 +113,7 @@ public class APIManager : MonoBehaviour
         Rect rec = new Rect(0, 0, texture.width, texture.height);
         return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
     }
+
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
@@ -275,9 +276,9 @@ public class APIManager : MonoBehaviour
         }
     }
     #endregion
-    private async Task<Texture2D> GetTexture(string route)
+    public async Task<Texture2D> GetTexture(string url)
     {
-        using UnityWebRequest req = UnityWebRequestTexture.GetTexture(uri: route);
+        using UnityWebRequest req = UnityWebRequestTexture.GetTexture(uri: url);
         var opration = req.SendWebRequest();
         while (!opration.isDone)
         {
