@@ -11,7 +11,6 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public EnemyWave[] EnemyWaves;
     public BossUIManager bossManeger;
     int currentWave = 0;
-    public bool endlessGame;
     public List<GameObject> listEnemySpawned = new List<GameObject>();
 
     private void Awake()
@@ -48,13 +47,16 @@ public class LevelEnemyManager : MonoBehaviour, IListener
 
     IEnumerator SpawnEnemyCo()
     {
-       
+
+      
+        
             for (int i = 0; i < EnemyWaves.Length; i++)
             {
                 yield return new WaitForSeconds(EnemyWaves[i].wait);
-
                 for (int j = 0; j < EnemyWaves[i].enemySpawns.Length; j++)
                 {
+                    print("hey");
+
                     var enemySpawn = EnemyWaves[i].enemySpawns[j];
                     yield return new WaitForSeconds(enemySpawn.wait);
                     for (int k = 0; k < enemySpawn.numberEnemy; k++)
@@ -135,13 +137,15 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                 }
             
             //check all enemy killed
-            while (isEnemyAlive())
-            {
-                yield return new WaitForSeconds(0.1f);
-            }
+         
+                while (isEnemyAlive())
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
 
-            yield return new WaitForSeconds(0.5f);
-            GameManager.Instance.Victory();
+                yield return new WaitForSeconds(0.5f);
+                GameManager.Instance.Victory();
+          
         }
     
         
