@@ -6,39 +6,59 @@ using Random = UnityEngine.Random;
 
 public class EndlessWaveGenerator : LevelEnemyManager, IListener
 {
-    [HideInInspector]public EnemyWave wave;
-    [HideInInspector] public List<EnemySpawn> _enemySpawn;
-    public GameObject[] enemies;
-    public float increaseDifficultyRate = 0.4f;
-    private float _currentDifficultyRate = 0f;
-    [HideInInspector]public float[] _enemyCounts;
-    public float InitialWaitAmount = 3;
-    [HideInInspector] public int _waveCount;
- 
+    [Serializable]
+    public class EnemyClass
+    {
+        public GameObject enemyObject;
+        public int initialCount;
+    }
+
+    [SerializeField]private EnemyClass[] enemiesList;
+    public SpriteRenderer backgroundSprite;
+    public Sprite backgroundImage;
+
+    [HideInInspector] public EnemyWave wave;
+    [HideInInspector] public List<EnemySpawn> enemySpawn;
+    private GameObject[] _enemies;
+    public float increaseEnemySpeedDifficultyRate = 0.05f;
+    public float increaseEnemyAttackDifficultyRate = 0.1f;
+    public float increaseEnemyHealthDifficultyRate = 0.1f;
+    public float increaseEnemyAmountDifficultyRate = 0.4f;
+    public float increaseEnemyWaitDifficultyRate = 0.2f;
+    private float[] _enemyCounts;
+    public float initialWaitAmount = 3;
+    [HideInInspector] public int waveCount;
+
     int totalEnemy, currentSpawn;
 
     void Start()
     {
-        _enemyCounts = new float[enemies.Length];
-        _enemyCounts[0] = 2;
-        _enemyCounts[1] = 1;
+        _enemies = new GameObject[enemiesList.Length];
+        _enemyCounts = new float[enemiesList.Length];
+       for (int a = 0; a < enemiesList.Length; a++)
+       {
+           _enemyCounts[a] = enemiesList[a].initialCount;
+           _enemies[a] = enemiesList[a].enemyObject;
+       }
+        backgroundSprite.sprite = backgroundImage;
+       
     }
 
 
     // generate a new wave harder than last
-    public void GenerateWave()
+     private void GenerateWave()
     {
-        _enemySpawn.Clear();
+        enemySpawn.Clear();
 
         // check if ran out of new enemies 
         int enemiesInUse;
-        if (_currentDifficultyRate + 1 < enemies.Length)
+        if ((waveCount * increaseEnemyAmountDifficultyRate) + 1 < _enemies.Length)
         {
-            enemiesInUse = Convert.ToInt32(Mathf.Round(_currentDifficultyRate + 1));
+            enemiesInUse = Convert.ToInt32(Mathf.Round((waveCount * increaseEnemyAmountDifficultyRate) + 1));
         }
         else
         {
-            enemiesInUse = enemies.Length;
+            enemiesInUse = _enemies.Length;
         }
 
         // add new enemies to wave spwan 
@@ -47,47 +67,44 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
         for (int i = 0; i < enemiesInUse; i++)
         {
             EnemySpawn newSpawn = new EnemySpawn();
-            newSpawn.enemy = enemies[i];
-            _enemyCounts[i] += increaseDifficultyRate;
+            newSpawn.enemy = _enemies[i];
+            _enemyCounts[i] += increaseEnemyAmountDifficultyRate;
             newSpawn.numberEnemy = Convert.ToInt32(Mathf.Round(_enemyCounts[i]));
-            newSpawn.wait = 1 / (_currentDifficultyRate + increaseDifficultyRate);
+            newSpawn.wait = 1 / ((waveCount+1) * increaseEnemyWaitDifficultyRate );
             newSpawn.customHealth =
-                Convert.ToInt32(Mathf.Round(enemies[i].GetComponent<SmartEnemyGrounded>().health *
-                                            _currentDifficultyRate));
+                Convert.ToInt32(Mathf.Round(_enemies[i].GetComponent<SmartEnemyGrounded>().health *
+                                            waveCount * increaseEnemyHealthDifficultyRate));
             newSpawn.customSpeed =
-                Convert.ToInt32(Mathf.Round(enemies[i].GetComponent<SmartEnemyGrounded>().walkSpeed *
-                                            _currentDifficultyRate));
+                Convert.ToInt32(Mathf.Round(_enemies[i].GetComponent<SmartEnemyGrounded>().walkSpeed *
+                                            waveCount * increaseEnemySpeedDifficultyRate));
 
 
-         
-             var rangeAttack = enemies[i].GetComponent<EnemyRangeAttack>();
-             if (rangeAttack)
-             {
-                 newSpawn.customAttackDmg += _currentDifficultyRate * rangeAttack.damage;
-               
-             }
-             var meleeAttack = enemies[i].GetComponent<EnemyMeleeAttack>();
-             if (meleeAttack)
-             {
-                 newSpawn.customAttackDmg += _currentDifficultyRate *  meleeAttack.dealDamage;
-             }
-             var throwAttack = enemies[i].GetComponent<EnemyThrowAttack>();
-             if (throwAttack)
-             {
-                 newSpawn.customAttackDmg += _currentDifficultyRate *    throwAttack.damage;
-             }
+            var rangeAttack = _enemies[i].GetComponent<EnemyRangeAttack>();
+            if (rangeAttack)
+            {
+                newSpawn.customAttackDmg += (waveCount * increaseEnemyAttackDifficultyRate) * rangeAttack.damage;
+            }
 
-            
+            var meleeAttack = _enemies[i].GetComponent<EnemyMeleeAttack>();
+            if (meleeAttack)
+            {
+                newSpawn.customAttackDmg += (waveCount * increaseEnemyAttackDifficultyRate) * meleeAttack.dealDamage;
+            }
+
+            var throwAttack = _enemies[i].GetComponent<EnemyThrowAttack>();
+            if (throwAttack)
+            {
+                newSpawn.customAttackDmg += (waveCount * increaseEnemyAttackDifficultyRate) * throwAttack.damage;
+            }
 
 
-            _enemySpawn.Add(newSpawn);
+            enemySpawn.Add(newSpawn);
         }
 
         // set wave data ready for usage in LevelEnemyManager.cs for creation
-        _waveCount++;
-        _currentDifficultyRate = _waveCount * increaseDifficultyRate;
-        wave.wait = InitialWaitAmount;
-        wave.enemySpawns = _enemySpawn.ToArray();
+        waveCount++;
+        wave.wait = initialWaitAmount;
+        wave.enemySpawns = enemySpawn.ToArray();
     }
 
     public new void IPlay()
@@ -192,17 +209,17 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                 yield return new WaitForSeconds(0.1f);
             }
 
-           
-                foreach(GameObject enemy in listEnemySpawned)
-                {
-                    Destroy(enemy);
-                }
-                listEnemySpawned.Clear();
-                GenerateWave();
-                EnemyWaves = new EnemyWave[1];
-                EnemyWaves[0] = wave;
-                StartCoroutine(SpawnEnemyCo());
-          
+
+            foreach (GameObject enemy in listEnemySpawned)
+            {
+                Destroy(enemy);
+            }
+
+            listEnemySpawned.Clear();
+            GenerateWave();
+            EnemyWaves = new EnemyWave[1];
+            EnemyWaves[0] = wave;
+            StartCoroutine(SpawnEnemyCo());
         }
     }
 

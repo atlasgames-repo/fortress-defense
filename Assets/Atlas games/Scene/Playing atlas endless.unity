@@ -2345,6 +2345,12 @@ MonoBehaviour:
   DIFF: 0
   AZDPS: 0
   MAX_DIFF: 10000
+--- !u!212 &623368472 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5819173856168309435, guid: fbb3b7f7fe0265040a38823a6e6f5037,
+    type: 3}
+  m_PrefabInstance: {fileID: 5819173854667223568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &649034434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4646,30 +4652,65 @@ MonoBehaviour:
   EnemyWaves: []
   bossManeger: {fileID: 0}
   listEnemySpawned: []
+  enemiesList:
+  - enemyObject: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
+      type: 3}
+    initialCount: 2
+  - enemyObject: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
+      type: 3}
+    initialCount: 1
+  - enemyObject: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 3505094654918231060, guid: 93b3a96647087d54085a68ddee065188,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 8735511819807008694, guid: 4938ba1c1070b8b4e8cda5c6fb4cf6c0,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 1384076305360503900, guid: 71d92f6a73d83a648b515b6a3ba1a113,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 6513545254321279005, guid: 2c5556c3a69136f43b0397e19407d0e2,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 6095283598343155490, guid: 1d22479a8a9a454499d8b5f1c77eea2d,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 3924842065213229019, guid: e9c59e2fd78df8346a4f538953463f51,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 5848783413869001439, guid: 47a3389ea7fcd80408b82752901fef1c,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 7750709616934011868, guid: 867afff3257836d4083e111950f04e86,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 7965514550485599631, guid: 0b3d1e7795ef1cf40b031e4821bd133c,
+      type: 3}
+    initialCount: 0
+  - enemyObject: {fileID: 8885830814786365834, guid: 8a42c3f4494766942b7362c1737df6f9,
+      type: 3}
+    initialCount: 0
+  backgroundSprite: {fileID: 623368472}
+  backgroundImage: {fileID: 21300000, guid: 5be1e0fc71c022242992f95a2e6ef815, type: 3}
   wave:
     wait: 3
     enemySpawns: []
-  _enemySpawn: []
-  enemies:
-  - {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd, type: 3}
-  - {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d, type: 3}
-  - {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03, type: 3}
-  - {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701, type: 3}
-  - {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2, type: 3}
-  - {fileID: 3505094654918231060, guid: 93b3a96647087d54085a68ddee065188, type: 3}
-  - {fileID: 8735511819807008694, guid: 4938ba1c1070b8b4e8cda5c6fb4cf6c0, type: 3}
-  - {fileID: 1384076305360503900, guid: 71d92f6a73d83a648b515b6a3ba1a113, type: 3}
-  - {fileID: 6513545254321279005, guid: 2c5556c3a69136f43b0397e19407d0e2, type: 3}
-  - {fileID: 6095283598343155490, guid: 1d22479a8a9a454499d8b5f1c77eea2d, type: 3}
-  - {fileID: 3924842065213229019, guid: e9c59e2fd78df8346a4f538953463f51, type: 3}
-  - {fileID: 5848783413869001439, guid: 47a3389ea7fcd80408b82752901fef1c, type: 3}
-  - {fileID: 7750709616934011868, guid: 867afff3257836d4083e111950f04e86, type: 3}
-  - {fileID: 7965514550485599631, guid: 0b3d1e7795ef1cf40b031e4821bd133c, type: 3}
-  - {fileID: 8885830814786365834, guid: 8a42c3f4494766942b7362c1737df6f9, type: 3}
-  increaseDifficultyRate: 0.4
-  _enemyCounts: []
-  InitialWaitAmount: 3
-  _waveCount: 0
+  enemySpawn: []
+  increaseEnemySpeedDifficultyRate: 0.05
+  increaseEnemyAttackDifficultyRate: 0.1
+  increaseEnemyHealthDifficultyRate: 0.1
+  increaseEnemyAmountDifficultyRate: 0.4
+  increaseEnemyWaitDifficultyRate: 0.2
+  initialWaitAmount: 3
+  waveCount: 0
 --- !u!1 &1356289288
 GameObject:
   m_ObjectHideFlags: 0
