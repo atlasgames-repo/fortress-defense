@@ -44,6 +44,11 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
         backgroundSprite.sprite = backgroundImage;
     }
 
+
+    
+
+
+    // generate a new wave harder than last
     private void GenerateWave()
     {
         enemySpawn.Clear();
@@ -239,4 +244,5 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
         return false;
     }
     
+
 }
