@@ -13,7 +13,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
         public int initialCount;
     }
 
-    [SerializeField]private EnemyClass[] enemiesList;
+    [SerializeField] private EnemyClass[] enemiesList;
     public SpriteRenderer backgroundSprite;
     public Sprite backgroundImage;
 
@@ -35,18 +35,18 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     {
         _enemies = new GameObject[enemiesList.Length];
         _enemyCounts = new float[enemiesList.Length];
-       for (int a = 0; a < enemiesList.Length; a++)
-       {
-           _enemyCounts[a] = enemiesList[a].initialCount;
-           _enemies[a] = enemiesList[a].enemyObject;
-       }
+        for (int a = 0; a < enemiesList.Length; a++)
+        {
+            _enemyCounts[a] = enemiesList[a].initialCount;
+            _enemies[a] = enemiesList[a].enemyObject;
+        }
         backgroundSprite.sprite = backgroundImage;
-       
+
     }
 
 
     // generate a new wave harder than last
-     private void GenerateWave()
+    private void GenerateWave()
     {
         enemySpawn.Clear();
 
@@ -70,7 +70,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             newSpawn.enemy = _enemies[i];
             _enemyCounts[i] += increaseEnemyAmountDifficultyRate;
             newSpawn.numberEnemy = Convert.ToInt32(Mathf.Round(_enemyCounts[i]));
-            newSpawn.wait = 1 / ((waveCount+1) * increaseEnemyWaitDifficultyRate );
+            newSpawn.wait = 1 / ((waveCount + 1) * increaseEnemyWaitDifficultyRate);
             newSpawn.customHealth =
                 Convert.ToInt32(Mathf.Round(_enemies[i].GetComponent<SmartEnemyGrounded>().health *
                                             waveCount * increaseEnemyHealthDifficultyRate));
