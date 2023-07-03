@@ -123,6 +123,12 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
         EnemyWaves = new EnemyWave[1];
         EnemyWaves[0] = wave;
 
+        foreach (GameObject enemy in listEnemySpawned)
+        {
+            Destroy(enemy);
+        }
+
+        listEnemySpawned.Clear();
 
         for (int i = 0; i < EnemyWaves.Length; i++)
         {
@@ -213,21 +219,15 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                 yield return new WaitForSeconds(0.1f);
             }
 
+            EnemyWaves = new EnemyWave[0];
 
-            foreach (GameObject enemy in listEnemySpawned)
-            {
-                Destroy(enemy);
-            }
 
-            listEnemySpawned.Clear();
-            GenerateWave();
-            EnemyWaves = new EnemyWave[1];
-            EnemyWaves[0] = wave;
+
         }
     }
-    private void Update()
+     void Update()
     {
-        while (!IsEnemyAlive())
+        if (EnemyWaves.Length == 0)
         {
             StartCoroutine(SpawnEnemyCo());
         }
