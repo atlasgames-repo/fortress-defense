@@ -14,6 +14,7 @@ public class Menu_Victory : MonoBehaviour
     public GameObject Star1;
     public GameObject Star2;
     public GameObject Star3;
+    public GameObject StarsParent;
     public GameObject VictoryImage;
     public GameObject ButtonImage;
 
@@ -31,6 +32,7 @@ public class Menu_Victory : MonoBehaviour
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
+        StarsParent.SetActive(false);
         VictoryLinesParticalSystem.Stop();
         VictoryStarsParticalSystem.Stop();
     }
@@ -41,7 +43,7 @@ public class Menu_Victory : MonoBehaviour
         VictoryLinesParticalSystem.Play();
         VictoryStarsParticalSystem.Play();
 
-        //VictoryParticalSystemAnimation
+
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
@@ -84,6 +86,7 @@ public class Menu_Victory : MonoBehaviour
         VictoryImage.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);
+        StarsParent.SetActive(true);
         ButtonImage.SetActive(true);
         Menu.SetActive(true);
         Restart.SetActive(true);
