@@ -14,20 +14,34 @@ public class Menu_Victory : MonoBehaviour
     public GameObject Star1;
     public GameObject Star2;
     public GameObject Star3;
+    public GameObject VictoryImage;
+    public GameObject ButtonImage;
+
+    // Effects
+    public ParticleSystem VictoryLinesParticalSystem;
+    public ParticleSystem VictoryStarsParticalSystem;
 
     void Awake()
     {
+        VictoryImage.SetActive(false);
+        ButtonImage.SetActive(false);
         Menu.SetActive(false);
         Restart.SetActive(false);
         Next.SetActive(false);
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
+        VictoryLinesParticalSystem.Stop();
+        VictoryStarsParticalSystem.Stop();
     }
 
     IEnumerator Start()
     {
         SoundManager.PlaySfx(SoundManager.Instance.soundVictoryPanel);
+        VictoryLinesParticalSystem.Play();
+        VictoryStarsParticalSystem.Play();
+
+        //VictoryParticalSystemAnimation
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
@@ -61,12 +75,16 @@ public class Menu_Victory : MonoBehaviour
                 SoundManager.PlaySfx(SoundManager.Instance.soundStar3);
                 GameManager.Instance.levelStarGot = 3;
             }
-            //}
+
         }
         if (GlobalValue.levelType == Level.LeveType.MISSION)
             GlobalValue.LevelStar(GlobalValue.levelPlaying, GameManager.Instance.levelStarGot);
-        yield return new WaitForSeconds(0.5f);
 
+        yield return new WaitForSeconds(0.1f);
+        VictoryImage.SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+        ButtonImage.SetActive(true);
         Menu.SetActive(true);
         Restart.SetActive(true);
 
