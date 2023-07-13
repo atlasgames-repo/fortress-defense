@@ -65,7 +65,6 @@ public class GameTutorial : MonoBehaviour
 
     [HideInInspector]public string tutorialName;
 
-   public List<Button> buttons = new List<Button>();
 
     // start game and open tutorial automatically if never watched 
     void Start()
