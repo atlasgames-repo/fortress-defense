@@ -38,11 +38,13 @@ public class GameTutorial : MonoBehaviour
     public GameObject dialogBackground;
     public Transform pointerObject;
     public Transform pointerIcon;
+    public GameObject clickPreventer;
     private int _tipOrder;
     public float speed = 30f;
     private float _maxDistance = 0.01f;
-
-
+    private int _childIndex;
+    private Transform _buttonParent;
+    private GameObject _uiPartClone;
     [Serializable]
     public class TipSetup
     {
@@ -56,15 +58,19 @@ public class GameTutorial : MonoBehaviour
         public float scale;
         public string type;
         public bool isUiInteractible;
+        public bool pauseGame;
     }
 
-    public string tutorialName;
+    public float initialWait = 0.5f;
+
+    [HideInInspector]public string tutorialName;
 
    public List<Button> buttons = new List<Button>();
 
     // start game and open tutorial automatically if never watched 
     void Start()
     {
+        clickPreventer.SetActive(false);
         _tipOrder = -1;
         StartCoroutine(OpenTutorialAtStart());
         pointerIcon.gameObject.SetActive(false);
@@ -77,7 +83,7 @@ public class GameTutorial : MonoBehaviour
 // open tutorial if never watched
     IEnumerator OpenTutorialAtStart()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(initialWait);
         StartTutorial();
         
         //makes sure that tutorial doesnt play anymore at the start of the scene 
@@ -129,11 +135,15 @@ public class GameTutorial : MonoBehaviour
                     
                     if (!prevSetup.isUiInteractible)
                     {
-                        foreach (Button button in buttons)
-                        { 
-                            button.interactable = true;
-                        }
-                        buttons.Clear();
+                        prevSetup.uiPart.transform.SetParent(_buttonParent);
+                        prevSetup.uiPart.transform.SetSiblingIndex(_childIndex);
+                     Destroy(_uiPartClone);
+                        clickPreventer.SetActive(false);
+                    }
+
+                    if (prevSetup.pauseGame)
+                    {
+                        Time.timeScale = 1;
                     }
                     prevSetup.uiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
                     break;
@@ -160,17 +170,13 @@ public class GameTutorial : MonoBehaviour
                 case "Task":
                     if (!nextSetup.isUiInteractible)
                     {
-                        Button[] buttonsActive = FindObjectsOfType<Button>();
-                        foreach (Button button in buttonsActive)
-                        {
-                            if (button.IsInteractable())
-                            {
-                                button.interactable = false;
-                                buttons.Add(button);
-                            }
-                        }   
+                        _buttonParent = nextSetup.uiPart.transform.parent;
+                        _childIndex = nextSetup.uiPart.transform.GetSiblingIndex();
+                        clickPreventer.SetActive(true);
+                        _uiPartClone = Instantiate(nextSetup.uiPart.gameObject, nextSetup.uiPart.position, nextSetup.uiPart.rotation,
+                            nextSetup.uiPart.parent);
+                        nextSetup.uiPart.transform.SetParent(clickPreventer.transform);
                     }
-                    nextSetup.uiPart.GetComponent<Button>().interactable = true;
                     nextSetup.uiPart.GetComponent<Button>().onClick.AddListener(NextTip);
                     Thread.Sleep(Mathf.RoundToInt(nextSetup.delay * 1000));
                     pointerObject.gameObject.SetActive(true);
@@ -214,7 +220,14 @@ public class GameTutorial : MonoBehaviour
                     darkBackground.SetActive(false);
                     mask.gameObject.SetActive(false);
                     dialogBackground.SetActive(false);
-                    Time.timeScale = 1;
+                    if (nextSetup.pauseGame)
+                    {
+                        Time.timeScale = 0;
+                    }
+                    else
+                    {
+                        Time.timeScale = 1;
+                    }
                     break;
                 case "Tip":
                     nextSetup.tipAnimator.SetTrigger(nextSetup.openTrigger);

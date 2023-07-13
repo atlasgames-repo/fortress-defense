@@ -29,6 +29,7 @@ public class TipEditor : Editor
     private Transform _uiPart;
     private float _scale = 0;
     private bool _isUiInteractible;
+    private bool _isGamePaused = false;
 
     // properties
     public List<GameTutorial.TipSetup> setups;
@@ -70,6 +71,7 @@ public class TipEditor : Editor
         else if (_gt.type == GameTutorial.TipType.Task)
         {
             _isUiInteractible = EditorGUILayout.Toggle("Can Interact with UI ", _isUiInteractible);
+            _isGamePaused = EditorGUILayout.Toggle("Pause game showing task", _isGamePaused);
             EditorGUILayout.PropertyField(_direction);
             _delay = EditorGUILayout.FloatField("Start Pointing delay", _delay);
             _buttonTransform = (Button)EditorGUILayout.ObjectField("Target Button", _buttonTransform, typeof(Button), true);
@@ -109,6 +111,7 @@ public class TipEditor : Editor
                     _setup.pointerDirection = _gt.direction.ToString();
                     _setup.type = _gt.type.ToString();
                     _setup.isUiInteractible = _isUiInteractible;
+                    _setup.pauseGame = _isGamePaused;
                     _setup.uiPart = _buttonTransform.transform;
                     setups.Add(_setup);
                 }
@@ -158,6 +161,7 @@ public class TipEditor : Editor
             _setup.scale = 0;
             _setup.isUiInteractible = false;
             _setup.type = null;
+            _setup.pauseGame = false;
         }
         catch (Exception e)
         {
