@@ -2146,8 +2146,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000076293945}
-  m_SizeDelta: {x: 1920, y: 1081}
+  m_AnchoredPosition: {x: 0, y: -0.24754}
+  m_SizeDelta: {x: 1920, y: 1080.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &569708540
 Animator:
@@ -4219,7 +4219,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 'In the aftermath of an apocalyptic event, where mutation has affected
+    all beings, five archers from different tribes gather. They have embarked on
+    a journey to learn the ancient ways of the alchemists, seeking knowledge for
+    their survival. As they delve into the mystical arts, different kinds of magic
+    begin to manifest. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4246,8 +4250,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.19
-  m_fontSizeBase: 34.19
+  m_fontSize: 50.52
+  m_fontSizeBase: 50.52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4773,6 +4777,7 @@ GameObject:
   - component: {fileID: 1350690316}
   - component: {fileID: 1350690318}
   - component: {fileID: 1350690317}
+  - component: {fileID: 1350690319}
   m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
@@ -4796,10 +4801,10 @@ RectTransform:
   m_Father: {fileID: 1872998979}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0021515}
-  m_SizeDelta: {x: 1920, y: 1081}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.0020751953}
+  m_SizeDelta: {x: 0, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1350690317
 MonoBehaviour:
@@ -4839,6 +4844,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350690315}
   m_CullTransparentMesh: 1
+--- !u!114 &1350690319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350690315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0
 --- !u!1 &1361777809
 GameObject:
   m_ObjectHideFlags: 0
@@ -6771,20 +6789,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e498a71b8792f429c6311ccce43b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  captions:
+  - captionText: 'In the aftermath of an apocalyptic event, where mutation has affected
+      all beings, five archers from different tribes gather. They have embarked on
+      a journey to learn the ancient ways of the alchemists, seeking knowledge for
+      their survival. As they delve into the mystical arts, different kinds of magic
+      begin to manifest. '
+    captionTime: 1
+    captionWait: 4
+  - captionText: 'United by their common purpose, they join forces to make a stand
+      against the relentless mutants that threaten their existence. With unwavering
+      determination, they establish strongholds strategically positioned to wage
+      a fierce battle. In a twist of fate, they discover the power of alchemy to
+      awaken the dormant spirit within the mutants, turning them into formidable
+      allies in the fight for their shared future. '
+    captionTime: 1.5
+    captionWait: 4.5
+  - captionText: ' A vivid portrayal of this extraordinary alliance, capturing the
+      essence of their resilience, cooperation, and the unyielding spirit of hope.
+      The artwork, a masterful illustration, imbues the scene with life and detail,
+      evoking a sense of awe and wonderment.'
+    captionTime: 1
+    captionWait: 5
   storyHolder: {fileID: 347892904}
-  caption: In the aftermath of an apocalyptic event, where mutation has affected
-    all beings, five archers from different tribes gather. They have embarked on
-    a journey to learn the ancient ways of the alchemists, seeking knowledge for
-    their survival. As they delve into the mystical arts, different kinds of magic
-    begin to manifest. United by their common purpose, they join forces to make a
-    stand against the relentless mutants that threaten their existence. With unwavering
-    determination, they establish strongholds strategically positioned to wage a
-    fierce battle. In a twist of fate, they discover the power of alchemy to awaken
-    the dormant spirit within the mutants, turning them into formidable allies in
-    the fight for their shared future. A vivid portrayal of this extraordinary alliance,
-    capturing the essence of their resilience, cooperation, and the unyielding spirit
-    of hope. The artwork, a masterful illustration, imbues the scene with life and
-    detail, evoking a sense of awe and wonderment.
   text: {fileID: 1145817531}
   slides:
   - image: {fileID: 24616781}
@@ -6796,8 +6823,7 @@ MonoBehaviour:
   - image: {fileID: 1852875157}
     time: 4
     fadeTime: 2
-  captionTime: 7
-  captionWait: 0.5
+  captionWait: 3
   captionAnimator: {fileID: 569708540}
 --- !u!1 &1877169186
 GameObject:

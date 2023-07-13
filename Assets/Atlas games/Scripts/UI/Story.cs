@@ -14,13 +14,19 @@ public class Story : MonoBehaviour
         public float time;
         public float fadeTime;
     }
+    [Serializable]
+    public class caption
+    {
+        public string captionText;
+        public float captionTime;
+        public float captionWait;
+    }
 
+    public caption[] captions;
     public Transform storyHolder;
-    public string caption;
     public TextMeshProUGUI text;
     public StorySlide[] slides;
 
-    public float captionTime = 4f;
     public float captionWait =1.5f; 
     public Animator captionAnimator;
     private bool _playing = false;
@@ -37,6 +43,7 @@ public class Story : MonoBehaviour
 
         StartCoroutine(StartStory());
         StartCoroutine(StartCaption());
+        
     }
 
     IEnumerator StartStory()
@@ -47,7 +54,6 @@ public class Story : MonoBehaviour
             StartCoroutine(FadeSlide(slides[i].fadeTime, slides[i].image.GetComponent<CanvasGroup>()));
             if (i == slides.Length - 1)
             {
-                print("Hi");
                 captionAnimator.gameObject.AddComponent<CanvasGroup>();
                 StartCoroutine(FadeSlide(slides[i].fadeTime, captionAnimator.gameObject.GetComponent<CanvasGroup>()));
             }
@@ -78,30 +84,35 @@ public class Story : MonoBehaviour
 
     IEnumerator StartCaption()
     {
+    
         yield return new WaitForSecondsRealtime(captionWait);
-        StartCoroutine(TypeText());
-        
-
-    }
-    private IEnumerator TypeText()
-    {
         captionAnimator.gameObject.SetActive(true);
         captionAnimator.SetTrigger("Play");
-        float typingSpeed = captionTime / caption.Length;
+        for (int i = 0; i < captions.Length; i++)
+        {
+            text.text = "";
+            StartCoroutine(TypeText(captions[i].captionText, captions[i].captionTime));
+            yield return new WaitForSecondsRealtime(captions[i].captionTime + captions[i].captionWait);
+        }
+    }
+    private IEnumerator TypeText(string captionString,float captionTime)
+    {
+        float typingSpeed = captionTime / captionString.Length;
         float elapsedTime = 0.0f;
         int charactersTyped = 0;
 
         while (elapsedTime < captionTime)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            int charactersToType = Mathf.FloorToInt((elapsedTime / captionTime) * caption.Length) - charactersTyped;
+            int charactersToType = Mathf.FloorToInt((elapsedTime / captionTime) * captionString.Length) - charactersTyped;
             charactersTyped += charactersToType;
 
-            text.text = caption.Substring(0, charactersTyped);
+            text.text = captionString.Substring(0, charactersTyped);
 
             yield return new WaitForSecondsRealtime(charactersToType * typingSpeed);
         }
 
-        text.text = caption;
+        text.text = captionString;
+        yield break;
     }
 }
