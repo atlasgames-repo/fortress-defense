@@ -9,6 +9,7 @@ using System.Threading;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 public class APIManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class APIManager : MonoBehaviour
     public Color ErrorColor, WarningColor;
     [ReadOnly] public LifeTTR lifeTTR;
 
-    private string pattern = @"{.*}";
+    private string pattern = @"{.*}", patternList = @"\[.*\]";
 
     public int lifeTTL = 30;
     public int maxLife = 5;
@@ -82,7 +83,15 @@ public class APIManager : MonoBehaviour
         string param = type != null ? $"?type={type}" : "";
         return await Get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: User.Token);
     }
-
+    public async Task Updates_achivement(int status = 0, string id = "0")
+    {
+        string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
+        await Get<object>(route: "/achivements/add", auth_token: User.Token,parameters: param);
+    }
+    public async Task<AchievementModel[]> Get_achivements()
+    {
+        return await Get<AchievementModel[]>(route: "/achivements", auth_token: User.Token);
+    }
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
         await GetAssetBundle(name, address, progress);
@@ -208,7 +217,8 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                // res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(Clean_json(req.downloadHandler.text));
             }
             catch (System.Exception e)
             {
@@ -261,7 +271,8 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                // res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(Clean_json(req.downloadHandler.text));
             }
             catch (System.Exception)
             {
@@ -340,12 +351,21 @@ public class APIManager : MonoBehaviour
     {
         RegexOptions options = RegexOptions.Multiline;
         string value = "{}";
+        MatchCollection Listmatches = Regex.Matches(data, patternList, options);
+        if (Listmatches.Count > 0)
+            return data;
+
         foreach (Match m in Regex.Matches(data, pattern, options))
         {
             value = m.Value;
         }
 
         return value;
+    }
+
+    internal void Updates_achivement(string id, int new_status)
+    {
+        throw new NotImplementedException();
     }
 }
 

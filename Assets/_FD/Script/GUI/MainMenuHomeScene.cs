@@ -8,7 +8,7 @@ public class MainMenuHomeScene : MonoBehaviour
     public static MainMenuHomeScene Instance;
     public GameObject MapUI;
     public GameObject ShopUI;
-    public GameObject TrophyUI;
+    public GameObject TrophyUI,TrophyUIV2;
     public GameObject EventUI, CoinShopUI, UpgradeUI;
 
     public GameObject Loading;
@@ -156,6 +156,11 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         SoundManager.Click();
         TrophyUI.SetActive(open);
+    }
+    public void OpenTrophyV2(bool open)
+    {
+        SoundManager.Click();
+        TrophyUIV2.SetActive(open);
     }
     public void OpenEvent(bool open)
     {
