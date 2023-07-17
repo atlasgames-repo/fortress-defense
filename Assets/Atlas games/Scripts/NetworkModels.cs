@@ -111,9 +111,9 @@ public class UserUpdate : BaseModel
     }
     public UserUpdate(int _gem = 0, int _uxp = 0, int _coin = 0)
     {
-        gem = _gem == 0 ? User.UserProfile.gem : _gem;
-        uxp = _uxp == 0 ? User.UserProfile.uxp : _uxp;
-        coin = _coin == 0 ? User.UserProfile.coin : _coin;
+        gem = _gem;
+        uxp = _uxp;
+        coin = _coin;
     }
 
 }

@@ -40,6 +40,7 @@ public class VictoryMenuEvents : MonoBehaviour
         ExpTxt.text = Exp.ToString();
         TwoerHealthTxt.text = TwoerHealth.ToString();
         StarTxt.text = Star.ToString();
+        User.Coin = Exp + TwoerHealth + Star;
         yield return new WaitForSeconds(ItemDelay*2);
         StartCoroutine(Convert(ExpTxt,Exp,()=>{
             StartCoroutine(Convert(TwoerHealthTxt,TwoerHealth,()=>{
@@ -73,7 +74,6 @@ public class VictoryMenuEvents : MonoBehaviour
         {
             CoinTxt.color = DefaultColor;
             CoinTxt.fontSize = DefaultScale;
-            User.Coin = Coin;
         }
         StopSound = true;
         _ref.transform.parent.gameObject.SetActive(false);

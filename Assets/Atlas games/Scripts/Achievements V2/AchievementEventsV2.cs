@@ -15,7 +15,7 @@ public class AchievementEventsV2
     }
     public AchievementEventsV2(AchievementModel _model){
         model = _model;
-        model.startPoint = _model.startPoint; 
+        model.startPoint = _model.startPoint > 0 ? _model.startPoint: Value; 
     }
     public int Value{
         get{
