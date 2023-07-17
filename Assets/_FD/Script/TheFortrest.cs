@@ -25,6 +25,10 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     [ReadOnly] public float extraHealth = 0;
     [ReadOnly] public float currentHealth;
 
+
+    [Header("Sounds")]
+    public AudioClip DestroyFortrestSound;
+
     
     public SpriteRenderer fortrestSprite;
 
@@ -90,6 +94,9 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
         {
             //if (healthCharacter == HEALTH_CHARACTER.PLAYER)
                 GameManager.Instance.GameOver();
+
+            SoundManager.PlaySfx(DestroyFortrestSound, 1f);
+
             //else
             //    GameManager.Instance.Victory();
         }

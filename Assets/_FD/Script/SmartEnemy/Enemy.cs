@@ -233,10 +233,10 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     }
 
-    void FinishSpawning()
-    {
-        if (enemyState == ENEMYSTATE.SPAWNING && isPlaying)
+    void FinishSpawning() {
+        if (enemyState == ENEMYSTATE.SPAWNING && isPlaying){
             SetEnemyState(ENEMYSTATE.WALK);
+        }
     }
 
     public void SetSkeletonAnimation(string name, bool looped = false, int trackIndex = 0)
@@ -347,6 +347,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         isPlayerDetected = false;
         SetEnemyState(ENEMYSTATE.DEATH);
 
+
         if (GetComponent<GiveCoinWhenDie>())
         {
             GetComponent<GiveCoinWhenDie>().GiveCoin();
@@ -358,7 +359,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         }
 
         if (dieFX)
+        {
             Instantiate(dieFX, transform.position, dieFX.transform.rotation);
+        }
 
         if (enemyEffect == ENEMYEFFECT.FREEZE && dieFrozenFX)
             SpawnSystemHelper.GetNextObject(dieFrozenFX, true).transform.position = hitPos;

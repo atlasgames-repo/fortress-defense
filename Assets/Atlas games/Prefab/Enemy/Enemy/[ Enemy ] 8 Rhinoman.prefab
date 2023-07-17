@@ -101,8 +101,9 @@ GameObject:
   - component: {fileID: -8156948405148906701}
   - component: {fileID: 6159341402180863545}
   - component: {fileID: 7284110223270760973}
+  - component: {fileID: 3401582274350673272}
   m_Layer: 10
-  m_Name: '[Enemy] 8 Rhinoman'
+  m_Name: '[ Enemy ] 8 Rhinoman'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
+  is_boss: 0
   useGravity: 0
   gravity: 35
   walkSpeed: 0.8
@@ -255,6 +257,10 @@ MonoBehaviour:
   randomBloodPuddlePoint: {x: 0.5, y: 0.25}
   healthBarOffset: {x: 0, y: 1.5}
   enemyState: 0
+  weaknessMultiplier: 1
+  strengthMultiplier: 1
+  weakness: 0
+  strength: 0
   canBeFreeze: 1
   dieFrozenFX: {fileID: 0}
   canBeBurn: 1
@@ -275,6 +281,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d828c6f696d736348b98d90b6aa3fcb9, type: 3}
   soundDieBlowVol: 0.5
   soundDieBlow: []
+  BossMusic: {fileID: 0}
   soundSpawnVol: 0.5
   soundSpawn: []
   currentHealth: 0
@@ -282,9 +289,13 @@ MonoBehaviour:
   checkTarget: {fileID: 0}
   isPlayerDetected: 0
   delayChasePlayerWhenDetect: 0
+  is_spine: 0
+  skeletonAnimation: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  deadSoundAfterEnemyDie: {fileID: 8300000, guid: 728f42b76f3e7bb43852a60504cfb2ed,
+    type: 3}
 --- !u!114 &5679737192734217279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +381,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expMin: 25
   expMax: 30
+--- !u!114 &3401582274350673272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384076305360503900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deac127726f16204ca764c1a9be80522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1384076306607587853
 GameObject:
   m_ObjectHideFlags: 0

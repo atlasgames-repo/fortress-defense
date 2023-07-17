@@ -34,6 +34,9 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     EnemyCallMinion callMinion;
     SpawnItemHelper spawnItem;
 
+    public AudioClip deadSoundAfterEnemyDie;
+    
+
     public override void Start()
     {
         base.Start();
@@ -85,6 +88,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
         if (enemyState != ENEMYSTATE.WALK || GameManager.Instance.State != GameManager.GameState.Playing)
         {
+            //ScreenShake.instance.StartShake(0.2f, 0.5f);
             velocity.x = 0;
             return;
         }
@@ -303,7 +307,9 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         AnimSetBool("isDead", true);
         SetSkeletonAnimation(ANIMATION_STATE.DEAD);
         if (enemyEffect == ENEMYEFFECT.BURNING)
+        {
             return;
+        }
 
         if (enemyEffect == ENEMYEFFECT.EXPLOSION || dieBehavior == DIEBEHAVIOR.DESTROY)
         {
@@ -369,7 +375,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     {
         yield return new WaitForSeconds(delay);
         if (disableFX)
+        {
             SpawnSystemHelper.GetNextObject(disableFX, true).transform.position = spawnDisableFX != null ? spawnDisableFX.position : transform.position;
+            SoundManager.PlaySfx(deadSoundAfterEnemyDie , 1f);
+        }
         gameObject.SetActive(false);
     }
     public void TouchEvent()

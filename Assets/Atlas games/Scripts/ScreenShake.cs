@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class ScreenShake : MonoBehaviour
-{
-
+public class ScreenShake : MonoBehaviour {
     public static ScreenShake instance;
 
     private float shakeTimeRemaining, shakePower, shakeFadeTime, shakeRotation;
@@ -14,13 +12,12 @@ public class ScreenShake : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         instance = this;
     }
 
-    private void LateUpdate() {
-        if(shakeTimeRemaining > 0f)
+    private IEnumerator ShakeCoroutine() {
+        while (shakeTimeRemaining > 0f)
         {
             shakeTimeRemaining -= Time.deltaTime;
 
@@ -32,9 +29,12 @@ public class ScreenShake : MonoBehaviour
             shakePower = Mathf.MoveTowards(shakePower, 0f, shakeFadeTime * Time.deltaTime);
 
             shakeRotation = Mathf.MoveTowards(shakeRotation, 0f, shakeFadeTime * rotationMultiplier * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(0, 0, shakeRotation * Random.Range(-1f, 1f));
+
+            yield return null;
         }
 
-        transform.rotation = Quaternion.Euler(0, 0, shakeRotation * Random.Range(-1f, 1f));
+
     }
 
     public void StartShake(float length, float power) {
@@ -44,5 +44,8 @@ public class ScreenShake : MonoBehaviour
         shakeFadeTime = power / length;
 
         shakeRotation = power * rotationMultiplier;
+
+        StartCoroutine(ShakeCoroutine());
     }
+
 }

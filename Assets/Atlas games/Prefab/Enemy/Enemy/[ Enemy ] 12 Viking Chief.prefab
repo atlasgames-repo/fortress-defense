@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 979113116349509217}
   - component: {fileID: 2993637932634077197}
   m_Layer: 10
-  m_Name: '[Enemy] 12 Viking Chief'
+  m_Name: '[ Enemy ] 12 Viking Chief'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
+  is_boss: 0
   useGravity: 0
   gravity: 35
   walkSpeed: 1
@@ -233,6 +234,10 @@ MonoBehaviour:
   randomBloodPuddlePoint: {x: 0.5, y: 0.25}
   healthBarOffset: {x: 0, y: 1.5}
   enemyState: 0
+  weaknessMultiplier: 1
+  strengthMultiplier: 1
+  weakness: 0
+  strength: 0
   canBeFreeze: 1
   dieFrozenFX: {fileID: 0}
   canBeBurn: 1
@@ -253,6 +258,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d828c6f696d736348b98d90b6aa3fcb9, type: 3}
   soundDieBlowVol: 0.5
   soundDieBlow: []
+  BossMusic: {fileID: 0}
   soundSpawnVol: 0.5
   soundSpawn: []
   currentHealth: 0
@@ -260,9 +266,13 @@ MonoBehaviour:
   checkTarget: {fileID: 0}
   isPlayerDetected: 0
   delayChasePlayerWhenDetect: 0
+  is_spine: 0
+  skeletonAnimation: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  deadSoundAfterEnemyDie: {fileID: 8300000, guid: 728f42b76f3e7bb43852a60504cfb2ed,
+    type: 3}
 --- !u!114 &922197190802713276
 MonoBehaviour:
   m_ObjectHideFlags: 0

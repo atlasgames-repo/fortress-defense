@@ -130,6 +130,7 @@ public class MenuManager : MonoBehaviour, IListener
 
         yield return new WaitForSeconds(1.5f);
         FailUI.SetActive(true);
+        SoundManager.PlaySfx(SoundManager.Instance.soundFailPanel);
         if (LifeTTRSource.Life <= 1)
             FailUI.transform.GetChild(1).GetChild(1).GetComponent<Button>().interactable = false;
 

@@ -37,6 +37,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip soundStar2;
     public AudioClip soundStar3;
 
+    [Header("Losing")]
+    public AudioClip soundFailPanel;
+
     private AudioSource musicAudio;
     private AudioSource soundFx;
 
