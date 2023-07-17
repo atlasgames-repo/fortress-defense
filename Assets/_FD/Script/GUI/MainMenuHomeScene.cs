@@ -74,7 +74,7 @@ public class MainMenuHomeScene : MonoBehaviour
 
         foreach (var ct in coinTxt)
         {
-            ct.text = GlobalValue.SavedCoins + "";
+            ct.text = User.Coin + "";
         }
     }
 

@@ -489,6 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1935942946}
   - component: {fileID: 1935942944}
+  - component: {fileID: 1935942945}
   m_Layer: 0
   m_Name: AchivementListener V2
   m_TagString: Untagged
@@ -510,16 +511,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialDelaySeconds: 0.1
   ListenerTickSeconds: 1
-  achievements:
-  - model:
-      _id: 3
-      name: 100th kill
-      description: 100th killed enemy
-      reward: 560
-      checkpoint: 100
-      fieldName: KillCount
-      type: 0
-      status: 0
+  achievements: []
+--- !u!114 &1935942945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935942943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4379addc07b082148825b901d741add9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 8dd0cf85c1ed9604a9395d0888c48726, type: 2}
+  InitialDelaySeconds: 0.2
+  ListenerTickSeconds: 3
+  Probability:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4.7032304
+      outSlope: 4.7032304
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.048079144
+    - serializedVersion: 3
+      time: 1
+      value: 3
+      inSlope: 16.306683
+      outSlope: 16.306683
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.018479884
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Schedules:
+  - name: Daily
+    DurationMinutes: 1440
+    NumberOfMissions: 4
+    type: 0
+    status: 0
+  - name: Weekly
+    DurationMinutes: 1440
+    NumberOfMissions: 4
+    type: 1
+    status: 0
+  - name: OneTime
+    DurationMinutes: 1440
+    NumberOfMissions: 1
+    type: 2
+    status: 0
 --- !u!4 &1935942946
 Transform:
   m_ObjectHideFlags: 0

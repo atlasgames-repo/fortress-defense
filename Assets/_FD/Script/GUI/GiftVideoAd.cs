@@ -39,7 +39,7 @@ public class GiftVideoAd : MonoBehaviour
         AdsManager.AdResult -= AdsManager_AdResult;
         if (isSuccess)
         {
-            GlobalValue.SavedCoins += rewarded;
+            User.Coin = rewarded;
             SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
         }
     }

@@ -9,16 +9,16 @@ public class BasePlayerPrefs<T> : MonoBehaviour
 {
     public static string PrefsName;
     // Start is called before the first frame update
-    public static void Add(string index, T value)
+    public static void Add(Guid index, T value)
     {
-        Dictionary<string, T> dict = Dict;
+        Dictionary<Guid, T> dict = Dict;
         if (!dict.ContainsKey(index))
         {
             dict.Add(index, value);
             Dict = dict;
         }
     }
-    public static void Update(string index, T value)
+    public static void Update(Guid index, T value)
     {
             bool is_exist = TryGetValue(index, out T outvalue);
             if (is_exist)
@@ -27,7 +27,7 @@ public class BasePlayerPrefs<T> : MonoBehaviour
                 Add(index,value);
             }
     }
-    public static void Remove(string index)
+    public static void Remove(Guid index)
     {
             var dict = Dict;
             dict.Remove(index);
@@ -37,48 +37,33 @@ public class BasePlayerPrefs<T> : MonoBehaviour
     {
         get { return JsonConvert.SerializeObject(Dict, Formatting.Indented); }
     }
-    public static string[] Keys
+    public static Guid[] Keys
     {
         get
         {
-            Dictionary<string, T> dict = Dict;
+            Dictionary<Guid, T> dict = Dict;
             return dict.Keys.ToArray();
         }
     }
-    public static bool TryGetValue(string index, out T value)
+    public static bool TryGetValue(Guid index, out T value)
     {
-        Dictionary<string, T> dict = Dict;
+        Dictionary<Guid, T> dict = Dict;
         dict.TryGetValue(index, out T found_value);
         if (found_value != null) { value = found_value; return true; }
         else { value = default; return false; }
-    }
-
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
-
-    public override bool Equals(object other)
-    {
-        return base.Equals(other);
-    }
-
-    public override string ToString()
-    {
-        return base.ToString();
     }
 
     public static T[] DictArray
     {
         get
         {
-            Dictionary<string, T> dict = Dict;
+            Dictionary<Guid, T> dict = Dict;
             return dict.Values.ToArray();
         }
     }
-    public static Dictionary<string, T> Dict
+    public static Dictionary<Guid, T> Dict
     {
-        get { return JsonConvert.DeserializeObject<Dictionary<string, T>>(PlayerPrefs.GetString(typeof(T).Name,"{}")); }
+        get { return JsonConvert.DeserializeObject<Dictionary<Guid, T>>(PlayerPrefs.GetString(typeof(T).Name,"{}")); }
         set { PlayerPrefs.SetString(typeof(T).Name, JsonConvert.SerializeObject(value)); }
     }
 }

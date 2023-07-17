@@ -73,7 +73,7 @@ public class VictoryMenuEvents : MonoBehaviour
         {
             CoinTxt.color = DefaultColor;
             CoinTxt.fontSize = DefaultScale;
-            GlobalValue.SavedCoins += Coin;
+            User.Coin = Coin;
         }
         StopSound = true;
         _ref.transform.parent.gameObject.SetActive(false);

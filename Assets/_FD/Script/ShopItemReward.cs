@@ -53,11 +53,11 @@ public class ShopItemReward : MonoBehaviour {
     }
 
 	public void UseCoin(){
-		var coins = GlobalValue.SavedCoins;
+		var coins = User.Coin;
         if (coins >= coinPrice)
         {
             coins -= coinPrice;
-            GlobalValue.SavedCoins = coins;
+            User.Coin = coins;
 
             DoReward();
         }

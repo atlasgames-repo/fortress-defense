@@ -110,9 +110,10 @@ public class APIManager : MonoBehaviour
 
     public async Task<UserResponse> UpdateUser(UserUpdate userdata)
     {
-        return await Post<UserResponse>(
+        Debug.LogError(userdata.ToJson);
+        return await Get<UserResponse>(
         route: "/user/update",
-        data: userdata.ToJson,
+        parameters: userdata.ToParams,
         auth_token: User.Token);
     }
 
@@ -191,6 +192,9 @@ public class APIManager : MonoBehaviour
             req.SetRequestHeader(item.Key, item.Value);
         }
         req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
+        // Set the request headers
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Accept", "application/json");
         var opration = req.SendWebRequest();
 
         while (!opration.isDone)
@@ -209,7 +213,7 @@ public class APIManager : MonoBehaviour
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(req.error);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -238,13 +242,15 @@ public class APIManager : MonoBehaviour
         {
             headers = new Dictionary<string, string>();
         }
-
         using UnityWebRequest req = UnityWebRequest.Post(uri: Base_url + route, postData: data);
         foreach (KeyValuePair<string, string> item in headers)
         {
             req.SetRequestHeader(item.Key, item.Value);
         }
         req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
+        // Set the request headers
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Accept", "application/json");
         var opration = req.SendWebRequest();
 
         while (!opration.isDone)
@@ -263,7 +269,7 @@ public class APIManager : MonoBehaviour
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(req.error);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -308,7 +314,7 @@ public class APIManager : MonoBehaviour
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(req.error);
             throw new System.Net.WebException(message: req.error);
         }
         else

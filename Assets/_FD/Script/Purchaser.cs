@@ -286,7 +286,7 @@ using UnityEngine.Purchasing;
 //				Debug.Log (string.Format ("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
 //				// The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
 ////				ScoreManager.score += 100;
-//				GlobalValue.SavedCoins += 100;
+//				User.Coin = 100;
 //				Debug.Log ("Add 100 stars");
 //			}
 
@@ -296,13 +296,13 @@ using UnityEngine.Purchasing;
 				Debug.Log (string.Format ("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
 				// The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
 				//				ScoreManager.score += 100;
-				GlobalValue.SavedCoins += reward1;
+				User.Coin = reward1;
 				Debug.Log ("Purchase: " + reward1);
 			}else if (String.Equals (args.purchasedProduct.definition.id, item2, StringComparison.Ordinal)) {
 				Debug.Log (string.Format ("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
 				// The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
 				//				ScoreManager.score += 100;
-				GlobalValue.SavedCoins += reward2;
+				User.Coin = reward2;
 				Debug.Log ("Purchase: " + reward2);
 			}
         else if (String.Equals(args.purchasedProduct.definition.id, item3, StringComparison.Ordinal))
@@ -310,7 +310,7 @@ using UnityEngine.Purchasing;
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
             // The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
             //				ScoreManager.score += 100;
-            GlobalValue.SavedCoins += reward3;
+            User.Coin = reward3;
             Debug.Log("Purchase: " + reward3);
         }
         else if (String.Equals(args.purchasedProduct.definition.id, item4, StringComparison.Ordinal))
@@ -318,7 +318,7 @@ using UnityEngine.Purchasing;
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
             // The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
             //				ScoreManager.score += 100;
-            GlobalValue.SavedCoins += reward4;
+            User.Coin = reward4;
             Debug.Log("Purchase: " + reward4);
         }
         else if (String.Equals(args.purchasedProduct.definition.id, item5, StringComparison.Ordinal))
@@ -326,7 +326,7 @@ using UnityEngine.Purchasing;
             Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
             // The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
             //				ScoreManager.score += 100;
-            GlobalValue.SavedCoins += reward5;
+            User.Coin = reward5;
             Debug.Log("Purchase: " + reward5);
         }
         // Or ... a non-consumable product has been purchased by this user.

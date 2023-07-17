@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Threading.Tasks;
+using System.Linq;
 
 public class AchievementTasksV2: BasePlayerPrefs<AchievementModel>
 {
@@ -28,12 +28,12 @@ public class AchievementTasksV2: BasePlayerPrefs<AchievementModel>
     }
     IEnumerator Listener()
     {
-        AchievementModel[] models = new AchievementModel[achievements.Length];
+        achievements = new AchievementEventsV2[DictArray.Length];
         for (int i = 0; i < achievements.Length; i++)
         {
-            models[i] = achievements[i].model;
+            achievements[i] = new AchievementEventsV2(DictArray[i]);
         }
-        AddNewAchievements(models);
+        // AddNewAchievements(models);
         yield return new WaitForSeconds(InitialDelaySeconds);
         while (true)
         {
@@ -56,7 +56,7 @@ public class AchievementTasksV2: BasePlayerPrefs<AchievementModel>
             achievements[i] = new AchievementEventsV2(DictArray[i]);
         }
     }
-    public void TryGetEvent(string index, out AchievementEventsV2 Event){
+    public void TryGetEvent(Guid index, out AchievementEventsV2 Event){
         foreach (AchievementEventsV2 item in achievements)
         {
             if (item.model._id == index)
@@ -74,4 +74,5 @@ public class AchievementTasksV2: BasePlayerPrefs<AchievementModel>
     public void ReciveTheReward(int index){
 
     }
+
 }
