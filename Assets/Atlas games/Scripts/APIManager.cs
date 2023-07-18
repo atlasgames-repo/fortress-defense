@@ -110,7 +110,6 @@ public class APIManager : MonoBehaviour
 
     public async Task<UserResponse> UpdateUser(UserUpdate userdata)
     {
-        Debug.LogError(userdata.ToJson);
         return await Get<UserResponse>(
         route: "/user/update",
         parameters: userdata.ToParams,

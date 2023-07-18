@@ -65,7 +65,7 @@ public class GameMode : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         //Screen.SetResolution((int)resolution.x, (int)resolution.y);
-        Application.targetFrameRate = setFPS;
+        // Application.targetFrameRate = setFPS;
 
 //        string gameId = "";
 //#if UNITY_IOS

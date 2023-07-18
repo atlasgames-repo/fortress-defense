@@ -97,8 +97,8 @@ public class AchievementManagerV2 : MonoBehaviour
         if (scheduleModel != null)
         {
             ChildInParent.GetChild(obj.transform, TypeIndex).GetComponent<TextMeshProUGUI>().text = scheduleModel.name;
-            TimeSpan timer = scheduleModel.ExpireDate - DateTime.Now;
-            ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().text = $"{timer.Days}:{timer.Hours}:{timer.Minutes}:{timer.Seconds}";
+            // TimeSpan timer = scheduleModel.ExpireDate - DateTime.Now;
+            ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<AvhievementTimerClock>().StartTheClock(scheduleModel.ExpireDate);
             ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type/(float)AchievementType.LEGENDARY);
         }
 
