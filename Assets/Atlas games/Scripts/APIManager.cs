@@ -36,7 +36,7 @@ public class APIManager : MonoBehaviour
         tokenSource = new CancellationTokenSource();
         DontDestroyOnLoad(gameObject);
         UnityWebRequest.ClearCookieCache();
-
+        Application.targetFrameRate = 144;
     }
     public IEnumerator LoadAsynchronously(string name)
     {

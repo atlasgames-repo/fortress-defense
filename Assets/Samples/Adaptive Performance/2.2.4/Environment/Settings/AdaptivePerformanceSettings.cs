@@ -19,7 +19,7 @@ static class AdaptivePerformanceConfig
         settings.automaticPerformanceMode = false;
         settings.logging = true;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Application.targetFrameRate = 120;
+        Application.targetFrameRate = 144;
         Debug.Log($"AdaptivePerformanceConfig setting automatic performance mode to {settings.automaticPerformanceMode},logging to {settings.logging} targetFrameRate to {Application.targetFrameRate}. Override in Sample on demand.");
     }
 }

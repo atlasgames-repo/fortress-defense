@@ -25,7 +25,7 @@ public class VariableRefreshRateControl : MonoBehaviour
     {
         timeOuttimer = timeOut;
 
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 144;
         targetRefreshRate.SetValueWithoutNotify(60);
 
 #if UNITY_ADAPTIVE_PERFORMANCE_SAMSUNG_ANDROID
