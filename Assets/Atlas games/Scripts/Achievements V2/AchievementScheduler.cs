@@ -27,24 +27,29 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
         {
             foreach (AchievementScheduleModel schedules in Schedules)
             {
-                // check if the schedule is expired and active
-                AchievementScheduleModel foundSchedule = DictArray.Where(a => a.type == schedules.type).FirstOrDefault();
-                if (foundSchedule != null && DateTime.Compare(DateTime.Now, foundSchedule.ExpireDate) < 0) continue; // if the schedule isn't expired
-                
+                // check if the schedule is expired or active
+                AchievementScheduleModel foundSchedule = DictArray.Where(a => a.type == schedules.type && a.status == ScheduleStatus.PENDING).FirstOrDefault();
+                // Executes Only of the schedule is expired or its one time and done or expired
                 if (foundSchedule != null)
                 {
+                    int expired = DateTime.Compare(DateTime.Now, foundSchedule.ExpireDate);
+                    if (expired < 0 && foundSchedule.type != ScheduleType.ONETIME) continue;  // if the schedule isn't expired
+
                     int successfullTasks = 0;
                     foreach (AchievementModel item in BasePlayerPrefs<AchievementModel>.DictArray.Where(a => a.Schedul_id == foundSchedule._id).ToArray()) // deactivate the expired Tasks
                     {
-                        item.isActive = false;
+                        item.isActive = expired < 0 && item.isActive && item.status != TrophyStatus.PAYED;
+                        
                         if (item.status == TrophyStatus.PAYED) successfullTasks++;
                         BasePlayerPrefs<AchievementModel>.Update(item._id, item);
                     }
-                    foundSchedule.status = successfullTasks < foundSchedule.NumberOfMissions ? ScheduleStatus.EXPIRED : ScheduleStatus.DONE;
+                    foundSchedule.status = successfullTasks < foundSchedule.NumberOfMissions ? expired >= 0 ? ScheduleStatus.EXPIRED: ScheduleStatus.PENDING : ScheduleStatus.DONE;
                     Update(foundSchedule._id, foundSchedule);
+                    if (foundSchedule.status == ScheduleStatus.PENDING) continue;
                 }
                 // add new schedule of this type
                 AchievementScheduleModel new_schedule = new AchievementScheduleModel(schedules.type, schedules.NumberOfMissions, schedules.name);
+
                 Add(new_schedule._id, new_schedule);
                 
                 for (int i = 0; i < schedules.NumberOfMissions; i++)
@@ -52,7 +57,6 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
                     AchievementModel new_achievement = GetRandomAchievemntByType(GetAchievementType);
                     new_achievement._id = Guid.NewGuid();
                     new_achievement.Schedul_id = new_schedule._id;
-                    
                     AchievementTasksV2.self.AddNewAchievements(new AchievementModel[1]{new_achievement});
                 } 
             }

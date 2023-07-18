@@ -51,9 +51,9 @@ public class AchievementManagerV2 : MonoBehaviour
             yield return null;
         }
         AchievementModel[] models = new AchievementModel[0];
-        AchievementScheduleModel scheduleModelDaily = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(s => s.type == ScheduleType.DAYLY).FirstOrDefault();
-        AchievementScheduleModel scheduleModelWeekly = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(s => s.type == ScheduleType.WEEKLY).FirstOrDefault();
-        AchievementScheduleModel scheduleModelOneTime = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(s => s.type == ScheduleType.ONETIME).FirstOrDefault();
+        AchievementScheduleModel scheduleModelDaily = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(s => s.type == ScheduleType.DAYLY && s.status == ScheduleStatus.PENDING).FirstOrDefault();
+        AchievementScheduleModel scheduleModelWeekly = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(s => s.type == ScheduleType.WEEKLY && s.status == ScheduleStatus.PENDING).FirstOrDefault();
+        AchievementScheduleModel scheduleModelOneTime = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(s => s.type == ScheduleType.ONETIME && s.status == ScheduleStatus.PENDING).FirstOrDefault();
         switch (index)
         {
             case 0: models = BasePlayerPrefs<AchievementModel>.DictArray; break;
@@ -98,7 +98,10 @@ public class AchievementManagerV2 : MonoBehaviour
         {
             ChildInParent.GetChild(obj.transform, TypeIndex).GetComponent<TextMeshProUGUI>().text = scheduleModel.name;
             // TimeSpan timer = scheduleModel.ExpireDate - DateTime.Now;
-            ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<AvhievementTimerClock>().StartTheClock(scheduleModel.ExpireDate);
+            if (scheduleModel.status != ScheduleStatus.PENDING)
+                ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().text = scheduleModel.status == ScheduleStatus.DONE ? "COMPELETED":"EXPIRED";
+            else
+                ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<AvhievementTimerClock>().StartTheClock(scheduleModel.ExpireDate);
             ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type/(float)AchievementType.LEGENDARY);
         }
 

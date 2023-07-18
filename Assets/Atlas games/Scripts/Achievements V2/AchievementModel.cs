@@ -44,20 +44,19 @@ public class AchievementScheduleModel : BaseModel
     public Guid _id = Guid.NewGuid();
     public string name;
     public DateTime ExpireDate = DateTime.Now;
-    public int DurationMinutes =  1_440;
+    public int DurationMinutes =  10;
     public int NumberOfMissions = 4;
     public ScheduleType type = ScheduleType.DAYLY;
     public ScheduleStatus status = ScheduleStatus.PENDING;
 
     public AchievementScheduleModel(){
-        DurationMinutes =  1_440;
         ExpireDate = DateTime.Now.AddMinutes(DurationMinutes);
     }
     public AchievementScheduleModel(ScheduleType _type){
         DurationMinutes = _type switch
         {
             ScheduleType.DAYLY => 1_440,
-            ScheduleType.ONETIME => 1_440,
+            ScheduleType.ONETIME => DurationMinutes * UnityEngine.Random.Range(1, 144),
             ScheduleType.WEEKLY => 10_080,
             _ => 1_440,
         };
@@ -68,7 +67,7 @@ public class AchievementScheduleModel : BaseModel
         DurationMinutes = _type switch
         {
             ScheduleType.DAYLY => 1_440,
-            ScheduleType.ONETIME => 1_440,
+            ScheduleType.ONETIME => DurationMinutes * UnityEngine.Random.Range(1, 144),
             ScheduleType.WEEKLY => 10_080,
             _ => 1_440,
         };
@@ -81,7 +80,7 @@ public class AchievementScheduleModel : BaseModel
         DurationMinutes = _type switch
         {
             ScheduleType.DAYLY => 1_440,
-            ScheduleType.ONETIME => 1_440,
+            ScheduleType.ONETIME => DurationMinutes * UnityEngine.Random.Range(1, 144),
             ScheduleType.WEEKLY => 10_080,
             _ => 1_440,
         };

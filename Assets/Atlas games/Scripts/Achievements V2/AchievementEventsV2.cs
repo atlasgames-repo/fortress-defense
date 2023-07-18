@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Linq;
 
 [Serializable]
 public class AchievementEventsV2
@@ -15,7 +16,13 @@ public class AchievementEventsV2
     }
     public AchievementEventsV2(AchievementModel _model){
         model = _model;
-        model.startPoint = _model.startPoint > 0 ? _model.startPoint: Value; 
+        AchievementScheduleModel shcedulModel = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(sm => model.Schedul_id == sm._id).FirstOrDefault();
+        if (shcedulModel != null && shcedulModel.type == ScheduleType.ONETIME)
+        {
+            model.startPoint = 0;
+            model.checkpoint = (int)Math.Round((Value + model.checkpoint + 100) /100d,0,MidpointRounding.AwayFromZero) * 100;
+        }
+        else model.startPoint = _model.startPoint > 0 ? _model.startPoint: Value; 
     }
     public int Value{
         get{

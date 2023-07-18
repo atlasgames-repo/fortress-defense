@@ -54,10 +54,9 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("lastDayShowNativeAd3", value); }
     }
 
-    public static int SavedCoins
+    public static int UserGold
     {
-        get { return PlayerPrefs.GetInt("Coins", 200); }
-        set { PlayerPrefs.SetInt("Coins", value); }
+        get { return User.Coin; }
     }
 
     public static int LevelPass
