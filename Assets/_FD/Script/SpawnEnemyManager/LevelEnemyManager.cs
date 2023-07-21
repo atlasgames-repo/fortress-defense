@@ -6,6 +6,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
 {
     public static LevelEnemyManager Instance;
     public GameObject FX_Smoke, FX_Blow;
+    public GameObject Grave;
     public SimpleProjectile bullet;
     public Transform[] spawnPositions;
     public EnemyWave[] EnemyWaves;

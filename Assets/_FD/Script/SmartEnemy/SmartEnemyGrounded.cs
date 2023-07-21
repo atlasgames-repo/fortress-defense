@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using UnityEngine;
 
 [AddComponentMenu("ADDP/Enemy AI/Smart Enemy Ground Control")]
@@ -35,7 +36,13 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     SpawnItemHelper spawnItem;
 
     public AudioClip deadSoundAfterEnemyDie;
-    
+
+    public GameObject enemySprite;
+
+    [Header("Grave")]
+    public GameObject grave;
+    public AudioClip graveComing;
+
 
     public override void Start()
     {
@@ -286,6 +293,15 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         Invoke("AllowCheckAttack", 2);
     }
 
+    public IEnumerator Grave() {
+        if (isDead == true)
+        {
+            yield return new WaitForSeconds(2f);
+            grave.SetActive(true);
+            SoundManager.PlaySfx(graveComing, 1f);
+        }
+    }
+
     public override void Die()
     {
         if (isDead)
@@ -317,7 +333,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             return;
         }
         StopAllCoroutines();
-        StartCoroutine(DisableEnemy(AnimationHelper.getAnimationLength(anim, "Die") + 2f));
+        StartCoroutine(DisableEnemy(AnimationHelper.getAnimationLength(anim, "Die") + 1f));
+        StartCoroutine(Grave());
     }
 
     public override void Hit(Vector2 force, bool pushBack = false, bool knockDownRagdoll = false, bool shock = false)
@@ -379,6 +396,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             SpawnSystemHelper.GetNextObject(disableFX, true).transform.position = spawnDisableFX != null ? spawnDisableFX.position : transform.position;
             SoundManager.PlaySfx(deadSoundAfterEnemyDie , 1f);
         }
+        enemySprite.SetActive(false);
+        yield return new WaitForSeconds(4f);
         gameObject.SetActive(false);
     }
     public void TouchEvent()

@@ -142,6 +142,7 @@ MonoBehaviour:
   FX_Smoke: {fileID: 6338145615417356351, guid: 2e064da420e915d45ae6569a3ed46339,
     type: 3}
   FX_Blow: {fileID: 7587624716690234243, guid: 0ffe2a5380c64a640830cf2a52799faa, type: 3}
+  Grave: {fileID: 1213430302484413256, guid: 92ecf27a09919354bb709818fccf6047, type: 3}
   bullet: {fileID: 6686378747336277193, guid: b5ded0b86258f854c990f4a75d9ac1c8, type: 3}
   spawnPositions:
   - {fileID: 1527872745}
@@ -175,6 +176,20 @@ MonoBehaviour:
       customAttackDmg: 0
       boosType: 0
       BossScale: 1.599
+      BossMinExp: 99
+      BossMaxExp: 90
+  - wait: 3
+    enemySpawns:
+    - wait: 0
+      enemy: {fileID: 3697426553599540029, guid: 8d5cd9de2fd6e4a40aa6ab3793c4b0f6,
+        type: 3}
+      numberEnemy: 1
+      rate: 1
+      customHealth: 1000
+      customSpeed: 0.6
+      customAttackDmg: 0
+      boosType: 2
+      BossScale: 1
       BossMinExp: 99
       BossMaxExp: 90
   bossManeger: {fileID: 0}

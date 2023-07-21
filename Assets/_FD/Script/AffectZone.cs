@@ -28,6 +28,14 @@ public class AffectZone : MonoBehaviour
     public float poisonRate = 0.5f;
     public AudioClip poisonSound;
 
+    [Header("Fire")]
+    public float fireActiveTime = 3;
+    public float fireAffectTime = 3;
+    public float fireDamage = 10;
+    public GameObject fireFX;
+    public float fireRate = 0.5f;
+    public AudioClip fireSound;
+
     // Start is called before the first frame update
     List<Enemy> listEnemyInZone;
     AffectZoneType zoneType;
@@ -65,6 +73,9 @@ public class AffectZone : MonoBehaviour
                     StartCoroutine(StopActiveCo());
                     break;
                 case AffectZoneType.Poison:
+                    StartCoroutine(StopActiveCo());
+                    break;
+                case AffectZoneType.Fire:
                     StartCoroutine(StopActiveCo());
                     break;
             }
@@ -121,6 +132,16 @@ public class AffectZone : MonoBehaviour
                                 }
                                 SoundManager.PlaySfx(poisonSound);
                                 break;
+                            case AffectZoneType.Fire:
+                                target.Fire(fireDamage, fireActiveTime, gameObject);
+                                if (fireFX)
+                                {
+                                    var _fx = SpawnSystemHelper.GetNextObject(fireFX, true);
+                                    _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
+                                    _fx.transform.position = target.gameObject.transform.position;
+                                }
+                                SoundManager.PlaySfx(fireSound, 0.1f);
+                                break;
                         }
                     }
                 }
@@ -136,6 +157,9 @@ public class AffectZone : MonoBehaviour
                     break;
                 case AffectZoneType.Poison:
                     yield return new WaitForSeconds(poisonRate);
+                    break;
+                case AffectZoneType.Fire:
+                    yield return new WaitForSeconds(fireRate);
                     break;
             }
             yield return null;
@@ -155,6 +179,9 @@ public class AffectZone : MonoBehaviour
                 break;
             case AffectZoneType.Poison:
                 delay = poisonActiveTime;
+                break;
+            case AffectZoneType.Fire:
+                delay = fireActiveTime;
                 break;
         }
         yield return new WaitForSeconds(delay);

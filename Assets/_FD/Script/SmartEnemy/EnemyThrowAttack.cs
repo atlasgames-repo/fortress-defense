@@ -42,7 +42,7 @@ public class EnemyThrowAttack : MonoBehaviour
         obj.GetComponent<Projectile>().NewDamage = (float)damage;
         obj.GetComponent<SimpleProjectile>().ExplosionObj = FX_Blow;
         obj.GetComponent<SimpleProjectile>().DestroyEffect = FX_Smoke;
-
+            
         float angle;
         angle = isFacingRight ? angleThrow : 135;
 

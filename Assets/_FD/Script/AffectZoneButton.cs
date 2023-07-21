@@ -89,6 +89,10 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         SoundManager.Click();
     }
 
+    void ActiveFire() {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Fire, this);    
+        SoundManager.Click();
+    }
 
 
     public void StartCountingDown()
@@ -115,6 +119,9 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
                 break;
             case AffectZoneType.Poison:
                 ActivePoison();
+                break;
+            case AffectZoneType.Fire:
+                ActiveFire(); 
                 break;
         }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum NumberArrow { Single, Double }
-public enum WEAPON_EFFECT { NONE, POISON, FREEZE, LIGHTING }
+public enum WEAPON_EFFECT { NONE, POISON, FREEZE, LIGHTING, FIRE }
 
 [System.Serializable]
 public class WeaponEffect
@@ -26,4 +26,9 @@ public class WeaponEffect
     [Range(0f, 1f)]
     public float freezeChance = 0.1f;
     public float freezeTime = 5;
+    [Header("FIRE")]
+    [Range(0f, 1f)]
+    public float fireChance = 0.1f;
+    public float fireTime = 5;
+    public float fireDamagePerSec = 80;
 }

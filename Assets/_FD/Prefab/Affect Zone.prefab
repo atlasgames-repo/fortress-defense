@@ -48,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -138,7 +140,7 @@ MonoBehaviour:
   frozenDamage: 30
   frozenFX: {fileID: 6548707270156744103, guid: 92311b3fd0727054eb1d46064895ac98,
     type: 3}
-  forzenSound: {fileID: 8300000, guid: 60b1a3909f2d94b40a83081a75757a8f, type: 3}
+  forzenSound: {fileID: 8300000, guid: 2653f158ab318d94783d6657075b08d6, type: 3}
   poisonActiveTime: 8
   poisonAffectTime: 3
   poisonDamage: 15
@@ -146,6 +148,12 @@ MonoBehaviour:
     type: 3}
   poisonRate: 1
   poisonSound: {fileID: 0}
+  fireActiveTime: 8
+  fireAffectTime: 3
+  fireDamage: 15
+  fireFX: {fileID: 2123164202128918392, guid: adca490b7ce5c444f83d0afe52a5a33a, type: 3}
+  fireRate: 1
+  fireSound: {fileID: 8300000, guid: 449edf3ff3f0aeb4aa09077c0403744b, type: 3}
 --- !u!95 &7033971606386179562
 Animator:
   serializedVersion: 3
