@@ -22,11 +22,11 @@ public class TipEditor : Editor
     private float _delay;
     private Transform _pointerObject;
     private SerializedProperty _direction;
-    private Button _buttonTransform;
+    private string _buttonName;
     
     // if tip type is just tip : 
     private Animator _tipAnimator;
-    private Transform _uiPart;
+    private string _uiPartName;
     private float _scale = 0;
     private bool _isUiInteractible;
     private bool _isGamePaused = false;
@@ -74,12 +74,12 @@ public class TipEditor : Editor
             _isGamePaused = EditorGUILayout.Toggle("Pause game showing task", _isGamePaused);
             EditorGUILayout.PropertyField(_direction);
             _delay = EditorGUILayout.FloatField("Start Pointing delay", _delay);
-            _buttonTransform = (Button)EditorGUILayout.ObjectField("Target Button", _buttonTransform, typeof(Button), true);
+            _buttonName = EditorGUILayout.TextField("Target button name", _buttonName);
         }
         else if (_gt.type == GameTutorial.TipType.Tip)
         {
             _tipAnimator = (Animator)EditorGUILayout.ObjectField("Tip Animation", _tipAnimator, typeof(Animator), true);
-            _uiPart = (Transform)EditorGUILayout.ObjectField("UI Element", _uiPart, typeof(Transform), true);
+            _uiPartName = EditorGUILayout.TextField("Target UI element name", _uiPartName);
             _scale = EditorGUILayout.FloatField("Mask Scale ", _scale);
             _closeTrigger = EditorGUILayout.TextField("Animation Close Trigger", _closeTrigger);
             _openTrigger = EditorGUILayout.TextField("Animation Open Trigger", _openTrigger);
@@ -105,23 +105,23 @@ public class TipEditor : Editor
             }
             else if (_gt.type == GameTutorial.TipType.Task)
             {
-                if (_buttonTransform != null && _direction != null)
+                if (_buttonName != null && _direction != null)
                 {
                     _setup.delay = _delay;
                     _setup.pointerDirection = _gt.direction.ToString();
                     _setup.type = _gt.type.ToString();
                     _setup.isUiInteractible = _isUiInteractible;
                     _setup.pauseGame = _isGamePaused;
-                    _setup.uiPart = _buttonTransform.transform;
+                    _setup.uiPartName = _buttonName;
                     setups.Add(_setup);
                 }
             }
             else if (_gt.type == GameTutorial.TipType.Tip)
             {
-                if (_openTrigger != null && _closeTrigger != null && _uiPart && _tipAnimator)
+                if (_openTrigger != null && _closeTrigger != null && _uiPartName !=null && _tipAnimator)
                 {
                     _setup.tipAnimator = _tipAnimator;
-                    _setup.uiPart = _uiPart;
+                    _setup.uiPartName = _uiPartName;
                     _setup.scale = _scale;
                     _setup.openTrigger = _openTrigger;
                     _setup.closeTrigger = _closeTrigger;
@@ -157,7 +157,7 @@ public class TipEditor : Editor
             _setup.pointerDirection = null;
             _setup.delay = 0.5f;
             _setup.tipAnimator = null;
-            _setup.uiPart = null;
+            _setup.uiPartName= null;
             _setup.scale = 0;
             _setup.isUiInteractible = false;
             _setup.type = null;

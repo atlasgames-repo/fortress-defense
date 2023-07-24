@@ -31,6 +31,7 @@ public class GameTutorial : MonoBehaviour
     [HideInInspector] public Direction direction;
 
 
+    public int level;
     public List<TipSetup> tipsList;
     [HideInInspector] public Transform[] uiParts;
     public Transform mask;
@@ -54,7 +55,7 @@ public class GameTutorial : MonoBehaviour
         public float delay;
         public bool isLastDialog;
         public Animator tipAnimator;
-        public Transform uiPart;
+        public string uiPartName;
         public float scale;
         public string type;
         public bool isUiInteractible;
@@ -111,11 +112,17 @@ public class GameTutorial : MonoBehaviour
         }
     }
 
+    private GameObject _prevUiPart;
     void CloseTip()
     {
+        
         if (_tipOrder > 0)
         {
             TipSetup prevSetup = tipsList[_tipOrder - 1];
+            if (prevSetup.uiPartName != "")
+            {
+                _prevUiPart = GameObject.Find(prevSetup.uiPartName);
+            }
             switch (prevSetup.type)
             {
                 case "Dialog":
@@ -134,8 +141,8 @@ public class GameTutorial : MonoBehaviour
                     
                     if (!prevSetup.isUiInteractible)
                     {
-                        prevSetup.uiPart.transform.SetParent(_buttonParent);
-                        prevSetup.uiPart.transform.SetSiblingIndex(_childIndex);
+                        _prevUiPart.transform.SetParent(_buttonParent);
+                        _prevUiPart.transform.SetSiblingIndex(_childIndex);
                      Destroy(_uiPartClone);
                         clickPreventer.SetActive(false);
                     }
@@ -144,18 +151,24 @@ public class GameTutorial : MonoBehaviour
                     {
                         Time.timeScale = 1;
                     }
-                    prevSetup.uiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+                    
+                    _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
                     break;
             }
         }
     }
 
 
+    private GameObject _nextUiPart;
     public void OpenTip()
     {
         if (_tipOrder <= tipsList.Count - 1)
         {
             TipSetup nextSetup = tipsList[_tipOrder];
+            if (nextSetup.uiPartName != "")
+            {
+                _nextUiPart = GameObject.Find(nextSetup.uiPartName);
+            }
             switch (nextSetup.type)
             {
                 case "Dialog":
@@ -169,18 +182,18 @@ public class GameTutorial : MonoBehaviour
                 case "Task":
                     if (!nextSetup.isUiInteractible)
                     {
-                        _buttonParent = nextSetup.uiPart.transform.parent;
-                        _childIndex = nextSetup.uiPart.transform.GetSiblingIndex();
+                        _buttonParent = _nextUiPart.transform.parent;
+                        _childIndex = _nextUiPart.transform.GetSiblingIndex();
                         clickPreventer.SetActive(true);
-                        _uiPartClone = Instantiate(nextSetup.uiPart.gameObject, nextSetup.uiPart.position, nextSetup.uiPart.rotation,
-                            nextSetup.uiPart.parent);
-                        nextSetup.uiPart.transform.SetParent(clickPreventer.transform);
+                        _uiPartClone = Instantiate(_nextUiPart, _nextUiPart.transform.position, _nextUiPart.transform.rotation,
+                            _nextUiPart.transform.parent);
+                        _nextUiPart.transform.transform.SetParent(clickPreventer.transform);
                     }
-                    nextSetup.uiPart.GetComponent<Button>().onClick.AddListener(NextTip);
+                    _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
                     Thread.Sleep(Mathf.RoundToInt(nextSetup.delay * 1000));
                     pointerObject.gameObject.SetActive(true);
                     pointerIcon.gameObject.SetActive(true);
-                    pointerObject.transform.position = nextSetup.uiPart.position;
+                    pointerObject.transform.position = _nextUiPart.transform.position;
                     for (int a = 0; a < pointerObject.childCount; a++)
                     {
                         if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
@@ -234,7 +247,7 @@ public class GameTutorial : MonoBehaviour
                     darkBackground.SetActive(true);
                     mask.gameObject.SetActive(true);
                     dialogBackground.SetActive(false);
-                    StartCoroutine(SmoothTransition(nextSetup.uiPart.position, nextSetup.scale));
+                    StartCoroutine(SmoothTransition(_nextUiPart.transform.position, nextSetup.scale));
                     break;
             }
         }
