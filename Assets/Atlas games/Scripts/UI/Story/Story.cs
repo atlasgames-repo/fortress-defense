@@ -22,6 +22,7 @@ public class Story : MonoBehaviour
         public float captionWait;
     }
 
+    public int level;
     public caption[] captions;
     public Transform storyHolder;
     public TextMeshProUGUI text;
