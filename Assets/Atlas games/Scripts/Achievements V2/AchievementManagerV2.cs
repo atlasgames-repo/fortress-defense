@@ -74,63 +74,73 @@ public class AchievementManagerV2 : MonoBehaviour
             yield return null;
         }
     }
-    public async void ClaimAchievement(AchievementModel foundedModel, GameObject obj){
+    public async void ClaimAchievement(AchievementModel foundedModel, GameObject obj)
+    {
         if (foundedModel == null || !foundedModel.isActive || !((int)foundedModel.status >= 2)) return;
         bool result = await UserV2.SyncSetCoin(foundedModel.reward);
         if (result)
         {
             foundedModel.status = TrophyStatus.PAYED;
-            BasePlayerPrefs<AchievementModel>.Update(foundedModel._id,foundedModel);
-            SetUpButtons(obj,DoneIndex);
+            BasePlayerPrefs<AchievementModel>.Update(foundedModel._id, foundedModel);
+            SetUpButtons(obj, DoneIndex);
         }
     }
     void Add(AchievementModel trophy)
     {
         GameObject obj = Instantiate(rootObject, parent, false);
         ChildInParent.GetChild(obj.transform, NameIndex).GetComponent<TextMeshProUGUI>().text = trophy.name;
-        ChildInParent.GetChild(obj.transform, DescriptionIndex).GetComponent<TextMeshProUGUI>().text = trophy.description.Replace(TextPlaceHolder, ColorTag.Replace(ColorTagPlaceHolder,trophy.checkpoint.ToString()));
-        ChildInParent.GetChild(obj.transform, BackgroundIndex).GetComponent<Image>().color = BackgroundColor.Evaluate((float)trophy.type/(float)AchievementType.LEGENDARY);
+        ChildInParent.GetChild(obj.transform, DescriptionIndex).GetComponent<TextMeshProUGUI>().text = trophy.description.Replace(TextPlaceHolder, ColorTag.Replace(ColorTagPlaceHolder, trophy.checkpoint.ToString()));
+        ChildInParent.GetChild(obj.transform, BackgroundIndex).GetComponent<Image>().color = BackgroundColor.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
         ChildInParent.GetChild(obj.transform, RewardIndex).GetComponent<TextMeshProUGUI>().text = RewardPrefix + trophy.reward.ToString();
-        ChildInParent.GetChild(obj.transform, RewardIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type/(float)AchievementType.LEGENDARY);
+        ChildInParent.GetChild(obj.transform, RewardIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
 
         BasePlayerPrefs<AchievementScheduleModel>.TryGetValue(trophy.Schedul_id, out AchievementScheduleModel scheduleModel);
+        bool is_expired = false;
         if (scheduleModel != null)
         {
             ChildInParent.GetChild(obj.transform, TypeIndex).GetComponent<TextMeshProUGUI>().text = scheduleModel.name;
             // TimeSpan timer = scheduleModel.ExpireDate - DateTime.Now;
             if (scheduleModel.status != ScheduleStatus.PENDING)
-                ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().text = scheduleModel.status == ScheduleStatus.DONE ? "COMPELETED":"EXPIRED";
+            {
+                ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().text = scheduleModel.status == ScheduleStatus.DONE ? "COMPELETED" : "EXPIRED";
+                is_expired = scheduleModel.status != ScheduleStatus.DONE;
+            }
             else
                 ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<AvhievementTimerClock>().StartTheClock(scheduleModel.ExpireDate);
-            ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type/(float)AchievementType.LEGENDARY);
+            ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
         }
 
         AchievementTasksV2.self.TryGetEvent(trophy._id, out AchievementEventsV2 Events);
         if (Events != null)
         {
-            ChildInParent.GetChild(obj.transform,StatusIndex).GetComponent<TextMeshProUGUI>().text = Events.OutOf;
-            ChildInParent.GetChild(obj.transform,SliderIndex).GetComponent<Slider>().value = Events.Proccess;
-            ChildInParent.GetChild(obj.transform,ClaimIndex).GetComponent<Button>().onClick.AddListener(() => ClaimAchievement(trophy, obj));
+            ChildInParent.GetChild(obj.transform, StatusIndex).GetComponent<TextMeshProUGUI>().text = Events.OutOf;
+            ChildInParent.GetChild(obj.transform, SliderIndex).GetComponent<Slider>().value = Events.Proccess;
+            ChildInParent.GetChild(obj.transform, ClaimIndex).GetComponent<Button>().onClick.AddListener(() => ClaimAchievement(trophy, obj));
         }
 
         if ((int)trophy.status >= (int)TrophyStatus.ACHIEVED)
         {
-            SetUpButtons(obj,ClaimIndex);
+            SetUpButtons(obj, ClaimIndex);
+        }
+        else if (is_expired)
+        {
+            SetUpButtons(obj, "expired");
         }
         else
         {
-            SetUpButtons(obj,SliderIndex);
+            SetUpButtons(obj, SliderIndex);
         }
         if ((int)trophy.status == (int)TrophyStatus.PAYED)
         {
-            SetUpButtons(obj,DoneIndex);
+            SetUpButtons(obj, DoneIndex);
         }
 
     }
-    void SetUpButtons(GameObject obj, string state){
-        ChildInParent.GetChild(obj.transform,ClaimIndex).gameObject.SetActive(state == ClaimIndex);
-        ChildInParent.GetChild(obj.transform,SliderIndex).gameObject.SetActive(state == SliderIndex);
-        ChildInParent.GetChild(obj.transform,DoneIndex).gameObject.SetActive(state == DoneIndex);
+    void SetUpButtons(GameObject obj, string state)
+    {
+        ChildInParent.GetChild(obj.transform, ClaimIndex).gameObject.SetActive(state == ClaimIndex);
+        ChildInParent.GetChild(obj.transform, SliderIndex).gameObject.SetActive(state == SliderIndex);
+        ChildInParent.GetChild(obj.transform, DoneIndex).gameObject.SetActive(state == DoneIndex);
     }
 
 }
