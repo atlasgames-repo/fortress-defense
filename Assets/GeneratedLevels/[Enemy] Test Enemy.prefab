@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
+  is_boss: 0
   useGravity: 0
   gravity: 50
   walkSpeed: 1.5
@@ -297,6 +298,10 @@ MonoBehaviour:
   resistPoisonPercent: 10
   poisonSlowSpeed: 0.3
   damagePoisonPerSecond: 0
+  canBeFire: 1
+  resistFirePercent: 10
+  fireSlowSpeed: 0.3
+  damageFirePerSecond: 0
   canBeShock: 1
   timeShocking: 2
   soundHitVol: 0.5
@@ -309,6 +314,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d828c6f696d736348b98d90b6aa3fcb9, type: 3}
   soundDieBlowVol: 0.8
   soundDieBlow: []
+  BossMusic: {fileID: 0}
   soundSpawnVol: 0.5
   soundSpawn: []
   currentHealth: 0
@@ -321,6 +327,11 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  deadSoundAfterEnemyDie: {fileID: 0}
+  enemySprite: {fileID: 0}
+  grave: {fileID: 6810516755070250868, guid: 17cb8b2197609ad47adccea960c5c064, type: 3}
+  graveComing: {fileID: 0}
+  graveDestroy: {fileID: 0}
 --- !u!114 &760439294879069736
 MonoBehaviour:
   m_ObjectHideFlags: 0

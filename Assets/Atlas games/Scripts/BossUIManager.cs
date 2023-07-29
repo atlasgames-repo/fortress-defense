@@ -34,8 +34,7 @@ public class BossUIManager : MonoBehaviour
     }
 
     IEnumerator ShakeScreenRepeatedly() {
-        while (true)
-        {
+
             if (!isShaking)
             {
                 ScreenShake.instance.StartShake(0.1f, 0.1f);
@@ -45,7 +44,7 @@ public class BossUIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             isShaking = false;
-        }
+        
     }
 
     // Update is called once per frame

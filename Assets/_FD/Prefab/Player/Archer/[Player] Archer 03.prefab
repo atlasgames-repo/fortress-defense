@@ -302,6 +302,7 @@ MonoBehaviour:
   upgradedCharacterID: {fileID: -8493228012531445255, guid: bd1fda59a7d358a44bdeea974a6c01bc,
     type: 3}
   enemyType: 0
+  is_boss: 0
   useGravity: 0
   gravity: 35
   walkSpeed: 0
@@ -322,6 +323,10 @@ MonoBehaviour:
   randomBloodPuddlePoint: {x: 0.5, y: 0.25}
   healthBarOffset: {x: 0, y: 1.5}
   enemyState: 1
+  weaknessMultiplier: 1
+  strengthMultiplier: 1
+  weakness: 0
+  strength: 0
   canBeFreeze: 1
   dieFrozenFX: {fileID: 0}
   canBeBurn: 1
@@ -330,6 +335,10 @@ MonoBehaviour:
   resistPoisonPercent: 10
   poisonSlowSpeed: 0.3
   damagePoisonPerSecond: 0
+  canBeFire: 1
+  resistFirePercent: 10
+  fireSlowSpeed: 0.3
+  damageFirePerSecond: 0
   canBeShock: 1
   timeShocking: 2
   soundHitVol: 0.5
@@ -338,6 +347,7 @@ MonoBehaviour:
   soundDie: []
   soundDieBlowVol: 0.5
   soundDieBlow: []
+  BossMusic: {fileID: 0}
   soundSpawnVol: 0.5
   soundSpawn: []
   currentHealth: 0
@@ -358,7 +368,7 @@ MonoBehaviour:
   iconPoison: {fileID: 3891750227588774121}
   iconDoubleArrow: {fileID: 2291303495340019668}
   weaponEffect:
-    effectType: 0
+    effectType: 1
     normalDamageMin: 20
     normalDamageMax: 25
     poisonChance: 1
@@ -366,6 +376,9 @@ MonoBehaviour:
     poisonDamagePerSec: 80
     freezeChance: 1
     freezeTime: 5
+    fireChance: 0.1
+    fireTime: 5
+    fireDamagePerSec: 80
   damageMin: 0
   damageMax: 0
   stepCheck: 0.1

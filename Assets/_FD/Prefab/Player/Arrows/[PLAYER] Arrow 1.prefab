@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3009410485888043091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.857, y: -0.343, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 1, z: 1}
   m_Children:
   - {fileID: 3256792321730553421}
   m_Father: {fileID: 0}
@@ -48,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -132,6 +134,18 @@ MonoBehaviour:
   soundHitNothingVolume: 0.5
   ExplosionObj: {fileID: 0}
   parentToHitObject: 1
+  arrowEffect:
+    effectType: 2
+    normalDamageMin: 30
+    normalDamageMax: 50
+    poisonChance: 0.1
+    poisonTime: 5
+    poisonDamagePerSec: 80
+    freezeChance: 0.1
+    freezeTime: 5
+    fireChance: 0.1
+    fireTime: 5
+    fireDamagePerSec: 80
   checkTargetDistanceOffset: {x: -0.25, y: 0}
   checkTargetDistance: 0.5
 --- !u!1 &3495437189585903451

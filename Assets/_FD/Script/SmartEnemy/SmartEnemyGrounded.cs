@@ -42,6 +42,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     [Header("Grave")]
     public GameObject grave;
     public AudioClip graveComing;
+    public Animation graveDestroy;
 
 
     public override void Start()
@@ -335,6 +336,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         StopAllCoroutines();
         StartCoroutine(DisableEnemy(AnimationHelper.getAnimationLength(anim, "Die") + 1f));
         StartCoroutine(Grave());
+        graveDestroy.Play();
     }
 
     public override void Hit(Vector2 force, bool pushBack = false, bool knockDownRagdoll = false, bool shock = false)
