@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Security.Policy;
 using UnityEngine;
 
 [AddComponentMenu("ADDP/Enemy AI/Smart Enemy Ground Control")]
