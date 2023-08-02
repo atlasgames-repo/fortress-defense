@@ -18,12 +18,10 @@ public class AutoDestroy : MonoBehaviour {
     IEnumerator DisableCo()
     {
         yield return null;
-        ScreenShake.instance.StartShake(0.2f, 0.1f);
+
         yield return new WaitForSeconds(destroyAfterTime);
         if (onlyDisactive)
-        {
             gameObject.SetActive(false);
-        }
         else Destroy(gameObject);
     }
 }
