@@ -13,21 +13,57 @@ MonoBehaviour:
   m_Name: LevelGenerator
   m_EditorClassIdentifier: 
   levels:
-  - level: 16
-    defaultExp: 50
-    backgroundSprite: {fileID: 21300000, guid: 1cb073ea1c2d0e54ea162e91503069c2, type: 3}
+  - level: 21
+    defaultExp: 130
+    backgroundSprite: {fileID: 21300000, guid: 5be1e0fc71c022242992f95a2e6ef815, type: 3}
     Waves:
     - wait: 0
       enemySpawns:
       - wait: 0
-        enemy: {fileID: 3946748681848493890, guid: b16e599b3265a744d89e925a2f9835fa,
+        enemy: {fileID: 1384076305360503900, guid: 71d92f6a73d83a648b515b6a3ba1a113,
           type: 3}
-        numberEnemy: 1
+        numberEnemy: 6
         rate: 1
         customHealth: 700
         customSpeed: 0.7
         customAttackDmg: 0
-        boosType: 2
+        boosType: 0
+        BossScale: 1.599
+        BossMinExp: 99
+        BossMaxExp: 90
+      - wait: 0
+        enemy: {fileID: 3449677795528492924, guid: 754de641f17a8c04f9ecc8d5c4dc7bd2,
+          type: 3}
+        numberEnemy: 5
+        rate: 1
+        customHealth: 700
+        customSpeed: 0.7
+        customAttackDmg: 0
+        boosType: 0
+        BossScale: 1.599
+        BossMinExp: 99
+        BossMaxExp: 90
+      - wait: 0
+        enemy: {fileID: 3505094654918231060, guid: 93b3a96647087d54085a68ddee065188,
+          type: 3}
+        numberEnemy: 6
+        rate: 1
+        customHealth: 700
+        customSpeed: 0.7
+        customAttackDmg: 0
+        boosType: 0
+        BossScale: 1.599
+        BossMinExp: 99
+        BossMaxExp: 90
+      - wait: 0
+        enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
+          type: 3}
+        numberEnemy: 8
+        rate: 1
+        customHealth: 700
+        customSpeed: 0.7
+        customAttackDmg: 0
+        boosType: 0
         BossScale: 1.599
         BossMinExp: 99
         BossMaxExp: 90
