@@ -128,6 +128,7 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("GameTutorialOpened", 0); }
         set { PlayerPrefs.SetInt("GameTutorialOpened", value); }
     }
+    
 }
 
 
