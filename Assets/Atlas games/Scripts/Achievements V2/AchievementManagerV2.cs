@@ -17,7 +17,8 @@ enum AchievementFilter
     EXPIRED,
     DAILY,
     WEEKLY,
-    ONETIME
+    ONETIME,
+    PERMENENT
 }
 
 public class AchievementManagerV2 : MonoBehaviour
@@ -66,6 +67,7 @@ public class AchievementManagerV2 : MonoBehaviour
             case 7: models = BasePlayerPrefs<AchievementModel>.DictArray.Where(k => k.Schedul_id == scheduleModelDaily._id).ToArray(); break;
             case 8: models = BasePlayerPrefs<AchievementModel>.DictArray.Where(k => k.Schedul_id == scheduleModelWeekly._id).ToArray(); break;
             case 9: models = BasePlayerPrefs<AchievementModel>.DictArray.Where(k => k.Schedul_id == scheduleModelOneTime._id).ToArray(); break;
+            case 10: models = BasePlayerPrefs<AchievementModel>.DictArray.Where(k => k.isOneTime == true).OrderBy(x => Guid.NewGuid()).ToArray(); break;
             default: break;
         }
         foreach (AchievementModel model in models)

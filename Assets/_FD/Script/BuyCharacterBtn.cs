@@ -131,7 +131,7 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
         {
             //SoundManager.PlaySfx(SoundManager.Instance.buyCharacter);
             CharacterManager.Instance.SpawnCharacter(this);
-
+            GlobalValue.BoughtGroundUnit++;
         }
     }
 

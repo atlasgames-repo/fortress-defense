@@ -10,31 +10,30 @@ using System.Linq;
 public class AchievementEventsV2
 {
     public AchievementModel model;
-    public AchievementEventsV2(){
+    public AchievementEventsV2()
+    {
         if (model != null)
-        model.startPoint = Value; 
+            model.startPoint = Value;
     }
-    public AchievementEventsV2(AchievementModel _model){
+    public AchievementEventsV2(AchievementModel _model)
+    {
         model = _model;
-        AchievementScheduleModel shcedulModel = BasePlayerPrefs<AchievementScheduleModel>.DictArray.Where(sm => model.Schedul_id == sm._id).FirstOrDefault();
-        if (shcedulModel != null && shcedulModel.type == ScheduleType.ONETIME)
-        {
-            model.startPoint = 0;
-            model.checkpoint = (int)Math.Round((Value + model.checkpoint + 100) /100d,0,MidpointRounding.AwayFromZero) * 100;
-        }
-        else model.startPoint = _model.startPoint > 0 ? _model.startPoint: Value; 
     }
-    public int Value{
-        get{
+    public int Value
+    {
+        get
+        {
             Type type = typeof(GlobalValue);
             PropertyInfo field = type.GetProperty(model.fieldName, BindingFlags.Static | BindingFlags.Public);
             return (int)field.GetValue(null);
         }
     }
-    public float Proccess => ((float)Value - model.startPoint)/model.checkpoint;
+    public float Proccess => ((float)Value - model.startPoint) / model.checkpoint;
     public string OutOf => $"{Value - model.startPoint}/{model.checkpoint}";
-    public bool IsPassed{
-        get{
+    public bool IsPassed
+    {
+        get
+        {
             bool is_passed = Proccess >= 1;
             if (model.isActive == false) return false; // This achievement is not active
             if (model.status == TrophyStatus.PAYED) return false; // If already payed, do nothing
@@ -48,7 +47,8 @@ public class AchievementEventsV2
             else return false;
         }
     }
-    public void Update_status(TrophyStatus new_status){
+    public void Update_status(TrophyStatus new_status)
+    {
         model.status = new_status;
         BasePlayerPrefs<AchievementModel>.Update(model._id, model);
     }

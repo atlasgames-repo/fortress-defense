@@ -15,6 +15,7 @@ public enum ScheduleType
     DAYLY,
     WEEKLY,
     ONETIME,
+    PERMENENT,
 }
 public enum ScheduleStatus
 {
@@ -34,6 +35,7 @@ public class AchievementModel : BaseModel
     public int checkpoint;
     public string fieldName;
     public bool isActive = true;
+    public bool isOneTime = false;
     public AchievementType type = AchievementType.NORMAL;
     public TrophyStatus status = TrophyStatus.UNKNOWN;
 
@@ -44,15 +46,17 @@ public class AchievementScheduleModel : BaseModel
     public Guid _id = Guid.NewGuid();
     public string name;
     public DateTime ExpireDate = DateTime.Now;
-    public int DurationMinutes =  10;
+    public int DurationMinutes = 10;
     public int NumberOfMissions = 4;
     public ScheduleType type = ScheduleType.DAYLY;
     public ScheduleStatus status = ScheduleStatus.PENDING;
 
-    public AchievementScheduleModel(){
+    public AchievementScheduleModel()
+    {
         ExpireDate = DateTime.Now.AddMinutes(DurationMinutes);
     }
-    public AchievementScheduleModel(ScheduleType _type){
+    public AchievementScheduleModel(ScheduleType _type)
+    {
         DurationMinutes = _type switch
         {
             ScheduleType.DAYLY => 1_440,
@@ -63,7 +67,8 @@ public class AchievementScheduleModel : BaseModel
         type = _type;
         ExpireDate = DateTime.Now.AddMinutes(DurationMinutes);
     }
-    public AchievementScheduleModel(ScheduleType _type, int numberOfMissions){
+    public AchievementScheduleModel(ScheduleType _type, int numberOfMissions)
+    {
         DurationMinutes = _type switch
         {
             ScheduleType.DAYLY => 1_440,
@@ -75,15 +80,25 @@ public class AchievementScheduleModel : BaseModel
         NumberOfMissions = numberOfMissions;
         ExpireDate = DateTime.Now.AddMinutes(DurationMinutes);
     }
-    public AchievementScheduleModel(ScheduleType _type, int numberOfMissions, string _name){
+    public AchievementScheduleModel(ScheduleType _type, int numberOfMissions, string _name)
+    {
         name = _name;
         DurationMinutes = _type switch
         {
             ScheduleType.DAYLY => 1_440,
             ScheduleType.ONETIME => DurationMinutes * UnityEngine.Random.Range(1, 144),
             ScheduleType.WEEKLY => 10_080,
+            ScheduleType.PERMENENT => 525_600,
             _ => 1_440,
         };
+        type = _type;
+        NumberOfMissions = numberOfMissions;
+        ExpireDate = DateTime.Now.AddMinutes(DurationMinutes);
+    }
+    public AchievementScheduleModel(ScheduleType _type, int numberOfMissions, string _name, int duration)
+    {
+        name = _name;
+        DurationMinutes = duration;
         type = _type;
         NumberOfMissions = numberOfMissions;
         ExpireDate = DateTime.Now.AddMinutes(DurationMinutes);
@@ -94,11 +109,13 @@ public class AchievementUpdateModel : BaseModel
 {
     public string id;
     public int status;
-    public AchievementUpdateModel(){
+    public AchievementUpdateModel()
+    {
         id = "0";
         status = 0;
     }
-    public AchievementUpdateModel(string _id, int _status){
+    public AchievementUpdateModel(string _id, int _status)
+    {
         id = _id;
         status = _status;
     }

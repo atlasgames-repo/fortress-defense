@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Reflection;
 
 public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
 {
@@ -30,9 +31,29 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
             {
                 // check if the schedule is expired or active
                 AchievementScheduleModel foundSchedule = DictArray.Where(a => a.type == schedules.type && a.status == ScheduleStatus.PENDING).FirstOrDefault();
+                if (schedules.type == ScheduleType.PERMENENT)
+                {
+                    if (foundSchedule != null) continue;
+
+                    // Check if the schedule is permenent
+                    // add new schedule of this type
+                    AchievementScheduleModel new_permenent_schedule = new AchievementScheduleModel(schedules.type, schedules.NumberOfMissions, schedules.name);
+                    Add(new_permenent_schedule._id, new_permenent_schedule);
+                    // generate the permenent models
+                    AchievementModel[] models = data.models.Where(ach => ach.isOneTime == true).ToArray();
+                    for (int i = 0; i < models.Length; i++)
+                    {
+                        AchievementModel new_achievement = models[i];
+                        new_achievement._id = Guid.NewGuid();
+                        new_achievement.Schedul_id = new_permenent_schedule._id;
+                        ChangeModelCheckPoint(ref new_achievement, new_permenent_schedule);
+                        AchievementTasksV2.self.AddNewAchievements(new AchievementModel[1] { new_achievement });
+                    }
+                }
                 // Executes Only of the schedule is expired or its one time and done or expired
                 if (foundSchedule != null)
                 {
+
                     int expired = DateTime.Compare(DateTime.Now, foundSchedule.ExpireDate);
                     if (expired < 0 && foundSchedule.type != ScheduleType.ONETIME) continue;  // if the schedule isn't expired
 
@@ -58,6 +79,7 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
                     AchievementModel new_achievement = GetRandomAchievemntByType(GetAchievementType);
                     new_achievement._id = Guid.NewGuid();
                     new_achievement.Schedul_id = new_schedule._id;
+                    ChangeModelCheckPoint(ref new_achievement, new_schedule);
                     AchievementTasksV2.self.AddNewAchievements(new AchievementModel[1] { new_achievement });
                 }
             }
@@ -78,9 +100,28 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
             yield return new WaitForSeconds(ListenerTickSeconds);
         }
     }
+    public void ChangeModelCheckPoint(ref AchievementModel model, AchievementScheduleModel schedule)
+    {
+
+        if (schedule != null && schedule.type == ScheduleType.ONETIME)
+        {
+            model.startPoint = 0;
+            model.checkpoint = (int)Math.Round((Value(model) + model.checkpoint + 100) / 100d, 0, MidpointRounding.AwayFromZero) * 100;
+        }
+        else if (schedule.type == ScheduleType.PERMENENT)
+            model.startPoint = 0;
+        else
+            model.startPoint = model.startPoint > 0 ? model.startPoint : Value(model);
+    }
+    public int Value(AchievementModel model)
+    {
+        Type type = typeof(GlobalValue);
+        PropertyInfo field = type.GetProperty(model.fieldName, BindingFlags.Static | BindingFlags.Public);
+        return (int)field.GetValue(null);
+    }
     public AchievementModel GetRandomAchievemntByType(AchievementType _type)
     {
-        return data.models.Where(achiv => achiv.type == _type).OrderBy(x => UnityEngine.Random.value).First();
+        return data.models.Where(achiv => achiv.type == _type && achiv.isOneTime == false).OrderBy(x => UnityEngine.Random.value).First();
     }
     public AchievementType GetAchievementType
     {

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
-public class AchievementTasksV2: BasePlayerPrefs<AchievementModel>
+public class AchievementTasksV2 : BasePlayerPrefs<AchievementModel>
 {
     public static AchievementTasksV2 self;
     public float InitialDelaySeconds = 5;
@@ -56,7 +58,8 @@ public class AchievementTasksV2: BasePlayerPrefs<AchievementModel>
             achievements[i] = new AchievementEventsV2(DictArray[i]);
         }
     }
-    public void TryGetEvent(Guid index, out AchievementEventsV2 Event){
+    public void TryGetEvent(Guid index, out AchievementEventsV2 Event)
+    {
         foreach (AchievementEventsV2 item in achievements)
         {
             if (item.model._id == index)
@@ -67,12 +70,10 @@ public class AchievementTasksV2: BasePlayerPrefs<AchievementModel>
         }
         Event = null;
     }
-    void OnApplicationQuit(){
+    void OnApplicationQuit()
+    {
         if (_dispatcher != null)
-        StopCoroutine(_dispatcher);
-    }
-    public void ReciveTheReward(int index){
-
+            StopCoroutine(_dispatcher);
     }
 
 }

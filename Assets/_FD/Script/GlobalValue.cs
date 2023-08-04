@@ -132,6 +132,27 @@ public class GlobalValue : MonoBehaviour
     {
         get { return User.Coin; }
     }
+    public static int BoughtGroundUnit
+    {
+        get { return PlayerPrefs.GetInt("BoughtGroundUnit", 0); }
+        set { PlayerPrefs.SetInt("BoughtGroundUnit", value); }
+    }
+    public static int PoisionUsage
+    {
+        get { return PlayerPrefs.GetInt("PoisionUsage", 0); }
+        set { PlayerPrefs.SetInt("PoisionUsage", value); }
+    }
+    public static int FreezeUsage
+    {
+        get { return PlayerPrefs.GetInt("FreezeUsage", 0); }
+        set { PlayerPrefs.SetInt("FreezeUsage", value); }
+    }
+    public static int LightningUsage
+    {
+        get { return PlayerPrefs.GetInt("LightningUsage", 0); }
+        set { PlayerPrefs.SetInt("LightningUsage", value); }
+    }
+
     public static int GameStartTimerMinutes
     {
         get
