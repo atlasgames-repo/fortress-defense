@@ -11,7 +11,6 @@ public class BaseModel
     {
         get { return JsonUtility.ToJson(this); }
     }
-
     public string ToParams
     {
         get
@@ -100,29 +99,21 @@ public class Authentication : BaseModel
 public class UserResponse : BaseModel
 {
     public string first_name, last_name, display_name, email, username, registered_date, avatar;
-    public int gem, uxp;
+    public int coin, gem, uxp;
 
 }
 [Serializable]
 public class UserUpdate : BaseModel
 {
-    public string token = "null";
-    public int gem = User.UserProfile.gem, uxp = User.UserProfile.uxp;
+    public int gem = User.UserProfile.gem, uxp = User.UserProfile.uxp, coin = User.UserProfile.coin;
     public UserUpdate()
     {
-
     }
-    public UserUpdate(string _token, int _gem = 0, int _uxp = 0)
+    public UserUpdate(int _gem = 0, int _uxp = 0, int _coin = 0)
     {
-        token = _token;
-        gem = _gem == 0 ? User.UserProfile.gem : _gem;
-        uxp = _uxp == 0 ? User.UserProfile.uxp : _uxp; ;
-    }
-    public UserUpdate(int _gem = 0, int _uxp = 0)
-    {
-        token = User.Token;
-        gem = _gem == 0 ? User.UserProfile.gem : _gem;
-        uxp = _uxp == 0 ? User.UserProfile.uxp : _uxp;
+        gem = _gem;
+        uxp = _uxp;
+        coin = _coin;
     }
 
 }

@@ -108,12 +108,15 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         switch (affectType)
         {
             case AffectZoneType.Lighting:
+                GlobalValue.LightningUsage++;
                 ActiveLighting();
                 break;
             case AffectZoneType.Frozen:
+                GlobalValue.FreezeUsage++;
                 ActiveFrozen();
                 break;
             case AffectZoneType.Poison:
+                GlobalValue.PoisionUsage++;
                 ActivePoison();
                 break;
         }

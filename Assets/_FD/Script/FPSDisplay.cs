@@ -11,7 +11,7 @@ public class FPSDisplay : MonoBehaviour {
 	void Start(){
 		DontDestroyOnLoad (gameObject);
 		Screen.SetResolution ((int)resolution.x, (int)resolution.y, true);
-        Application.targetFrameRate = setFPS;
+        // Application.targetFrameRate = setFPS;
     }
 
 	void Update()

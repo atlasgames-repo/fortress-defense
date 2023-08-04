@@ -65,7 +65,7 @@ public class GameMode : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         //Screen.SetResolution((int)resolution.x, (int)resolution.y);
-        Application.targetFrameRate = setFPS;
+        // Application.targetFrameRate = setFPS;
 
 //        string gameId = "";
 //#if UNITY_IOS
@@ -99,7 +99,7 @@ public class GameMode : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G))
         {
-            GlobalValue.SavedCoins += 999999;
+            User.Coin = 999999;
         }
 
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
@@ -178,7 +178,7 @@ public class GameMode : MonoBehaviour
     //            Debug.Log("The ad was successfully shown.");
 
     //            //	#if UNITY_EDITOR
-    //            GlobalValue.SavedCoins += watchVideoAdRewarded;
+    //            User.Coin = watchVideoAdRewarded;
     //            SoundManager.PlaySfx(soundReward);
     //            //	#endif
     //            break;

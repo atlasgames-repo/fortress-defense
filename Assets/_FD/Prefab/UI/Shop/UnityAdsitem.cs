@@ -17,10 +17,12 @@ public class UnityAdsitem : MonoBehaviour
                 rewardedTxt.text = "NO AD AVAILABLE NOW!";
             else
                 rewardedTxt.text = "+" + AdsManager.Instance.getRewarded;
-        }else
+        }
+        else
             rewardedTxt.text = "NO AD AVAILABLE NOW!";
     }
 
+    [System.Obsolete]
     public void WatchVideoAd()
     {
         if (AdsManager.Instance)
@@ -36,7 +38,7 @@ public class UnityAdsitem : MonoBehaviour
         AdsManager.AdResult -= AdsManager_AdResult;
         if (isSuccess)
         {
-            GlobalValue.SavedCoins += rewarded;
+            User.Coin = rewarded;
             SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
         }
     }
