@@ -111,7 +111,6 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("GameTutorialOpened", 0); }
         set { PlayerPrefs.SetInt("GameTutorialOpened", value); }
     }
-
     // Achievements
     public static int LevelPass
     {
@@ -163,5 +162,3 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetString("GameStartTimerMinutes", DateTime.Now.AddMinutes(value).ToString("yyyy-MM-dd HH:mm:ss")); }
     }
 }
-
-
