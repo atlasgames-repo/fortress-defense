@@ -244,7 +244,6 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         if (is_spine && skeletonAnimation != null)
             skeletonAnimation.AnimationState.SetAnimation(trackIndex, name, looped);
     }
-
     public void AnimSetTrigger(string name)
     {
         anim.SetTrigger(name);

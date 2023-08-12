@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AffectZoneType { Lighting, Frozen, Poison}
+public enum AffectZoneType { Lighting, Frozen, Poison,Magnet,Cure}
 public class AffectZoneManager : MonoBehaviour
 {
     public static AffectZoneManager Instance;
@@ -11,6 +11,7 @@ public class AffectZoneManager : MonoBehaviour
     AffectZoneType affectType;
     [ReadOnly] public bool isChecking = false;
     [ReadOnly] public bool isAffectZoneWorking = false;
+    [Header("CURE")] public float healAmount;
 
     AffectZoneButton pickedBtn;
     private void OnEnable()
@@ -31,6 +32,10 @@ public class AffectZoneManager : MonoBehaviour
         }
     }
 
+    public void Cure()
+    {
+        FindObjectOfType<TheFortrest>().HealFortress(healAmount);
+    }
     void Update()
     {
         if (isChecking)

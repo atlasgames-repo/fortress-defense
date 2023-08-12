@@ -10,6 +10,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     public bool isSocking { get; set; }
     public bool isDead { get; set; }
 
+     public bool magnet = false;
     [HideInInspector]
     public Vector3 velocity;
     private Vector2 _direction;
@@ -115,15 +116,25 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         if (isStopping || isStunning)
             targetVelocityX = 0;
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? 0.1f : 0.2f);
+     
 
-        velocity.y += -gravity * Time.deltaTime;
+     
 
         if ((_direction.x > 0 && controller.collisions.right) || (_direction.x < 0 && controller.collisions.left))
             velocity.x = 0;
-
-        controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
-
+        if (!magnet)
+        {
+            controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
+            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? 0.1f : 0.2f);
+            velocity.y += -gravity * Time.deltaTime;
+        }
+        else
+        {
+            controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
+            velocity.x = 0;
+            velocity.y += -0;
+        }
+       
         if (controller.collisions.above || controller.collisions.below)
             velocity.y = 0;
 

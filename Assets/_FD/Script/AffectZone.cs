@@ -6,35 +6,39 @@ public class AffectZone : MonoBehaviour
 {
     [ReadOnly] public bool isActived = false;
 
-    [Header("LIGHTNING")]
-    public float lightingActiveTime = 3;
+    [Header("LIGHTNING")] public float lightingActiveTime = 3;
     public float lightingDamage = 10;
     public GameObject lightingFX;
     public float lightingRate = 1;
     public AudioClip lightingSound;
 
-    [Header("FROZEN")]
-    public float frozenActiveTime = 3;
+    [Header("FROZEN")] public float frozenActiveTime = 3;
     public float frozenAffectTime = 3;
     public float frozenDamage = 10;
     public GameObject frozenFX;
     public AudioClip forzenSound;
 
-    [Header("POISON")]
-    public float poisonActiveTime = 3;
+    [Header("POISON")] public float poisonActiveTime = 3;
     public float poisonAffectTime = 3;
     public float poisonDamage = 10;
     public GameObject poisonFX;
     public float poisonRate = 0.5f;
     public AudioClip poisonSound;
 
+    [Header("MAGNET")] public float magnetRate = 3f;
+    public float magnetActiveTime = 3;
+    public GameObject magnetIcon;
+
+
     // Start is called before the first frame update
     List<Enemy> listEnemyInZone;
     AffectZoneType zoneType;
+
     public AffectZoneType getAffectZoneType
     {
         get { return zoneType; }
     }
+
     Animator anim;
 
     private void Awake()
@@ -67,10 +71,16 @@ public class AffectZone : MonoBehaviour
                 case AffectZoneType.Poison:
                     StartCoroutine(StopActiveCo());
                     break;
+                case AffectZoneType.Magnet:
+                    StartCoroutine(StopActiveCo());
+                    break;
+                case AffectZoneType.Frozen:
+                    StartCoroutine(StopActiveCo());
+                    break;
             }
-
         }
     }
+
 
     IEnumerator ActiveCo()
     {
@@ -93,14 +103,17 @@ public class AffectZone : MonoBehaviour
                             case AffectZoneType.Lighting:
                                 var _weaponFX = new WeaponEffect();
                                 _weaponFX.effectType = WEAPON_EFFECT.LIGHTING;
-                                target.TakeDamage(lightingDamage, Vector2.zero, target.gameObject.transform.position, gameObject, BODYPART.NONE, _weaponFX);
+                                target.TakeDamage(lightingDamage, Vector2.zero, target.gameObject.transform.position,
+                                    gameObject, BODYPART.NONE, _weaponFX);
                                 if (lightingFX)
-                                    SpawnSystemHelper.GetNextObject(lightingFX, true).transform.position = target.gameObject.transform.position;
+                                    SpawnSystemHelper.GetNextObject(lightingFX, true).transform.position =
+                                        target.gameObject.transform.position;
                                 SoundManager.PlaySfx(lightingSound);
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
                             case AffectZoneType.Frozen:
-                                target.TakeDamage(frozenDamage, Vector2.zero, target.gameObject.transform.position, gameObject);
+                                target.TakeDamage(frozenDamage, Vector2.zero, target.gameObject.transform.position,
+                                    gameObject);
                                 target.Freeze(frozenAffectTime, gameObject);
                                 if (frozenFX)
                                 {
@@ -108,6 +121,7 @@ public class AffectZone : MonoBehaviour
                                     _fx.GetComponent<AutoDestroy>().Init(frozenAffectTime);
                                     _fx.transform.position = target.gameObject.transform.position;
                                 }
+
                                 SoundManager.PlaySfx(forzenSound);
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
@@ -119,7 +133,12 @@ public class AffectZone : MonoBehaviour
                                     _fx.GetComponent<AutoDestroy>().Init(poisonAffectTime);
                                     _fx.transform.position = target.gameObject.transform.position;
                                 }
+
                                 SoundManager.PlaySfx(poisonSound);
+                                break;
+                            case AffectZoneType.Magnet:
+
+                                // code for magnet
                                 break;
                         }
                     }
@@ -137,7 +156,11 @@ public class AffectZone : MonoBehaviour
                 case AffectZoneType.Poison:
                     yield return new WaitForSeconds(poisonRate);
                     break;
+                case AffectZoneType.Magnet:
+                    yield return new WaitForSeconds(magnetRate);
+                    break;
             }
+
             yield return null;
         }
     }
@@ -156,7 +179,12 @@ public class AffectZone : MonoBehaviour
             case AffectZoneType.Poison:
                 delay = poisonActiveTime;
                 break;
+            case AffectZoneType.Magnet:
+                delay = magnetActiveTime;
+                // stop magnet 
+                break;
         }
+
         yield return new WaitForSeconds(delay);
 
         Stop();

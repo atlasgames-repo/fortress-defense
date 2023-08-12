@@ -26,6 +26,9 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     bool allowCounting = false;
     bool canUse = true;
     float holdCounter = 0;
+
+
+   
     public CanvasGroup canvasGroup;
 
     void Start()
@@ -76,6 +79,17 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Lighting, this);
         SoundManager.Click();
     }
+    void ActiveMagnet()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Magnet, this);
+        SoundManager.Click();
+    }
+    void ActiveCure()
+    {
+    //    AffectZoneManager.Instance.ActiveZone(AffectZoneType.Cure, this);
+    AffectZoneManager.Instance.Cure();
+        SoundManager.Click();
+    }
 
     void ActiveFrozen()
     {
@@ -115,6 +129,12 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
                 break;
             case AffectZoneType.Poison:
                 ActivePoison();
+                break;
+            case AffectZoneType.Magnet:
+                ActiveMagnet();
+                break;
+            case AffectZoneType.Cure:
+                ActiveCure();
                 break;
         }
 
