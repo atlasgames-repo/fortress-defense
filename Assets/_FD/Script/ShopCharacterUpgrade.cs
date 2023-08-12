@@ -77,9 +77,9 @@ public class ShopCharacterUpgrade : MonoBehaviour
         if (characterID.CurrentUpgrade == -1)
             return;
 
-        if(GlobalValue.SavedCoins >= characterID.UpgradeSteps[characterID.CurrentUpgrade].price)
+        if(User.Coin >= characterID.UpgradeSteps[characterID.CurrentUpgrade].price)
         {
-            GlobalValue.SavedCoins -= characterID.UpgradeSteps[characterID.CurrentUpgrade].price;
+            User.Coin = -characterID.UpgradeSteps[characterID.CurrentUpgrade].price;
             SoundManager.PlaySfx(SoundManager.Instance.soundUpgrade);
 
             characterID.UpgradeCharacter();

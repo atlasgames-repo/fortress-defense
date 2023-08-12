@@ -9,6 +9,7 @@ using System.Threading;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 public class APIManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class APIManager : MonoBehaviour
     public Color ErrorColor, WarningColor;
     [ReadOnly] public LifeTTR lifeTTR;
 
-    private string pattern = @"{.*}";
+    private string pattern = @"{.*}", patternList = @"\[.*\]";
 
     public int lifeTTL = 30;
     public int maxLife = 5;
@@ -35,7 +36,7 @@ public class APIManager : MonoBehaviour
         tokenSource = new CancellationTokenSource();
         DontDestroyOnLoad(gameObject);
         UnityWebRequest.ClearCookieCache();
-
+        Application.targetFrameRate = 144;
     }
     public IEnumerator LoadAsynchronously(string name)
     {
@@ -82,7 +83,15 @@ public class APIManager : MonoBehaviour
         string param = type != null ? $"?type={type}" : "";
         return await Get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: User.Token);
     }
-
+    public async Task Updates_achivement(int status = 0, string id = "0")
+    {
+        string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
+        await Get<object>(route: "/achivements/add", auth_token: User.Token,parameters: param);
+    }
+    public async Task<AchievementModel[]> Get_achivements()
+    {
+        return await Get<AchievementModel[]>(route: "/achivements", auth_token: User.Token);
+    }
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
         await GetAssetBundle(name, address, progress);
@@ -101,9 +110,9 @@ public class APIManager : MonoBehaviour
 
     public async Task<UserResponse> UpdateUser(UserUpdate userdata)
     {
-        return await Post<UserResponse>(
+        return await Get<UserResponse>(
         route: "/user/update",
-        data: userdata.ToJson,
+        parameters: userdata.ToParams,
         auth_token: User.Token);
     }
 
@@ -113,6 +122,7 @@ public class APIManager : MonoBehaviour
         Rect rec = new Rect(0, 0, texture.width, texture.height);
         return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
     }
+
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
@@ -181,6 +191,9 @@ public class APIManager : MonoBehaviour
             req.SetRequestHeader(item.Key, item.Value);
         }
         req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
+        // Set the request headers
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Accept", "application/json");
         var opration = req.SendWebRequest();
 
         while (!opration.isDone)
@@ -199,7 +212,7 @@ public class APIManager : MonoBehaviour
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(req.error);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -207,7 +220,8 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                // res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(Clean_json(req.downloadHandler.text));
             }
             catch (System.Exception e)
             {
@@ -227,13 +241,15 @@ public class APIManager : MonoBehaviour
         {
             headers = new Dictionary<string, string>();
         }
-
         using UnityWebRequest req = UnityWebRequest.Post(uri: Base_url + route, postData: data);
         foreach (KeyValuePair<string, string> item in headers)
         {
             req.SetRequestHeader(item.Key, item.Value);
         }
         req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
+        // Set the request headers
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Accept", "application/json");
         var opration = req.SendWebRequest();
 
         while (!opration.isDone)
@@ -252,7 +268,7 @@ public class APIManager : MonoBehaviour
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(req.error);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -260,7 +276,8 @@ public class APIManager : MonoBehaviour
             T res;
             try
             {
-                res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                // res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
+                res = JsonConvert.DeserializeObject<T>(Clean_json(req.downloadHandler.text));
             }
             catch (System.Exception)
             {
@@ -275,9 +292,9 @@ public class APIManager : MonoBehaviour
         }
     }
     #endregion
-    private async Task<Texture2D> GetTexture(string route)
+    public async Task<Texture2D> GetTexture(string url)
     {
-        using UnityWebRequest req = UnityWebRequestTexture.GetTexture(uri: route);
+        using UnityWebRequest req = UnityWebRequestTexture.GetTexture(uri: url);
         var opration = req.SendWebRequest();
         while (!opration.isDone)
         {
@@ -296,7 +313,7 @@ public class APIManager : MonoBehaviour
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(error_response.message);
+            RunStatus(req.error);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -339,12 +356,21 @@ public class APIManager : MonoBehaviour
     {
         RegexOptions options = RegexOptions.Multiline;
         string value = "{}";
+        MatchCollection Listmatches = Regex.Matches(data, patternList, options);
+        if (Listmatches.Count > 0)
+            return data;
+
         foreach (Match m in Regex.Matches(data, pattern, options))
         {
             value = m.Value;
         }
 
         return value;
+    }
+
+    internal void Updates_achivement(string id, int new_status)
+    {
+        throw new NotImplementedException();
     }
 }
 

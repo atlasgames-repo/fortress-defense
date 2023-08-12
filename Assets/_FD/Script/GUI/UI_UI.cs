@@ -42,7 +42,7 @@ public class UI_UI : MonoBehaviour
         //enemyHealthSlider.value = Mathf.Lerp(enemyHealthSlider.value, enemyHealthValue, lerpSpeed * Time.deltaTime);
         
         enemyWavePercentSlider.value = Mathf.Lerp(enemyWavePercentSlider.value, enemyWaveValue, lerpSpeed * Time.deltaTime);
-        coinTxt.text = GlobalValue.SavedCoins + "";
+        coinTxt.text = User.Coin + "";
         expTxt.text = GameManager.Instance.currentExp + "";
     }
 

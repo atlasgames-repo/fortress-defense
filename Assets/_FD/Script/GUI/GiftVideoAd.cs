@@ -11,7 +11,7 @@ public class GiftVideoAd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(AdsManager.Instance)
+        if (AdsManager.Instance)
         {
             rewardedTxt.text = AdsManager.Instance.getRewarded + "";
         }
@@ -23,6 +23,7 @@ public class GiftVideoAd : MonoBehaviour
         button.SetActive(allowShow && AdsManager.Instance && AdsManager.Instance.isRewardedAdReady());
     }
 
+    [System.Obsolete]
     public void WatchVideoAd()
     {
         SoundManager.Click();
@@ -38,7 +39,7 @@ public class GiftVideoAd : MonoBehaviour
         AdsManager.AdResult -= AdsManager_AdResult;
         if (isSuccess)
         {
-            GlobalValue.SavedCoins += rewarded;
+            User.Coin = rewarded;
             SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
         }
     }
