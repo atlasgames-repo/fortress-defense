@@ -28,8 +28,12 @@ public class AffectZone : MonoBehaviour
     [Header("MAGNET")] public float magnetRate = 3f;
     public float magnetActiveTime = 3;
     public GameObject magnetIcon;
-
-
+    public float magnetScaleTime = 0.5f;
+    public float elapsedTime = 0;
+    private Vector3 _initialScale = new Vector3(0, 0, 0);
+    private Vector3 _targetScale = new Vector3(1, 1, 1);
+    public float magnetAttractionSpeed = 5f;
+    private GameObject _magnet;
     // Start is called before the first frame update
     List<Enemy> listEnemyInZone;
     AffectZoneType zoneType;
@@ -137,7 +141,21 @@ public class AffectZone : MonoBehaviour
                                 SoundManager.PlaySfx(poisonSound);
                                 break;
                             case AffectZoneType.Magnet:
+                                if (!_magnet)
+                                {
+                                    _magnet = Instantiate(magnetIcon, transform.position, Quaternion.identity, transform);
+                                    _initialScale = _magnet.transform.localScale;
+                                    if (elapsedTime < magnetScaleTime)
+                                    {
+                                        elapsedTime += Time.deltaTime;
+                                        float t = elapsedTime / magnetScaleTime;
+                                        _magnet.transform.localScale = Vector3.Lerp(_initialScale, _targetScale, t);
+                                    } 
+                                }
 
+                                target.GetComponent<SmartEnemyGrounded>().magnet = true;
+                                target.GetComponent<SmartEnemyGrounded>().magnetPos = transform.position;
+                                target.GetComponent<SmartEnemyGrounded>().magnetAttractionSpeed = magnetAttractionSpeed;
                                 // code for magnet
                                 break;
                         }
@@ -158,6 +176,14 @@ public class AffectZone : MonoBehaviour
                     break;
                 case AffectZoneType.Magnet:
                     yield return new WaitForSeconds(magnetRate);
+                    Stop();
+                    List<Enemy> _tempList = new List<Enemy>(listEnemyInZone);
+
+                    foreach (var target in _tempList)
+                    {
+                        target.GetComponent<SmartEnemyGrounded>().magnet = false;
+                    }
+                    Destroy(_magnet);
                     break;
             }
 
