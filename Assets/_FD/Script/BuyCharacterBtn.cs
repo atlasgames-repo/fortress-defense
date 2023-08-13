@@ -116,7 +116,7 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
 
     void CheckAvailable()
     {
-        ownBtn.interactable = GlobalValue.SavedCoins >= price && numberCharacterAlive() < max;
+        ownBtn.interactable = User.Coin >= price && numberCharacterAlive() < max;
     }
 
     private void OnBtnClick()
@@ -131,7 +131,7 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
         {
             //SoundManager.PlaySfx(SoundManager.Instance.buyCharacter);
             CharacterManager.Instance.SpawnCharacter(this);
-
+            GlobalValue.BoughtGroundUnit++;
         }
     }
 

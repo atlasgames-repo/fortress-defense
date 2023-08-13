@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using TMPro;
+using System;
+
 public class LoginManager : MonoBehaviour
 {
     public TMP_InputField username, password;
@@ -21,6 +23,9 @@ public class LoginManager : MonoBehaviour
         await Task.Delay(1);
         await auth_with_token();
         // StartCoroutine(LoadAsynchronously("Download"));
+
+        // Reset GameStartTime
+        GlobalValue.GameStartTimerMinutes = 0;
     }
     public void OpenSignUpLink()
     {

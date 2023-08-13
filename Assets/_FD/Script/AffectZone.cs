@@ -43,6 +43,7 @@ public class AffectZone : MonoBehaviour
         get { return zoneType; }
     }
 
+
     Animator anim;
 
     private void Awake()
@@ -141,6 +142,7 @@ public class AffectZone : MonoBehaviour
                                 SoundManager.PlaySfx(poisonSound);
                                 break;
                             case AffectZoneType.Magnet:
+                                print("magnet");
                                 if (!_magnet)
                                 {
                                     _magnet = Instantiate(magnetIcon, transform.position, Quaternion.identity, transform);

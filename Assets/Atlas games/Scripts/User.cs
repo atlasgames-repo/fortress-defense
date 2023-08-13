@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using UnityEngine.Events;
 
 public class User : MonoBehaviour
 {
-    private delegate void callback(UserResponse response);
+    public static UnityEvent UserUpdateEvent; 
     public static UserResponse UserProfile
     {
         get { return JsonUtility.FromJson<UserResponse>(PlayerPrefs.GetString("user", "{}")); }
@@ -21,15 +23,24 @@ public class User : MonoBehaviour
         get { return UserProfile.gem; }
         set
         {
-            Update_User(new UserUpdate(_gem: UserProfile.gem + value));
+            Update_User(new UserUpdate(_gem: value));
         }
     }
+    public static int Coin
+    {
+        get { return UserProfile.coin; }
+        set
+        {
+            Update_User(new UserUpdate(_coin: value));
+        }
+    }
+
     public static int Uxp
     {
         get { return UserProfile.uxp; }
         set
         {
-            Update_User(new UserUpdate(_uxp: UserProfile.uxp + value));
+            Update_User(new UserUpdate(_uxp: value));
         }
     }
     public static int Level
@@ -48,18 +59,17 @@ public class User : MonoBehaviour
     }
     private static async void Update_User(UserUpdate user)
     {
-        UserResponse response = await APIManager.instance.UpdateUser(user);
-        UserProfile = response;
+        await APIManager.instance.UpdateUser(user);
+        Get_User_Eeventually();
     }
     public static void Get_User_Eeventually()
     {
-        Task task = Task.Run(() => Get_user());
+        Get_user();
     }
-    public static async Task<UserResponse> Get_user()
+    public static async void Get_user()
     {
-        UserResponse response = await APIManager.instance.UpdateUser(new UserUpdate());
+        UserResponse response = await APIManager.instance.Check_token();
         UserProfile = response;
-        return response;
     }
 
 }

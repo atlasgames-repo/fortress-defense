@@ -55,7 +55,6 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                 yield return new WaitForSeconds(EnemyWaves[i].wait);
                 for (int j = 0; j < EnemyWaves[i].enemySpawns.Length; j++)
                 {
-                    print("hey");
 
                     var enemySpawn = EnemyWaves[i].enemySpawns[j];
                     yield return new WaitForSeconds(enemySpawn.wait);
