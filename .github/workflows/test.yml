@@ -8,7 +8,6 @@ on:
 ### Refer to https://game.ci/docs/github/getting-started
 jobs:
     test:
-        if: needs.checklicense.outputs.is_unity_license_set == 'true'
         name: Run all tests ✨
         runs-on: ubuntu-latest
         steps:
