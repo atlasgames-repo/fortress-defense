@@ -43,33 +43,16 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("lastDayShowNativeAd2", value); }
     }
 
-    public static int KillCount
-    {
-        get { return PlayerPrefs.GetInt("killcount", 0); }
-        set { PlayerPrefs.SetInt("killcount", value); }
-    }
+
     public static int lastDayShowNativeAd3
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd3", 0); }
         set { PlayerPrefs.SetInt("lastDayShowNativeAd3", value); }
     }
 
-    public static int SavedCoins
-    {
-        get { return PlayerPrefs.GetInt("Coins", 200); }
-        set { PlayerPrefs.SetInt("Coins", value); }
-    }
 
-    public static int LevelPass
-    {
-        get { return PlayerPrefs.GetInt("LevelReached", 0); }
-        set { PlayerPrefs.SetInt("LevelReached", value); }
-    }
-    public static int WorldPass
-    {
-        get { return PlayerPrefs.GetInt("WorldReached", 1); }
-        set { PlayerPrefs.SetInt("WorldReached", value); }
-    }
+
+
 
     public static void LevelStar(int level, int stars)
     {
@@ -128,7 +111,54 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("GameTutorialOpened", 0); }
         set { PlayerPrefs.SetInt("GameTutorialOpened", value); }
     }
-    
+    // Achievements
+    public static int LevelPass
+    {
+        get { return PlayerPrefs.GetInt("LevelReached", 0); }
+        set { PlayerPrefs.SetInt("LevelReached", value); }
+    }
+    public static int WorldPass
+    {
+        get { return PlayerPrefs.GetInt("WorldReached", 1); }
+        set { PlayerPrefs.SetInt("WorldReached", value); }
+    }
+    public static int KillCount
+    {
+        get { return PlayerPrefs.GetInt("killcount", 0); }
+        set { PlayerPrefs.SetInt("killcount", value); }
+    }
+    public static int UserGold
+    {
+        get { return User.Coin; }
+    }
+    public static int BoughtGroundUnit
+    {
+        get { return PlayerPrefs.GetInt("BoughtGroundUnit", 0); }
+        set { PlayerPrefs.SetInt("BoughtGroundUnit", value); }
+    }
+    public static int PoisionUsage
+    {
+        get { return PlayerPrefs.GetInt("PoisionUsage", 0); }
+        set { PlayerPrefs.SetInt("PoisionUsage", value); }
+    }
+    public static int FreezeUsage
+    {
+        get { return PlayerPrefs.GetInt("FreezeUsage", 0); }
+        set { PlayerPrefs.SetInt("FreezeUsage", value); }
+    }
+    public static int LightningUsage
+    {
+        get { return PlayerPrefs.GetInt("LightningUsage", 0); }
+        set { PlayerPrefs.SetInt("LightningUsage", value); }
+    }
+
+    public static int GameStartTimerMinutes
+    {
+        get
+        {
+            string strDateTime = PlayerPrefs.GetString("GameStartTimerMinutes", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            return (DateTime.Now - DateTime.ParseExact(strDateTime, "yyyy-MM-dd HH:mm:ss", null)).Minutes;
+        }
+        set { PlayerPrefs.SetString("GameStartTimerMinutes", DateTime.Now.AddMinutes(value).ToString("yyyy-MM-dd HH:mm:ss")); }
+    }
 }
-
-

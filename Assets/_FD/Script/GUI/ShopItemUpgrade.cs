@@ -67,10 +67,10 @@ public class ShopItemUpgrade : MonoBehaviour
 
     public void Upgrade()
     {
-        if (GlobalValue.SavedCoins >= coinPrice)
+        if (User.Coin >= coinPrice)
         {
             SoundManager.PlaySfx(SoundManager.Instance.soundUpgrade);
-            GlobalValue.SavedCoins -= coinPrice;
+            User.Coin = -coinPrice;
 
             
                     GlobalValue.UpgradeStrongWall++;

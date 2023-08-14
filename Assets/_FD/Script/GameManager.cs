@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
 
         // Gold and xp conversion
         // for now a 1 to 1 conversion
-        //GlobalValue.SavedCoins += currentExp;
+        //User.Coin = currentExp;
         // TODO: Exp to gold convertion effects 
 
 
@@ -171,12 +171,11 @@ public class GameManager : MonoBehaviour
                 if (GlobalValue.levelPlaying > GlobalValue.LevelPass)
                     GlobalValue.LevelPass = GlobalValue.levelPlaying;
                 GlobalValue.WorldPass = (int)(GlobalValue.LevelPass / 10) + 1;
-                Debug.LogError(GlobalValue.WorldPass);
                 GlobalValue.LevelStar(GlobalValue.levelPlaying, levelStarGot);
                 break;
             case Level.LeveType.EVENT:
                 _Event.CompleteLevel();
-                GlobalValue.SavedCoins += _Event.GetCurrentEvent.price;
+                User.Coin = _Event.GetCurrentEvent.price;
                 break;
             default:
                 break;
@@ -197,7 +196,7 @@ public class GameManager : MonoBehaviour
     //SoundManager.PlaySfx(SoundManager.Instance.soundGamefinish, 0.5f);
 
     //save coins and points
-    //GlobalValue.SavedCoins = Coin;
+    //User.Coin = Coin;
 
     //save level and save star
     //GlobalValue.UnlockLevel(SceneManager.GetActiveScene().name);

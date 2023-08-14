@@ -51,7 +51,7 @@ public class MenuManager : MonoBehaviour, IListener
         StartUI.SetActive(true);
 
         // SHow the CoinTxt value in the UI
-        UI.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = GlobalValue.SavedCoins.ToString();
+        UI.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = User.Coin.ToString();
 
         yield return new WaitForSeconds(1);
         StartUI.SetActive(false);

@@ -28,6 +28,7 @@ public class ProfileManager : MonoBehaviour
         while (true)
         {
             fetchData();
+            User.Get_User_Eeventually();
             yield return new WaitForSeconds(updateDelay);
         }
     }
@@ -39,7 +40,7 @@ public class ProfileManager : MonoBehaviour
     {
         username.text = user.display_name;
         life.text = $"{LifeTTRSource.Life}/{LifeTTRSource.max_life}";
-        gold.text = $"{GlobalValue.SavedCoins}";
+        gold.text = $"{User.Coin}";
         gem.text = $"{(await APIManager.instance.Request_Gem()).gem}";
         avatar.sprite = await APIManager.instance.Get_rofile_picture(user.avatar);
         uxp.text = $"{User.Level}";
