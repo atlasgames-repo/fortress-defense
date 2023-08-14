@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AffectZoneType { Lighting, Frozen, Poison,Magnet,Cure}
+public enum AffectZoneType { Lighting, Frozen, Poison, Magnet, Cure }
 public class AffectZoneManager : MonoBehaviour
 {
     public static AffectZoneManager Instance;
@@ -16,7 +16,7 @@ public class AffectZoneManager : MonoBehaviour
     AffectZoneButton pickedBtn;
     private void OnEnable()
     {
-        
+
     }
 
     private void Awake()
@@ -48,12 +48,13 @@ public class AffectZoneManager : MonoBehaviour
                     var isZone = hit.collider.gameObject.GetComponent<AffectZone>();
                     if (isZone)
                     {
-                        foreach(var zone in affectZoneList)
+                        foreach (var zone in affectZoneList)
                         {
-                            zone.gameObject.SetActive(false);
+                            if (zone.gameObject.name != isZone.gameObject.name) // When The isZone deactivates OnTriggerExit2D calls and removes all enemy inside the effect and thats why some times it doesn't works. This will fix the issue
+                                zone.gameObject.SetActive(false);
                         }
-
                         isZone.gameObject.SetActive(true);
+                        Debug.LogError($"Running zone: {affectType}");
                         isZone.Active(affectType);
                         pickedBtn.StartCountingDown();
                         isChecking = false;

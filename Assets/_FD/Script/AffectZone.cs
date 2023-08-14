@@ -96,6 +96,7 @@ public class AffectZone : MonoBehaviour
             anim.SetBool("isActivating", true);
         while (true)
         {
+            Debug.LogError($"AffectZone Stat: {listEnemyInZone.Count}");
             if (listEnemyInZone.Count > 0)
             {
                 List<Enemy> _tempList = new List<Enemy>(listEnemyInZone);
@@ -142,7 +143,7 @@ public class AffectZone : MonoBehaviour
                                 SoundManager.PlaySfx(poisonSound);
                                 break;
                             case AffectZoneType.Magnet:
-                                print("magnet");
+
                                 if (!_magnet)
                                 {
                                     _magnet = Instantiate(magnetIcon, transform.position, Quaternion.identity, transform);
@@ -152,7 +153,7 @@ public class AffectZone : MonoBehaviour
                                         elapsedTime += Time.deltaTime;
                                         float t = elapsedTime / magnetScaleTime;
                                         _magnet.transform.localScale = Vector3.Lerp(_initialScale, _targetScale, t);
-                                    } 
+                                    }
                                 }
 
                                 target.GetComponent<SmartEnemyGrounded>().magnet = true;
@@ -180,9 +181,10 @@ public class AffectZone : MonoBehaviour
                     yield return new WaitForSeconds(magnetRate);
                     Stop();
                     List<Enemy> _tempList = new List<Enemy>(listEnemyInZone);
-
+                    Debug.LogError("Enemy counts: " + listEnemyInZone.Count);
                     foreach (var target in _tempList)
                     {
+                        Debug.LogError("Enemy: " + target.name);
                         target.GetComponent<SmartEnemyGrounded>().magnet = false;
                     }
                     Destroy(_magnet);
@@ -236,10 +238,13 @@ public class AffectZone : MonoBehaviour
             if (enemy != null)
             {
                 if (!listEnemyInZone.Contains(enemy))
+                {
                     listEnemyInZone.Add(enemy);
+                    Debug.LogError("Add: " + collision.gameObject.name + "list: " + listEnemyInZone.Count + " Zone: " + this.gameObject.name);
+                }
             }
         }
-        //Debug.LogError(collision.gameObject + "list: " + listEnemyInZone.Count);
+        // Debug.LogError(collision.gameObject + "list: " + listEnemyInZone.Count);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -248,8 +253,11 @@ public class AffectZone : MonoBehaviour
         {
             var enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
+            {
                 listEnemyInZone.Remove(enemy);
+                Debug.LogError("Remove: " + collision.gameObject.name + "list: " + listEnemyInZone.Count + " Zone: " + this.gameObject.name);
+            }
         }
-        //Debug.LogError(collision.gameObject);
+        // Debug.LogError(collision.gameObject);
     }
 }
