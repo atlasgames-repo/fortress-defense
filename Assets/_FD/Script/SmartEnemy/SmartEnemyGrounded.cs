@@ -9,10 +9,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     public bool isSocking { get; set; }
     public bool isDead { get; set; }
 
-    [HideInInspector] public bool magnet = false;
+     public bool magnet = false;
     [HideInInspector] public Vector3 magnetPos;
     [HideInInspector] public float magnetAttractionSpeed;
-    
+    [HideInInspector] public float minMagnetDistance=1;
     [HideInInspector] public Vector3 velocity;
     private Vector2 _direction;
     [HideInInspector] public Controller2D controller;
@@ -131,7 +131,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
             velocity.x = 0;
             velocity.y += -0;
-            if (Vector3.Distance(transform.position, magnetPos) > 1)
+            if (Vector3.Distance(transform.position, magnetPos) > minMagnetDistance)
             {
                 float translationDistance = magnetAttractionSpeed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, magnetPos, translationDistance);

@@ -54,7 +54,7 @@ public class AffectZoneManager : MonoBehaviour
                                 zone.gameObject.SetActive(false);
                         }
                         isZone.gameObject.SetActive(true);
-                        Debug.LogError($"Running zone: {affectType}");
+//                        Debug.LogError($"Running zone: {affectType}");
                         isZone.Active(affectType);
                         pickedBtn.StartCountingDown();
                         isChecking = false;

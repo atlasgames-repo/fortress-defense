@@ -30,12 +30,15 @@ public class AffectZone : MonoBehaviour
     public GameObject magnetIcon;
     public float magnetScaleTime = 0.5f;
     public float elapsedTime = 0;
+    public float magnetDamage = 3;
     private Vector3 _initialScale = new Vector3(0, 0, 0);
     private Vector3 _targetScale = new Vector3(1, 1, 1);
     public float magnetAttractionSpeed = 5f;
-    private GameObject _magnet;
+    public GameObject _magnet;
+    [HideInInspector]public List<Enemy> tempMagnetList;
+    public float minMagnetDistance = 0.2f;
     // Start is called before the first frame update
-    List<Enemy> listEnemyInZone;
+   public List<Enemy> listEnemyInZone;
     AffectZoneType zoneType;
 
     public AffectZoneType getAffectZoneType
@@ -96,7 +99,7 @@ public class AffectZone : MonoBehaviour
             anim.SetBool("isActivating", true);
         while (true)
         {
-            Debug.LogError($"AffectZone Stat: {listEnemyInZone.Count}");
+//            Debug.LogError($"AffectZone Stat: {listEnemyInZone.Count}");
             if (listEnemyInZone.Count > 0)
             {
                 List<Enemy> _tempList = new List<Enemy>(listEnemyInZone);
@@ -155,10 +158,16 @@ public class AffectZone : MonoBehaviour
                                         _magnet.transform.localScale = Vector3.Lerp(_initialScale, _targetScale, t);
                                     }
                                 }
-
+                                if (!target.GetComponent<SmartEnemyGrounded>().magnet)
+                                {
+                                    tempMagnetList.Add(target);
+                                }
                                 target.GetComponent<SmartEnemyGrounded>().magnet = true;
                                 target.GetComponent<SmartEnemyGrounded>().magnetPos = transform.position;
+                                target.GetComponent<SmartEnemyGrounded>().minMagnetDistance = minMagnetDistance;
                                 target.GetComponent<SmartEnemyGrounded>().magnetAttractionSpeed = magnetAttractionSpeed;
+                                target.TakeDamage(magnetDamage, Vector2.zero, target.gameObject.transform.position,
+                                    gameObject, BODYPART.NONE,null);
                                 // code for magnet
                                 break;
                         }
@@ -179,15 +188,6 @@ public class AffectZone : MonoBehaviour
                     break;
                 case AffectZoneType.Magnet:
                     yield return new WaitForSeconds(magnetRate);
-                    Stop();
-                    List<Enemy> _tempList = new List<Enemy>(listEnemyInZone);
-                    Debug.LogError("Enemy counts: " + listEnemyInZone.Count);
-                    foreach (var target in _tempList)
-                    {
-                        Debug.LogError("Enemy: " + target.name);
-                        target.GetComponent<SmartEnemyGrounded>().magnet = false;
-                    }
-                    Destroy(_magnet);
                     break;
             }
 
@@ -216,12 +216,26 @@ public class AffectZone : MonoBehaviour
         }
 
         yield return new WaitForSeconds(delay);
-
+        if (zoneType == AffectZoneType.Magnet)
+        {
+            StopMagnet();
+        }
+        
         Stop();
     }
 
+    void StopMagnet()
+    {
+        for (int i = 0; i < tempMagnetList.Count; i++)
+        {
+            tempMagnetList[i].GetComponent<SmartEnemyGrounded>().magnet = false;
+        }
+        Destroy(_magnet);
+        tempMagnetList.Clear();   
+    }
     void Stop()
     {
+
         AffectZoneManager.Instance.FinishAffect();
         StopAllCoroutines();
         isActived = false;
@@ -240,7 +254,7 @@ public class AffectZone : MonoBehaviour
                 if (!listEnemyInZone.Contains(enemy))
                 {
                     listEnemyInZone.Add(enemy);
-                    Debug.LogError("Add: " + collision.gameObject.name + "list: " + listEnemyInZone.Count + " Zone: " + this.gameObject.name);
+                 //   Debug.LogError("Add: " + collision.gameObject.name + "list: " + listEnemyInZone.Count + " Zone: " + this.gameObject.name);
                 }
             }
         }
@@ -255,7 +269,7 @@ public class AffectZone : MonoBehaviour
             if (enemy != null)
             {
                 listEnemyInZone.Remove(enemy);
-                Debug.LogError("Remove: " + collision.gameObject.name + "list: " + listEnemyInZone.Count + " Zone: " + this.gameObject.name);
+//                Debug.LogError("Remove: " + collision.gameObject.name + "list: " + listEnemyInZone.Count + " Zone: " + this.gameObject.name);
             }
         }
         // Debug.LogError(collision.gameObject);

@@ -613,7 +613,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         {
             damagePoisonPerSecond = damage;
             enemyEffect = ENEMYEFFECT.POISON;
-
+        
             StartCoroutine(PoisonCo(time));
         }
     }

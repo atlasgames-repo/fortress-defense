@@ -14,8 +14,8 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     }
 
     [SerializeField] private EnemyClass[] enemiesList;
-    public SpriteRenderer backgroundSprite;
-    public Sprite backgroundImage;
+  //  public SpriteRenderer backgroundSprite;
+   // public Sprite backgroundImage;
 
     [HideInInspector] public EnemyWave wave;
     [HideInInspector] public List<EnemySpawn> enemySpawn;
@@ -41,7 +41,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             _enemies[a] = enemiesList[a].enemyObject;
         }
 
-        backgroundSprite.sprite = backgroundImage;
+    //    backgroundSprite.sprite = backgroundImage;
     }
 
 
