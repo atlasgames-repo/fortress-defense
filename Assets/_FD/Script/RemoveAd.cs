@@ -19,7 +19,7 @@ public class RemoveAd : MonoBehaviour
         if (GlobalValue.RemoveAds)
         {
 
-            priceTxt.text = "$" + GameMode.Instance.purchase.removeAdsPrice;
+            // priceTxt.text = "$" + GameMode.Instance.purchase.removeAdsPrice;
             Debug.LogWarning("Ads Remove");
             gameObject.SetActive(false);
         }
@@ -28,6 +28,6 @@ public class RemoveAd : MonoBehaviour
     public void Buy()
     {
         SoundManager.Click();
-        GameMode.Instance.BuyRemoveAds();
+        // GameMode.Instance.BuyRemoveAds();
     }
 }
