@@ -133,13 +133,8 @@ jobs:
                   path: build
     buildForMac:
         needs: build
-        name: Build for ${{ matrix.targetPlatform }}
+        name: Build for StandaloneOSX
         runs-on: macos-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                targetPlatform:
-                    - StandaloneOSX
         steps:
             - uses: actions/checkout@v3
               with:
@@ -147,17 +142,17 @@ jobs:
             - uses: actions/cache@v3
               with:
                   path: Library
-                  key: Library-${{ matrix.targetPlatform }}
+                  key: Library-StandaloneOSX
             - uses: game-ci/unity-builder@v2
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                  targetPlatform: ${{ matrix.targetPlatform }}
+                  targetPlatform: StandaloneOSX
             - uses: actions/upload-artifact@v3
               with:
-                  name: Build-${{ matrix.targetPlatform }}
+                  name: Build-StandaloneOSX
                   path: build
 
     buildForWindows:
