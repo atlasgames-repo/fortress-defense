@@ -22,36 +22,36 @@ public class GameMode : MonoBehaviour
     public int freezeArrowPrice = 1000;
 
     [Header("FPS DISPLAY")]
-   
+
     public bool showInfor = true;
-  [HideInInspector]  public Vector2 resolution = new Vector2(1280, 720);
+    [HideInInspector] public Vector2 resolution = new Vector2(1280, 720);
     public int setFPS = 60;
     float deltaTime = 0.0f;
 
-    public Purchaser purchase;
+    // public Purchaser purchase;
 
-    public void BuyItem(int id)
-    {
-        switch (id)
-        {
-            case 1:
-                purchase.BuyItem1();
-                break;
-            case 2:
-                purchase.BuyItem2();
-                break;
-            case 3:
-                purchase.BuyItem3();
-                break;
-            default:
-                break;
-        }
-    }
+    // public void BuyItem(int id)
+    // {
+    //     switch (id)
+    //     {
+    //         case 1:
+    //             purchase.BuyItem1();
+    //             break;
+    //         case 2:
+    //             purchase.BuyItem2();
+    //             break;
+    //         case 3:
+    //             purchase.BuyItem3();
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
 
-    public void BuyRemoveAds()
-    {
-        purchase.BuyRemoveAds();
-    }
+    // public void BuyRemoveAds()
+    // {
+    //     purchase.BuyRemoveAds();
+    // }
 
     private void Awake()
     {
@@ -67,17 +67,17 @@ public class GameMode : MonoBehaviour
         //Screen.SetResolution((int)resolution.x, (int)resolution.y);
         // Application.targetFrameRate = setFPS;
 
-//        string gameId = "";
-//#if UNITY_IOS
-//		gameId = UNITY_IOS_ID;
-//#elif UNITY_ANDROID
-//        gameId = UNITY_ANDROID_ID;
-//#endif
+        //        string gameId = "";
+        //#if UNITY_IOS
+        //		gameId = UNITY_IOS_ID;
+        //#elif UNITY_ANDROID
+        //        gameId = UNITY_ANDROID_ID;
+        //#endif
 
-//        if (Advertisement.isSupported)
-//        {
-//            Advertisement.Initialize(gameId, isTestMode);
-//        }
+        //        if (Advertisement.isSupported)
+        //        {
+        //            Advertisement.Initialize(gameId, isTestMode);
+        //        }
     }
 
     #region FPS DISPLAY
@@ -161,7 +161,7 @@ public class GameMode : MonoBehaviour
     //    Debug.Log("AD COUNTER = " + counter);
     //    if (counter < showVideoAdAfter)
     //        return;
-        
+
     //    if (Advertisement.IsReady())
     //    {
     //        Debug.Log("SHOW VIDEO AD");
