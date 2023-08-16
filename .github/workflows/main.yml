@@ -77,7 +77,6 @@ jobs:
             fail-fast: false
             matrix:
                 targetPlatform:
-                    - StandaloneLinux64
                     - iOS
                     - WebGL
         steps:
@@ -171,12 +170,7 @@ jobs:
                 targetPlatform:
                     - StandaloneWindows
                     - StandaloneWindows64
-                    - WSAPlayer
         steps:
-            - name: Free Disk Space (Ubuntu)
-              uses: jlumbroso/free-disk-space@main
-              with:
-                  dotnet: false
             - uses: actions/checkout@v3
               with:
                   lfs: true
