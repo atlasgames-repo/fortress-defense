@@ -84,6 +84,21 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Magnet, this);
         SoundManager.Click();
     }
+    void ActiveFire()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Fire, this);
+        SoundManager.Click();
+    }
+    void ActiveDark()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Dark, this);
+        SoundManager.Click();
+    }
+    void ActiveAero()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Aero, this);
+        SoundManager.Click();
+    }
     void ActiveCure()
     {
     //    AffectZoneManager.Instance.ActiveZone(AffectZoneType.Cure, this);
@@ -138,6 +153,15 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
                 break;
             case AffectZoneType.Cure:
                 ActiveCure();
+                break;
+            case AffectZoneType.Fire:
+                ActiveFire();
+                break;
+            case AffectZoneType.Aero:
+                ActiveAero();
+                break;
+            case AffectZoneType.Dark:
+                ActiveDark();
                 break;
         }
 
