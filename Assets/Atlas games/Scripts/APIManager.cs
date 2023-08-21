@@ -21,7 +21,7 @@ public class APIManager : MonoBehaviour
     public GameObject status;
     public float status_destroy;
     CancellationTokenSource tokenSource;
-    public Color ErrorColor, WarningColor;
+    public Color ErrorColor, WarningColor, CoolColor;
     [ReadOnly] public LifeTTR lifeTTR;
 
     private string pattern = @"{.*}", patternList = @"\[.*\]";
@@ -86,7 +86,7 @@ public class APIManager : MonoBehaviour
     public async Task Updates_achivement(int status = 0, string id = "0")
     {
         string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
-        await Get<object>(route: "/achivements/add", auth_token: User.Token,parameters: param);
+        await Get<object>(route: "/achivements/add", auth_token: User.Token, parameters: param);
     }
     public async Task<AchievementModel[]> Get_achivements()
     {
@@ -99,7 +99,7 @@ public class APIManager : MonoBehaviour
     public async Task<AuthenticationResponse> Authenticate(Authentication auth)
     {
         AuthenticationResponse res = await Get<AuthenticationResponse>(route: "/user/login", parameters: auth.ToParams);
-        Debug.LogError(res.ToJson);
+        RunStatus(res.message, CoolColor);
         return res;
     }
     public async Task<UserResponse> Check_token()

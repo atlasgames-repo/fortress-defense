@@ -69,7 +69,6 @@ public class LoginManager : MonoBehaviour
         }
         if (auth_result != null)
         {
-            User.UserProfile = auth_result;
             StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
         }
     }
