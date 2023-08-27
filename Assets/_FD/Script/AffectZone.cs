@@ -11,7 +11,7 @@ public class AffectZone : MonoBehaviour
     public GameObject lightingFX;
     public float lightingRate = 1;
     public AudioClip lightingSound;
-    [Header("FIRE")] public float fireActiveTime = 3;
+    [Header("FIRE")] public float fireAffectTime = 3;
     public float fireDamage = 10;
     public GameObject fireFX;
     public float fireRate = 1;
@@ -156,13 +156,16 @@ public class AffectZone : MonoBehaviour
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
                             case AffectZoneType.Fire:
-                                 _weaponFX = new WeaponEffect();
-                                _weaponFX.effectType = WEAPON_EFFECT.FIRE;
                                 target.TakeDamage(fireDamage, Vector2.zero, target.gameObject.transform.position,
-                                    gameObject, BODYPART.NONE, _weaponFX);
-                                if (fireFX)
-                                    SpawnSystemHelper.GetNextObject(fireFX, true).transform.position =
-                                        target.gameObject.transform.position;
+                                    gameObject);
+                                target.Freeze(fireAffectTime, gameObject);
+                                if (darkFX)
+                                {
+                                    var _fx = SpawnSystemHelper.GetNextObject(fireFX, true);
+                                    _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
+                                    _fx.transform.position = target.gameObject.transform.position;
+                                }
+
                                 SoundManager.PlaySfx(fireSound);
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
@@ -182,17 +185,15 @@ public class AffectZone : MonoBehaviour
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
                             case AffectZoneType.Dark:
+                                _weaponFX = new WeaponEffect();
+                                _weaponFX.effectType = WEAPON_EFFECT.DARK;
                                 target.TakeDamage(darkDamage, Vector2.zero, target.gameObject.transform.position,
-                                    gameObject);
-                                target.Freeze(darkAffectTime, gameObject);
+                                    gameObject, BODYPART.NONE, _weaponFX);
                                 if (darkFX)
-                                {
-                                    var _fx = SpawnSystemHelper.GetNextObject(darkFX, true);
-                                    _fx.GetComponent<AutoDestroy>().Init(darkAffectTime);
-                                    _fx.transform.position = target.gameObject.transform.position;
-                                }
-
-                                SoundManager.PlaySfx(forzenSound);
+                                    SpawnSystemHelper.GetNextObject(darkFX, true).transform.position =
+                                        target.gameObject.transform.position;
+                                SoundManager.PlaySfx(darkSound);
+                              
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
 
@@ -301,7 +302,7 @@ public class AffectZone : MonoBehaviour
                 delay = lightingActiveTime;
                 break;
             case AffectZoneType.Fire:
-                delay = fireActiveTime;
+                delay = fireAffectTime;
                 break;
             case AffectZoneType.Frozen:
                 delay = frozenActiveTime;
