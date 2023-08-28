@@ -12,7 +12,7 @@ public class AffectZoneManager : MonoBehaviour
     [ReadOnly] public bool isChecking = false;
     [ReadOnly] public bool isAffectZoneWorking = false;
     [Header("CURE")] public float healAmount;
-
+    public AudioClip cureSound;
     AffectZoneButton pickedBtn;
     private void OnEnable()
     {
@@ -35,6 +35,12 @@ public class AffectZoneManager : MonoBehaviour
     public void Cure()
     {
         FindObjectOfType<TheFortrest>().HealFortress(healAmount);
+        GameObject[] cureAnimations =  GameObject.FindGameObjectsWithTag("CureAnimation");
+        foreach (var cureAnimation in cureAnimations)
+        {
+            cureAnimation.GetComponent<Animator>().SetTrigger("Cure");
+        }
+        SoundManager.PlaySfx(cureSound);
     }
     void Update()
     {
