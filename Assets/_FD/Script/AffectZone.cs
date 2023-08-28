@@ -49,6 +49,7 @@ public class AffectZone : MonoBehaviour
      GameObject _magnet;
     [HideInInspector]public List<Enemy> tempMagnetList;
     public float minMagnetDistance = 0.2f;
+    public AudioClip magnetSound;
 
     [Header("AERO")]
     public float aeroRate = 3f;
@@ -63,6 +64,7 @@ public class AffectZone : MonoBehaviour
      GameObject _aero;
     [HideInInspector]public List<Enemy> tempAeroList;
     public float minAeroDistance = 0.2f;
+    public AudioClip aeroSound;
     // Start is called before the first frame update
     public List<Enemy> listEnemyInZone;
     AffectZoneType zoneType;
@@ -231,6 +233,7 @@ public class AffectZone : MonoBehaviour
                                 target.GetComponent<SmartEnemyGrounded>().magnetAttractionSpeed = magnetAttractionSpeed;
                                 target.TakeDamage(magnetDamage, Vector2.zero, target.gameObject.transform.position,
                                     gameObject, BODYPART.NONE,null);
+                                SoundManager.PlaySfx(magnetSound);
                                 // code for magnet
                                 break;
                             case AffectZoneType.Aero:
@@ -238,7 +241,7 @@ public class AffectZone : MonoBehaviour
                                 if (!_aero)
                                 {
                                     _aero = Instantiate(aeroIcon, transform.position, Quaternion.identity, transform);
-                                    _initialAeroScale = _magnet.transform.localScale;
+                                    _initialAeroScale = _aero.transform.localScale;
                                     if (elapsedAeroTime < aeroScaleTime)
                                     {
                                         elapsedAeroTime += Time.deltaTime;
@@ -256,6 +259,7 @@ public class AffectZone : MonoBehaviour
                                 target.GetComponent<SmartEnemyGrounded>().magnetAttractionSpeed = aeroAttractionSpeed;
                                 target.TakeDamage(aeroDamage, Vector2.zero, target.gameObject.transform.position,
                                     gameObject, BODYPART.NONE,null);
+                                                                    SoundManager.PlaySfx(aeroSound);
                                 // code for magnet
                                 break;
 
