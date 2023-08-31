@@ -6,33 +6,32 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D))]
 public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 {
-
     public bool isSocking { get; set; }
     public bool isDead { get; set; }
 
-    [HideInInspector]
-    public Vector3 velocity;
+     public bool magnet = false;
+    [HideInInspector] public Vector3 magnetPos;
+    [HideInInspector] public float magnetAttractionSpeed;
+    [HideInInspector] public float minMagnetDistance=1;
+    [HideInInspector] public Vector3 velocity;
     private Vector2 _direction;
-    [HideInInspector]
-    public Controller2D controller;
+    [HideInInspector] public Controller2D controller;
 
     float velocityXSmoothing = 0;
     Vector2 pushForce;
     private float _directionFace;
 
-    [Header("Manul options")]
-    public bool is_targeted;
+    [Header("Manul options")] public bool is_targeted;
 
 
-    [Header("New")]
-
-    bool allowCheckAttack = true;
+    [Header("New")] bool allowCheckAttack = true;
 
     EnemyRangeAttack rangeAttack;
     EnemyMeleeAttack meleeAttack;
     EnemyThrowAttack throwAttack;
     EnemyCallMinion callMinion;
     SpawnItemHelper spawnItem;
+
 
     public override void Start()
     {
@@ -41,10 +40,12 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         controller = GetComponent<Controller2D>();
         _direction = isFacingRight() ? Vector2.right : Vector2.left;
 
-        if ((_direction == Vector2.right && startBehavior == STARTBEHAVIOR.WALK_LEFT) || (_direction == Vector2.left && startBehavior == STARTBEHAVIOR.WALK_RIGHT))
+        if ((_direction == Vector2.right && startBehavior == STARTBEHAVIOR.WALK_LEFT) ||
+            (_direction == Vector2.left && startBehavior == STARTBEHAVIOR.WALK_RIGHT))
         {
             Flip();
         }
+
         isPlaying = true;
         isSocking = false;
 
@@ -115,14 +116,27 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         if (isStopping || isStunning)
             targetVelocityX = 0;
 
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? 0.1f : 0.2f);
-
-        velocity.y += -gravity * Time.deltaTime;
 
         if ((_direction.x > 0 && controller.collisions.right) || (_direction.x < 0 && controller.collisions.left))
             velocity.x = 0;
-
-        controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
+        if (!magnet)
+        {
+            controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
+            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing,
+                (controller.collisions.below) ? 0.1f : 0.2f);
+            velocity.y += -gravity * Time.deltaTime;
+        }
+        else
+        {
+            controller.Move(velocity * Time.deltaTime * multipleSpeed, false, isFacingRight());
+            velocity.x = 0;
+            velocity.y += -0;
+            if (Vector3.Distance(transform.position, magnetPos) > minMagnetDistance)
+            {
+                float translationDistance = magnetAttractionSpeed * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, magnetPos, translationDistance);
+            }
+        }
 
         if (controller.collisions.above || controller.collisions.below)
             velocity.y = 0;
@@ -136,7 +150,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     void Flip()
     {
         _direction = -_direction;
-        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, isFacingRight() ? 0 : 180, transform.rotation.z));
+        transform.rotation =
+            Quaternion.Euler(new Vector3(transform.rotation.x, isFacingRight() ? 0 : 180, transform.rotation.z));
     }
 
     public override void Stun(float time = 2)
@@ -215,6 +230,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                         SetEnemyState(ENEMYSTATE.WALK);
                     }
                 }
+
                 break;
 
             case ATTACKTYPE.THROW:
@@ -233,6 +249,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                         SetEnemyState(ENEMYSTATE.WALK);
                     }
                 }
+
                 break;
             default:
                 break;
@@ -310,6 +327,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             gameObject.SetActive(false);
             return;
         }
+
         StopAllCoroutines();
         StartCoroutine(DisableEnemy(AnimationHelper.getAnimationLength(anim, "Die") + 2f));
     }
@@ -369,9 +387,11 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     {
         yield return new WaitForSeconds(delay);
         if (disableFX)
-            SpawnSystemHelper.GetNextObject(disableFX, true).transform.position = spawnDisableFX != null ? spawnDisableFX.position : transform.position;
+            SpawnSystemHelper.GetNextObject(disableFX, true).transform.position =
+                spawnDisableFX != null ? spawnDisableFX.position : transform.position;
         gameObject.SetActive(false);
     }
+
     public void TouchEvent()
     {
         GameObject[] archers = GameObject.FindGameObjectsWithTag("Player");

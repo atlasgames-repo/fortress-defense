@@ -32,7 +32,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
     void Start()
     {
-        
+
         if (GameLevelSetup.Instance)
         {
             if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
@@ -48,7 +48,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             initialWaitAmount = GameLevelSetup.Instance.InitialWaitAmount();
 
         }
-        
+
         _enemies = new GameObject[enemiesList.Length];
         _enemyCounts = new float[enemiesList.Length];
         for (int a = 0; a < enemiesList.Length; a++)
@@ -60,7 +60,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     }
 
 
-    
+
 
 
     // generate a new wave harder than last
@@ -240,7 +240,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
         }
     }
-     void Update()
+    void Update()
     {
         if (EnemyWaves.Length == 0)
         {
@@ -258,6 +258,6 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
         return false;
     }
-    
+
 
 }
