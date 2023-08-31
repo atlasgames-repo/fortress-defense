@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AffectZoneType { Lighting, Frozen, Poison}
+public enum AffectZoneType { Lighting, Frozen, Poison, Magnet, Cure, Fire, Dark, Aero }
 public class AffectZoneManager : MonoBehaviour
 {
     public static AffectZoneManager Instance;
@@ -11,11 +11,12 @@ public class AffectZoneManager : MonoBehaviour
     AffectZoneType affectType;
     [ReadOnly] public bool isChecking = false;
     [ReadOnly] public bool isAffectZoneWorking = false;
-
+    [Header("CURE")] public float healAmount;
+    public AudioClip cureSound;
     AffectZoneButton pickedBtn;
     private void OnEnable()
     {
-        
+
     }
 
     private void Awake()
@@ -31,6 +32,16 @@ public class AffectZoneManager : MonoBehaviour
         }
     }
 
+    public void Cure()
+    {
+        FindObjectOfType<TheFortrest>().HealFortress(healAmount);
+        GameObject[] cureAnimations =  GameObject.FindGameObjectsWithTag("CureAnimation");
+        foreach (var cureAnimation in cureAnimations)
+        {
+            cureAnimation.GetComponent<Animator>().SetTrigger("Cure");
+        }
+        SoundManager.PlaySfx(cureSound);
+    }
     void Update()
     {
         if (isChecking)
@@ -43,12 +54,13 @@ public class AffectZoneManager : MonoBehaviour
                     var isZone = hit.collider.gameObject.GetComponent<AffectZone>();
                     if (isZone)
                     {
-                        foreach(var zone in affectZoneList)
+                        foreach (var zone in affectZoneList)
                         {
-                            zone.gameObject.SetActive(false);
+                            if (zone.gameObject.name != isZone.gameObject.name) // When The isZone deactivates OnTriggerExit2D calls and removes all enemy inside the effect and thats why some times it doesn't works. This will fix the issue
+                                zone.gameObject.SetActive(false);
                         }
-
                         isZone.gameObject.SetActive(true);
+//                        Debug.LogError($"Running zone: {affectType}");
                         isZone.Active(affectType);
                         pickedBtn.StartCountingDown();
                         isChecking = false;

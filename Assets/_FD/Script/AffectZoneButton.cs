@@ -26,6 +26,9 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     bool allowCounting = false;
     bool canUse = true;
     float holdCounter = 0;
+
+
+   
     public CanvasGroup canvasGroup;
 
     void Start()
@@ -76,6 +79,32 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Lighting, this);
         SoundManager.Click();
     }
+    void ActiveMagnet()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Magnet, this);
+        SoundManager.Click();
+    }
+    void ActiveFire()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Fire, this);
+        SoundManager.Click();
+    }
+    void ActiveDark()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Dark, this);
+        SoundManager.Click();
+    }
+    void ActiveAero()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.Aero, this);
+        SoundManager.Click();
+    }
+    void ActiveCure()
+    {
+    //    AffectZoneManager.Instance.ActiveZone(AffectZoneType.Cure, this);
+    AffectZoneManager.Instance.Cure();
+        SoundManager.Click();
+    }
 
     void ActiveFrozen()
     {
@@ -118,6 +147,21 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
             case AffectZoneType.Poison:
                 GlobalValue.PoisionUsage++;
                 ActivePoison();
+                break;
+            case AffectZoneType.Magnet:
+                ActiveMagnet();
+                break;
+            case AffectZoneType.Cure:
+                ActiveCure();
+                break;
+            case AffectZoneType.Fire:
+                ActiveFire();
+                break;
+            case AffectZoneType.Aero:
+                ActiveAero();
+                break;
+            case AffectZoneType.Dark:
+                ActiveDark();
                 break;
         }
 

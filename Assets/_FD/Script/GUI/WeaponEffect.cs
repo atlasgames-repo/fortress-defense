@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum NumberArrow { Single, Double }
-public enum WEAPON_EFFECT { NONE, POISON, FREEZE, LIGHTING }
+public enum WEAPON_EFFECT { NONE, POISON, FREEZE, LIGHTING , FIRE, DARK}
 
 [System.Serializable]
 public class WeaponEffect

@@ -34,6 +34,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     public float shakeTime = 0.3f;
     public bool shakeX, shakeY;
 
+    private float _startingHealth;
     Vector2 startingPos;
     IEnumerator ShakeCoDo;
 
@@ -76,6 +77,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
         extraHealth = maxHealth * GlobalValue.StrongWallExtra;
         maxHealth += extraHealth;
         currentHealth = maxHealth;
+        _startingHealth = currentHealth;
         MenuManager.Instance.UpdateHealthbar(currentHealth, maxHealth/*, healthCharacter*/);
     }
 
@@ -103,6 +105,21 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
         }
 
         //update fortrest state
+    UpdateFortressState();
+    }
+
+    public void HealFortress(float healAmount)
+    {
+        currentHealth += healAmount;
+        if (currentHealth > _startingHealth)
+        {
+            currentHealth = _startingHealth;
+        }
+        UpdateFortressState();
+    }
+    void UpdateFortressState()
+    {
+        MenuManager.Instance.UpdateHealthbar(currentHealth, maxHealth/*, healthCharacter*/);
         if (currentHealth > 0)
         {
             for (int i = (stateFortrestSprites.Length - 1); i > 0 ; i--)
