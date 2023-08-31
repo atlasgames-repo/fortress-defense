@@ -7,15 +7,14 @@ using Random = UnityEngine.Random;
 public class EndlessWaveGenerator : LevelEnemyManager, IListener
 {
     [Serializable]
-    public class EnemyClass
+    public class EndlessEnemyWave
     {
         public GameObject enemyObject;
         public int initialCount;
     }
 
-    [SerializeField] private EnemyClass[] enemiesList;
-  //  public SpriteRenderer backgroundSprite;
-   // public Sprite backgroundImage;
+    [SerializeField] private EndlessEnemyWave[] enemiesList;
+
 
     [HideInInspector] public EnemyWave wave;
     [HideInInspector] public List<EnemySpawn> enemySpawn;
@@ -33,6 +32,23 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
     void Start()
     {
+
+        if (GameLevelSetup.Instance)
+        {
+            if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
+            {
+                GetComponent<LevelEnemyManager>().enabled = false;
+            }
+            enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
+            increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();
+            increaseEnemyAttackDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAttackDifficultyRate();
+            increaseEnemyHealthDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyHealthDifficultyRate();
+            increaseEnemyAmountDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAmountDifficultyRate();
+            increaseEnemyWaitDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyWaitDifficultyRate();
+            initialWaitAmount = GameLevelSetup.Instance.InitialWaitAmount();
+
+        }
+
         _enemies = new GameObject[enemiesList.Length];
         _enemyCounts = new float[enemiesList.Length];
         for (int a = 0; a < enemiesList.Length; a++)
@@ -41,11 +57,10 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             _enemies[a] = enemiesList[a].enemyObject;
         }
 
-    //    backgroundSprite.sprite = backgroundImage;
     }
 
 
-    
+
 
 
     // generate a new wave harder than last
@@ -225,7 +240,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
         }
     }
-     void Update()
+    void Update()
     {
         if (EnemyWaves.Length == 0)
         {
@@ -243,6 +258,6 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
         return false;
     }
-    
+
 
 }
