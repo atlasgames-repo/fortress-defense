@@ -27,7 +27,6 @@ public enum TrophyStatus
     PAYED,
 }
 
-[ExecuteInEditMode]
 public class Trophy : MonoBehaviour
 {
     public static Trophy self;
@@ -42,7 +41,7 @@ public class Trophy : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        StartCoroutine(StartEnum());
+        // StartCoroutine(StartEnum());
     }
 
     // Update is called once per frame

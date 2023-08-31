@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class User : MonoBehaviour
 {
-    public static UnityEvent UserUpdateEvent; 
+    public static UnityEvent UserUpdateEvent;
     public static UserResponse UserProfile
     {
         get { return JsonUtility.FromJson<UserResponse>(PlayerPrefs.GetString("user", "{}")); }
@@ -23,7 +23,7 @@ public class User : MonoBehaviour
         get { return UserProfile.gem; }
         set
         {
-            Update_User(new UserUpdate(_gem: value));
+            Update_Gem(new UserUpdate(_gem: value));
         }
     }
     public static int Coin
@@ -31,7 +31,9 @@ public class User : MonoBehaviour
         get { return UserProfile.coin; }
         set
         {
-            Update_User(new UserUpdate(_coin: value));
+            UserResponse _UserProfile = UserProfile;
+            _UserProfile.coin += value;
+            UserProfile = _UserProfile;
         }
     }
 
@@ -40,7 +42,9 @@ public class User : MonoBehaviour
         get { return UserProfile.uxp; }
         set
         {
-            Update_User(new UserUpdate(_uxp: value));
+            UserResponse _UserProfile = UserProfile;
+            _UserProfile.uxp += value;
+            UserProfile = _UserProfile;
         }
     }
     public static int Level
@@ -57,9 +61,9 @@ public class User : MonoBehaviour
             return (UserProfile.uxp - this_level_uxp) / (next_level_uxp - this_level_uxp);
         }
     }
-    private static async void Update_User(UserUpdate user)
+    private static async void Update_Gem(UserUpdate user)
     {
-        await APIManager.instance.UpdateUser(user);
+        await APIManager.instance.Request_Gem(new GemRequestModel(_amount: user.gem.ToString()));
         Get_User_Eeventually();
     }
     public static void Get_User_Eeventually()
@@ -68,8 +72,12 @@ public class User : MonoBehaviour
     }
     public static async void Get_user()
     {
-        UserResponse response = await APIManager.instance.Check_token();
-        UserProfile = response;
+        UserResponse user_response = await APIManager.instance.Check_token();
+        GemResponseModel gems_res = await APIManager.instance.Request_Gem();
+        user_response.gem = gems_res.gem;
+        user_response.coin = UserProfile.coin;
+        user_response.uxp = UserProfile.uxp;
+        UserProfile = user_response;
     }
 
 }

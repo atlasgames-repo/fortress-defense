@@ -118,7 +118,7 @@ public class LifeTTRSource : MonoBehaviour
     public static void Remove(int key)
     {
         var dict = LifeTTRv2;
-        if (!dict.ContainsKey(key))
+        if (dict.ContainsKey(key))
         {
             dict.Remove(key);
             LifeTTRv2 = dict;
