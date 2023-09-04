@@ -1,11 +1,6 @@
-name: Unity Testing
+name: Unity Build Android
 
 on:
-    push:
-        branches:
-            - "*"
-            - "!master"
-            - "!update**"
     workflow_dispatch: {}
 
 ### Refer to https://game.ci/docs/github/getting-started
@@ -63,9 +58,43 @@ jobs:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-            #   with:
-            #       githubToken: ${{ secrets.GITHUB_TOKEN }}
+              # with:
+              # githubToken: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v3
               with:
                   name: Test results (all modes)
                   path: ${{ steps.testRunner.outputs.artifactsPath }}
+
+    buildAndroid:
+        needs: test
+        name: Build for Android
+        runs-on: ubuntu-latest
+        steps:
+            - name: Free Disk Space (Ubuntu)
+              uses: jlumbroso/free-disk-space@main
+              with:
+                  android: false
+                  dotnet: false
+            - uses: actions/checkout@v3
+              with:
+                  lfs: true
+            - uses: actions/cache@v3
+              with:
+                  path: Library
+                  key: Library-Android
+            - uses: game-ci/unity-builder@v2
+              env:
+                  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+              with:
+                  targetPlatform: Android
+                  androidKeystoreName: user.keystore
+                  androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+                  androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+                  androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+                  androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: Build-Android
+                  path: build
