@@ -244,7 +244,7 @@ PlayerSettings:
   AndroidKeystoreName: D:/Projects/Hadi/Assets/user.keystore
   AndroidKeyaliasName: atlasgames
   AndroidBuildApkPerCpuArchitecture: 0
-  AndroidTVCompatibility: 1
+  AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
@@ -405,6 +405,9 @@ PlayerSettings:
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
+    m_Automatic: 1
+  - m_BuildTarget: AndroidPlayer
+    m_APIs: 0b000000
     m_Automatic: 1
   m_BuildTargetVRSettings: []
   openGLRequireES31: 0
@@ -660,11 +663,11 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
-    Android: 0
-    Standalone: 0
+    Android: 1
+    Standalone: 1
   il2cppCompilerConfiguration:
     Android: 1
-    Standalone: 2
+    Standalone: 1
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1
