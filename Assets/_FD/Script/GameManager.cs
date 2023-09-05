@@ -146,8 +146,8 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.PauseMusic(true);
         State = GameState.Success;
 
-        if (AdsManager.Instance)
-            AdsManager.Instance.ShowNormalAd(State);
+        // if (AdsManager.Instance)
+        //     AdsManager.Instance.ShowNormalAd(State);
 
         foreach (var item in listeners)
         {
@@ -228,8 +228,8 @@ public class GameManager : MonoBehaviour
 
         State = GameState.GameOver;
 
-        if (AdsManager.Instance)
-            AdsManager.Instance.ShowNormalAd(GameState.GameOver);
+        // if (AdsManager.Instance)
+        //     AdsManager.Instance.ShowNormalAd(GameState.GameOver);
 
         //Debug.LogError("CALL");
         foreach (var item in listeners)

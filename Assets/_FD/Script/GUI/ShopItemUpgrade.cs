@@ -72,17 +72,17 @@ public class ShopItemUpgrade : MonoBehaviour
             SoundManager.PlaySfx(SoundManager.Instance.soundUpgrade);
             User.Coin = -coinPrice;
 
-            
-                    GlobalValue.UpgradeStrongWall++;
-                    GlobalValue.StrongWallExtra += StrongPerUpgrade;
-            
+
+            GlobalValue.UpgradeStrongWall++;
+            GlobalValue.StrongWallExtra += StrongPerUpgrade;
+
             UpdateStatus();
         }
         else
         {
             SoundManager.PlaySfx(SoundManager.Instance.soundNotEnoughCoin);
-            if (AdsManager.Instance && AdsManager.Instance.isRewardedAdReady())
-                NotEnoughCoins.Instance.ShowUp();
+            // if (AdsManager.Instance && AdsManager.Instance.isRewardedAdReady())
+            //     NotEnoughCoins.Instance.ShowUp();
         }
     }
 }

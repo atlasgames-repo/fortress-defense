@@ -4,28 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
-public class ShopItemReward : MonoBehaviour {
+public class ShopItemReward : MonoBehaviour
+{
     public string itemName = "ITEM NAME";
-	public enum ItemType{DoubleArrow, Posion, Freeze}
-	public ItemType itemType;
+    public enum ItemType { DoubleArrow, Posion, Freeze }
+    public ItemType itemType;
 
-	public int rewardedUnit = 1;
+    public int rewardedUnit = 1;
 
     public Text nameTxt;
-	public Text rewardedAmountTxt;
-	public Text currentAmountTxt;
-	//public AudioClip sound;
+    public Text rewardedAmountTxt;
+    public Text currentAmountTxt;
+    //public AudioClip sound;
 
-	[ReadOnly] public int coinPrice = 1;
-	public Text coinTxt;
-	//public GameObject watchVideoBut;
-	//ShowOptions options;
+    [ReadOnly] public int coinPrice = 1;
+    public Text coinTxt;
+    //public GameObject watchVideoBut;
+    //ShowOptions options;
 
-	void OnEnable(){
-		UpdateAmount ();
-	}
+    void OnEnable()
+    {
+        UpdateAmount();
+    }
 
-	void Start(){
+    void Start()
+    {
         if (GameMode.Instance)
         {
             switch (itemType)
@@ -44,16 +47,17 @@ public class ShopItemReward : MonoBehaviour {
             }
         }
 
-        UpdateAmount ();
+        UpdateAmount();
 
-		rewardedAmountTxt.text = "x" + rewardedUnit;
-		coinTxt.text = coinPrice.ToString ();
+        rewardedAmountTxt.text = "x" + rewardedUnit;
+        coinTxt.text = coinPrice.ToString();
         nameTxt.text = itemName;
         //options = new ShowOptions { resultCallback = HandleShowResult2 };
     }
 
-	public void UseCoin(){
-		var coins = User.Coin;
+    public void UseCoin()
+    {
+        var coins = User.Coin;
         if (coins >= coinPrice)
         {
             coins -= coinPrice;
@@ -64,10 +68,10 @@ public class ShopItemReward : MonoBehaviour {
         else
         {
             SoundManager.PlaySfx(SoundManager.Instance.soundNotEnoughCoin);
-            if (AdsManager.Instance && AdsManager.Instance.isRewardedAdReady())
-                NotEnoughCoins.Instance.ShowUp();
+            // if (AdsManager.Instance && AdsManager.Instance.isRewardedAdReady())
+            //     NotEnoughCoins.Instance.ShowUp();
         }
-	}
+    }
 
     //public void ShowRewardAd()
     //{
@@ -77,32 +81,33 @@ public class ShopItemReward : MonoBehaviour {
     //    }
     //    SoundManager.Click();
     //}
-	
-	//private void ShowRewardedAd()
-	//{
 
-	//	if (Advertisement.IsReady ("rewardedVideo")) {
-	//		Advertisement.Show ("rewardedVideo", options);
-	//	}
-	//}
+    //private void ShowRewardedAd()
+    //{
 
-	//private void HandleShowResult2(ShowResult result)
-	//{
-	//	switch (result) {
-	//	case ShowResult.Finished:
-	//		Debug.Log ("The ad was successfully shown.");
-	//		DoReward ();
-	//		break;
-	//	case ShowResult.Skipped:
-	//		Debug.Log ("The ad was skipped before reaching the end.");
-	//		break;
-	//	case ShowResult.Failed:
-	//		Debug.LogError ("The ad failed to be shown.");
-	//		break;
-	//	}
-	//}
+    //	if (Advertisement.IsReady ("rewardedVideo")) {
+    //		Advertisement.Show ("rewardedVideo", options);
+    //	}
+    //}
 
-	private void DoReward(){
+    //private void HandleShowResult2(ShowResult result)
+    //{
+    //	switch (result) {
+    //	case ShowResult.Finished:
+    //		Debug.Log ("The ad was successfully shown.");
+    //		DoReward ();
+    //		break;
+    //	case ShowResult.Skipped:
+    //		Debug.Log ("The ad was skipped before reaching the end.");
+    //		break;
+    //	case ShowResult.Failed:
+    //		Debug.LogError ("The ad failed to be shown.");
+    //		break;
+    //	}
+    //}
+
+    private void DoReward()
+    {
         switch (itemType)
         {
             case ItemType.DoubleArrow:
@@ -118,11 +123,11 @@ public class ShopItemReward : MonoBehaviour {
                 break;
         }
 
-		UpdateAmount ();
+        UpdateAmount();
         SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
-		//Debug.LogWarning ("ITEM: " + sound.name);
-		//SoundManager.PlaySfx (sound);
-	}
+        //Debug.LogWarning ("ITEM: " + sound.name);
+        //SoundManager.PlaySfx (sound);
+    }
 
     private void UpdateAmount()
     {
