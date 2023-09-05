@@ -11,16 +11,16 @@ public class GiftVideoAd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (AdsManager.Instance)
-        {
-            rewardedTxt.text = AdsManager.Instance.getRewarded + "";
-        }
+        // if (AdsManager.Instance)
+        // {
+        //     rewardedTxt.text = AdsManager.Instance.getRewarded + "";
+        // }
     }
 
     // Update is called once per frame
     void Update()
     {
-        button.SetActive(allowShow && AdsManager.Instance && AdsManager.Instance.isRewardedAdReady());
+        // button.SetActive(allowShow && AdsManager.Instance && AdsManager.Instance.isRewardedAdReady());
     }
 
     [System.Obsolete]
@@ -29,19 +29,19 @@ public class GiftVideoAd : MonoBehaviour
         SoundManager.Click();
         allowShow = false;
         //AdsManager.Instance.ShowRewardVideo();
-        AdsManager.AdResult += AdsManager_AdResult;
-        AdsManager.Instance.ShowRewardedAds();
-        Invoke("AllowShow", 2);
+        // AdsManager.AdResult += AdsManager_AdResult;
+        // AdsManager.Instance.ShowRewardedAds();
+        // Invoke("AllowShow", 2);
     }
 
     private void AdsManager_AdResult(bool isSuccess, int rewarded)
     {
-        AdsManager.AdResult -= AdsManager_AdResult;
-        if (isSuccess)
-        {
-            User.Coin = rewarded;
-            SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
-        }
+        // AdsManager.AdResult -= AdsManager_AdResult;
+        // if (isSuccess)
+        // {
+        //     User.Coin = rewarded;
+        //     SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
+        // }
     }
 
     void AllowShow()

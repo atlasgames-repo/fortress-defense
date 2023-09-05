@@ -10,36 +10,36 @@ public class UnityAdsitem : MonoBehaviour
     private void Update()
     {
         //but.SetActive(GameMode.Instance && GameMode.Instance.isRewardedAdReady());
-        but.SetActive(AdsManager.Instance && AdsManager.Instance.isRewardedAdReady());
-        if (AdsManager.Instance)
-        {
-            if (!AdsManager.Instance.isRewardedAdReady())
-                rewardedTxt.text = "NO AD AVAILABLE NOW!";
-            else
-                rewardedTxt.text = "+" + AdsManager.Instance.getRewarded;
-        }
-        else
-            rewardedTxt.text = "NO AD AVAILABLE NOW!";
+        // but.SetActive(AdsManager.Instance && AdsManager.Instance.isRewardedAdReady());
+        // if (AdsManager.Instance)
+        // {
+        //     if (!AdsManager.Instance.isRewardedAdReady())
+        //         rewardedTxt.text = "NO AD AVAILABLE NOW!";
+        //     else
+        //         rewardedTxt.text = "+" + AdsManager.Instance.getRewarded;
+        // }
+        // else
+        //     rewardedTxt.text = "NO AD AVAILABLE NOW!";
     }
 
     [System.Obsolete]
     public void WatchVideoAd()
     {
-        if (AdsManager.Instance)
-        {
-            SoundManager.Click();
-            AdsManager.AdResult += AdsManager_AdResult;
-            AdsManager.Instance.ShowRewardedAds();
-        }
+        // if (AdsManager.Instance)
+        // {
+        //     SoundManager.Click();
+        //     AdsManager.AdResult += AdsManager_AdResult;
+        //     AdsManager.Instance.ShowRewardedAds();
+        // }
     }
 
     private void AdsManager_AdResult(bool isSuccess, int rewarded)
     {
-        AdsManager.AdResult -= AdsManager_AdResult;
-        if (isSuccess)
-        {
-            User.Coin = rewarded;
-            SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
-        }
+        // AdsManager.AdResult -= AdsManager_AdResult;
+        // if (isSuccess)
+        // {
+        //     User.Coin = rewarded;
+        //     SoundManager.PlaySfx(SoundManager.Instance.soundPurchased);
+        // }
     }
 }
