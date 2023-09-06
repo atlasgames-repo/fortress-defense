@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using UnityEngine.Android;
 
 public class APIManager : MonoBehaviour
 {
@@ -37,6 +38,12 @@ public class APIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         UnityWebRequest.ClearCookieCache();
         Application.targetFrameRate = 144;
+#if UNITY_ANDROID || UNITY_IPHONE
+        bool is_read = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead);
+        bool is_write = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite);
+        if (!is_read || !is_write)
+            Permission.RequestUserPermissions(new string[2]{Permission.ExternalStorageRead, Permission.ExternalStorageWrite});
+#endif
     }
     public IEnumerator LoadAsynchronously(string name)
     {
