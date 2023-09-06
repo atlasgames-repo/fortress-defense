@@ -1,7 +1,12 @@
 name: Unity Build IOS
 
 on:
-    workflow_dispatch: {}
+    workflow_dispatch:
+        inputs:
+            customParameters:
+                description: "build custom parameters"
+                required: false
+                default: ""
 
 ### Refer to https://game.ci/docs/github/getting-started
 jobs:
@@ -27,6 +32,7 @@ jobs:
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
                   targetPlatform: IOS
+                  customParameters: "${{ inputs.customParameters }}"
             - uses: actions/upload-artifact@v3
               with:
                   name: Build-IOS
