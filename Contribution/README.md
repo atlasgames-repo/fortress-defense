@@ -1,5 +1,3 @@
-# Fortress-defense
-The unity fortress defense project
 # How To Contribute
 ### create an issue
 1) Issues are related to adding new features or fixing bugs, we can discuss the feature/bug in there too. (```The best way to do it honestly``` :))
