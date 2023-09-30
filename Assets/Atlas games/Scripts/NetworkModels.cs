@@ -130,6 +130,11 @@ public static class NetworkStatusError
 {
     public static readonly string TOKEN_LOGIN_FAIL = "ابتدا باید وارد شوید";
     public static readonly string LOGIN_FAIL = "یوزرنیم یا پسوردو اشتباه وارد کردی، حواس پرت -__-";
+    public static readonly string UNKNOWN_ERROR = "مشکلی پیش اومده دوباره امتحان کن :(";
+    public static readonly string COULDNT_GET_UPDATES = "آپدیت ها پیدا نشد، دوباره تلاش کن، باشه ؟";
+    public static readonly string SUCCESSFUL_LOGIN = "ورود موفقیت آمیز، الان بازی لود میشه.";
+    public static readonly string FAIL_LOGIN = "مشکلی در ورود پیش اومده دوباره امتحان کن. :/";
+    public static readonly string USER_UPDATE_FAIL = "نتونستیم اطلاعتت رو آپدیت کنیم، گر صبر کنی یه ترشی حلوا سازی.";
 
 }
 public class NetworkModels : BaseModel
