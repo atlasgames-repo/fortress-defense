@@ -11,6 +11,7 @@ public class BaseModel
     {
         get { return JsonUtility.ToJson(this); }
     }
+
     public string ToParams
     {
         get
@@ -125,7 +126,13 @@ public class Message : BaseModel
 
 }
 
-
+[Serializable]
+public class NetworkStatusTranslate : BaseModel
+{
+    Dictionary<int, string> translation = new Dictionary<int, string>() {
+        { 100, "hehel" }
+        };
+}
 public class NetworkModels : BaseModel
 {
 

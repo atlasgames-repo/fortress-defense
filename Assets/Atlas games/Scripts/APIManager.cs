@@ -219,7 +219,7 @@ public class APIManager : MonoBehaviour
                 RunStatus(req.error, ErrorColor);
                 throw;
             }
-            RunStatus(req.error);
+            RunStatus(error_response.message);
             throw new System.Net.WebException(message: req.error);
         }
         else
