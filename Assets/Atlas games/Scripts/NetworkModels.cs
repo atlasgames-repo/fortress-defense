@@ -126,12 +126,11 @@ public class Message : BaseModel
 
 }
 
-[Serializable]
-public class NetworkStatusTranslate : BaseModel
+public static class NetworkStatusError
 {
-    Dictionary<int, string> translation = new Dictionary<int, string>() {
-        { 100, "hehel" }
-        };
+    public static readonly string TOKEN_LOGIN_FAIL = "ابتدا باید وارد شوید";
+    public static readonly string LOGIN_FAIL = "یوزرنیم یا پسوردو اشتباه وارد کردی، حواس پرت -__-";
+
 }
 public class NetworkModels : BaseModel
 {
