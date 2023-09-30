@@ -60,7 +60,7 @@ public class APIManager : MonoBehaviour
     {
         Transform root = GameObject.FindGameObjectWithTag("Canves").transform;
         GameObject obj = Instantiate(status, root, false);
-        obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = message;
+        obj.GetComponentInChildren<RTLTMPro.RTLTextMeshPro>().text = message;
         if (color != null)
             obj.GetComponent<Image>().color = (Color)color;
         await DestroyDelay(obj, status_destroy);
