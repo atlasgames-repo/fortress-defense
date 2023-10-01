@@ -20,7 +20,8 @@ public class BaseModel
             Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(this.ToJson);
             foreach (KeyValuePair<string, string> item in dict)
             {
-                param += $"{item.Key}={item.Value}&";
+                if (!string.IsNullOrEmpty(item.Value) || !APIManager.instance.IS_DEBUG)
+                    param += $"{item.Key}={item.Value}&";
             }
             return param;
         }

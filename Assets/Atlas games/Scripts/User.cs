@@ -73,8 +73,6 @@ public class User : MonoBehaviour
     public static async void Get_user()
     {
         UserResponse user_response = await APIManager.instance.Check_token();
-        GemResponseModel gems_res = await APIManager.instance.Request_Gem();
-        user_response.gem = gems_res.gem;
         user_response.coin = UserProfile.coin;
         user_response.uxp = UserProfile.uxp;
         UserProfile = user_response;
