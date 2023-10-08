@@ -11,6 +11,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using UnityEngine.Android;
+using UnityEditor;
 
 public class APIManager : MonoBehaviour
 {
