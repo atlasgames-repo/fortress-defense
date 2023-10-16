@@ -46,7 +46,9 @@ jobs:
         needs: checklicense
         if: needs.checklicense.outputs.is_unity_license_set == 'true'
         name: Run all tests ✨
-        runs-on: ubuntu-latest
+        runs-on:
+            group: default
+            labels: ubuntu
         steps:
             - uses: actions/checkout@v3
               with:
@@ -71,7 +73,9 @@ jobs:
     build:
         needs: test
         name: Build for ${{ matrix.targetPlatform }}
-        runs-on: ubuntu-latest
+        runs-on:
+            group: default
+            labels: ubuntu
         strategy:
             fail-fast: false
             matrix:
@@ -79,10 +83,10 @@ jobs:
                     - iOS
                     - WebGL
         steps:
-            - name: Free Disk Space (Ubuntu)
-              uses: jlumbroso/free-disk-space@main
-              with:
-                  dotnet: false
+            # - name: Free Disk Space (Ubuntu)
+            #   uses: jlumbroso/free-disk-space@main
+            #   with:
+            #       dotnet: false
             - uses: actions/checkout@v3
               with:
                   lfs: true
@@ -104,13 +108,10 @@ jobs:
     buildAndroid:
         needs: build
         name: Build for Android
-        runs-on: ubuntu-latest
+        runs-on:
+            group: default
+            labels: ubuntu
         steps:
-            - name: Free Disk Space (Ubuntu)
-              uses: jlumbroso/free-disk-space@main
-              with:
-                  android: false
-                  dotnet: false
             - uses: actions/checkout@v3
               with:
                   lfs: true
