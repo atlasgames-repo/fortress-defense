@@ -102,6 +102,8 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     [HideInInspector] public Vector2 randomHitPoint = new Vector2(0.2f, 0.2f);
     [HideInInspector] public Vector2 randomBloodPuddlePoint = new Vector2(0.5f, 0.25f);
     public Vector2 healthBarOffset = new Vector2(0, 1.5f);
+    public float AutoHealthBarOffset = 0.2f;
+    public bool IsAutoHealthBar = true;
 
     [ReadOnly] public ENEMYSTATE enemyState = ENEMYSTATE.IDLE;
     protected ENEMYEFFECT enemyEffect;
@@ -197,7 +199,10 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
             gravity = 0;
         currentHealth = health;
         moveSpeed = walkSpeed;
-
+        if (IsAutoHealthBar){
+            BoxCollider2D box = transform.GetComponent<BoxCollider2D>();
+            healthBarOffset.y = box.size.y;
+        }
         var healthBarObj = (HealthBarEnemyNew)Resources.Load("HealthBar", typeof(HealthBarEnemyNew));
         healthBar = (HealthBarEnemyNew)Instantiate(healthBarObj, healthBarOffset, Quaternion.identity);
 

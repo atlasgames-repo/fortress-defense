@@ -61,7 +61,7 @@ public class APIManager : MonoBehaviour
     {
         Transform root = GameObject.FindGameObjectWithTag("Canves").transform;
         GameObject obj = Instantiate(status, root, false);
-        obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = message;
+        obj.GetComponentInChildren<RTLTMPro.RTLTextMeshPro>().text = message;
         if (color != null)
             obj.GetComponent<Image>().color = (Color)color;
         await DestroyDelay(obj, status_destroy);
@@ -89,7 +89,7 @@ public class APIManager : MonoBehaviour
     public async Task<AssetBundleUpdateResponse> Check_for_updates(string type = null)
     {
         string param = type != null ? $"?type={type}" : "";
-        return await Get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: User.Token);
+        return await Get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: User.Token, custom_message: NetworkStatusError.COULDNT_GET_UPDATES);
     }
     public async Task Updates_achivement(int status = 0, string id = "0")
     {
@@ -106,13 +106,13 @@ public class APIManager : MonoBehaviour
     }
     public async Task<AuthenticationResponse> Authenticate(Authentication auth)
     {
-        AuthenticationResponse res = await Get<AuthenticationResponse>(route: "/user/login", parameters: auth.ToParams);
-        RunStatus(res.message, CoolColor);
+        AuthenticationResponse res = await Get<AuthenticationResponse>(route: "/user/login", parameters: auth.ToParams, custom_message: NetworkStatusError.FAIL_LOGIN);
+        RunStatus(NetworkStatusError.SUCCESSFUL_LOGIN, CoolColor);
         return res;
     }
     public async Task<UserResponse> Check_token()
     {
-        UserResponse res = await Get<UserResponse>(route: "/user/details", auth_token: User.Token);
+        UserResponse res = await Get<UserResponse>(route: "/user/details", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
 
@@ -121,7 +121,7 @@ public class APIManager : MonoBehaviour
         return await Get<UserResponse>(
         route: "/user/update",
         parameters: userdata.ToParams,
-        auth_token: User.Token);
+        auth_token: User.Token, custom_message: NetworkStatusError.USER_UPDATE_FAIL);
     }
 
     public async Task<Sprite> Get_rofile_picture(string url)
@@ -136,7 +136,7 @@ public class APIManager : MonoBehaviour
         return await Get<GemResponseModel>(
         route: "/user/gem",
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
-        auth_token: User.Token);
+        auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }
     #endregion
 
@@ -187,7 +187,7 @@ public class APIManager : MonoBehaviour
 
         }
     }
-    private async Task<T> Get<T>(string route, string parameters = null, Dictionary<string, string> headers = null, string auth_token = "null")
+    private async Task<T> Get<T>(string route, string parameters = null, Dictionary<string, string> headers = null, string auth_token = "null", string custom_message = null)
     {
         if (headers == null)
             headers = new Dictionary<string, string>();
@@ -217,10 +217,10 @@ public class APIManager : MonoBehaviour
             }
             catch (System.Exception)
             {
-                RunStatus(req.error, ErrorColor);
+                RunStatus(NetworkStatusError.UNKNOWN_ERROR, ErrorColor);
                 throw;
             }
-            RunStatus(req.error);
+            RunStatus(custom_message != null ? custom_message : NetworkStatusError.UNKNOWN_ERROR, ErrorColor);
             throw new System.Net.WebException(message: req.error);
         }
         else
@@ -231,9 +231,9 @@ public class APIManager : MonoBehaviour
                 // res = JsonUtility.FromJson<T>(Clean_json(req.downloadHandler.text));
                 res = JsonConvert.DeserializeObject<T>(Clean_json(req.downloadHandler.text));
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                RunStatus(e.Message, ErrorColor);
+                RunStatus(NetworkStatusError.UNKNOWN_ERROR, ErrorColor);
                 throw;
             }
             if (tokenSource.IsCancellationRequested)
