@@ -24,9 +24,9 @@ public class DownloadManager : MonoBehaviour
         {
             assets = await APIManager.instance.Check_for_updates();
         }
-        catch (System.Exception e)
+        catch (System.Exception)
         {
-            APIManager.instance.RunStatus(e.Message, APIManager.instance.ErrorColor);
+            APIManager.instance.RunStatus(NetworkStatusError.UNKNOWN_ERROR, APIManager.instance.ErrorColor);
             User.Token = "";
             await Task.Delay(3 * 1000);
             APIManager.instance.LoadAsynchronously("Login");
