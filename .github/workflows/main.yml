@@ -47,7 +47,7 @@ jobs:
         if: needs.checklicense.outputs.is_unity_license_set == 'true'
         name: Run all tests ✨
         runs-on:
-            group: default
+            group: Default
             labels: ubuntu
         steps:
             - uses: actions/checkout@v3
@@ -74,7 +74,7 @@ jobs:
         needs: test
         name: Build for ${{ matrix.targetPlatform }}
         runs-on:
-            group: default
+            group: Default
             labels: ubuntu
         strategy:
             fail-fast: false
@@ -109,7 +109,7 @@ jobs:
         needs: build
         name: Build for Android
         runs-on:
-            group: default
+            group: Default
             labels: ubuntu
         steps:
             - uses: actions/checkout@v3

@@ -49,7 +49,7 @@ jobs:
         if: needs.checklicense.outputs.is_unity_license_set == 'true'
         name: Run all tests ✨
         runs-on:
-            group: default
+            group: Default
             labels: ubuntu
         steps:
             # - name: Free Disk Space (Ubuntu)
