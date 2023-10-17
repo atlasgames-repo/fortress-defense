@@ -581,19 +581,7 @@ MonoBehaviour:
   On: {fileID: -3640315186839972071, guid: 77ac981704d63d440aa56a363d55b783, type: 3}
   Off: {fileID: 4158989600569454305, guid: 77ac981704d63d440aa56a363d55b783, type: 3}
   login: {fileID: 378219134}
-  loading: {fileID: 177978654}
---- !u!1 &177978654 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9051519602918791668, guid: 7732144de3f6c704481bb31fcfe60cf0,
-    type: 3}
-  m_PrefabInstance: {fileID: 9051519603094463722}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &177978655 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9051519602918791669, guid: 7732144de3f6c704481bb31fcfe60cf0,
-    type: 3}
-  m_PrefabInstance: {fileID: 9051519603094463722}
-  m_PrefabAsset: {fileID: 0}
+  loading: {fileID: 0}
 --- !u!1 &197018188
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,7 +811,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 469523401}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1132,7 +1120,6 @@ RectTransform:
   - {fileID: 721260281}
   - {fileID: 22894144}
   - {fileID: 378219135}
-  - {fileID: 177978655}
   - {fileID: 247233784}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -2949,6 +2936,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4435878951544121298, guid: d4849a0f023c99b42b2c0baf4f80ef71,
+        type: 3}
+      propertyPath: IS_DEBUG
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4435878951544121299, guid: d4849a0f023c99b42b2c0baf4f80ef71,
         type: 3}
       propertyPath: m_Name
