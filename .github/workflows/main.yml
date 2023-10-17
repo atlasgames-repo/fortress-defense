@@ -106,7 +106,7 @@ jobs:
                   name: Build-${{ matrix.targetPlatform }}
                   path: build
     buildAndroid:
-        needs: build
+        needs: test
         name: Build for Android
         runs-on:
             group: Default
@@ -136,7 +136,7 @@ jobs:
                   name: Build-Android
                   path: build
     buildForMac:
-        needs: build
+        needs: test
         name: Build for StandaloneOSX
         runs-on: macos-latest
         steps:
@@ -160,9 +160,11 @@ jobs:
                   path: build
 
     buildForWindows:
-        needs: build
+        needs: test
         name: Build for ${{ matrix.targetPlatform }}
-        runs-on: windows-2019
+        runs-on:
+            group: Default
+            labels: window
         strategy:
             fail-fast: false
             matrix:

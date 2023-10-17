@@ -12,7 +12,9 @@ on:
 jobs:
     buildForWindows:
         name: Build for ${{ matrix.targetPlatform }}
-        runs-on: windows-2019
+        runs-on:
+            group: Default
+            labels: window
         strategy:
             fail-fast: false
             matrix:
