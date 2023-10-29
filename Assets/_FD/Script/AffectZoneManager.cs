@@ -51,25 +51,26 @@ public class AffectZoneManager : MonoBehaviour
         _pickedBtn.StartCountingDown();
         isAffectZoneWorking = false;
     }
-    void Update()
-    {
-        if (isChecking)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                RaycastHit2D hit = Physics2D.CircleCast(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.01f, Vector2.zero);
-                if (hit)
-                {
+    void Update(){
+        if (isChecking){
+            if (Input.GetMouseButtonDown(0)){
+                RaycastHit2D hit = new RaycastHit2D();
+                RaycastHit2D[] hits = Physics2D.CircleCastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.01f, Vector2.zero);
+                foreach (RaycastHit2D item in hits){
+                    if (item.collider.CompareTag("Zone")){
+                        hit = item;
+                        break;
+                    }
+                }
+                Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), new Vector3(0, 0, 10), Color.blue, 5);
+                if (hit){
                     var isZone = hit.collider.gameObject.GetComponent<AffectZone>();
-                    if (isZone)
-                    {
-                        foreach (var zone in affectZoneList)
-                        {
+                    if (isZone){
+                        foreach (var zone in affectZoneList){
                             if (zone.gameObject.name != isZone.gameObject.name) // When The isZone deactivates OnTriggerExit2D calls and removes all enemy inside the effect and thats why some times it doesn't works. This will fix the issue
                                 zone.gameObject.SetActive(false);
                         }
                         isZone.gameObject.SetActive(true);
-//                        Debug.LogError($"Running zone: {affectType}");
                         isZone.Active(affectType);
                         pickedBtn.StartCountingDown();
                         isChecking = false;

@@ -66,7 +66,6 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         }
 
         image.fillAmount = Mathf.Clamp01((coolDown - coolDownCounter) / coolDown);
-        Debug.LogError(coolDownCounter);
         timerTxt.text = (int)coolDownCounter + "";
         if ((int)coolDownCounter == 0)
             timerTxt.text = "";
