@@ -79,7 +79,7 @@ public class MenuManager : MonoBehaviour, IListener
             Time.timeScale = 0;
             UI.SetActive(false);
             PauseUI.SetActive(true);
-            SoundManager.Instance.PauseMusic(true);
+            // SoundManager.Instance.PauseMusic(true);
         }
         else
         {
