@@ -55,7 +55,6 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
             if (allowCounting)
             {
                 coolDownCounter -= Time.deltaTime;
-
                 if (coolDownCounter <= 0)
                     allowWork = true;
             }
@@ -106,7 +105,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     void ActiveCure()
     {
         //    AffectZoneManager.Instance.ActiveZone(AffectZoneType.Cure, this);
-        StartCoroutine(AffectZoneManager.Instance.Cure(this,coolDown));
+        StartCoroutine(AffectZoneManager.Instance.Cure(this,delayOnStart));
         SoundManager.Click();
         Debug.LogError("Cure clicked");
     }
@@ -129,6 +128,9 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     {
         allowCounting = true;
         coolDownCounter = coolDown;
+    }
+    public void SetAllowWork(bool allow){
+        allowWork = allow;
     }
 
     private void OnBtnClick()
