@@ -59,9 +59,6 @@ public class DownloadManager : MonoBehaviour
     }
     public void Add_target_platform(ref string pattern, int index = 2)
     {
-#if UNITY_STANDALONE
-        pattern = pattern.Insert(index, "StandaloneWindows64");
-#endif
 #if UNITY_ANDROID
         pattern = pattern.Insert(index, "Android");
 #endif
@@ -76,6 +73,9 @@ public class DownloadManager : MonoBehaviour
 #endif
 #if UNITY_STANDALONE_WIN && !UNITY_64 
         pattern = pattern.Insert(index, "StandaloneWindows");
+#endif
+#if UNITY_STANDALONE && UNITY_64
+        pattern = pattern.Insert(index, "StandaloneWindows64");
 #endif
     }
 
