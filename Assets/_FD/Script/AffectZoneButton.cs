@@ -28,13 +28,15 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     float holdCounter = 0;
 
 
-   
+
     public CanvasGroup canvasGroup;
 
     void Start()
     {
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
+        if (affectType == AffectZoneType.Cure)
+            ownBtn.interactable = false;
 
         if (image == null)
             image = GetComponent<Image>();
@@ -64,13 +66,16 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         }
 
         image.fillAmount = Mathf.Clamp01((coolDown - coolDownCounter) / coolDown);
-
+        Debug.LogError(coolDownCounter);
         timerTxt.text = (int)coolDownCounter + "";
         if ((int)coolDownCounter == 0)
             timerTxt.text = "";
 
-        canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
+        int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
 
+        canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
+        if (affectType == AffectZoneType.Cure)
+            ownBtn.interactable = canUse && fortressHealth > 0;
         canvasGroup.interactable = canUse;
     }
 
@@ -101,9 +106,10 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     }
     void ActiveCure()
     {
-    //    AffectZoneManager.Instance.ActiveZone(AffectZoneType.Cure, this);
-    AffectZoneManager.Instance.Cure();
+        //    AffectZoneManager.Instance.ActiveZone(AffectZoneType.Cure, this);
+        StartCoroutine(AffectZoneManager.Instance.Cure(this,coolDown));
         SoundManager.Click();
+        Debug.LogError("Cure clicked");
     }
 
     void ActiveFrozen()
