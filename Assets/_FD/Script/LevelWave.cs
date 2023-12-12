@@ -13,7 +13,7 @@ public class LevelWave : MonoBehaviour
 
     [Space(3)] 
     public EndlessWaveGenerator.EndlessEnemyWave[] enemiesList;
-    public LevelType type;
+    public LevelType type = LevelType.Normal;
     public int defaultExp = 200;
     public EnemyWave[] Waves;
     public float increaseEnemySpeedDifficultyRate = 0.05f;
