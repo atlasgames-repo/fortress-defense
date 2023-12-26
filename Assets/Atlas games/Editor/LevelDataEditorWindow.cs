@@ -70,6 +70,7 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
             if (levelname != null)
             {
                 createInstance(levelname);
+                Level = null;
                 Debug.LogError("Saved and exported the data");
             }
             else
@@ -90,6 +91,7 @@ public class LevelDataEditorWindow : ExtendedEditorWindow
                 Debug.LogError("Edited the data");
                 Apply();
                 Edit(Level, levelname);
+                Level = null;
             }
         }
         EditorGUILayout.EndHorizontal();
