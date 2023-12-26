@@ -13,21 +13,69 @@ MonoBehaviour:
   m_Name: LevelGenerator
   m_EditorClassIdentifier: 
   levels:
-  - level: 16
-    defaultExp: 50
-    backgroundSprite: {fileID: 21300000, guid: 1cb073ea1c2d0e54ea162e91503069c2, type: 3}
+  - level: 33
+    defaultExp: 301
+    backgroundSprite: {fileID: 21300000, guid: 819a86761329b794f93bb189d863d825, type: 3}
     Waves:
     - wait: 0
       enemySpawns:
       - wait: 0
-        enemy: {fileID: 3946748681848493890, guid: b16e599b3265a744d89e925a2f9835fa,
+        enemy: {fileID: 8735511819807008694, guid: 4938ba1c1070b8b4e8cda5c6fb4cf6c0,
           type: 3}
-        numberEnemy: 1
+        numberEnemy: 30
         rate: 1
         customHealth: 700
         customSpeed: 0.7
         customAttackDmg: 0
-        boosType: 2
+        boosType: 0
+        BossScale: 1.599
+        BossMinExp: 99
+        BossMaxExp: 90
+      - wait: 0
+        enemy: {fileID: 1384076305360503900, guid: 71d92f6a73d83a648b515b6a3ba1a113,
+          type: 3}
+        numberEnemy: 25
+        rate: 1
+        customHealth: 700
+        customSpeed: 0.7
+        customAttackDmg: 0
+        boosType: 0
+        BossScale: 1.599
+        BossMinExp: 99
+        BossMaxExp: 90
+      - wait: 0
+        enemy: {fileID: 8885830814786365834, guid: 8a42c3f4494766942b7362c1737df6f9,
+          type: 3}
+        numberEnemy: 5
+        rate: 1
+        customHealth: 700
+        customSpeed: 0.7
+        customAttackDmg: 0
+        boosType: 0
+        BossScale: 1.599
+        BossMinExp: 99
+        BossMaxExp: 90
+      - wait: 0
+        enemy: {fileID: 7750709616934011868, guid: 867afff3257836d4083e111950f04e86,
+          type: 3}
+        numberEnemy: 10
+        rate: 1
+        customHealth: 700
+        customSpeed: 0.7
+        customAttackDmg: 0
+        boosType: 0
+        BossScale: 1.599
+        BossMinExp: 99
+        BossMaxExp: 90
+      - wait: 0
+        enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
+          type: 3}
+        numberEnemy: 30
+        rate: 1
+        customHealth: 700
+        customSpeed: 0.7
+        customAttackDmg: 0
+        boosType: 0
         BossScale: 1.599
         BossMinExp: 99
         BossMaxExp: 90
