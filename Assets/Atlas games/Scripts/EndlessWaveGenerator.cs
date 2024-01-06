@@ -37,7 +37,8 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
         {
             if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
             {
-                GetComponent<LevelEnemyManager>().enabled = false;
+                bool is_true = TryGetComponent(out LevelEnemyManager waveGenerator);
+                if (is_true) waveGenerator.enabled = false;
             }
             enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
             increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();

@@ -27,7 +27,8 @@ public class LevelEnemyManager : MonoBehaviour, IListener
         {
             if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Normal)
             {
-                GetComponent<EndlessWaveGenerator>().enabled = false;
+                bool is_true = TryGetComponent(out EndlessWaveGenerator waveGenerator);
+                if (is_true) waveGenerator.enabled = false;
             }
             EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
         }
