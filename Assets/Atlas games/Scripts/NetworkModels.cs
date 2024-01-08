@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using Newtonsoft.Json;
+using UnityEngine.AddressableAssets;
 
 public class BaseModel
 {
@@ -35,6 +36,18 @@ public class AssetBundleUpdateResponse : BaseModel
 
 }
 
+[Serializable]
+public class AssetBundleGeneratorV2
+{
+    public AssetReferenceGameObject asset_bundle;
+    public string scene_name;
+    public float percent;
+    public bool is_complete = false;
+    public string root;
+    public GameObject obj;
+    public bool is_root_world = false, has_depends = false;
+    public string dependence, dependence_type;
+}
 [Serializable]
 public class AssetBundleGenerator
 {
