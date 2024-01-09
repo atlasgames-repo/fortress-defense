@@ -29,7 +29,7 @@ public class AddressableRootManager : MonoBehaviour
         float percent = 0;
         int comp_count = 0;
         foreach (AddressableManager item in addressables) {
-            percent = item.bundles.percent;
+            percent += item.bundles.percent;
             if (item.bundles.is_complete) comp_count++;
         }
         if (comp_count == addressables.Length) {
@@ -39,6 +39,5 @@ public class AddressableRootManager : MonoBehaviour
             StartCoroutine(APIManager.instance.LoadAsynchronously());
         }
         if (loading) loading.value = percent / (float)addressables.Length;
-        Debug.LogError(percent / (float)addressables.Length);
     }
 }
