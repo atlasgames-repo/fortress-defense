@@ -1,16 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.AddressableAssets.Settings;
-using UnityEditor.Build.Pipeline;
-using System.Linq;
-using UnityEditor.AddressableAssets;
 using UnityEditor.Compilation;
 using UnityEngine;
-
+public delegate void Callback();
 public class SwitchPlatform
 {
     static bool isListening = false;
+    
     static void BuildMac() {
         // Mac
         bool switched_1 = EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone , BuildTarget.StandaloneOSX);
@@ -57,6 +53,30 @@ public class SwitchPlatform
         }
     }
 
+    public static void BuildAddressables(object o = null)
+    {
+        if (EditorApplication.isCompiling)
+        {
+            Debug.Log("Delaying until compilation is finished...");
+     
+            if(!isListening)
+                CompilationPipeline.compilationFinished += BuildAddressables;
+            isListening = true;
+            return;
+        }
+
+        if(isListening)
+            CompilationPipeline.compilationFinished -= BuildAddressables;
+
+        //AddressableAssetSettingsDefaultObject.Settings = AddressableAssetSettings.Create();
+        Debug.Log("Building Addressables!!! START PLATFORM: platform: " + Application.platform + " target: " + EditorUserBuildSettings.activeBuildTarget);
+     
+        AddressableAssetSettings.CleanPlayerContent();
+        AddressableAssetSettings.BuildPlayerContent();
+     
+        Debug.Log("Building Addressables!!! DONE");
+    }
+
     [MenuItem("Assets/Addressables/Build All")]
     static void BuildAll() {
         // Mac
@@ -92,28 +112,5 @@ public class SwitchPlatform
             EditorUserBuildSettings.selectedStandaloneTarget = BuildTarget.StandaloneWindows64;
             BuildAddressables();
         }
-    }
-    public static void BuildAddressables(object o = null)
-    {
-        if (EditorApplication.isCompiling)
-        {
-            Debug.Log("Delaying until compilation is finished...");
-     
-            if(!isListening)
-                CompilationPipeline.compilationFinished += BuildAddressables;
-            isListening = true;
-            return;
-        }
- 
-        if(isListening)
-            CompilationPipeline.compilationFinished -= BuildAddressables;
- 
-        //AddressableAssetSettingsDefaultObject.Settings = AddressableAssetSettings.Create();
-        Debug.Log("Building Addressables!!! START PLATFORM: platform: " + Application.platform + " target: " + EditorUserBuildSettings.activeBuildTarget);
-     
-        AddressableAssetSettings.CleanPlayerContent();
-        AddressableAssetSettings.BuildPlayerContent();
-     
-        Debug.Log("Building Addressables!!! DONE");
     }
 }
