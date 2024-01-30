@@ -101,7 +101,7 @@ public class Authentication : BaseModel
 public class UserResponse : BaseModel
 {
     public string first_name, last_name, display_name, email, username, registered_date, avatar;
-    public int coin, gem, uxp;
+    public int coin, gem, uxp, rxp, rxpTotal;
 
 }
 [Serializable]

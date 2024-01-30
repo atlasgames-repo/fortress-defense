@@ -47,6 +47,27 @@ public class User : MonoBehaviour
             UserProfile = _UserProfile;
         }
     }
+    public static int Rxp
+        {
+            get { return UserProfile.rxp; }
+            set
+            {
+                UserResponse _UserProfile = UserProfile;
+                _UserProfile.rxp += value;
+                UserProfile = _UserProfile;
+            }
+        }
+
+    public static int RxpTotal
+    {
+        get { return UserProfile.rxpTotal; }
+        set
+        {
+            UserResponse _UserProfile = UserProfile;
+            _UserProfile.rxpTotal += value;
+            UserProfile = _UserProfile;
+        }
+    }
     public static int Level
     {
         get { return (int)Mathf.Pow(UserProfile.uxp, 0.5f); }
