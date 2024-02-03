@@ -54,6 +54,7 @@ public class LeaderBoard : MonoBehaviour
     IEnumerator GetData()
     {
         scroll.RefreshViews();
+        scroll.gameObject.SetActive(false);
         errorText.SetActive(false);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -61,10 +62,12 @@ public class LeaderBoard : MonoBehaviour
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
+                
                 string json = webRequest.downloadHandler.text;
                 json = fixJson(json);
                 _dataArray = JsonHelper.FromJson<LeaderboardData>(json);
                 Array.Sort(_dataArray, (x, y) => y.rxp.CompareTo(x.rxp));
+                scroll.gameObject.SetActive(true);
                 scroll.OnFill += OnFillItem;
                 scroll.OnHeight += OnHeightItem;
                 scroll.InitData(_dataArray.Length);

@@ -167,8 +167,8 @@ public class MainMenuHomeScene : MonoBehaviour
         }
         else
         {
-            LeaderBoardUI.SetActive(open);
             leaderBoard.ClearList();
+            LeaderBoardUI.SetActive(open);
         }
     }
     public void OpenTrophyV2(bool open)
