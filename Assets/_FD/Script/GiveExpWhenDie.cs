@@ -12,7 +12,7 @@ public class GiveExpWhenDie : MonoBehaviour
         int random = Random.Range(expMin, expMax); 
         //SoundManager.PlaySfx(SoundManager.Instance.coinCollect);
         //User.Coin = random;
-        GameManager.Instance.UpdateRxp(random,transform);
+        GameManager.Instance.UpdateXp(random,transform);
         FloatingTextManager.Instance.ShowText((int)random + "", Vector2.up * 1, Color.yellow, transform.position);
     }
 
