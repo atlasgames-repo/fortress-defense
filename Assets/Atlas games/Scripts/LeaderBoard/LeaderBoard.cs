@@ -27,7 +27,7 @@ public class LeaderBoard : MonoBehaviour
         // data for leader board that has to change based on postman.
         public string userName;
         public string imageUrl;
-        public string rxp;
+        public int rxp;
     }
 
     // this is for converting a Json Array to array.
@@ -45,12 +45,16 @@ public class LeaderBoard : MonoBehaviour
             public T[] Items;
         }
     }
-
+    string fixJson(string value)
+    {
+        value = "{\"Items\":" + value + "}";
+        return value;
+    }
     // get data from the API mocked for the leader board list.
     IEnumerator GetData()
     {
         scroll.RefreshViews();
-        errorText.SetActive(true);
+        errorText.SetActive(false);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
             yield return webRequest.SendWebRequest();
@@ -58,11 +62,13 @@ public class LeaderBoard : MonoBehaviour
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 string json = webRequest.downloadHandler.text;
+                json = fixJson(json);
                 _dataArray = JsonHelper.FromJson<LeaderboardData>(json);
-                _dataArray = _dataArray.OrderByDescending(obj => obj.rxp).ToArray();
+                Array.Sort(_dataArray, (x, y) => y.rxp.CompareTo(x.rxp));
                 scroll.OnFill += OnFillItem;
                 scroll.OnHeight += OnHeightItem;
                 scroll.InitData(_dataArray.Length);
+                
             }
             else
             {
@@ -80,7 +86,7 @@ public class LeaderBoard : MonoBehaviour
     {
         LeaderboardData data = _dataArray[index];
         // initialize the list item components.
-        item.GetComponent<LeaderboardListItem>().SetData(int.Parse(data.rxp), data.userName, data.imageUrl);
+        item.GetComponent<LeaderboardListItem>().SetData(data.rxp, data.userName, data.imageUrl);
     }
 
     public void ClearList()

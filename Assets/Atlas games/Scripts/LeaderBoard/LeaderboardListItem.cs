@@ -12,6 +12,6 @@ public class LeaderboardListItem : MonoBehaviour
     {
         rxpText.text = rxp.ToString();
         userNameText.text = userName;
-        image.Initialize(imageUrl);
+  //      image.Initialize(imageUrl);
     }
 }

@@ -162,13 +162,13 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         LeaderBoard leaderBoard = LeaderBoardUI.GetComponent<LeaderBoard>();
         if(open){
-            leaderBoard.LoadLeaderboard();
             LeaderBoardUI.SetActive(open);
+            leaderBoard.LoadLeaderboard();
         }
         else
         {
-            leaderBoard.ClearList();
             LeaderBoardUI.SetActive(open);
+            leaderBoard.ClearList();
         }
     }
     public void OpenTrophyV2(bool open)
