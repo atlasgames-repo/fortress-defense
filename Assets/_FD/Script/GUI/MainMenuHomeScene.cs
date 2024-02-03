@@ -9,7 +9,7 @@ public class MainMenuHomeScene : MonoBehaviour
     public GameObject MapUI;
     public GameObject ShopUI;
     public GameObject TrophyUI,TrophyUIV2;
-    public GameObject EventUI, CoinShopUI, UpgradeUI;
+    public GameObject EventUI, CoinShopUI, UpgradeUI,LeaderBoardUI;
 
     public GameObject Loading;
     public GameObject Settings;
@@ -156,6 +156,20 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         SoundManager.Click();
         TrophyUI.SetActive(open);
+    }
+
+    public void OpenLeaderBoard(bool open)
+    {
+        LeaderBoard leaderBoard = LeaderBoardUI.GetComponent<LeaderBoard>();
+        if(open){
+            leaderBoard.LoadLeaderboard();
+            LeaderBoardUI.SetActive(open);
+        }
+        else
+        {
+            leaderBoard.ClearList();
+            LeaderBoardUI.SetActive(open);
+        }
     }
     public void OpenTrophyV2(bool open)
     {
