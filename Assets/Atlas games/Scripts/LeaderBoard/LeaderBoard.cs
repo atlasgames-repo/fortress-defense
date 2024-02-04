@@ -11,6 +11,7 @@ public class LeaderBoard : MonoBehaviour
 {
     public string url = "https://run.mocky.io/v3/4f50ac8a-812c-4dd1-9a79-bf36e1f3ba12";
     public GameObject errorText;
+    public GameObject loadingText;
     private LeaderboardData[] _dataArray;
 
     public InfiniteScroll scroll;
@@ -56,6 +57,7 @@ public class LeaderBoard : MonoBehaviour
         scroll.RefreshViews();
         scroll.gameObject.SetActive(false);
         errorText.SetActive(false);
+        loadingText.SetActive(true);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
             yield return webRequest.SendWebRequest();
@@ -78,6 +80,7 @@ public class LeaderBoard : MonoBehaviour
                 errorText.SetActive(true);
             }
         }
+        loadingText.SetActive(false);
     }
 
     int OnHeightItem(int index)

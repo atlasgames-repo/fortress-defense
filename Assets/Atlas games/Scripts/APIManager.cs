@@ -138,6 +138,13 @@ public class APIManager : MonoBehaviour
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
         auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }
+    public async Task<RxpRequestModel> Request_Rxp(RxpRequestModel parames = null)
+    {
+        return await Get<RxpRequestModel>(
+            route: "/user/rxp",
+            parameters: parames == null ? new RxpRequestModel().ToParams : parames.ToParams,
+            auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
+    }
     #endregion
 
     #region Private API calls

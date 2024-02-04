@@ -77,6 +77,20 @@ public class GemRequestModel : BaseModel
         date = _date;
     }
 }
+
+[Serializable]
+public class RxpRequestModel : BaseModel
+{
+    public string amount = null;
+    public string game_id = "442";
+    public string date = null;
+    public RxpRequestModel(string _game_id = null, string _amount = null, string _date = null)
+    {
+        amount = _amount;
+        game_id = _game_id == null ? _game_id : "442";
+        date = _date;
+    }
+}
 [Serializable]
 public class AuthenticationResponse : CommonErrorResponse
 {
