@@ -129,6 +129,27 @@ public class GameLevelSetup : MonoBehaviour
         return null;
     }
 
+    public bool NightMode()
+    {
+        foreach (var obj in levelWaves)
+        {
+            if (obj.level == GlobalValue.levelPlaying)
+                return obj.nightMode;
+        }
+        return false;
+    }
+
+    public float NightModeXpMultiplier()
+    {
+        foreach (var obj in levelWaves)
+        {
+            if (obj.level == GlobalValue.levelPlaying)
+                return obj.nightXpMultiplier;
+        }
+
+        return 9999;
+    }
+
     public int getTotalLevels()
     {
         return levelWaves.Count;

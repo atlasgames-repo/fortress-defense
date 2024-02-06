@@ -15,4 +15,6 @@ public class LevelWaves
     public int defaultExp = 200;
     public Sprite backgroundSprite;
     public EnemyWave[] Waves;
+    public bool nightMode;
+    public float nightModeXpMultiplier;
 }

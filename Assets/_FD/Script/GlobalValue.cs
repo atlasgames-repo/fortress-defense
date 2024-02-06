@@ -87,7 +87,24 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("ItemPoison", 3); }
         set { PlayerPrefs.SetInt("ItemPoison", value); }
     }
-
+    public static bool NightMode
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("Night") == 1;
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("Night", 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("Night",0);
+            }
+        }
+    }
     public static int ItemFreeze
     {
         get { return PlayerPrefs.GetInt("ItemFreeze", 3); }

@@ -221,7 +221,18 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     _temp.SetActive(true);
                     //_temp.transform.localPosition = Vector2.zero;
                     listEnemySpawned.Add(_temp);
-
+                    if (GameLevelSetup.Instance)
+                    {
+                        if (GameLevelSetup.Instance.NightMode())
+                        {
+                            _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(_temp.GetComponent<SmartEnemyGrounded>().health *
+                                GameLevelSetup.Instance.NightModeXpMultiplier());
+                            _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(_temp.GetComponent<GiveExpWhenDie>().expMax *
+                                GameLevelSetup.Instance.NightModeXpMultiplier());
+                            _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(_temp.GetComponent<GiveExpWhenDie>().expMin *
+                                GameLevelSetup.Instance.NightModeXpMultiplier());
+                        }
+                    }
                     currentSpawn++;
                     MenuManager.Instance.UpdateEnemyWavePercent(currentSpawn, totalEnemy);
 
