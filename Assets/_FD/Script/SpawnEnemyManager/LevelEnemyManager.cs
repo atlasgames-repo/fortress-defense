@@ -93,17 +93,6 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                                 }
                             }
 
-                            var rangeAttack1 = _temp.GetComponent<EnemyRangeAttack>();
-                            if (rangeAttack1)
-                                rangeAttack1.bullet = bullet;
-                            var meleeAttack1 = _temp.GetComponent<EnemyMeleeAttack>();
-                            var throwAttack1 = _temp.GetComponent<EnemyThrowAttack>();
-                            if (throwAttack1)
-                            {
-                                throwAttack1.FX_Blow = FX_Blow;
-                                throwAttack1.FX_Smoke = FX_Smoke;
-                            }
-
                             if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
                             {
                                 bossManeger.enemy = _temp.GetComponent<Enemy>();
