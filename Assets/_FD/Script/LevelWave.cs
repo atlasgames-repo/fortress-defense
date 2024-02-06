@@ -22,11 +22,10 @@ public class LevelWave : MonoBehaviour
     public float increaseEnemyAmountDifficultyRate = 0.4f;
     public float increaseEnemyWaitDifficultyRate = 0.2f;
     public float initialWaitAmount = 3;
-    public bool night = false;
+    
     [Space(2)]
     [Header("Other settings")]
     public int level = 1;
     public Sprite backgroundSprite;
-    public Sprite backgroundSpriteNight;
 
 }
