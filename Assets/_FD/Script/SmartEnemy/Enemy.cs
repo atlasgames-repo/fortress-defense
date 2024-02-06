@@ -8,6 +8,7 @@ public enum ATTACKTYPE
     MELEE,
     THROW,
     //CALLMINION,
+    WIZARD,
     NONE
 }
 public static class ANIMATION_STATE
