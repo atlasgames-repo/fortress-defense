@@ -70,7 +70,7 @@ public class ExtendedEditorWindow : EditorWindow
         level.defaultExp = obj.levels[0].defaultExp;
         level.backgroundSprite = obj.levels[0].backgroundSprite;
         level.Waves = obj.levels[0].Waves;
-
+        level.night = obj.levels[0].night;
         // Create the new Prefab and log whether Prefab was saved successfully.
         bool prefabSuccess;
 
@@ -108,6 +108,7 @@ public class ExtendedEditorWindow : EditorWindow
         obj.levels[0].defaultExp = level.defaultExp;
         obj.levels[0].backgroundSprite = level.backgroundSprite;
         obj.levels[0].Waves = level.Waves;
+        obj.levels[0].night = level.night;
         serializedObject = new SerializedObject(obj);
         Apply();
         AssetDatabase.Refresh();
@@ -121,7 +122,14 @@ public class ExtendedEditorWindow : EditorWindow
 
         LEM.EnemyWaves = obj.levels[0].Waves;
         gameManager.currentExp = obj.levels[0].defaultExp;
-        background.sprite = obj.levels[0].backgroundSprite;
+        if (obj.levels[0].night)
+        {
+            background.sprite = obj.levels[0].backgroundSpriteNight;
+        }
+        else
+        {
+            background.sprite = obj.levels[0].backgroundSprite;
+        }
         PrefabUtility.RecordPrefabInstancePropertyModifications(LEM.gameObject);
         PrefabUtility.RecordPrefabInstancePropertyModifications(gameManager.gameObject);
         PrefabUtility.RecordPrefabInstancePropertyModifications(background.gameObject);

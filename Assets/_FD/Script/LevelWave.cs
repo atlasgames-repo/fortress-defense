@@ -27,5 +27,6 @@ public class LevelWave : MonoBehaviour
     [Header("Other settings")]
     public int level = 1;
     public Sprite backgroundSprite;
-
+    public Sprite backgroundSpriteNight;
+    public bool night = false;
 }
