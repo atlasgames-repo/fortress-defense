@@ -123,16 +123,7 @@ public class GameLevelSetup : MonoBehaviour
         foreach (var obj in levelWaves)
         {
             if (obj.level == GlobalValue.levelPlaying)
-            {
-                if (obj.night)
-                {
-                    return obj.backgroundSpriteNight;
-                }
-                else
-                {
-                    return obj.backgroundSprite;
-                }
-            }
+                return obj.backgroundSprite;
         }
 
         return null;
