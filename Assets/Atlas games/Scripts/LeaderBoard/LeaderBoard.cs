@@ -13,7 +13,7 @@ public class LeaderBoard : MonoBehaviour
     public GameObject errorText;
     public GameObject loadingText;
     private LeaderboardData[] _dataArray;
-
+    public LeaderboardList listOfUsers;
     public InfiniteScroll scroll;
 
     // Start is called before the first frame update
@@ -68,11 +68,13 @@ public class LeaderBoard : MonoBehaviour
                 string json = webRequest.downloadHandler.text;
                 json = fixJson(json);
                 _dataArray = JsonHelper.FromJson<LeaderboardData>(json);
+                // the next line is not necessary ...
                 Array.Sort(_dataArray, (x, y) => y.rxp.CompareTo(x.rxp));
+                listOfUsers.data = _dataArray;
                 scroll.gameObject.SetActive(true);
                 scroll.OnFill += OnFillItem;
                 scroll.OnHeight += OnHeightItem;
-                scroll.InitData(_dataArray.Length);
+                scroll.InitData(listOfUsers.data.Length);
                 
             }
             else
@@ -90,7 +92,7 @@ public class LeaderBoard : MonoBehaviour
 
     void OnFillItem(int index, GameObject item)
     {
-        LeaderboardData data = _dataArray[index];
+        LeaderboardData data = listOfUsers.data[index];
         // initialize the list item components.
         item.GetComponent<LeaderboardListItem>().SetData(data.rxp, data.userName, data.imageUrl);
     }
