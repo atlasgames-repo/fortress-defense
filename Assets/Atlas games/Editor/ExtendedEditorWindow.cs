@@ -69,6 +69,7 @@ public class ExtendedEditorWindow : EditorWindow
         level.level = obj.levels[0].level;
         level.defaultExp = obj.levels[0].defaultExp;
         level.backgroundSprite = obj.levels[0].backgroundSprite;
+        level.backgroundSpriteNight = obj.levels[0].backgroundSpriteNight;
         level.Waves = obj.levels[0].Waves;
 
         // Create the new Prefab and log whether Prefab was saved successfully.
