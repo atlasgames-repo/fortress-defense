@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesList: []
   type: 1
-  defaultExp: 175
+  defaultExp: 250
   Waves:
   - wait: 0
     enemySpawns:
@@ -61,19 +61,7 @@ MonoBehaviour:
       BossScale: 1.001
       BossMinExp: 25
       BossMaxExp: 50
-    - wait: 5
-      enemy: {fileID: 3697426553599540029, guid: 5ede7aebc455259498991f0bc774b8ef,
-        type: 3}
-      numberEnemy: 10
-      rate: 1
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.001
-      BossMinExp: 25
-      BossMaxExp: 50
-    - wait: 8
+    - wait: 0
       enemy: {fileID: 3697426553599540029, guid: f161e65047f24e14a9d149461ad486fe,
         type: 3}
       numberEnemy: 9
@@ -85,7 +73,7 @@ MonoBehaviour:
       BossScale: 1.0001
       BossMinExp: 25
       BossMaxExp: 50
-    - wait: 10
+    - wait: 8
       enemy: {fileID: 3697426553599540029, guid: 20f278aeea3ae0f4d839b8d87b873823,
         type: 3}
       numberEnemy: 9
@@ -97,6 +85,18 @@ MonoBehaviour:
       BossScale: 1.5
       BossMinExp: 99
       BossMaxExp: 90
+    - wait: 0
+      enemy: {fileID: 3697426553599540029, guid: 5ede7aebc455259498991f0bc774b8ef,
+        type: 3}
+      numberEnemy: 10
+      rate: 1
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1.001
+      BossMinExp: 25
+      BossMaxExp: 50
     - wait: 12
       enemy: {fileID: 3697426553599540029, guid: 2395704e03c7ea248b4e120a0486406d,
         type: 3}

@@ -45,14 +45,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesList: []
   type: 1
-  defaultExp: 200
+  defaultExp: 250
   Waves:
   - wait: 0
     enemySpawns:
     - wait: 0
       enemy: {fileID: 3697426553599540029, guid: 123122959a301b744af86510d77373ab,
         type: 3}
-      numberEnemy: 13
+      numberEnemy: 10
       rate: 1
       customHealth: 0
       customSpeed: 0
@@ -61,22 +61,10 @@ MonoBehaviour:
       BossScale: 1.001
       BossMinExp: 25
       BossMaxExp: 50
-    - wait: 6
-      enemy: {fileID: 3697426553599540029, guid: 123122959a301b744af86510d77373ab,
-        type: 3}
-      numberEnemy: 13
-      rate: 1
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.001
-      BossMinExp: 25
-      BossMaxExp: 50
-    - wait: 9
+    - wait: 0
       enemy: {fileID: 3697426553599540029, guid: 76ba55c0b60bb254986de8615e038728,
         type: 3}
-      numberEnemy: 14
+      numberEnemy: 10
       rate: 1
       customHealth: 0
       customSpeed: 0
@@ -85,10 +73,22 @@ MonoBehaviour:
       BossScale: 1.5
       BossMinExp: 99
       BossMaxExp: 90
-    - wait: 10
+    - wait: 9
+      enemy: {fileID: 3697426553599540029, guid: 5ede7aebc455259498991f0bc774b8ef,
+        type: 3}
+      numberEnemy: 12
+      rate: 1
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1.02
+      BossMinExp: 25
+      BossMaxExp: 50
+    - wait: 0
       enemy: {fileID: 3697426553599540029, guid: f161e65047f24e14a9d149461ad486fe,
         type: 3}
-      numberEnemy: 14
+      numberEnemy: 12
       rate: 1
       customHealth: 0
       customSpeed: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
       BossMinExp: 25
       BossMaxExp: 50
     - wait: 11
-      enemy: {fileID: 3697426553599540029, guid: 5ede7aebc455259498991f0bc774b8ef,
+      enemy: {fileID: 3697426553599540029, guid: 123122959a301b744af86510d77373ab,
         type: 3}
       numberEnemy: 14
       rate: 1
@@ -106,7 +106,7 @@ MonoBehaviour:
       customSpeed: 0
       customAttackDmg: 0
       boosType: 0
-      BossScale: 1.02
+      BossScale: 1.001
       BossMinExp: 25
       BossMaxExp: 50
   increaseEnemySpeedDifficultyRate: 0.05
