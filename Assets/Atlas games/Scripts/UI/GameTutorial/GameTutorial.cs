@@ -274,4 +274,13 @@ public class GameTutorial : MonoBehaviour
             yield return null;
         }
     }
+
+    public void SkipTutorial()
+    {
+        CloseTip();
+        darkBackground.SetActive(false);
+        dialogBackground.SetActive(false);
+        Time.timeScale = 1;
+        _tipOrder = -1;
+    }
 }
