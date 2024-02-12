@@ -121,7 +121,15 @@ public class GameTutorial : MonoBehaviour
             TipSetup prevSetup = tipsList[_tipOrder - 1];
             if (prevSetup.uiPartName != "")
             {
-                _prevUiPart = GameObject.Find(prevSetup.uiPartName);
+                TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+                foreach (var uiPart in uiParts)
+                {
+                    if (uiPart.name == prevSetup.uiPartName)
+                    {
+                        _prevUiPart = uiPart.gameObject;
+                    }
+                }
+              //  _prevUiPart = GameObject.Find(prevSetup.uiPartName);
             }
             switch (prevSetup.type)
             {
@@ -167,7 +175,14 @@ public class GameTutorial : MonoBehaviour
             TipSetup nextSetup = tipsList[_tipOrder];
             if (nextSetup.uiPartName != "")
             {
-                _nextUiPart = GameObject.Find(nextSetup.uiPartName);
+                TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+                foreach (var uiPart in uiParts)
+                {
+                    if (uiPart.name ==  nextSetup.uiPartName)
+                    {
+                        _prevUiPart = uiPart.gameObject;
+                    }
+                }
             }
             switch (nextSetup.type)
             {
@@ -277,10 +292,60 @@ public class GameTutorial : MonoBehaviour
 
     public void SkipTutorial()
     {
-        CloseTip();
+        _tipOrder++;
+        TipSetup prevSetup = tipsList[_tipOrder - 1];
+        if (prevSetup.uiPartName != "")
+        {
+            TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+            foreach (var uiPart in uiParts)
+            {
+                if (uiPart.name == prevSetup.uiPartName)
+                {
+                    _prevUiPart = uiPart.gameObject;
+                }
+            }
+            //  _prevUiPart = GameObject.Find(prevSetup.uiPartName);
+        }
+        
+        switch (prevSetup.type)
+        {
+            case "Dialog":
+                if (prevSetup.isLastDialog)
+                {
+                    prevSetup.tipAnimator.SetTrigger(prevSetup.closeTrigger);
+                }
+                else
+                {
+                    prevSetup.tipAnimator.gameObject.SetActive(false);
+                }
+
+                break;
+            case "Tip":
+                prevSetup.tipAnimator.SetTrigger(prevSetup.closeTrigger);
+                break;
+            case "Task":
+                pointerObject.gameObject.SetActive(false);
+                pointerIcon.gameObject.SetActive(false);
+                    
+                if (!prevSetup.isUiInteractible)
+                {
+                    _prevUiPart.transform.SetParent(_buttonParent);
+                    _prevUiPart.transform.SetSiblingIndex(_childIndex);
+                    Destroy(_uiPartClone);
+                    clickPreventer.SetActive(false);
+                }
+
+                if (prevSetup.pauseGame)
+                {
+                    Time.timeScale = 1;
+                }
+                    
+                _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+                break;
+        }
+
         darkBackground.SetActive(false);
         dialogBackground.SetActive(false);
-        Time.timeScale = 1;
         _tipOrder = -1;
     }
 }
