@@ -17,7 +17,6 @@ public class LeaderBoard : MonoBehaviour
     public LeaderboardList listOfUsers;
     public InfiniteScroll scroll;
 
-    // Start is called before the first frame update
     public void LoadLeaderboard()
     {
         StartCoroutine(GetData());
@@ -32,21 +31,6 @@ public class LeaderBoard : MonoBehaviour
         public int rxp;
     }
 
-    // this is for converting a Json Array to array.
-    public static class JsonHelper
-    {
-        public static T[] FromJson<T>(string json)
-        {
-            Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
-            return wrapper.Items;
-        }
-
-        [Serializable]
-        private class Wrapper<T>
-        {
-            public T[] Items;
-        }
-    }
     string fixJson(string value)
     {
         value = "{\"Items\":" + value + "}";
