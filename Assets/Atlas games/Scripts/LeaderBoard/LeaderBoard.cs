@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Mopsicus.InfiniteScroll;
+using Newtonsoft.Json;
 using Spine;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -67,7 +68,7 @@ public class LeaderBoard : MonoBehaviour
                 
                 string json = webRequest.downloadHandler.text;
                 json = fixJson(json);
-                _dataArray = JsonHelper.FromJson<LeaderboardData>(json);
+                _dataArray = JsonConvert.DeserializeObject<LeaderboardData[]>(json);
                 // the next line is not necessary ...
                 Array.Sort(_dataArray, (x, y) => y.rxp.CompareTo(x.rxp));
                 listOfUsers.data = _dataArray;
@@ -94,7 +95,7 @@ public class LeaderBoard : MonoBehaviour
     {
         LeaderboardData data = listOfUsers.data[index];
         // initialize the list item components.
-        item.GetComponent<LeaderboardListItem>().SetData(data.rxp, data.userName, data.imageUrl);
+        item.GetComponent<LeaderboardListItem>().SetData(data);
     }
 
     public void ClearList()
