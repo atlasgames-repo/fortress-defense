@@ -147,7 +147,7 @@ public class GameLevelSetup : MonoBehaviour
                 return obj.nightXpMultiplier;
         }
 
-        return 9999;
+        return 1;
     }
 
     public int getTotalLevels()
@@ -175,3 +175,4 @@ public class GameLevelSetup : MonoBehaviour
         // }
     }
 }
+

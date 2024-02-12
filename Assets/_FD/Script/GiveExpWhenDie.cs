@@ -17,3 +17,4 @@ public class GiveExpWhenDie : MonoBehaviour
         //FloatingTextManager.Instance.ShowText((int)random + "", Vector2.up * 1, Color.yellow, transform.position);
     }
 }
+

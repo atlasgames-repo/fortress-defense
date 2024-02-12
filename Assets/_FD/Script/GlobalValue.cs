@@ -95,14 +95,7 @@ public class GlobalValue : MonoBehaviour
         }
         set
         {
-            if (value)
-            {
-                PlayerPrefs.SetInt("Night", 1);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("Night",0);
-            }
+            PlayerPrefs.SetInt("Night", value ? 1 : 0 );
         }
     }
     public static int ItemFreeze
@@ -179,3 +172,4 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetString("GameStartTimerMinutes", DateTime.Now.AddMinutes(value).ToString("yyyy-MM-dd HH:mm:ss")); }
     }
 }
+
