@@ -12,6 +12,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public BossUIManager bossManeger;
     int currentWave = 0;
     private bool _nightMode = false;
+    private float _nightModeXpMultiplier = 1f;
     public List<GameObject> listEnemySpawned = new List<GameObject>();
 
     private void Awake()
@@ -32,6 +33,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
             }
             EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
             _nightMode = GameLevelSetup.Instance.NightMode();
+            _nightModeXpMultiplier = GameLevelSetup.Instance.NightModeXpMultiplier();
         }
 
         //calculate number of enemies
@@ -137,11 +139,11 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         {
                            
                                 _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(_temp.GetComponent<SmartEnemyGrounded>().health *
-                                    GameLevelSetup.Instance.NightModeXpMultiplier());
+                                    _nightModeXpMultiplier);
                                 _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(_temp.GetComponent<GiveExpWhenDie>().expMax *
-                                    GameLevelSetup.Instance.NightModeXpMultiplier());
+                                    _nightModeXpMultiplier);
                                 _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(_temp.GetComponent<GiveExpWhenDie>().expMin *
-                                    GameLevelSetup.Instance.NightModeXpMultiplier());
+                                    _nightModeXpMultiplier);
                             
                         }
                         listEnemySpawned.Add(_temp);

@@ -27,6 +27,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     private float[] _enemyCounts;
     public float initialWaitAmount = 3;
     private bool _nightMode = false;
+    private float _nightModeXpMultiplier = 1f;
     [HideInInspector] public int waveCount;
 
     int totalEnemy, currentSpawn;
@@ -41,6 +42,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             }
 
             _nightMode = GameLevelSetup.Instance.NightMode();
+            _nightModeXpMultiplier = GameLevelSetup.Instance.NightModeXpMultiplier();
             enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
             increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();
             increaseEnemyAttackDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAttackDifficultyRate();
@@ -222,13 +224,13 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     {
                         _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(
                             _temp.GetComponent<SmartEnemyGrounded>().health *
-                            GameLevelSetup.Instance.NightModeXpMultiplier());
+                            _nightModeXpMultiplier);
                         _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(
                             _temp.GetComponent<GiveExpWhenDie>().expMax *
-                            GameLevelSetup.Instance.NightModeXpMultiplier());
+                            _nightModeXpMultiplier);
                         _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(
                             _temp.GetComponent<GiveExpWhenDie>().expMin *
-                            GameLevelSetup.Instance.NightModeXpMultiplier());
+                            _nightModeXpMultiplier);
                     }
 
                     currentSpawn++;
