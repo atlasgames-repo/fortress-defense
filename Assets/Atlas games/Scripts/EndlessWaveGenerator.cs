@@ -27,6 +27,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     private float[] _enemyCounts;
     public float initialWaitAmount = 3;
     private bool _nightMode = false;
+    private float _nightModeXpMultiplier = 1f;
     [HideInInspector] public int waveCount;
 
     int totalEnemy, currentSpawn;
