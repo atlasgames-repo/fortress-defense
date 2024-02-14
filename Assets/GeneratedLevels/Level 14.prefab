@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5742610510337794261}
   - component: {fileID: 2192087334775240486}
   m_Layer: 0
-  m_Name: 'level 14 '
+  m_Name: Level 14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,10 +49,10 @@ MonoBehaviour:
   Waves:
   - wait: 0
     enemySpawns:
-    - wait: 0
-      enemy: {fileID: 6095283598343155490, guid: 1d22479a8a9a454499d8b5f1c77eea2d,
+    - wait: 5
+      enemy: {fileID: 3697426553599540029, guid: c737a1613d0c3f14db79779f64a01621,
         type: 3}
-      numberEnemy: 7
+      numberEnemy: 5
       rate: 1
       customHealth: 0
       customSpeed: 0
@@ -61,28 +61,16 @@ MonoBehaviour:
       BossScale: 1.599
       BossMinExp: 99
       BossMaxExp: 90
-    - wait: 1
-      enemy: {fileID: 8735511819807008694, guid: 4938ba1c1070b8b4e8cda5c6fb4cf6c0,
+    - wait: 9
+      enemy: {fileID: 3697426553599540029, guid: bb4a391d19b886c41b2c33129326ffa1,
         type: 3}
-      numberEnemy: 4
+      numberEnemy: 5
       rate: 2
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
       boosType: 0
       BossScale: 1.6
-      BossMinExp: 150
-      BossMaxExp: 170
-    - wait: 1
-      enemy: {fileID: 1384076305360503900, guid: 71d92f6a73d83a648b515b6a3ba1a113,
-        type: 3}
-      numberEnemy: 3
-      rate: 1
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.8
       BossMinExp: 150
       BossMaxExp: 170
   - wait: 0
@@ -118,4 +106,4 @@ MonoBehaviour:
   increaseEnemyWaitDifficultyRate: 0.2
   initialWaitAmount: 3
   level: 14
-  backgroundSprite: {fileID: 21300000, guid: 5be1e0fc71c022242992f95a2e6ef815, type: 3}
+  backgroundSprite: {fileID: 21300000, guid: fdc33d5c7ce20604ab95d438c07656fb, type: 3}
