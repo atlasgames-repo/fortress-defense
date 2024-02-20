@@ -86,7 +86,8 @@ public class SimpleProjectile : Projectile, ICanTakeDamage, IListener
 		}
 
         var obj = destroyParent != null ? destroyParent : gameObject;
-		Destroy(obj);
+		gameObject.transform.position = new Vector3(0, 100, gameObject.transform.position.z);
+		gameObject.SetActive(false);
 	}
 
 
