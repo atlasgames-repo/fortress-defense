@@ -37,6 +37,11 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd1", 0); }
         set { PlayerPrefs.SetInt("lastDayShowNativeAd1", value); }
     }
+    public static string menuTutorial
+    {
+        get { return PlayerPrefs.GetString("MenuTutorial",""); }
+        set { PlayerPrefs.SetString("MenuTutorial", value); }
+    }
     public static int lastDayShowNativeAd2
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd2", 0); }

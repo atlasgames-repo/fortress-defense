@@ -26,7 +26,7 @@ public class GameTutorial : MonoBehaviour
         BottomRight
     }
 
-
+    public string menuPlacing;
     [HideInInspector] public TipType type;
     [HideInInspector] public Direction direction;
 
@@ -124,7 +124,7 @@ public class GameTutorial : MonoBehaviour
                 TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
                 foreach (var uiPart in uiParts)
                 {
-                    if (uiPart.name == prevSetup.uiPartName)
+                    if (uiPart.GetComponent<TutorialFinder>().uiPartName == prevSetup.uiPartName)
                     {
                         _prevUiPart = uiPart.gameObject;
                     }
@@ -178,9 +178,9 @@ public class GameTutorial : MonoBehaviour
                 TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
                 foreach (var uiPart in uiParts)
                 {
-                    if (uiPart.name ==  nextSetup.uiPartName)
+                    if (uiPart.GetComponent<TutorialFinder>().uiPartName ==  nextSetup.uiPartName)
                     {
-                        _prevUiPart = uiPart.gameObject;
+                        _nextUiPart = uiPart.gameObject;
                     }
                 }
             }
@@ -204,7 +204,12 @@ public class GameTutorial : MonoBehaviour
                             _nextUiPart.transform.parent);
                         _nextUiPart.transform.transform.SetParent(clickPreventer.transform);
                     }
-                    _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
+
+                    if (_nextUiPart.GetComponent<Button>())
+                    {
+                        _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
+                    }
+
                     Thread.Sleep(Mathf.RoundToInt(nextSetup.delay * 1000));
                     pointerObject.gameObject.SetActive(true);
                     pointerIcon.gameObject.SetActive(true);
@@ -339,8 +344,11 @@ public class GameTutorial : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
-                    
-                _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+
+                if (_prevUiPart.GetComponent<Button>())
+                {
+                    _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+                }
                 break;
         }
 
