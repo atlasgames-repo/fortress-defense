@@ -52,7 +52,7 @@ MonoBehaviour:
     - wait: 0
       enemy: {fileID: 3697426553599540029, guid: 752c447ac704a854d83d9f91bebf8ecd,
         type: 3}
-      numberEnemy: 5
+      numberEnemy: 4
       rate: 1
       customHealth: 0
       customSpeed: 0
@@ -61,10 +61,10 @@ MonoBehaviour:
       BossScale: 1.5
       BossMinExp: 99
       BossMaxExp: 90
-    - wait: 0
+    - wait: 10
       enemy: {fileID: 3697426553599540029, guid: 752c447ac704a854d83d9f91bebf8ecd,
         type: 3}
-      numberEnemy: 5
+      numberEnemy: 4
       rate: 1
       customHealth: 0
       customSpeed: 0
@@ -73,16 +73,28 @@ MonoBehaviour:
       BossScale: 1.5
       BossMinExp: 99
       BossMaxExp: 90
-    - wait: 0
+    - wait: 12
       enemy: {fileID: 3697426553599540029, guid: 5ed90722750202a44a0a11abe50fe556,
         type: 3}
-      numberEnemy: 3
+      numberEnemy: 4
+      rate: 1
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1.02
+      BossMinExp: 25
+      BossMaxExp: 50
+    - wait: 16
+      enemy: {fileID: 3697426553599540029, guid: bb4a391d19b886c41b2c33129326ffa1,
+        type: 3}
+      numberEnemy: 1
       rate: 1
       customHealth: 0
       customSpeed: 0
       customAttackDmg: 0
       boosType: 1
-      BossScale: 1.02
+      BossScale: 1.5
       BossMinExp: 25
       BossMaxExp: 50
   increaseEnemySpeedDifficultyRate: 0.05
