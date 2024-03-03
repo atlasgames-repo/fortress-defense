@@ -223,6 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
+  is_boss: 0
   useGravity: 0
   gravity: 35
   walkSpeed: 1
@@ -243,7 +244,13 @@ MonoBehaviour:
   randomHitPoint: {x: 0.2, y: 0.2}
   randomBloodPuddlePoint: {x: 0.5, y: 0.25}
   healthBarOffset: {x: 0, y: 1.5}
+  AutoHealthBarOffset: 0.2
+  IsAutoHealthBar: 1
   enemyState: 0
+  weaknessMultiplier: 1
+  strengthMultiplier: 1
+  weakness: 0
+  strength: 0
   canBeFreeze: 1
   dieFrozenFX: {fileID: 0}
   canBeBurn: 1
@@ -264,6 +271,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d828c6f696d736348b98d90b6aa3fcb9, type: 3}
   soundDieBlowVol: 0.5
   soundDieBlow: []
+  BossMusic: {fileID: 0}
   soundSpawnVol: 0.5
   soundSpawn: []
   currentHealth: 0
@@ -273,6 +281,10 @@ MonoBehaviour:
   delayChasePlayerWhenDetect: 0
   is_spine: 1
   skeletonAnimation: {fileID: 0}
+  magnet: 0
+  magnetPos: {x: 0, y: 0, z: 0}
+  magnetAttractionSpeed: 0
+  minMagnetDistance: 1
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
@@ -317,7 +329,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.021621704, y: 0.30189776}
+  m_Offset: {x: 0.021621704, y: 0.24688464}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -328,7 +340,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6153898, y: 1.3388119}
+  m_Size: {x: 1.6153898, y: 1.2287856}
   m_EdgeRadius: 0
 --- !u!50 &1950496933
 Rigidbody2D:

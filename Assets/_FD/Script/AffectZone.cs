@@ -135,7 +135,6 @@ public class AffectZone : MonoBehaviour
             anim.SetBool("isActivating", true);
         while (true)
         {
-//            Debug.LogError($"AffectZone Stat: {listEnemyInZone.Count}");
             if (listEnemyInZone.Count > 0)
             {
                 List<Enemy> _tempList = new List<Enemy>(listEnemyInZone);

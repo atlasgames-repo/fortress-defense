@@ -86,8 +86,8 @@ public class ExtendedEditorWindow : EditorWindow
     }
     protected void Edit(LevelWave level, string name = null)
     {
-        if (!gameLevelSetup)
-            EditorUtility.DisplayDialog("Editing level", "First Open Game level setup!", "Ok", "Exit");
+        // if (!gameLevelSetup)
+        //     EditorUtility.DisplayDialog("Editing level", "First Open Game level setup!", "Ok", "Exit");
         LevelData obj = serializedObject.targetObject as LevelData;
         if (name != null)
             level.gameObject.name = name;

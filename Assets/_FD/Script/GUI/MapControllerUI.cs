@@ -12,6 +12,7 @@ public class MapControllerUI : MonoBehaviour
     private float newPosX = 0;
     public Text worldTxt;
     int currentPos = 0;
+    public float shadow_oppasity = 0.15f, shadow_delay = 0.01f;
     public AudioClip music;
     public GameObject life_prefab;
     public Transform life_parent;
@@ -141,11 +142,11 @@ public class MapControllerUI : MonoBehaviour
 
         }
 
-        BlackScreenUI.instance.Show(0.15f);
+        BlackScreenUI.instance.Show(shadow_oppasity);
 
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(shadow_delay);
         SetMapPosition();
-        BlackScreenUI.instance.Hide(0.15f);
+        BlackScreenUI.instance.Hide(shadow_oppasity);
 
         SetWorldNumber();
 
@@ -186,11 +187,11 @@ public class MapControllerUI : MonoBehaviour
 
         }
 
-        BlackScreenUI.instance.Show(0.15f);
+        BlackScreenUI.instance.Show(shadow_oppasity);
 
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(shadow_delay);
         SetMapPosition();
-        BlackScreenUI.instance.Hide(0.15f);
+        BlackScreenUI.instance.Hide(shadow_oppasity);
 
         SetWorldNumber();
 
