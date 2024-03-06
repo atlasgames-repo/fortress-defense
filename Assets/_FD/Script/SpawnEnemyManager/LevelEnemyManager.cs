@@ -11,6 +11,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public EnemyWave[] EnemyWaves;
     public BossUIManager bossManeger;
     int currentWave = 0;
+    private bool _nightMode = false;
     public List<GameObject> listEnemySpawned = new List<GameObject>();
 
     private void Awake()
@@ -31,6 +32,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                 if (is_true) waveGenerator.enabled = false;
             }
             EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
+            _nightMode = GameLevelSetup.Instance.NightMode();
         }
 
         //calculate number of enemies
@@ -118,6 +120,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                                     enemySpawn.BossMinExp;
                                 bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax =
                                     enemySpawn.BossMaxExp;
+                                
                                 bossManeger.gameObject.SetActive(true);
                                 bossManeger.enemy.is_boss = true;
                                 AudioClip bossMusic = bossManeger.enemy.BossMusic != null
@@ -133,6 +136,17 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         yield return new WaitForSeconds(0.1f);
                         _temp.SetActive(true);
                         //_temp.transform.localPosition = Vector2.zero;
+                        if (_nightMode)
+                        {
+                           
+                                _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(_temp.GetComponent<SmartEnemyGrounded>().health *
+                                    GameLevelSetup.Instance.NightModeXpMultiplier());
+                                _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(_temp.GetComponent<GiveExpWhenDie>().expMax *
+                                    GameLevelSetup.Instance.NightModeXpMultiplier());
+                                _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(_temp.GetComponent<GiveExpWhenDie>().expMin *
+                                    GameLevelSetup.Instance.NightModeXpMultiplier());
+                            
+                        }
                         listEnemySpawned.Add(_temp);
 
                         currentSpawn++;
@@ -141,7 +155,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         yield return new WaitForSeconds(enemySpawn.rate);
                     }
                 }
-            
+              
             //check all enemy killed
          
                 while (isEnemyAlive())

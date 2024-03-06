@@ -71,7 +71,8 @@ public class ExtendedEditorWindow : EditorWindow
         level.defaultExp = obj.levels[0].defaultExp;
         level.backgroundSprite = obj.levels[0].backgroundSprite;
         level.Waves = obj.levels[0].Waves;
-
+        level.nightMode = obj.levels[0].nightMode;
+        level.nightXpMultiplier = obj.levels[0].nightModeXpMultiplier;
         // Create the new Prefab and log whether Prefab was saved successfully.
         bool prefabSuccess;
 
@@ -96,6 +97,10 @@ public class ExtendedEditorWindow : EditorWindow
         level.defaultExp = obj.levels[0].defaultExp;
         level.backgroundSprite = obj.levels[0].backgroundSprite;
         level.Waves = obj.levels[0].Waves;
+        level.nightMode = obj.levels[0].nightMode;
+        level.nightXpMultiplier = obj.levels[0].nightModeXpMultiplier;
+        Apply();
+
         EditorUtility.SetDirty(level.gameObject);
         PrefabUtility.RecordPrefabInstancePropertyModifications(level.gameObject);
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
@@ -109,6 +114,8 @@ public class ExtendedEditorWindow : EditorWindow
         obj.levels[0].defaultExp = level.defaultExp;
         obj.levels[0].backgroundSprite = level.backgroundSprite;
         obj.levels[0].Waves = level.Waves;
+        obj.levels[0].nightMode = level.nightMode;
+        obj.levels[0].nightModeXpMultiplier = level.nightXpMultiplier;
         serializedObject = new SerializedObject(obj);
         Apply();
         AssetDatabase.Refresh();
@@ -123,6 +130,7 @@ public class ExtendedEditorWindow : EditorWindow
         LEM.EnemyWaves = obj.levels[0].Waves;
         gameManager.currentExp = obj.levels[0].defaultExp;
         background.sprite = obj.levels[0].backgroundSprite;
+        GlobalValue.NightMode = obj.levels[0].nightMode;
         PrefabUtility.RecordPrefabInstancePropertyModifications(LEM.gameObject);
         PrefabUtility.RecordPrefabInstancePropertyModifications(gameManager.gameObject);
         PrefabUtility.RecordPrefabInstancePropertyModifications(background.gameObject);
