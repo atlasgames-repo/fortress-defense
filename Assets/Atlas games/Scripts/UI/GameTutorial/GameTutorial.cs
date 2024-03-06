@@ -26,7 +26,7 @@ public class GameTutorial : MonoBehaviour
         BottomRight
     }
 
-
+    public string menuPlacing;
     [HideInInspector] public TipType type;
     [HideInInspector] public Direction direction;
 
@@ -121,7 +121,15 @@ public class GameTutorial : MonoBehaviour
             TipSetup prevSetup = tipsList[_tipOrder - 1];
             if (prevSetup.uiPartName != "")
             {
-                _prevUiPart = GameObject.Find(prevSetup.uiPartName);
+                TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+                foreach (var uiPart in uiParts)
+                {
+                    if (uiPart.GetComponent<TutorialFinder>().uiPartName == prevSetup.uiPartName)
+                    {
+                        _prevUiPart = uiPart.gameObject;
+                    }
+                }
+              //  _prevUiPart = GameObject.Find(prevSetup.uiPartName);
             }
             switch (prevSetup.type)
             {
@@ -167,7 +175,14 @@ public class GameTutorial : MonoBehaviour
             TipSetup nextSetup = tipsList[_tipOrder];
             if (nextSetup.uiPartName != "")
             {
-                _nextUiPart = GameObject.Find(nextSetup.uiPartName);
+                TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+                foreach (var uiPart in uiParts)
+                {
+                    if (uiPart.GetComponent<TutorialFinder>().uiPartName ==  nextSetup.uiPartName)
+                    {
+                        _nextUiPart = uiPart.gameObject;
+                    }
+                }
             }
             switch (nextSetup.type)
             {
@@ -189,7 +204,12 @@ public class GameTutorial : MonoBehaviour
                             _nextUiPart.transform.parent);
                         _nextUiPart.transform.transform.SetParent(clickPreventer.transform);
                     }
-                    _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
+
+                    if (_nextUiPart.GetComponent<Button>())
+                    {
+                        _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
+                    }
+
                     Thread.Sleep(Mathf.RoundToInt(nextSetup.delay * 1000));
                     pointerObject.gameObject.SetActive(true);
                     pointerIcon.gameObject.SetActive(true);
@@ -273,5 +293,67 @@ public class GameTutorial : MonoBehaviour
             mask.position = maskPosition;
             yield return null;
         }
+    }
+
+    public void SkipTutorial()
+    {
+        _tipOrder++;
+        TipSetup prevSetup = tipsList[_tipOrder - 1];
+        if (prevSetup.uiPartName != "")
+        {
+            TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+            foreach (var uiPart in uiParts)
+            {
+                if (uiPart.name == prevSetup.uiPartName)
+                {
+                    _prevUiPart = uiPart.gameObject;
+                }
+            }
+            //  _prevUiPart = GameObject.Find(prevSetup.uiPartName);
+        }
+        
+        switch (prevSetup.type)
+        {
+            case "Dialog":
+                if (prevSetup.isLastDialog)
+                {
+                    prevSetup.tipAnimator.SetTrigger(prevSetup.closeTrigger);
+                }
+                else
+                {
+                    prevSetup.tipAnimator.gameObject.SetActive(false);
+                }
+
+                break;
+            case "Tip":
+                prevSetup.tipAnimator.SetTrigger(prevSetup.closeTrigger);
+                break;
+            case "Task":
+                pointerObject.gameObject.SetActive(false);
+                pointerIcon.gameObject.SetActive(false);
+                    
+                if (!prevSetup.isUiInteractible)
+                {
+                    _prevUiPart.transform.SetParent(_buttonParent);
+                    _prevUiPart.transform.SetSiblingIndex(_childIndex);
+                    Destroy(_uiPartClone);
+                    clickPreventer.SetActive(false);
+                }
+
+                if (prevSetup.pauseGame)
+                {
+                    Time.timeScale = 1;
+                }
+
+                if (_prevUiPart.GetComponent<Button>())
+                {
+                    _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+                }
+                break;
+        }
+
+        darkBackground.SetActive(false);
+        dialogBackground.SetActive(false);
+        _tipOrder = -1;
     }
 }
