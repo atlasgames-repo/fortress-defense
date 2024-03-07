@@ -7,26 +7,13 @@ public class GameTutorialManager : MonoBehaviour
     private GameTutorialSetup _setup;
     void Start()
     {
-        StartToturial(false);
+        StartToturial();
     }
-    public void StartToturial(bool inMenu){
+    public void StartToturial(){
        _setup =  FindObjectOfType<GameTutorialSetup>();
-       if (!inMenu)
-       {
-           GameObject obj = Instantiate(_setup.SceneTutorial().gameObject,
-               FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
-               FindObjectOfType<Canvas>().transform);
-           obj.SetActive(true);
-           obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount -1);
-       }
-       else
-       {
-           GameObject obj = Instantiate(_setup.MenuTutorial().gameObject,
-               FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
-               FindObjectOfType<Canvas>().transform);
-           obj.SetActive(true);
-           obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount -1);
-       }
+       GameObject obj = Instantiate(_setup.SceneTutorial().gameObject, FindObjectOfType<Canvas>().transform.position, Quaternion.identity, FindObjectOfType<Canvas>().transform);
+       obj.SetActive(true);
+       obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount -1);
     }
 
     

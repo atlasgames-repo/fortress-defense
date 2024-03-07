@@ -80,9 +80,5 @@ public class AddAndUpgradePlayer : MonoBehaviour, IGetTouchEvent, IKeyboardCall
             SetPlayer();
             SoundManager.PlaySfx(currentPlayer == 0 ? SoundManager.Instance.soundAddArcher : SoundManager.Instance.soundUpgradeArcher);
         }
-        if (GetComponent<TutorialFinder>())
-        {
-            GetComponent<TutorialFinder>().InitiateTutorialClick();
-        }
     }
 }
