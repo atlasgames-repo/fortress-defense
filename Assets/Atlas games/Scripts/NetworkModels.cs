@@ -63,6 +63,21 @@ public class GemResponseModel : CommonErrorResponse
 {
     public int gem, rank;
 }
+
+[Serializable]
+public class data
+{
+    public int status;
+}
+[Serializable]
+public class LeaderBoardResponseModel : CommonErrorResponse
+{
+    public string code;
+    public string result;
+    public string message;
+    public data data;
+    public LeaderBoard.LeaderboardData[] results;
+}
 [Serializable]
 public class GemRequestModel : BaseModel
 {
@@ -116,7 +131,12 @@ public class UserResponse : BaseModel
 {
     public string first_name, last_name, display_name, email, username, registered_date, avatar;
     public int coin, gem, uxp, rxp, rxpTotal;
+}
 
+[Serializable]
+public class LeaderBoardResponse : BaseModel
+{
+    private LeaderBoard.LeaderboardData[] results;
 }
 [Serializable]
 public class UserUpdate : BaseModel
@@ -138,7 +158,6 @@ public class Message : BaseModel
 {
     public string server = "";
     public string auth = "";
-
 }
 
 public static class NetworkStatusError

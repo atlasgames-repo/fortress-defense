@@ -26,9 +26,16 @@ public class LeaderBoard : MonoBehaviour
     public class LeaderboardData
     {
         // data for leader board that has to change based on postman.
-        public string userName;
-        public string imageUrl;
-        public int rxp;
+        public int user_id;
+        public string user_name;
+        public string user_first_name;
+        public string user_last_name;
+        public string user_link;
+        public string user_avatar;
+        public int points;
+        public int rank;
+        //public string imageUrl;
+        // public int rxp;
     }
 
     string fixJson(string value)
@@ -43,6 +50,7 @@ public class LeaderBoard : MonoBehaviour
         scroll.gameObject.SetActive(false);
         errorText.SetActive(false);
         loadingText.SetActive(true);
+        Get_user();
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
             yield return webRequest.SendWebRequest();
@@ -52,9 +60,9 @@ public class LeaderBoard : MonoBehaviour
                 
                 string json = webRequest.downloadHandler.text;
                 json = fixJson(json);
-                _dataArray = JsonConvert.DeserializeObject<LeaderboardData[]>(json);
+//                _dataArray = JsonConvert.DeserializeObject<LeaderboardData[]>(json);
                 // the next line is not necessary ...
-                Array.Sort(_dataArray, (x, y) => y.rxp.CompareTo(x.rxp));
+          //      Array.Sort(_dataArray, (x, y) => y.rxp.CompareTo(x.rxp));
                 listOfUsers.data = _dataArray;
                 scroll.gameObject.SetActive(true);
                 scroll.OnFill += OnFillItem;
@@ -85,5 +93,12 @@ public class LeaderBoard : MonoBehaviour
     public void ClearList()
     {
         scroll.RefreshViews();
+    }
+    public static async void Get_user()
+    {
+        print("hello");
+        
+        LeaderBoardResponseModel[] leaderboardResponse = await APIManager.instance.Get_leader_board();
+        print(leaderboardResponse);
     }
 }

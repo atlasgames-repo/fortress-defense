@@ -12,9 +12,9 @@ public class LeaderboardListItem : MonoBehaviour
     // this function sets the data recived from leaderboard.cs to the list item component 
     public void SetData(LeaderBoard.LeaderboardData data)
     {
-        rxpText.text = data.rxp.ToString();
-        userNameText.text = data.userName;
-        SetImage(data.imageUrl);
+    //    rxpText.text = data.rxp.ToString();
+     //   userNameText.text = data.userName;
+    //    SetImage(data.imageUrl);
     }
     
     async void SetImage(string url)

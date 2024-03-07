@@ -96,9 +96,9 @@ public class APIManager : MonoBehaviour
         string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
         await Get<object>(route: "/achivements/add", auth_token: User.Token, parameters: param);
     }
-    public async Task<AchievementModel[]> Get_achivements()
+    public async Task<AchievementModel> Get_achivements()
     {
-        return await Get<AchievementModel[]>(route: "/achivements", auth_token: User.Token);
+        return await Get<AchievementModel>(route: "/achivements", auth_token: User.Token);
     }
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
@@ -131,6 +131,10 @@ public class APIManager : MonoBehaviour
         return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
     }
 
+    public async Task<LeaderBoardResponseModel[]> Get_leader_board(LeaderBoardResponseModel parames = null)
+    {
+        return await Get<LeaderBoardResponseModel[]>(route: "/games/rankings", auth_token: User.Token);
+    }
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
@@ -247,6 +251,9 @@ public class APIManager : MonoBehaviour
             {
                 throw new System.Exception(message: "Task cancelled");
             }
+            print(req.downloadHandler.text);
+            print(res);
+            print(User.Token);
             return res;
         }
     }
