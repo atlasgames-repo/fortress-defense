@@ -22,21 +22,6 @@ public class LeaderBoard : MonoBehaviour
         StartCoroutine(GetData());
     }
 
-    [Serializable]
-    public class LeaderboardData
-    {
-        // data for leader board that has to change based on postman.
-        public int user_id;
-        public string user_name;
-        public string user_first_name;
-        public string user_last_name;
-        public string user_link;
-        public string user_avatar;
-        public int points;
-        public int rank;
-        //public string imageUrl;
-        // public int rxp;
-    }
 
     string fixJson(string value)
     {

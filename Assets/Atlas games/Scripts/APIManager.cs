@@ -131,9 +131,13 @@ public class APIManager : MonoBehaviour
         return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
     }
 
-    public async Task<LeaderBoardResponseModel[]> Get_leader_board(LeaderBoardResponseModel parames = null)
+    public async Task<LeaderBoardResponseModel> Get_leader_board()
     {
-        return await Get<LeaderBoardResponseModel[]>(route: "/games/rankings", auth_token: User.Token);
+        LeaderBoardParams param = new LeaderBoardParams {
+            game_id = GAME_ID,
+            type = "all"
+        };
+        return await Get<LeaderBoardResponseModel>(route: "/games/rankings", auth_token: User.Token,parameters:param.ToParams);
     }
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {

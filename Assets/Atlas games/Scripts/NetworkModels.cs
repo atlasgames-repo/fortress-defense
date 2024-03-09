@@ -69,14 +69,31 @@ public class data
 {
     public int status;
 }
+
+[Serializable]
+public class LeaderboardData: BaseModel
+{
+    // data for leader board that has to change based on postman.
+    public int user_id;
+    public string user_name;
+    public string user_first_name;
+    public string user_last_name;
+    public string user_link;
+    public string user_avatar;
+    public int points;
+    public int rank;
+    //public string imageUrl;
+    // public int rxp;
+}
+[Serializable]
+public class LeaderBoardParams: BaseModel {
+    public string game_id;
+    public string type;
+}
 [Serializable]
 public class LeaderBoardResponseModel : CommonErrorResponse
 {
-    public string code;
-    public string result;
-    public string message;
-    public data data;
-    public LeaderBoard.LeaderboardData[] results;
+    public LeaderboardData[] results;
 }
 [Serializable]
 public class GemRequestModel : BaseModel
@@ -133,11 +150,6 @@ public class UserResponse : BaseModel
     public int coin, gem, uxp, rxp, rxpTotal;
 }
 
-[Serializable]
-public class LeaderBoardResponse : BaseModel
-{
-    private LeaderBoard.LeaderboardData[] results;
-}
 [Serializable]
 public class UserUpdate : BaseModel
 {
