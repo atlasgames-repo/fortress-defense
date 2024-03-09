@@ -7,6 +7,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public static LevelEnemyManager Instance;
     public GameObject FX_Smoke, FX_Blow;
     public SimpleProjectile bullet;
+    public Transform BossSpawnPoint;
     public Transform[] spawnPositions;
     public EnemyWave[] EnemyWaves;
     public BossUIManager bossManeger;
@@ -64,9 +65,12 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                     yield return new WaitForSeconds(enemySpawn.wait);
                     for (int k = 0; k < enemySpawn.numberEnemy; k++)
                     {
-                        GameObject _temp = Instantiate(enemySpawn.enemy,
-                            (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position,
-                            Quaternion.identity) as GameObject;
+                        Vector2 spawnPos = Vector2.zero;
+                        if (enemySpawn.boosType == EnemySpawn.isBoss.NONE)
+                            spawnPos = (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position;
+                        else
+                            spawnPos = (Vector2)BossSpawnPoint.position;
+                        GameObject _temp = Instantiate(enemySpawn.enemy,spawnPos,Quaternion.identity) as GameObject;
                         var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                         if (isEnemy != null)
                         {
