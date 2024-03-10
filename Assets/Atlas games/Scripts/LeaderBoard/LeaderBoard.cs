@@ -10,69 +10,34 @@ using UnityEngine.Networking;
 
 public class LeaderBoard : MonoBehaviour
 {
-    public string url = "https://run.mocky.io/v3/4f50ac8a-812c-4dd1-9a79-bf36e1f3ba12";
     public GameObject errorText;
     public GameObject loadingText;
-    private LeaderboardData[] _dataArray;
     public LeaderboardList listOfUsers;
-    public InfiniteScroll scroll;
-
+    public  InfiniteScroll scroll;
+    private LeaderBoardResponseModel _leaderboardResponse;
     public void LoadLeaderboard()
     {
-        StartCoroutine(GetData());
+        GetData();
     }
 
 
-    string fixJson(string value)
-    {
-        value = "{\"Items\":" + value + "}";
-        return value;
-    }
-    // get data from the API mocked for the leader board list.
-    IEnumerator GetData()
+    public void GetData()
     {
         scroll.RefreshViews();
         scroll.gameObject.SetActive(false);
         errorText.SetActive(false);
         loadingText.SetActive(true);
         Get_user();
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
-        {
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.Success)
-            {
-                
-                string json = webRequest.downloadHandler.text;
-                json = fixJson(json);
-//                _dataArray = JsonConvert.DeserializeObject<LeaderboardData[]>(json);
-                // the next line is not necessary ...
-          //      Array.Sort(_dataArray, (x, y) => y.rxp.CompareTo(x.rxp));
-                listOfUsers.data = _dataArray;
-                scroll.gameObject.SetActive(true);
-                scroll.OnFill += OnFillItem;
-                scroll.OnHeight += OnHeightItem;
-                scroll.InitData(listOfUsers.data.Length);
-                
-            }
-            else
-            {
-                errorText.SetActive(true);
-            }
-        }
-        loadingText.SetActive(false);
     }
 
-    int OnHeightItem(int index)
+     int OnHeightItem(int index)
     {
         return 150;
     }
 
-    void OnFillItem(int index, GameObject item)
+     void OnFillItem(int index, GameObject item)
     {
-       // LeaderboardData data = listOfUsers.data[index];
        LeaderboardData data = listOfUsers.data[index]; 
-       // initialize the list item components.
         item.GetComponent<LeaderboardListItem>().SetData(data);
     }
 
@@ -80,10 +45,19 @@ public class LeaderBoard : MonoBehaviour
     {
         scroll.RefreshViews();
     }
-    public static async void Get_user()
+    public async void Get_user()
     {
-        print("hello");
-        LeaderBoardResponseModel leaderboardResponse = await APIManager.instance.Get_leader_board();
-        print(leaderboardResponse.results[0]);
+       _leaderboardResponse = await APIManager.instance.Get_leader_board();
+       ShowData();
+    }
+
+    void ShowData()
+    {
+        listOfUsers.data = _leaderboardResponse.results;
+        loadingText.SetActive(false);
+        scroll.gameObject.SetActive(true);
+        scroll.OnFill += OnFillItem;
+        scroll.OnHeight += OnHeightItem;
+        scroll.InitData(listOfUsers.data.Length);
     }
 }
