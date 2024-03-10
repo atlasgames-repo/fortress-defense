@@ -10,7 +10,7 @@ public class LeaderboardListItem : MonoBehaviour
     public TMP_Text rxpText;
     public Image image;
     // this function sets the data recived from leaderboard.cs to the list item component 
-    public void SetData(LeaderBoard.LeaderboardData data)
+    public void SetData(LeaderboardData data)
     {
     //    rxpText.text = data.rxp.ToString();
      //   userNameText.text = data.userName;

@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "leaderboard", menuName = "Scriptable/LeaderBoardData", order = 1)]
 public class LeaderboardList : ScriptableObject
 {
-   public LeaderBoard.LeaderboardData[] data;
+   public LeaderboardData[] data;
 }

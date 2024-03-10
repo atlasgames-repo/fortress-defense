@@ -70,8 +70,9 @@ public class LeaderBoard : MonoBehaviour
 
     void OnFillItem(int index, GameObject item)
     {
-        LeaderboardData data = listOfUsers.data[index];
-        // initialize the list item components.
+       // LeaderboardData data = listOfUsers.data[index];
+       LeaderboardData data = listOfUsers.data[index]; 
+       // initialize the list item components.
         item.GetComponent<LeaderboardListItem>().SetData(data);
     }
 
@@ -82,8 +83,7 @@ public class LeaderBoard : MonoBehaviour
     public static async void Get_user()
     {
         print("hello");
-        
-        LeaderBoardResponseModel[] leaderboardResponse = await APIManager.instance.Get_leader_board();
-        print(leaderboardResponse);
+        LeaderBoardResponseModel leaderboardResponse = await APIManager.instance.Get_leader_board();
+        print(leaderboardResponse.results[0]);
     }
 }
