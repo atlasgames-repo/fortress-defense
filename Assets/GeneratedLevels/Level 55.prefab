@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesList: []
   type: 1
-  defaultExp: 150
+  defaultExp: 175
   Waves:
   - wait: 0
     enemySpawns:
@@ -109,14 +109,14 @@ MonoBehaviour:
       BossScale: 1.001
       BossMinExp: 25
       BossMaxExp: 50
-    - wait: 15
+    - wait: 10
       enemy: {fileID: 3697426553599540029, guid: b65f63e2d40e5874c82cbc1c118265b1,
         type: 3}
       numberEnemy: 1
       rate: 1
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
+      customHealth: 600
+      customSpeed: 1.5
+      customAttackDmg: 45
       boosType: 1
       BossScale: 1.5
       BossMinExp: 25
@@ -128,4 +128,4 @@ MonoBehaviour:
   increaseEnemyWaitDifficultyRate: 0.2
   initialWaitAmount: 3
   level: 55
-  backgroundSprite: {fileID: 21300000, guid: f1069ce09103d1d4186a1697d98c70d3, type: 3}
+  backgroundSprite: {fileID: 21300000, guid: ce6df42696d117d45b5fefd25503e563, type: 3}
