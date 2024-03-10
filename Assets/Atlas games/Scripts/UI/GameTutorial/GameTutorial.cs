@@ -26,6 +26,7 @@ public class GameTutorial : MonoBehaviour
         BottomRight
     }
 
+    public bool inMenu = false;
     public string menuPlacing;
     [HideInInspector] public TipType type;
     [HideInInspector] public Direction direction;

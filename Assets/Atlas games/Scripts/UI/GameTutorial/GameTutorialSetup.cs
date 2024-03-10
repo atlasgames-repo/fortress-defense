@@ -23,16 +23,16 @@ public class GameTutorialSetup : MonoBehaviour
         return null;
     }
 
-    public GameTutorial MenuTutorial()
-    {
-        foreach (var obj in  tutorials)
-        {
-            if (obj.menuPlacing == GlobalValue.menuTutorial)
-            {
-                return obj;
-            }        
-        }
+ // public GameTutorial MenuTutorial()
+ // {
+ //     foreach (var obj in  tutorials)
+ //     {
+ //         if (obj.menuPlacing == GlobalValue.menuTutorial)
+ //         {
+ //             return obj;
+ //         }        
+ //     }
 
-        return null;
-    }
+ //     return null;
+ // }
 }
