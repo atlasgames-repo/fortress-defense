@@ -26,19 +26,23 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     public float increaseEnemyWaitDifficultyRate = 0.2f;
     private float[] _enemyCounts;
     public float initialWaitAmount = 3;
+    public LevelEnemyManager level_enemy_manager;
     [HideInInspector] public int waveCount;
 
     int totalEnemy, currentSpawn;
 
-    void Start()
+    void Awake()
     {
 
         if (GameLevelSetup.Instance)
         {
             if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
             {
-                bool is_true = TryGetComponent(out LevelEnemyManager waveGenerator);
-                if (is_true) waveGenerator.enabled = false;
+                level_enemy_manager.enabled = false;
+            }
+            else {
+                this.enabled = false;
+                return;
             }
             enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
             increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();

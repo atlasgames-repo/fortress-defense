@@ -115,7 +115,8 @@ public class GameManager : MonoBehaviour
 
         foreach (var item in listeners)
         {
-            item.IPlay();
+            if (item.IEnabled())
+                item.IPlay();
         }
     }
 

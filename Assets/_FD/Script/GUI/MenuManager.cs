@@ -95,6 +95,9 @@ public class MenuManager : MonoBehaviour, IListener
 
     }
 
+    public bool IEnabled() {
+        return this.enabled;
+    }
     public void ISuccess()
     {
         StartCoroutine(VictoryCo());
