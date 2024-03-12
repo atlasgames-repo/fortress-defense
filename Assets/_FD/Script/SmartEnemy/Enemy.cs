@@ -201,7 +201,8 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         moveSpeed = walkSpeed;
         if (IsAutoHealthBar){
             BoxCollider2D box = transform.GetComponent<BoxCollider2D>();
-            healthBarOffset.y = box.size.y;
+            healthBarOffset.y = Mathf.Abs(box.bounds.max.y + AutoHealthBarOffset);
+            
         }
         var healthBarObj = (HealthBarEnemyNew)Resources.Load("HealthBar", typeof(HealthBarEnemyNew));
         healthBar = (HealthBarEnemyNew)Instantiate(healthBarObj, healthBarOffset, Quaternion.identity);
@@ -274,6 +275,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         enemyEffect = effect;
     }
 
+    public bool IEnabled() {
+        return this.enabled;
+    }
     public virtual void Update()
     {
 

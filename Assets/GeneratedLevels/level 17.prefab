@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2746096903205806281}
   - component: {fileID: 1467245353261260663}
   m_Layer: 0
-  m_Name: level 17
+  m_Name: Level 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesList: []
   type: 1
-  defaultExp: 75
+  defaultExp: 100
   Waves:
   - wait: 0
     enemySpawns:
@@ -61,7 +61,19 @@ MonoBehaviour:
       BossScale: 1.5
       BossMinExp: 99
       BossMaxExp: 90
-    - wait: 7
+    - wait: 9
+      enemy: {fileID: 3697426553599540029, guid: c737a1613d0c3f14db79779f64a01621,
+        type: 3}
+      numberEnemy: 4
+      rate: 1
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1.5
+      BossMinExp: 99
+      BossMaxExp: 90
+    - wait: 13
       enemy: {fileID: 3697426553599540029, guid: bb4a391d19b886c41b2c33129326ffa1,
         type: 3}
       numberEnemy: 4

@@ -10,6 +10,7 @@ public class ExtendedEditorWindow : EditorWindow
     protected SerializedProperty serializedProperty;
     string LevelEnemyManagerPath = "Assets/_FD/Prefab/System/LevelEnemyManager.prefab";
     string GameLevelSetupPath = "Assets/BundledAssets/Loading/Game Level Setup.prefab";
+    string AssetsPath = "Assets/GeneratedLevels/";
     public GameLevelSetup gameLevelSetup;
 
     protected string gameLevelSetupPath
@@ -95,11 +96,11 @@ public class ExtendedEditorWindow : EditorWindow
         level.defaultExp = obj.levels[0].defaultExp;
         level.backgroundSprite = obj.levels[0].backgroundSprite;
         level.Waves = obj.levels[0].Waves;
-        Apply();
-
         EditorUtility.SetDirty(level.gameObject);
-        PrefabUtility.RecordPrefabInstancePropertyModifications(level);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(level.gameObject);
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+        Apply();
+        AssetDatabase.Refresh();
     }
     protected void LoadLevel(LevelWave level)
     {
