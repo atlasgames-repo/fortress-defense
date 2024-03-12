@@ -19,6 +19,6 @@ public class LeaderboardListItem : MonoBehaviour
     
     async void SetImage(string url)
     {
-        image.sprite = await APIManager.instance.Get_rofile_picture(url);
+        
     }
 }
