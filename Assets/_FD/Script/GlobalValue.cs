@@ -37,11 +37,6 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd1", 0); }
         set { PlayerPrefs.SetInt("lastDayShowNativeAd1", value); }
     }
-    public static string menuTutorial
-    {
-        get { return PlayerPrefs.GetString("MenuTutorial",""); }
-        set { PlayerPrefs.SetString("MenuTutorial", value); }
-    }
     public static int lastDayShowNativeAd2
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd2", 0); }
@@ -49,6 +44,14 @@ public class GlobalValue : MonoBehaviour
     }
 
 
+    public static int GetTutorialState(string tutorialName)
+    {
+        return PlayerPrefs.GetInt("tutorial :"+tutorialName, 0);
+    }
+    public static void SetTutorialState(string tutorialName, int value)
+    {
+        PlayerPrefs.SetInt("tutorial :"+tutorialName, value);
+    }
     public static int lastDayShowNativeAd3
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd3", 0); }
@@ -111,11 +114,7 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetFloat("StrongWallExtra", 0); }
         set { PlayerPrefs.SetFloat("StrongWallExtra", value); }
     }
-    public static int GameTutorialOpened
-    {
-        get { return PlayerPrefs.GetInt("GameTutorialOpened", 0); }
-        set { PlayerPrefs.SetInt("GameTutorialOpened", value); }
-    }
+ 
     // Achievements
     public static int LevelPass
     {

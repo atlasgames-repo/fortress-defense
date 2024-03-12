@@ -8,20 +8,24 @@ public class GameTutorialManager : MonoBehaviour
     public bool inMenu = false;
     void Start()
     {
-       
+
         if (!inMenu)
         {
-            GameObject obj = Instantiate(setup.SceneTutorial().gameObject,
-                FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
-                FindObjectOfType<Canvas>().transform);
-            obj.SetActive(true);
-            obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
-        } 
+            if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0)
+            {
+                GameObject obj = Instantiate(setup.SceneTutorial().gameObject,
+                    FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
+                    FindObjectOfType<Canvas>().transform);
+                obj.SetActive(true);
+                obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
+                GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
+            }
+        }
     }
     GameObject _tutorialObj;
     public void StartTutorialInMenu(string placing)
     {
-        if (PlayerPrefs.GetInt("tutorial " + placing) == 0)
+        if (GlobalValue.GetTutorialState(placing) == 0)
         {
             for (int a = 0; a < setup.tutorials.Length; a++)
             {
@@ -30,13 +34,13 @@ public class GameTutorialManager : MonoBehaviour
                     _tutorialObj = setup.tutorials[a].gameObject;
                 }
             }
-            print(_tutorialObj.gameObject.name);
             GameObject spawnedObj = Instantiate(_tutorialObj,
                 FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
                 FindObjectOfType<Canvas>().transform);
             spawnedObj.SetActive(true);
             spawnedObj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
-            PlayerPrefs.SetInt("tutorial " + placing, 1);
+            GlobalValue.SetTutorialState(placing,1);
+            
         }
     }
 
