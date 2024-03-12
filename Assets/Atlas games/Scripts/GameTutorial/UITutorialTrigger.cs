@@ -16,7 +16,6 @@ public class UITutorialTrigger : MonoBehaviour
     {
         if (runAutomatically)
         {
-            print("step 1");
             FindObjectOfType<GameTutorialManager>().StartTutorialInMenu(tutorialName);
         }
     }

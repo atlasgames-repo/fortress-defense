@@ -21,8 +21,7 @@ public class GameTutorialManager : MonoBehaviour
     GameObject _tutorialObj;
     public void StartTutorialInMenu(string placing)
     {
-        print("step 2");
-        if (PlayerPrefs.GetInt("tutorial " + placing) == 1)
+        if (PlayerPrefs.GetInt("tutorial " + placing) == 0)
         {
             for (int a = 0; a < setup.tutorials.Length; a++)
             {
@@ -31,7 +30,6 @@ public class GameTutorialManager : MonoBehaviour
                     _tutorialObj = setup.tutorials[a].gameObject;
                 }
             }
-print("step 3");
             print(_tutorialObj.gameObject.name);
             GameObject spawnedObj = Instantiate(_tutorialObj,
                 FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
