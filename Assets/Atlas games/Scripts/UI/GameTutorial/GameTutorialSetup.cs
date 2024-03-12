@@ -6,10 +6,10 @@ using UnityEngine;
 public class GameTutorialSetup : MonoBehaviour
 {
     public GameTutorial[] tutorials;
-    public void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+ //  public void Awake()
+ //  {
+ //      DontDestroyOnLoad(gameObject);
+ //  }
 
     public GameTutorial SceneTutorial()
     {
