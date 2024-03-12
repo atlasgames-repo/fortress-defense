@@ -4,40 +4,36 @@ using UnityEngine;
 
 public class GameTutorialManager : MonoBehaviour
 {
-    private GameTutorialSetup _setup;
+    public GameTutorialSetup setup;
     public bool inMenu = false;
     void Start()
     {
-        StartToturial();
+       
+        if (!inMenu)
+        {
+            GameObject obj = Instantiate(setup.SceneTutorial().gameObject,
+                FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
+                FindObjectOfType<Canvas>().transform);
+            obj.SetActive(true);
+            obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
+        } 
     }
-    public void StartToturial(){
-       _setup =  FindObjectOfType<GameTutorialSetup>();
-       if (!inMenu)
-       {
-           GameObject obj = Instantiate(_setup.SceneTutorial().gameObject,
-               FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
-               FindObjectOfType<Canvas>().transform);
-           obj.SetActive(true);
-           obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
-       } 
-    }
-
+    GameObject _tutorialObj;
     public void StartTutorialInMenu(string placing)
     {
-        if (PlayerPrefs.GetInt("tutorial " + placing) == 0)
+        print("step 2");
+        if (PlayerPrefs.GetInt("tutorial " + placing) == 1)
         {
-
-            _setup = FindObjectOfType<GameTutorialSetup>();
-            GameObject obj;
-            for (int a = 0; a < _setup.tutorials.Length; a++)
+            for (int a = 0; a < setup.tutorials.Length; a++)
             {
-                if (_setup.tutorials[a].menuPlacing == placing)
+                if (setup.tutorials[a].menuPlacing == placing)
                 {
-                    obj = _setup.tutorials[a].gameObject;
+                    _tutorialObj = setup.tutorials[a].gameObject;
                 }
             }
-
-            GameObject spawnedObj = Instantiate(_setup.SceneTutorial().gameObject,
+print("step 3");
+            print(_tutorialObj.gameObject.name);
+            GameObject spawnedObj = Instantiate(_tutorialObj,
                 FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
                 FindObjectOfType<Canvas>().transform);
             spawnedObj.SetActive(true);
