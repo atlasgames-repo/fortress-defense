@@ -6,6 +6,7 @@ public class GameTutorialManager : MonoBehaviour
 {
     public GameTutorialSetup setup;
     public bool inMenu = false;
+    
     void Start()
     {
 
