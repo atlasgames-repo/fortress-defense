@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public bool IsWatchingAd { get; set; }
 
+    [ReadOnly] public int currentRxp;
 
     public enum GameState { Menu, Playing, GameOver, Success, Pause };
     public GameState State { get; set; }
@@ -39,12 +40,38 @@ public class GameManager : MonoBehaviour
     #region EXP
     [ReadOnly] public int currentExp = 200;
 
+    public void UpdateXp(int amount, Transform instigator)
+    {
+        if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
+        {
+            AddRxp(amount,transform); 
+            AddTotalRxp(amount);
+        }
+        else
+        {
+            AddExp(amount, instigator);
+        }
+    }
     public void AddExp(int _amount, Transform instigator)
     {
         currentExp += _amount;
         FloatingTextManager.Instance.ShowText(_amount + "XP", new Vector2(0, 0.5f), Color.blue, instigator.position);
     }
 
+    public void AddRxp(int _amount,Transform instigator)
+    {
+        currentRxp += _amount;
+        if (currentExp > User.Rxp)
+        {
+            User.Rxp = _amount;
+        }
+        FloatingTextManager.Instance.ShowText(_amount + "XP", new Vector2(0, 0.5f), Color.blue, instigator.position);
+    }
+
+    public void AddTotalRxp(int _amount)
+    {
+        User.RxpTotal = _amount;
+    }
     #endregion
     void Awake()
     {

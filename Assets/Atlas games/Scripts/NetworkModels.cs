@@ -76,6 +76,38 @@ public class GemResponseModel : CommonErrorResponse
 {
     public int gem, rank;
 }
+
+[Serializable]
+public class data
+{
+    public int status;
+}
+
+[Serializable]
+public class LeaderboardData: BaseModel
+{
+    // data for leader board that has to change based on postman.
+    public int user_id;
+    public string user_name;
+    public string user_first_name;
+    public string user_last_name;
+    public string user_link;
+    public string user_avatar;
+    public int points;
+    public int rank;
+    //public string imageUrl;
+    // public int rxp;
+}
+[Serializable]
+public class LeaderBoardParams: BaseModel {
+    public string game_id;
+    public string type;
+}
+[Serializable]
+public class LeaderBoardResponseModel : CommonErrorResponse
+{
+    public LeaderboardData[] results;
+}
 [Serializable]
 public class GemRequestModel : BaseModel
 {
@@ -84,6 +116,20 @@ public class GemRequestModel : BaseModel
     public string date = null;
     public GemRequestModel() { }
     public GemRequestModel(string _game_id = null, string _amount = null, string _date = null)
+    {
+        amount = _amount;
+        game_id = _game_id == null ? _game_id : "442";
+        date = _date;
+    }
+}
+
+[Serializable]
+public class RxpRequestModel : BaseModel
+{
+    public string amount = null;
+    public string game_id = "442";
+    public string date = null;
+    public RxpRequestModel(string _game_id = null, string _amount = null, string _date = null)
     {
         amount = _amount;
         game_id = _game_id == null ? _game_id : "442";
@@ -114,9 +160,9 @@ public class Authentication : BaseModel
 public class UserResponse : BaseModel
 {
     public string first_name, last_name, display_name, email, username, registered_date, avatar;
-    public int coin, gem, uxp;
-
+    public int coin, gem, uxp, rxp, rxpTotal;
 }
+
 [Serializable]
 public class UserUpdate : BaseModel
 {
@@ -137,7 +183,6 @@ public class Message : BaseModel
 {
     public string server = "";
     public string auth = "";
-
 }
 
 public static class NetworkStatusError
