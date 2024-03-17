@@ -8,13 +8,13 @@ public class GameTutorialSetup : MonoBehaviour
     public GameObject[] tutorials;
    public void Awake()
    {
-   //    foreach (GameObject tutorial in tutorials)
-   //    {
-   //        if (tutorial.GetComponent<GameTutorial>().inMenu)
-   //        {
-   //            tutorial.gameObject.SetActive(false);
-   //        }
-   //    }
+       foreach (GameObject tutorial in tutorials)
+       {
+           if (tutorial.GetComponent<GameTutorial>().inMenu)
+           {
+               tutorial.gameObject.SetActive(false);
+           }
+       }
        DontDestroyOnLoad(gameObject);
    }
 
