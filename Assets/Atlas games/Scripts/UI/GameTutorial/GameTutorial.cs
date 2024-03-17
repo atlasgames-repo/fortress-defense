@@ -215,7 +215,6 @@ dialogBackground.SetActive(true);
                     mask.gameObject.SetActive(false);
                     dialogBackground.SetActive(true);
                     Time.timeScale = 0;
-                    print("hello");
                     break;
                 case "Task":
                     if (!nextSetup.isUiInteractible && _nextUiPart.GetComponent<Button>())
