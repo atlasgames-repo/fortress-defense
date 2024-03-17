@@ -9,7 +9,7 @@ public class GameTutorialManager : MonoBehaviour
     
     void Start()
     {
-
+        setup = FindObjectOfType<GameTutorialSetup>();
         if (!inMenu)
         {
             if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0)
