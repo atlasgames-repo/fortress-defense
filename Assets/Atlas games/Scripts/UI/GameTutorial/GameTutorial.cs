@@ -47,6 +47,7 @@ public class GameTutorial : MonoBehaviour
     private int _childIndex;
     private Transform _buttonParent;
     private GameObject _uiPartClone;
+
     [Serializable]
     public class TipSetup
     {
@@ -65,12 +66,21 @@ public class GameTutorial : MonoBehaviour
 
     public float initialWait = 0.5f;
 
-    [HideInInspector]public string tutorialName;
+    [HideInInspector] public string tutorialName;
+    Camera _main;
 
 
     // start game and open tutorial automatically if never watched 
     void Start()
     {
+        Camera[] cams = FindObjectsOfType<Camera>();
+        foreach (Camera cam in cams)
+        {
+            if (cam.name == "Main Camera")
+            {
+                _main = cam;
+            }
+        }
         clickPreventer.SetActive(false);
         _tipOrder = -1;
         StartCoroutine(OpenTutorialAtStart());
@@ -86,7 +96,7 @@ public class GameTutorial : MonoBehaviour
     {
         yield return new WaitForSeconds(initialWait);
         StartTutorial();
-        
+
         //makes sure that tutorial doesnt play anymore at the start of the scene 
         PlayerPrefs.SetInt("GameTutorial" + tutorialName, 1);
     }
@@ -114,9 +124,9 @@ public class GameTutorial : MonoBehaviour
     }
 
     private GameObject _prevUiPart;
+
     void CloseTip()
     {
-        
         if (_tipOrder > 0)
         {
             TipSetup prevSetup = tipsList[_tipOrder - 1];
@@ -130,8 +140,9 @@ public class GameTutorial : MonoBehaviour
                         _prevUiPart = uiPart.gameObject;
                     }
                 }
-              //  _prevUiPart = GameObject.Find(prevSetup.uiPartName);
+                //  _prevUiPart = GameObject.Find(prevSetup.uiPartName);
             }
+
             switch (prevSetup.type)
             {
                 case "Dialog":
@@ -147,12 +158,12 @@ public class GameTutorial : MonoBehaviour
                 case "Task":
                     pointerObject.gameObject.SetActive(false);
                     pointerIcon.gameObject.SetActive(false);
-                    
+
                     if (!prevSetup.isUiInteractible)
                     {
                         _prevUiPart.transform.SetParent(_buttonParent);
                         _prevUiPart.transform.SetSiblingIndex(_childIndex);
-                     Destroy(_uiPartClone);
+                        Destroy(_uiPartClone);
                         clickPreventer.SetActive(false);
                     }
 
@@ -160,8 +171,12 @@ public class GameTutorial : MonoBehaviour
                     {
                         Time.timeScale = 1;
                     }
-                    
-                    _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+
+                    if (_prevUiPart.GetComponent<Button>())
+                    {
+                        _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+                    }
+
                     break;
             }
         }
@@ -169,6 +184,7 @@ public class GameTutorial : MonoBehaviour
 
 
     private GameObject _nextUiPart;
+
     public void OpenTip()
     {
         if (_tipOrder <= tipsList.Count - 1)
@@ -179,12 +195,13 @@ public class GameTutorial : MonoBehaviour
                 TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
                 foreach (var uiPart in uiParts)
                 {
-                    if (uiPart.GetComponent<TutorialFinder>().uiPartName ==  nextSetup.uiPartName)
+                    if (uiPart.GetComponent<TutorialFinder>().uiPartName == nextSetup.uiPartName)
                     {
                         _nextUiPart = uiPart.gameObject;
                     }
                 }
             }
+
             switch (nextSetup.type)
             {
                 case "Dialog":
@@ -196,24 +213,35 @@ public class GameTutorial : MonoBehaviour
                     Time.timeScale = 0;
                     break;
                 case "Task":
-                    if (!nextSetup.isUiInteractible)
+                    if (!nextSetup.isUiInteractible && _nextUiPart.GetComponent<Button>())
                     {
                         _buttonParent = _nextUiPart.transform.parent;
                         _childIndex = _nextUiPart.transform.GetSiblingIndex();
                         clickPreventer.SetActive(true);
-                        _uiPartClone = Instantiate(_nextUiPart, _nextUiPart.transform.position, _nextUiPart.transform.rotation,
+                        _uiPartClone = Instantiate(_nextUiPart, _nextUiPart.transform.position,
+                            _nextUiPart.transform.rotation,
                             _nextUiPart.transform.parent);
                         _nextUiPart.transform.transform.SetParent(clickPreventer.transform);
-                    }
-
-                    if (_nextUiPart.GetComponent<Button>())
-                    {
-                        _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
                     }
 
                     Thread.Sleep(Mathf.RoundToInt(nextSetup.delay * 1000));
                     pointerObject.gameObject.SetActive(true);
                     pointerIcon.gameObject.SetActive(true);
+                    if (_nextUiPart.GetComponent<Button>())
+                    {
+                        _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
+                        pointerObject.transform.position = _nextUiPart.transform.position;
+                    }
+                    else
+                    {
+                        Vector3 pos =_main.ViewportToScreenPoint(_nextUiPart.transform.position);
+                        pos.y = Screen.height - pos.y;
+                        pointerObject.transform.position = pos;
+                            print(pos);
+                        print(_main.ViewportToScreenPoint(_nextUiPart.transform.position));
+                    }
+
+
                     pointerObject.transform.position = _nextUiPart.transform.position;
                     for (int a = 0; a < pointerObject.childCount; a++)
                     {
@@ -261,6 +289,7 @@ public class GameTutorial : MonoBehaviour
                     {
                         Time.timeScale = 1;
                     }
+
                     break;
                 case "Tip":
                     nextSetup.tipAnimator.SetTrigger(nextSetup.openTrigger);
@@ -312,7 +341,7 @@ public class GameTutorial : MonoBehaviour
             }
             //  _prevUiPart = GameObject.Find(prevSetup.uiPartName);
         }
-        
+
         switch (prevSetup.type)
         {
             case "Dialog":
@@ -332,7 +361,7 @@ public class GameTutorial : MonoBehaviour
             case "Task":
                 pointerObject.gameObject.SetActive(false);
                 pointerIcon.gameObject.SetActive(false);
-                    
+
                 if (!prevSetup.isUiInteractible)
                 {
                     _prevUiPart.transform.SetParent(_buttonParent);
@@ -350,6 +379,7 @@ public class GameTutorial : MonoBehaviour
                 {
                     _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
                 }
+
                 break;
         }
 
@@ -357,4 +387,5 @@ public class GameTutorial : MonoBehaviour
         dialogBackground.SetActive(false);
         _tipOrder = -1;
     }
+    
 }
