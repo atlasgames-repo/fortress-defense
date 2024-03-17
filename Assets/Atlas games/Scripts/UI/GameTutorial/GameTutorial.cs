@@ -47,7 +47,7 @@ public class GameTutorial : MonoBehaviour
     private int _childIndex;
     private Transform _buttonParent;
     private GameObject _uiPartClone;
-
+    
     [Serializable]
     public class TipSetup
     {
@@ -73,6 +73,7 @@ public class GameTutorial : MonoBehaviour
     // start game and open tutorial automatically if never watched 
     void Start()
     {
+        dialogBackground.SetActive(false);
         pointerObject.transform.SetParent(transform.parent);
         pointerObject.transform.SetSiblingIndex(transform.parent.childCount - 1);
         Camera[] cams = FindObjectsOfType<Camera>();
@@ -261,33 +262,36 @@ public class GameTutorial : MonoBehaviour
                         if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
                         {
                             pointerIcon.transform.position = pointerObject.GetChild(a).position;
+                            float rotationAngel =0f;
                             switch (nextSetup.pointerDirection)
                             {
                                 case "Top":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, 0, 0);
+                                    rotationAngel = 0f;
                                     break;
                                 case "Bottom":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, 180, 0);
+                                    rotationAngel = 180f;
                                     break;
                                 case "Left":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, -90, 0);
+                                    rotationAngel = 90f;
                                     break;
                                 case "Right":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, 90, 0);
+                                    rotationAngel = -90f;
                                     break;
                                 case "TopLeft":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, -45, 0);
+                                    rotationAngel = -45f;
                                     break;
                                 case "TopRight":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, 45, 0);
+                                    rotationAngel = 45f;
                                     break;
                                 case "BottomLeft":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, -135, 0);
+                                    rotationAngel = -135f;
                                     break;
                                 case "BottomRight":
-                                    pointerIcon.transform.rotation = new Quaternion(0, 0, 135, 0);
+                                    rotationAngel = 135f;
                                     break;
                             }
+                            Quaternion newRotation = Quaternion.Euler(0, 0, rotationAngel);
+                            pointerIcon.transform.rotation = newRotation;
                         }
                     }
 
