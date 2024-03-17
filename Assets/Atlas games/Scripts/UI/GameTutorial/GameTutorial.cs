@@ -47,7 +47,7 @@ public class GameTutorial : MonoBehaviour
     private int _childIndex;
     private Transform _buttonParent;
     private GameObject _uiPartClone;
-    
+
     [Serializable]
     public class TipSetup
     {
@@ -250,11 +250,11 @@ public class GameTutorial : MonoBehaviour
                             Screen.width,
                             (_nextUiPart.transform.position.y - camPosition.y) / (topPos - camPosition.y) *
                             Screen.height, 0);
-                        print(finalPosition);
-                        pointerObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(finalPosition.x,finalPosition.y);
+                        pointerObject.GetComponent<RectTransform>().anchoredPosition =
+                            new Vector2(finalPosition.x, finalPosition.y);
                         Vector3 currentPos = pointerObject.position;
-                        print(currentPos);
-                        pointerObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(currentPos.x,currentPos.y);
+                        pointerObject.GetComponent<RectTransform>().anchoredPosition =
+                            new Vector2(currentPos.x, currentPos.y);
                     }
 
                     for (int a = 0; a < pointerObject.childCount; a++)
@@ -262,7 +262,7 @@ public class GameTutorial : MonoBehaviour
                         if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
                         {
                             pointerIcon.transform.position = pointerObject.GetChild(a).position;
-                            float rotationAngel =0f;
+                            float rotationAngel = 0f;
                             switch (nextSetup.pointerDirection)
                             {
                                 case "Top":
@@ -290,6 +290,7 @@ public class GameTutorial : MonoBehaviour
                                     rotationAngel = 135f;
                                     break;
                             }
+
                             Quaternion newRotation = Quaternion.Euler(0, 0, rotationAngel);
                             pointerIcon.transform.rotation = newRotation;
                         }
