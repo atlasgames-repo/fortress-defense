@@ -120,6 +120,9 @@ public class SimpleProjectile : Projectile, ICanTakeDamage, IListener
 		//		throw new System.NotImplementedException ();
 	}
 
+    public bool IEnabled() {
+        return this.enabled;
+    }
 	public void IPause ()
 	{
 		//		throw new System.NotImplementedException ();

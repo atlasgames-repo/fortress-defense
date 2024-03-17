@@ -275,6 +275,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         enemyEffect = effect;
     }
 
+    public bool IEnabled() {
+        return this.enabled;
+    }
     public virtual void Update()
     {
 

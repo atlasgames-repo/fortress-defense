@@ -27,18 +27,22 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     private float[] _enemyCounts;
     public float initialWaitAmount = 3;
     private bool _nightMode = false;
+    public LevelEnemyManager level_enemy_manager;
     [HideInInspector] public int waveCount;
 
     int totalEnemy, currentSpawn;
 
-    void Start()
+    void Awake()
     {
         if (GameLevelSetup.Instance)
         {
             if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
             {
-                bool is_true = TryGetComponent(out LevelEnemyManager waveGenerator);
-                if (is_true) waveGenerator.enabled = false;
+                level_enemy_manager.enabled = false;
+            }
+            else {
+                this.enabled = false;
+                return;
             }
 
             _nightMode = GameLevelSetup.Instance.NightMode();

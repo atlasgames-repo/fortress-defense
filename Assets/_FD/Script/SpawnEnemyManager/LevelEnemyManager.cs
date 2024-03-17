@@ -224,6 +224,9 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     {
         //throw new System.NotImplementedException();
     }
+    public bool IEnabled() {
+        return this.enabled;
+    }
 }
 
 [System.Serializable]
