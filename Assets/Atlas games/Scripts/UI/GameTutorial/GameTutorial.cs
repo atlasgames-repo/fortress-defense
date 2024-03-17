@@ -73,6 +73,8 @@ public class GameTutorial : MonoBehaviour
     // start game and open tutorial automatically if never watched 
     void Start()
     {
+        pointerObject.transform.SetParent(transform.parent);
+        pointerObject.transform.SetSiblingIndex(transform.parent.childCount - 1);
         Camera[] cams = FindObjectsOfType<Camera>();
         foreach (Camera cam in cams)
         {
@@ -81,6 +83,7 @@ public class GameTutorial : MonoBehaviour
                 _main = cam;
             }
         }
+
         clickPreventer.SetActive(false);
         _tipOrder = -1;
         StartCoroutine(OpenTutorialAtStart());
@@ -234,15 +237,25 @@ public class GameTutorial : MonoBehaviour
                     }
                     else
                     {
-                        Vector3 pos =_main.ViewportToScreenPoint(_nextUiPart.transform.position);
-                        pos.y = Screen.height - pos.y;
-                        pointerObject.transform.position = pos;
-                            print(pos);
-                        print(_main.ViewportToScreenPoint(_nextUiPart.transform.position));
+                        float ratio = Screen.width / Screen.height;
+                        float size = _main.GetComponent<FixedCamera>().orthographicSize;
+                        Vector3 camPosition = _main.transform.position;
+                        float topPos = 1f * size + camPosition.y;
+                        float bottomPos = -1f * size + camPosition.y;
+                        float leftPos = -ratio * size + camPosition.x;
+                        float rightPos = ratio * size + camPosition.x;
+                        Vector3 finalPosition = new Vector3(
+                            (_nextUiPart.transform.position.x - camPosition.x) / (rightPos - camPosition.x) *
+                            Screen.width,
+                            (_nextUiPart.transform.position.y - camPosition.y) / (topPos - camPosition.y) *
+                            Screen.height, 0);
+                        print(finalPosition);
+                        pointerObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(finalPosition.x,finalPosition.y);
+                        Vector3 currentPos = pointerObject.position;
+                        print(currentPos);
+                        pointerObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(currentPos.x,currentPos.y);
                     }
 
-
-                    pointerObject.transform.position = _nextUiPart.transform.position;
                     for (int a = 0; a < pointerObject.childCount; a++)
                     {
                         if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
@@ -387,5 +400,4 @@ public class GameTutorial : MonoBehaviour
         dialogBackground.SetActive(false);
         _tipOrder = -1;
     }
-    
 }
