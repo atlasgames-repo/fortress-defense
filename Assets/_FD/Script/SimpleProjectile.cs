@@ -79,11 +79,15 @@ public class SimpleProjectile : Projectile, ICanTakeDamage, IListener
             //Instantiate (DestroyEffect, transform.position, Quaternion.identity);
 
 		if (Explosion) {
-			var bullet = Instantiate (ExplosionObj, transform.position, Quaternion.identity) as GameObject;
-			//bullet.GetComponent<Grenade> ().DoExplosion (0);
+			// var bullet = Instantiate (ExplosionObj, transform.position, Quaternion.identity) as GameObject;
+			var bullet = SpawnSystemHelper.GetNextObject(ExplosionObj, false);
+			bullet.transform.position = transform.position;
+			bullet.SetActive(true);
 		}
 
-         (destroyParent != null ? destroyParent : gameObject).SetActive(false) ;
+        var obj = destroyParent != null ? destroyParent : gameObject;
+		gameObject.transform.position = new Vector3(0, 100, gameObject.transform.position.z);
+		gameObject.SetActive(false);
 	}
 
 
