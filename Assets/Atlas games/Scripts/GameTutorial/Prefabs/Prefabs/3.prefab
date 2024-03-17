@@ -2845,7 +2845,7 @@ RectTransform:
   m_GameObject: {fileID: 8272058860263513677}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.57396, y: 0.57396, z: 0.57396}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7450623545260239132}
   - {fileID: 7113249725073372619}
@@ -2882,6 +2882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c4665404d9a4e49a375cfe51258a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inMenu: 0
+  menuPlacing: 
   type: 2
   direction: 0
   level: 1
@@ -2918,17 +2920,6 @@ MonoBehaviour:
     scale: 4
     type: Dialog
     isUiInteractible: 0
-    pauseGame: 0
-  - openTrigger: Next 2
-    closeTrigger: Close
-    pointerDirection: Left
-    delay: 1
-    isLastDialog: 0
-    tipAnimator: {fileID: 4181166128708170863}
-    uiPartName: Upgrade
-    scale: 4
-    type: Task
-    isUiInteractible: 1
     pauseGame: 0
   uiParts: []
   mask: {fileID: 7450623545260239132}
