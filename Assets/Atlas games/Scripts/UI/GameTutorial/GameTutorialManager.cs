@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,11 +24,14 @@ public class GameTutorialManager : MonoBehaviour
             }
         }
     }
+
+
+
     GameObject _tutorialObj;
     public void StartTutorialInMenu(string placing)
     {
-    //   if (GlobalValue.GetTutorialState(placing) == 0)
-    //   {
+       if (GlobalValue.GetTutorialState(placing) == 0)
+       {
             for (int a = 0; a < setup.tutorials.Length; a++)
             {
                 if (setup.tutorials[a].GetComponent<GameTutorial>().menuPlacing == placing)
@@ -42,7 +46,7 @@ public class GameTutorialManager : MonoBehaviour
             spawnedObj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
             GlobalValue.SetTutorialState(placing,1);
             
-       // }
+        }
     }
 
 
