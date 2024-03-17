@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class GameTutorialSetup : MonoBehaviour
 {
-    public GameTutorial[] tutorials;
+    public GameObject[] tutorials;
    public void Awake()
    {
-       foreach (GameTutorial tutorial in tutorials)
+       foreach (GameObject tutorial in tutorials)
        {
-           if (tutorial.inMenu)
+           if (tutorial.GetComponent<GameTutorial>().inMenu)
            {
                tutorial.gameObject.SetActive(false);
            }
@@ -18,13 +18,15 @@ public class GameTutorialSetup : MonoBehaviour
        DontDestroyOnLoad(gameObject);
    }
 
-    public GameTutorial SceneTutorial()
+    public GameObject SceneTutorial()
     {
         
-        foreach (var obj in tutorials)
+        foreach (GameObject obj in tutorials)
         {
-            if (obj.level == GlobalValue.levelPlaying)
+            if (obj.GetComponent<GameTutorial>().level == GlobalValue.levelPlaying)
+            {
                 return obj;
+            }
         }
 
         return null;

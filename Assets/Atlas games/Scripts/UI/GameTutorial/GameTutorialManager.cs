@@ -17,7 +17,7 @@ public class GameTutorialManager : MonoBehaviour
                 GameObject obj = Instantiate(setup.SceneTutorial().gameObject,
                     FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
                     FindObjectOfType<Canvas>().transform);
-                obj.SetActive(true);
+                obj.GetComponent<GameTutorial>().enabled = true;
                 obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
                 GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
             }
@@ -30,7 +30,7 @@ public class GameTutorialManager : MonoBehaviour
         {
             for (int a = 0; a < setup.tutorials.Length; a++)
             {
-                if (setup.tutorials[a].menuPlacing == placing)
+                if (setup.tutorials[a].GetComponent<GameTutorial>().menuPlacing == placing)
                 {
                     _tutorialObj = setup.tutorials[a].gameObject;
                 }
@@ -38,7 +38,7 @@ public class GameTutorialManager : MonoBehaviour
             GameObject spawnedObj = Instantiate(_tutorialObj,
                 FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
                 FindObjectOfType<Canvas>().transform);
-            spawnedObj.SetActive(true);
+            spawnedObj.GetComponent<GameTutorial>().enabled = true;
             spawnedObj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
             GlobalValue.SetTutorialState(placing,1);
             
