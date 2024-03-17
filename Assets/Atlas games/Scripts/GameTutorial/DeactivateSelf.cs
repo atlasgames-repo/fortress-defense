@@ -9,4 +9,11 @@ public class DeactivateSelf : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    public void DeactivateParent()
+    {
+        print("hhewiodw");
+        transform.parent.GetComponent<GameTutorial>().DestroyTutorial();
+        
+    }
 }

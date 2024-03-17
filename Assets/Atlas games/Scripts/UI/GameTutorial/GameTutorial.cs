@@ -154,7 +154,7 @@ public class GameTutorial : MonoBehaviour
                     {
                         prevSetup.tipAnimator.SetTrigger(prevSetup.closeTrigger);
                     }
-
+dialogBackground.SetActive(true);
                     break;
                 case "Tip":
                     prevSetup.tipAnimator.SetTrigger(prevSetup.closeTrigger);
@@ -215,6 +215,7 @@ public class GameTutorial : MonoBehaviour
                     mask.gameObject.SetActive(false);
                     dialogBackground.SetActive(true);
                     Time.timeScale = 0;
+                    print("hello");
                     break;
                 case "Task":
                     if (!nextSetup.isUiInteractible && _nextUiPart.GetComponent<Button>())
@@ -404,5 +405,9 @@ public class GameTutorial : MonoBehaviour
         darkBackground.SetActive(false);
         dialogBackground.SetActive(false);
         _tipOrder = -1;
+    }
+    public void DestroyTutorial()
+    {
+        Destroy(gameObject);
     }
 }

@@ -608,6 +608,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6323824838081178071}
+        m_TargetAssemblyTypeName: GameTutorial, Assembly-CSharp
+        m_MethodName: DestroyTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2935983365366571326
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,7 +934,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3129406417522021045}
   - component: {fileID: 3347707350122896223}
-  - component: {fileID: 6645047244233420171}
   m_Layer: 5
   m_Name: Dialog
   m_TagString: Untagged
@@ -969,18 +980,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6645047244233420171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3494104836509814189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43cbe08ffa7c46498a1514f98cd579c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3597652862448683085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,6 +2026,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 203
       objectReference: {fileID: 0}
+    - target: {fileID: 6762730798973509398, guid: 306015b7a740bb04ab7770f946be5f45,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7261122201840647791, guid: 306015b7a740bb04ab7770f946be5f45,
         type: 3}
       propertyPath: m_Text
@@ -2046,15 +2050,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c4665404d9a4e49a375cfe51258a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &9165649809995352882 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4401795881581222096, guid: 306015b7a740bb04ab7770f946be5f45,
-    type: 3}
-  m_PrefabInstance: {fileID: 4766145380004615138}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6323824838081178068 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1577951845984614966, guid: 306015b7a740bb04ab7770f946be5f45,
+    type: 3}
+  m_PrefabInstance: {fileID: 4766145380004615138}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &9165649809995352882 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4401795881581222096, guid: 306015b7a740bb04ab7770f946be5f45,
     type: 3}
   m_PrefabInstance: {fileID: 4766145380004615138}
   m_PrefabAsset: {fileID: 0}
