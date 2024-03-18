@@ -47,7 +47,7 @@ public class AffectZoneManager : MonoBehaviour
             cureAnimation.GetComponent<Animator>().SetTrigger("Cure");
         }
         SoundManager.PlaySfx(cureSound);
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(1);
         _pickedBtn.StartCountingDown();
         isAffectZoneWorking = false;
     }

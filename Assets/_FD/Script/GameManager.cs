@@ -42,13 +42,11 @@ public class GameManager : MonoBehaviour
 
     public void UpdateXp(int amount, Transform instigator)
     {
-        if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
-        {
+        if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless) {
             AddRxp(amount,transform); 
             AddTotalRxp(amount);
-        }
-        else
-        {
+            AddExp(amount, instigator);
+        } else {
             AddExp(amount, instigator);
         }
     }
@@ -61,7 +59,7 @@ public class GameManager : MonoBehaviour
     public void AddRxp(int _amount,Transform instigator)
     {
         currentRxp += _amount;
-        if (currentExp > User.Rxp)
+        if (currentRxp > User.Rxp)
         {
             User.Rxp = _amount;
         }
