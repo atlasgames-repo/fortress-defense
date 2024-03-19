@@ -12,7 +12,6 @@ public class DeactivateSelf : MonoBehaviour
 
     public void DeactivateParent()
     {
-        print("hhewiodw");
         transform.parent.GetComponent<GameTutorial>().DestroyTutorial();
         
     }

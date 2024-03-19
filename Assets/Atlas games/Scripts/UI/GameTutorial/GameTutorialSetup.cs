@@ -13,7 +13,6 @@ public class GameTutorialSetup : MonoBehaviour
 
     public GameObject SceneTutorial()
     {
-        
         foreach (GameObject obj in tutorials)
         {
             if (obj.GetComponent<GameTutorial>().level == GlobalValue.levelPlaying)

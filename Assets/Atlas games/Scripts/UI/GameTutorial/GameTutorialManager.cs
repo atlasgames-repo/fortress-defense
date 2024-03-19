@@ -11,17 +11,18 @@ public class GameTutorialManager : MonoBehaviour
     void Start()
     {
         setup = FindObjectOfType<GameTutorialSetup>();
+       
         if (!inMenu)
         {
-            if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0)
-            {
-                GameObject obj = Instantiate(setup.SceneTutorial().gameObject,
-                    FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
-                    FindObjectOfType<Canvas>().transform);
+         // if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0)
+         // {
+                GameObject obj = Instantiate(setup.SceneTutorial(),
+                    FindObjectOfType<MenuManager>().transform.position, Quaternion.identity,
+                    FindObjectOfType<MenuManager>().transform);
                 obj.GetComponent<GameTutorial>().enabled = true;
-                obj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
+                obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
                 GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
-            }
+           // }
         }
     }
 
@@ -40,10 +41,10 @@ public class GameTutorialManager : MonoBehaviour
                 }
             }
             GameObject spawnedObj = Instantiate(_tutorialObj,
-                FindObjectOfType<Canvas>().transform.position, Quaternion.identity,
-                FindObjectOfType<Canvas>().transform);
+                FindObjectOfType<MainMenuHomeScene>().transform.position, Quaternion.identity,
+                FindObjectOfType<MainMenuHomeScene>().transform);
             spawnedObj.GetComponent<GameTutorial>().enabled = true;
-            spawnedObj.transform.SetSiblingIndex(FindObjectOfType<Canvas>().transform.childCount - 1);
+            spawnedObj.transform.SetSiblingIndex(FindObjectOfType<MainMenuHomeScene>().transform.childCount - 1);
             GlobalValue.SetTutorialState(placing,1);
             
         }

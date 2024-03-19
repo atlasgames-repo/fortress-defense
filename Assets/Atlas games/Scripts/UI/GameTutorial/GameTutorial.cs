@@ -180,6 +180,10 @@ dialogBackground.SetActive(true);
                     {
                         _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
                     }
+                    else
+                    {
+                        _prevUiPart.GetComponent<TutorialFinder>().isClickable = false;
+                    }
 
                     break;
             }
@@ -231,6 +235,7 @@ dialogBackground.SetActive(true);
                     Thread.Sleep(Mathf.RoundToInt(nextSetup.delay * 1000));
                     pointerObject.gameObject.SetActive(true);
                     pointerIcon.gameObject.SetActive(true);
+                    _nextUiPart.GetComponent<TutorialFinder>().isClickable = true;
                     if (_nextUiPart.GetComponent<Button>())
                     {
                         _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
@@ -256,7 +261,7 @@ dialogBackground.SetActive(true);
                         pointerObject.GetComponent<RectTransform>().anchoredPosition =
                             new Vector2(currentPos.x, currentPos.y);
                     }
-
+                    
                     for (int a = 0; a < pointerObject.childCount; a++)
                     {
                         if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
@@ -324,7 +329,7 @@ dialogBackground.SetActive(true);
             darkBackground.SetActive(false);
             dialogBackground.SetActive(false);
             Time.timeScale = 1;
-            _tipOrder = -1;
+          //  _tipOrder = -1;
         }
     }
 
@@ -403,7 +408,7 @@ dialogBackground.SetActive(true);
 
         darkBackground.SetActive(false);
         dialogBackground.SetActive(false);
-        _tipOrder = -1;
+       // _tipOrder = -1;
     }
     public void DestroyTutorial()
     {
