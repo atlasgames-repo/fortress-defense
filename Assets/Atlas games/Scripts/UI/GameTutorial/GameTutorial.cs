@@ -47,7 +47,8 @@ public class GameTutorial : MonoBehaviour
     private int _childIndex;
     private Transform _buttonParent;
     private GameObject _uiPartClone;
-
+    private Transform _pointerEnv;
+    private Transform _pointerPlacerEnv;
     [Serializable]
     public class TipSetup
     {
@@ -93,6 +94,10 @@ public class GameTutorial : MonoBehaviour
         {
             //play tutorial
         }
+
+        _pointerEnv = GameObject.FindWithTag("Pointer").transform;
+        _pointerPlacerEnv = GameObject.Find("PointerPlacer").transform;
+        _pointerEnv.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
     }
 
 // open tutorial if never watched
@@ -183,6 +188,7 @@ dialogBackground.SetActive(true);
                     else
                     {
                         _prevUiPart.GetComponent<TutorialFinder>().isClickable = false;
+                        _pointerEnv.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
                     }
 
                     break;
@@ -230,77 +236,117 @@ dialogBackground.SetActive(true);
                             _nextUiPart.transform.rotation,
                             _nextUiPart.transform.parent);
                         _nextUiPart.transform.transform.SetParent(clickPreventer.transform);
+                        pointerObject.gameObject.SetActive(true);
+                        pointerIcon.gameObject.SetActive(true);
                     }
-
                     Thread.Sleep(Mathf.RoundToInt(nextSetup.delay * 1000));
-                    pointerObject.gameObject.SetActive(true);
-                    pointerIcon.gameObject.SetActive(true);
                     _nextUiPart.GetComponent<TutorialFinder>().isClickable = true;
                     if (_nextUiPart.GetComponent<Button>())
                     {
                         _nextUiPart.transform.GetComponent<Button>().onClick.AddListener(NextTip);
                         pointerObject.transform.position = _nextUiPart.transform.position;
+                        for (int a = 0; a < pointerObject.childCount; a++)
+                        {
+                            if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
+                            {
+                                pointerIcon.transform.position = pointerObject.GetChild(a).position;
+                                float rotationAngel = 0f;
+                                switch (nextSetup.pointerDirection)
+                                {
+                                    case "Top":
+                                        rotationAngel = 0f;
+                                        break;
+                                    case "Bottom":
+                                        rotationAngel = 180f;
+                                        break;
+                                    case "Left":
+                                        rotationAngel = 90f;
+                                        break;
+                                    case "Right":
+                                        rotationAngel = -90f;
+                                        break;
+                                    case "TopLeft":
+                                        rotationAngel = -45f;
+                                        break;
+                                    case "TopRight":
+                                        rotationAngel = 45f;
+                                        break;
+                                    case "BottomLeft":
+                                        rotationAngel = -135f;
+                                        break;
+                                    case "BottomRight":
+                                        rotationAngel = 135f;
+                                        break;
+                                }
+
+                                Quaternion newRotation = Quaternion.Euler(0, 0, rotationAngel);
+                                pointerIcon.transform.rotation = newRotation;
+                            }
+                        }
+
+
                     }
                     else
                     {
-                        float ratio = Screen.width / Screen.height;
-                        float size = _main.GetComponent<FixedCamera>().orthographicSize;
-                        Vector3 camPosition = _main.transform.position;
-                        float topPos = 1f * size + camPosition.y;
-                        float bottomPos = -1f * size + camPosition.y;
-                        float leftPos = -ratio * size + camPosition.x;
-                        float rightPos = ratio * size + camPosition.x;
-                        Vector3 finalPosition = new Vector3(
-                            (_nextUiPart.transform.position.x - camPosition.x) / (rightPos - camPosition.x) *
-                            Screen.width,
-                            (_nextUiPart.transform.position.y - camPosition.y) / (topPos - camPosition.y) *
-                            Screen.height, 0);
-                        pointerObject.GetComponent<RectTransform>().anchoredPosition =
-                            new Vector2(finalPosition.x, finalPosition.y);
-                        Vector3 currentPos = pointerObject.position;
-                        pointerObject.GetComponent<RectTransform>().anchoredPosition =
-                            new Vector2(currentPos.x, currentPos.y);
+                     //   float ratio = Screen.width / Screen.height;
+                     //   float size = _main.GetComponent<FixedCamera>().orthographicSize;
+                     //   Vector3 camPosition = _main.transform.position;
+                     //   float topPos = 1f * size + camPosition.y;
+                     //   float bottomPos = -1f * size + camPosition.y;
+                     //   float leftPos = -ratio * size + camPosition.x;
+                     //   float rightPos = ratio * size + camPosition.x;
+                     //   Vector3 finalPosition = new Vector3(
+                     //       (_nextUiPart.transform.position.x - camPosition.x) / (rightPos - camPosition.x) *
+                     //       Screen.width,
+                     //       (_nextUiPart.transform.position.y - camPosition.y) / (topPos - camPosition.y) *
+                     //       Screen.height, 0);
+                     //   pointerObject.GetComponent<RectTransform>().anchoredPosition =
+                     //       new Vector2(finalPosition.x, finalPosition.y);
+                     //   Vector3 currentPos = pointerObject.position;
+                     //   pointerObject.GetComponent<RectTransform>().anchoredPosition =
+                     //       new Vector2(currentPos.x, currentPos.y);
+                     _pointerEnv.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+                     _pointerPlacerEnv.transform.position = _nextUiPart.transform.position;
+                     for (int a = 0; a < _pointerPlacerEnv.childCount; a++)
+                     {
+                         if (_pointerPlacerEnv.GetChild(a).name == nextSetup.pointerDirection)
+                         {
+                             _pointerEnv.position = _pointerPlacerEnv.GetChild(a).position;
+                             float rotationAngel = 0f;
+                             switch (nextSetup.pointerDirection)
+                             {
+                                 case "Top":
+                                     rotationAngel = 0f;
+                                     break;
+                                 case "Bottom":
+                                     rotationAngel = 180f;
+                                     break;
+                                 case "Left":
+                                     rotationAngel = 90f;
+                                     break;
+                                 case "Right":
+                                     rotationAngel = -90f;
+                                     break;
+                                 case "TopLeft":
+                                     rotationAngel = -45f;
+                                     break;
+                                 case "TopRight":
+                                     rotationAngel = 45f;
+                                     break;
+                                 case "BottomLeft":
+                                     rotationAngel = -135f;
+                                     break;
+                                 case "BottomRight":
+                                     rotationAngel = 135f;
+                                     break;
+                             }
+
+                             Quaternion newRotation = Quaternion.Euler(0, 0, rotationAngel);
+                             _pointerEnv.rotation = newRotation;
+                         }
+                     }
                     }
                     
-                    for (int a = 0; a < pointerObject.childCount; a++)
-                    {
-                        if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
-                        {
-                            pointerIcon.transform.position = pointerObject.GetChild(a).position;
-                            float rotationAngel = 0f;
-                            switch (nextSetup.pointerDirection)
-                            {
-                                case "Top":
-                                    rotationAngel = 0f;
-                                    break;
-                                case "Bottom":
-                                    rotationAngel = 180f;
-                                    break;
-                                case "Left":
-                                    rotationAngel = 90f;
-                                    break;
-                                case "Right":
-                                    rotationAngel = -90f;
-                                    break;
-                                case "TopLeft":
-                                    rotationAngel = -45f;
-                                    break;
-                                case "TopRight":
-                                    rotationAngel = 45f;
-                                    break;
-                                case "BottomLeft":
-                                    rotationAngel = -135f;
-                                    break;
-                                case "BottomRight":
-                                    rotationAngel = 135f;
-                                    break;
-                            }
-
-                            Quaternion newRotation = Quaternion.Euler(0, 0, rotationAngel);
-                            pointerIcon.transform.rotation = newRotation;
-                        }
-                    }
-
                     darkBackground.SetActive(false);
                     mask.gameObject.SetActive(false);
                     dialogBackground.SetActive(false);
@@ -401,6 +447,10 @@ dialogBackground.SetActive(true);
                 if (_prevUiPart.GetComponent<Button>())
                 {
                     _prevUiPart.GetComponent<Button>().onClick.RemoveListener(NextTip);
+                }
+                else
+                {
+                    _pointerEnv.GetComponent<SpriteRenderer>().enabled = false;
                 }
 
                 break;
