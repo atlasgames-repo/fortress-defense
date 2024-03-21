@@ -10,19 +10,22 @@ public class GameTutorialManager : MonoBehaviour
     
     void Start()
     {
+
         setup = FindObjectOfType<GameTutorialSetup>();
        
         if (!inMenu)
         {
-         // if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0)
-         // {
-                GameObject obj = Instantiate(setup.SceneTutorial(),
-                    FindObjectOfType<MenuManager>().transform.position, Quaternion.identity,
-                    FindObjectOfType<MenuManager>().transform);
-                obj.GetComponent<GameTutorial>().enabled = true;
-                obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
-                GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
-           // }
+         if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0)
+         {
+             GameObject obj = Instantiate(setup.SceneTutorial(),
+                 FindObjectOfType<MenuManager>().transform.position, Quaternion.identity,
+                 FindObjectOfType<MenuManager>().transform);
+             obj.GetComponent<GameTutorial>().enabled = true;
+             obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
+             GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
+         }
+        GameObject.FindWithTag("Pointer").transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+
         }
     }
 

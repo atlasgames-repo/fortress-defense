@@ -47,8 +47,8 @@ public class GameTutorial : MonoBehaviour
     private int _childIndex;
     private Transform _buttonParent;
     private GameObject _uiPartClone;
-    private Transform _pointerEnv;
-    private Transform _pointerPlacerEnv;
+    public Transform _pointerEnv;
+    public Transform _pointerPlacerEnv;
     [Serializable]
     public class TipSetup
     {
@@ -90,10 +90,7 @@ public class GameTutorial : MonoBehaviour
         _tipOrder = -1;
         StartCoroutine(OpenTutorialAtStart());
         pointerIcon.gameObject.SetActive(false);
-        if (PlayerPrefs.GetInt("GameTutorial" + tutorialName) != 1)
-        {
-            //play tutorial
-        }
+        
 
         _pointerEnv = GameObject.FindWithTag("Pointer").transform;
         _pointerPlacerEnv = GameObject.Find("PointerPlacer").transform;
