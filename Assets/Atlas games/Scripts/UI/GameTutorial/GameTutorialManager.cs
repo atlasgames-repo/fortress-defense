@@ -8,24 +8,18 @@ public class GameTutorialManager : MonoBehaviour
     public GameTutorialSetup setup;
     public bool inMenu = false;
     
-    void Start()
-    {
-
+    void Start() {
         setup = FindObjectOfType<GameTutorialSetup>();
-       
-        if (!inMenu)
-        {
-         if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0)
-         {
-             GameObject obj = Instantiate(setup.SceneTutorial(),
-                 FindObjectOfType<MenuManager>().transform.position, Quaternion.identity,
-                 FindObjectOfType<MenuManager>().transform);
-             obj.GetComponent<GameTutorial>().enabled = true;
-             obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
-             GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
-         }
+        if (!inMenu) {
         GameObject.FindWithTag("Pointer").transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
-
+            if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0) {
+                GameObject setup_obj = setup.SceneTutorial();
+                if (!setup_obj) return;
+                GameObject obj = Instantiate(setup.SceneTutorial(), FindObjectOfType<MenuManager>().transform.position, Quaternion.identity, FindObjectOfType<MenuManager>().transform);
+                obj.GetComponent<GameTutorial>().enabled = true;
+                obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
+                GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
+            }
         }
     }
 
