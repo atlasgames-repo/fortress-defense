@@ -26,19 +26,23 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     public float increaseEnemyWaitDifficultyRate = 0.2f;
     private float[] _enemyCounts;
     public float initialWaitAmount = 3;
+    private bool _nightMode = false;
+    private float _nightModeXpMultiplier = 1f;
     [HideInInspector] public int waveCount;
 
     int totalEnemy, currentSpawn;
 
     void Start()
     {
-
         if (GameLevelSetup.Instance)
         {
             if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless)
             {
                 GetComponent<LevelEnemyManager>().enabled = false;
             }
+
+            _nightMode = GameLevelSetup.Instance.NightMode();
+            _nightModeXpMultiplier = GameLevelSetup.Instance.NightModeXpMultiplier();
             enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
             increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();
             increaseEnemyAttackDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAttackDifficultyRate();
@@ -46,7 +50,6 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             increaseEnemyAmountDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAmountDifficultyRate();
             increaseEnemyWaitDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyWaitDifficultyRate();
             initialWaitAmount = GameLevelSetup.Instance.InitialWaitAmount();
-
         }
 
         _enemies = new GameObject[enemiesList.Length];
@@ -56,11 +59,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             _enemyCounts[a] = enemiesList[a].initialCount;
             _enemies[a] = enemiesList[a].enemyObject;
         }
-
     }
-
-
-
 
 
     // generate a new wave harder than last
@@ -221,6 +220,18 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     _temp.SetActive(true);
                     //_temp.transform.localPosition = Vector2.zero;
                     listEnemySpawned.Add(_temp);
+                    if (_nightMode)
+                    {
+                        _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(
+                            _temp.GetComponent<SmartEnemyGrounded>().health *
+                            _nightModeXpMultiplier);
+                        _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(
+                            _temp.GetComponent<GiveExpWhenDie>().expMax *
+                            _nightModeXpMultiplier);
+                        _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(
+                            _temp.GetComponent<GiveExpWhenDie>().expMin *
+                            _nightModeXpMultiplier);
+                    }
 
                     currentSpawn++;
                     MenuManager.Instance.UpdateEnemyWavePercent(currentSpawn, totalEnemy);
@@ -235,11 +246,9 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             }
 
             EnemyWaves = new EnemyWave[0];
-
-
-
         }
     }
+
     void Update()
     {
         if (EnemyWaves.Length == 0)
@@ -258,6 +267,4 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
         return false;
     }
-
-
 }

@@ -43,9 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10855318d3b18864dac9125a2f68e835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 33
-  defaultExp: 325
-  backgroundSprite: {fileID: 21300000, guid: 819a86761329b794f93bb189d863d825, type: 3}
+  enemiesList: []
+  type: 1
+  defaultExp: 300
   Waves:
   - wait: 0
     enemySpawns:
@@ -61,51 +61,13 @@ MonoBehaviour:
       BossScale: 1.599
       BossMinExp: 99
       BossMaxExp: 90
-    - wait: 0
-      enemy: {fileID: 1384076305360503900, guid: 71d92f6a73d83a648b515b6a3ba1a113,
-        type: 3}
-      numberEnemy: 25
-      rate: 1
-      customHealth: 700
-      customSpeed: 0.7
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.599
-      BossMinExp: 99
-      BossMaxExp: 90
-    - wait: 0
-      enemy: {fileID: 8885830814786365834, guid: 8a42c3f4494766942b7362c1737df6f9,
-        type: 3}
-      numberEnemy: 5
-      rate: 1
-      customHealth: 700
-      customSpeed: 0.7
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.599
-      BossMinExp: 99
-      BossMaxExp: 90
-    - wait: 0
-      enemy: {fileID: 7750709616934011868, guid: 867afff3257836d4083e111950f04e86,
-        type: 3}
-      numberEnemy: 10
-      rate: 1
-      customHealth: 700
-      customSpeed: 0.7
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.599
-      BossMinExp: 99
-      BossMaxExp: 90
-    - wait: 0
-      enemy: {fileID: 7410894354902345084, guid: 0456569c346a8cc40b693ef04ff40a03,
-        type: 3}
-      numberEnemy: 30
-      rate: 1
-      customHealth: 700
-      customSpeed: 0.7
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.599
-      BossMinExp: 99
-      BossMaxExp: 90
+  increaseEnemySpeedDifficultyRate: 0.05
+  increaseEnemyAttackDifficultyRate: 0.1
+  increaseEnemyHealthDifficultyRate: 0.1
+  increaseEnemyAmountDifficultyRate: 0.4
+  increaseEnemyWaitDifficultyRate: 0.2
+  initialWaitAmount: 3
+  level: 33
+  backgroundSprite: {fileID: 21300000, guid: 819a86761329b794f93bb189d863d825, type: 3}
+  nightMode: 0
+  nightXpMultiplier: 0
