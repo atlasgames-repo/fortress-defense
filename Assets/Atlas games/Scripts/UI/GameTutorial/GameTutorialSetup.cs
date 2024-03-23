@@ -5,18 +5,20 @@ using UnityEngine;
 
 public class GameTutorialSetup : MonoBehaviour
 {
-    public GameTutorial[] tutorials;
-    public void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+    public GameObject[] tutorials;
+   public void Awake()
+   {
+       DontDestroyOnLoad(gameObject);
+   }
 
-    public GameTutorial SceneTutorial()
+    public GameObject SceneTutorial()
     {
-        foreach (var obj in tutorials)
+        foreach (GameObject obj in tutorials)
         {
-            if (obj.level == GlobalValue.levelPlaying)
+            if (obj.GetComponent<GameTutorial>().level == GlobalValue.levelPlaying)
+            {
                 return obj;
+            }
         }
 
         return null;

@@ -19,7 +19,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
         Instance = this;
     }
 
-    int totalEnemy, currentSpawn;
+    [HideInInspector]public int totalEnemy, currentSpawn;
 
     // Start is called before the first frame update
     void Start()

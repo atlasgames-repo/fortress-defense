@@ -33,7 +33,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     [HideInInspector] public int waveCount;
     public GameObject WaveCountUI;
 
-    int totalEnemy, currentSpawn;
+    
 
     void Awake()
     {
