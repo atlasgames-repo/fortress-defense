@@ -75,9 +75,9 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         }
 
         //check hit target
-        RaycastHit2D hit = Physics2D.Linecast(oldPos, transform.position, LayerCollision);
+        RaycastHit2D[] hit = Physics2D.LinecastAll(oldPos, transform.position, LayerCollision);
 
-        if (hit)
+        if (hit.Length > 0)
         {
             isHit = Hit(hit);
         }
@@ -112,7 +112,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
     }
 
-    bool Hit(RaycastHit2D other)
+    bool Hit(RaycastHit2D[] other)
     {
         Player_Archer _owner = null;
         if (Owner)
@@ -120,22 +120,32 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
         bool trg = _owner != null && _owner.is_manual_enable;
         int trgID = trg ? _owner.manual_targeted_enemy.GetInstanceID() : 0;
-
-        if (_owner != null && trg && trgID != other.collider.gameObject.GetInstanceID())
+        GameObject _other = null;
+        Vector2 point = Vector2.zero;
+        foreach (RaycastHit2D item in other) {
+            if (item.collider.gameObject.GetInstanceID() == trgID) {
+                _other = item.collider.gameObject;
+                point = item.point;
+                break;
+            }
+        }
+        if (_other == null)
+            return false;
+        if (_owner != null && trg && trgID != _other.GetInstanceID())
             return false;
 
-        transform.position = other.point + (Vector2)(transform.position - transform.Find("head").position);
-        var takeDamage = (ICanTakeDamage)other.collider.gameObject.GetComponent(typeof(ICanTakeDamage));
+        transform.position = point + (Vector2)(transform.position - transform.Find("head").position);
+        var takeDamage = (ICanTakeDamage)_other.GetComponent(typeof(ICanTakeDamage));
         // GlobalValue.Debug($"Can take damage: {takeDamage}");
         if (takeDamage != null)
         {
-            OnCollideTakeDamage(other.collider, takeDamage);
+            OnCollideTakeDamage(_other.GetComponent<Collider2D>(), takeDamage);
             if (criticalDamage)
-                FloatingTextManager.Instance.ShowText($"CRITICAL X{critMulti.ToString("0.0")}", Vector2.up, Color.yellow, other.collider.gameObject.transform.position, 30);
+                FloatingTextManager.Instance.ShowText($"CRITICAL X{critMulti.ToString("0.0")}", Vector2.up, Color.yellow, _other.transform.position, 30);
 
         }
         else
-            OnCollideOther(other.collider);
+            OnCollideOther(_other.GetComponent<Collider2D>());
         //}
         return true;
     }
