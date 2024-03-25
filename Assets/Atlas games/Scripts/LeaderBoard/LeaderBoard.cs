@@ -48,7 +48,7 @@ public class LeaderBoard : MonoBehaviour
     }
     public async void Get_user()
     {
-        ShowData();
+        if (listOfUsers.data.Length > 0)ShowData();
         _leaderboardResponse = await APIManager.instance.Get_leader_board();
         listOfUsers.data = _leaderboardResponse.results;
         ShowData();
