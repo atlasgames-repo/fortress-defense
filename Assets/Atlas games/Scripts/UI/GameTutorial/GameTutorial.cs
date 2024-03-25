@@ -92,9 +92,12 @@ public class GameTutorial : MonoBehaviour
         pointerIcon.gameObject.SetActive(false);
         
 
-        _pointerEnv = GameObject.FindWithTag("Pointer").transform;
-        _pointerPlacerEnv = GameObject.Find("PointerPlacer").transform;
-        _pointerEnv.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        GameObject pointer = GameObject.FindWithTag("Pointer");
+        GameObject pointer_placer = GameObject.Find("PointerPlacer");
+        if (pointer) _pointerEnv = pointer.transform;
+        if (pointer_placer) _pointerPlacerEnv = pointer_placer.transform;
+        if (_pointerEnv)
+            _pointerEnv.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
     }
 
 // open tutorial if never watched
