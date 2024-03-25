@@ -96,9 +96,9 @@ public class APIManager : MonoBehaviour
         string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
         await Get<object>(route: "/achivements/add", auth_token: User.Token, parameters: param);
     }
-    public async Task<AchievementModel[]> Get_achivements()
+    public async Task<AchievementModel> Get_achivements()
     {
-        return await Get<AchievementModel[]>(route: "/achivements", auth_token: User.Token);
+        return await Get<AchievementModel>(route: "/achivements", auth_token: User.Token);
     }
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
@@ -131,12 +131,27 @@ public class APIManager : MonoBehaviour
         return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
     }
 
+    public async Task<LeaderBoardResponseModel> Get_leader_board()
+    {
+        LeaderBoardParams param = new LeaderBoardParams {
+            game_id = GAME_ID,
+            type = "all"
+        };
+        return await Get<LeaderBoardResponseModel>(route: "/games/rankings", auth_token: User.Token,parameters:param.ToParams);
+    }
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
         route: "/user/gem",
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
         auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
+    }
+    public async Task<RxpRequestModel> Request_Rxp(RxpRequestModel parames = null)
+    {
+        return await Get<RxpRequestModel>(
+            route: "/user/rxp",
+            parameters: parames == null ? new RxpRequestModel().ToParams : parames.ToParams,
+            auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }
     #endregion
 
@@ -240,6 +255,9 @@ public class APIManager : MonoBehaviour
             {
                 throw new System.Exception(message: "Task cancelled");
             }
+            print(req.downloadHandler.text);
+            print(res);
+            print(User.Token);
             return res;
         }
     }

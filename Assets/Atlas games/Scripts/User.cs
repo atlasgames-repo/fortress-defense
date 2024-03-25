@@ -45,6 +45,28 @@ public class User : MonoBehaviour
             UserResponse _UserProfile = UserProfile;
             _UserProfile.uxp += value;
             UserProfile = _UserProfile;
+          //  Update_Rxp(new UserUpdate(_gem: value));
+        }
+    }
+    public static int Rxp
+        {
+            get { return UserProfile.rxp; }
+            set
+            {
+                UserResponse _UserProfile = UserProfile;
+                _UserProfile.rxp += value;
+                UserProfile = _UserProfile;
+            }
+        }
+
+    public static int RxpTotal
+    {
+        get { return UserProfile.rxpTotal; }
+        set
+        {
+            UserResponse _UserProfile = UserProfile;
+            _UserProfile.rxpTotal += value;
+            UserProfile = _UserProfile;
         }
     }
     public static int Level
@@ -66,6 +88,11 @@ public class User : MonoBehaviour
         await APIManager.instance.Request_Gem(new GemRequestModel(_amount: user.gem.ToString()));
         Get_User_Eeventually();
     }
+    private static async void Update_Rxp(UserUpdate user)
+    {
+        await APIManager.instance.Request_Rxp(new RxpRequestModel(_amount: user.gem.ToString()));
+        Get_User_Eeventually();
+    }
     public static void Get_User_Eeventually()
     {
         Get_user();
@@ -75,6 +102,8 @@ public class User : MonoBehaviour
         UserResponse user_response = await APIManager.instance.Check_token();
         user_response.coin = UserProfile.coin;
         user_response.uxp = UserProfile.uxp;
+        user_response.rxp = UserProfile.rxp;
+        user_response.rxpTotal = UserProfile.rxpTotal;
         UserProfile = user_response;
     }
 
