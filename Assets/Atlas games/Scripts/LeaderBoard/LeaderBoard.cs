@@ -48,13 +48,14 @@ public class LeaderBoard : MonoBehaviour
     }
     public async void Get_user()
     {
-       _leaderboardResponse = await APIManager.instance.Get_leader_board();
-       ShowData();
+        ShowData();
+        _leaderboardResponse = await APIManager.instance.Get_leader_board();
+        listOfUsers.data = _leaderboardResponse.results;
+        ShowData();
     }
 
     void ShowData()
     {
-        listOfUsers.data = _leaderboardResponse.results;
         loadingText.SetActive(false);
         scroll.gameObject.SetActive(true);
         scroll.OnFill += OnFillItem;
