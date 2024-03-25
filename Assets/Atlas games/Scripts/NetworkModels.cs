@@ -187,13 +187,13 @@ public class Message : BaseModel
 
 public static class NetworkStatusError
 {
-    public static readonly string TOKEN_LOGIN_FAIL = "ابتدا باید وارد شوید";
-    public static readonly string LOGIN_FAIL = "یوزرنیم یا پسوردو اشتباه وارد کردی، حواس پرت -__-";
-    public static readonly string UNKNOWN_ERROR = "مشکلی پیش اومده دوباره امتحان کن :(";
-    public static readonly string COULDNT_GET_UPDATES = "آپدیت ها پیدا نشد، دوباره تلاش کن، باشه ؟";
-    public static readonly string SUCCESSFUL_LOGIN = "ورود موفقیت آمیز، الان بازی لود میشه.";
-    public static readonly string FAIL_LOGIN = "مشکلی در ورود پیش اومده دوباره امتحان کن. :/";
-    public static readonly string USER_UPDATE_FAIL = "نتونستیم اطلاعتت رو آپدیت کنیم، گر صبر کنی یه ترشی حلوا سازی.";
+    public static readonly string TOKEN_LOGIN_FAIL = "Most login first";
+    public static readonly string LOGIN_FAIL = "Wrong login information";
+    public static readonly string UNKNOWN_ERROR = "Something might be wrong, try again later";
+    public static readonly string COULDNT_GET_UPDATES = "Didn't find any updates, try again later";
+    public static readonly string SUCCESSFUL_LOGIN = "Login successful!";
+    public static readonly string FAIL_LOGIN = "Something might be wrong with login, try again later";
+    public static readonly string USER_UPDATE_FAIL = "We couldn't fetch some data, please be patient!";
 
 }
 public class NetworkModels : BaseModel
