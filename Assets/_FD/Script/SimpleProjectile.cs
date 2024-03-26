@@ -8,6 +8,9 @@ public class SimpleProjectile : Projectile, ICanTakeDamage, IListener
     public int pointToGivePlayer = 100;
     public float timeToLive = 3;
 	public Sprite newBulletImage;
+	public AudioClip fire_sound;
+	[Range(0,1)]
+	public float fire_sound_volume = 0.5f;
 	public AudioClip soundHitEnemy;
 	[Range(0,1)]
 	public float soundHitEnemyVolume = 0.5f;
@@ -27,6 +30,8 @@ public class SimpleProjectile : Projectile, ICanTakeDamage, IListener
         timeToLiveCounter = timeToLive ;
     }
 	void Start(){
+		if (fire_sound)
+			SoundManager.PlaySfx(fire_sound, fire_sound_volume);
 		if (Explosion) {
 			rend = GetComponent<SpriteRenderer> ();
 //			rend.sprite = newBulletImage;

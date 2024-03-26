@@ -48,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -143,8 +145,10 @@ MonoBehaviour:
   pointToGivePlayer: 100
   timeToLive: 5
   newBulletImage: {fileID: 0}
-  soundHitEnemy: {fileID: 0}
-  soundHitEnemyVolume: 0.5
+  fire_sound: {fileID: 8300000, guid: f08584fa4d19b2148917971162fc4fa6, type: 3}
+  fire_sound_volume: 0.5
+  soundHitEnemy: {fileID: 8300000, guid: d09850c9a45d18a4795aeacb4878e43e, type: 3}
+  soundHitEnemyVolume: 0.3
   soundHitNothing: {fileID: 0}
   soundHitNothingVolume: 0.5
   ExplosionObj: {fileID: 7587624716690234243, guid: 0ffe2a5380c64a640830cf2a52799faa,
