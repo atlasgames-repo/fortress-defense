@@ -123,7 +123,13 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         GameObject _other = null;
         Vector2 point = Vector2.zero;
         foreach (RaycastHit2D item in other) {
-            if (item.collider.gameObject.GetInstanceID() == trgID) {
+            if (trg) {
+                if (item.collider.gameObject.GetInstanceID() == trgID) {
+                    _other = item.collider.gameObject;
+                    point = item.point;
+                    break;
+                }
+            } else {
                 _other = item.collider.gameObject;
                 point = item.point;
                 break;
