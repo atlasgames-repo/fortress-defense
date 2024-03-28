@@ -115,6 +115,10 @@ public class APIManager : MonoBehaviour
         UserResponse res = await Get<UserResponse>(route: "/user/details", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
+    public async Task<UserResponse> GetRXP() {
+        UserResponse res = await Get<UserResponse>(route: "/user/xp", parameters:$"?game_id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        return res;
+    }
 
     public async Task<UserResponse> UpdateUser(UserUpdate userdata)
     {
@@ -149,7 +153,7 @@ public class APIManager : MonoBehaviour
     public async Task<RxpRequestModel> Request_Rxp(RxpRequestModel parames = null)
     {
         return await Get<RxpRequestModel>(
-            route: "/user/rxp",
+            route: "/user/xp",
             parameters: parames == null ? new RxpRequestModel().ToParams : parames.ToParams,
             auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }

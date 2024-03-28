@@ -132,7 +132,7 @@ public class RxpRequestModel : BaseModel
     public RxpRequestModel(string _game_id = null, string _amount = null, string _date = null)
     {
         amount = _amount;
-        game_id = _game_id == null ? _game_id : "442";
+        game_id = _game_id == null ? "442" : _game_id;
         date = _date;
     }
 }
@@ -160,7 +160,7 @@ public class Authentication : BaseModel
 public class UserResponse : BaseModel
 {
     public string first_name, last_name, display_name, email, username, registered_date, avatar;
-    public int coin, gem, uxp, rxp, rxpTotal;
+    public int coin, gem, uxp, rxp, rxpTotal,xp;
 }
 
 [Serializable]
