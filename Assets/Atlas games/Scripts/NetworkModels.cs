@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using Newtonsoft.Json;
+using UnityEngine.AddressableAssets;
 
 public class BaseModel
 {
@@ -36,6 +37,18 @@ public class AssetBundleUpdateResponse : BaseModel
 }
 
 [Serializable]
+public class AssetBundleGeneratorV2
+{
+    public AssetReferenceGameObject asset_bundle;
+    public string scene_name;
+    public float percent;
+    public bool is_complete = false;
+    public string root;
+    public GameObject obj;
+    public bool is_root_world = false, has_depends = false;
+    public string dependence, dependence_type;
+}
+[Serializable]
 public class AssetBundleGenerator
 {
     public string name;
@@ -63,6 +76,38 @@ public class GemResponseModel : CommonErrorResponse
 {
     public int gem, rank;
 }
+
+[Serializable]
+public class data
+{
+    public int status;
+}
+
+[Serializable]
+public class LeaderboardData: BaseModel
+{
+    // data for leader board that has to change based on postman.
+    public int user_id;
+    public string user_name;
+    public string user_first_name;
+    public string user_last_name;
+    public string user_link;
+    public string user_avatar;
+    public int points;
+    public int rank;
+    //public string imageUrl;
+    // public int rxp;
+}
+[Serializable]
+public class LeaderBoardParams: BaseModel {
+    public string game_id;
+    public string type;
+}
+[Serializable]
+public class LeaderBoardResponseModel : CommonErrorResponse
+{
+    public LeaderboardData[] results;
+}
 [Serializable]
 public class GemRequestModel : BaseModel
 {
@@ -74,6 +119,20 @@ public class GemRequestModel : BaseModel
     {
         amount = _amount;
         game_id = _game_id == null ? _game_id : "442";
+        date = _date;
+    }
+}
+
+[Serializable]
+public class RxpRequestModel : BaseModel
+{
+    public string amount = null;
+    public string game_id = "442";
+    public string date = null;
+    public RxpRequestModel(string _game_id = null, string _amount = null, string _date = null)
+    {
+        amount = _amount;
+        game_id = _game_id == null ? "442" : _game_id;
         date = _date;
     }
 }
@@ -101,9 +160,9 @@ public class Authentication : BaseModel
 public class UserResponse : BaseModel
 {
     public string first_name, last_name, display_name, email, username, registered_date, avatar;
-    public int coin, gem, uxp;
-
+    public int coin, gem, uxp, rxp, rxpTotal,xp;
 }
+
 [Serializable]
 public class UserUpdate : BaseModel
 {
@@ -124,18 +183,17 @@ public class Message : BaseModel
 {
     public string server = "";
     public string auth = "";
-
 }
 
 public static class NetworkStatusError
 {
-    public static readonly string TOKEN_LOGIN_FAIL = "ابتدا باید وارد شوید";
-    public static readonly string LOGIN_FAIL = "یوزرنیم یا پسوردو اشتباه وارد کردی، حواس پرت -__-";
-    public static readonly string UNKNOWN_ERROR = "مشکلی پیش اومده دوباره امتحان کن :(";
-    public static readonly string COULDNT_GET_UPDATES = "آپدیت ها پیدا نشد، دوباره تلاش کن، باشه ؟";
-    public static readonly string SUCCESSFUL_LOGIN = "ورود موفقیت آمیز، الان بازی لود میشه.";
-    public static readonly string FAIL_LOGIN = "مشکلی در ورود پیش اومده دوباره امتحان کن. :/";
-    public static readonly string USER_UPDATE_FAIL = "نتونستیم اطلاعتت رو آپدیت کنیم، گر صبر کنی یه ترشی حلوا سازی.";
+    public static readonly string TOKEN_LOGIN_FAIL = "Most login first";
+    public static readonly string LOGIN_FAIL = "Wrong login information";
+    public static readonly string UNKNOWN_ERROR = "Something might be wrong, try again later";
+    public static readonly string COULDNT_GET_UPDATES = "Didn't find any updates, try again later";
+    public static readonly string SUCCESSFUL_LOGIN = "Login successful!";
+    public static readonly string FAIL_LOGIN = "Something might be wrong with login, try again later";
+    public static readonly string USER_UPDATE_FAIL = "We couldn't fetch some data, please be patient!";
 
 }
 public class NetworkModels : BaseModel

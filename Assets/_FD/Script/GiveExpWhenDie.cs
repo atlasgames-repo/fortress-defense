@@ -6,14 +6,15 @@ public class GiveExpWhenDie : MonoBehaviour
 {
     public int expMin = 5;
     public int expMax = 7;
-
+    private bool _isEndless = false;
     public void GiveExp()
     {
+        int random = Random.Range(expMin, expMax); 
         //SoundManager.PlaySfx(SoundManager.Instance.coinCollect);
-        int random = Random.Range(expMin, expMax);
         //User.Coin = random;
-        GameManager.Instance.AddExp(random, transform);
-
-        //FloatingTextManager.Instance.ShowText((int)random + "", Vector2.up * 1, Color.yellow, transform.position);
+        GameManager.Instance.UpdateXp(random,transform);
+        FloatingTextManager.Instance.ShowText((int)random + "", Vector2.up * 1, Color.yellow, transform.position);
     }
+
+   
 }
