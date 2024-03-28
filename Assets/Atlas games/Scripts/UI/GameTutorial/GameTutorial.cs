@@ -249,6 +249,7 @@ dialogBackground.SetActive(true);
                         {
                             if (pointerObject.GetChild(a).name == nextSetup.pointerDirection)
                             {
+                                pointerIcon.gameObject.SetActive(true);
                                 pointerIcon.transform.position = pointerObject.GetChild(a).position;
                                 float rotationAngel = 0f;
                                 switch (nextSetup.pointerDirection)
