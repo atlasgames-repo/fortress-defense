@@ -53,6 +53,7 @@ MonoBehaviour:
     type: 3}
   FX_Blow: {fileID: 7587624716690234243, guid: 0ffe2a5380c64a640830cf2a52799faa, type: 3}
   bullet: {fileID: 6686378747336277193, guid: b5ded0b86258f854c990f4a75d9ac1c8, type: 3}
+  BossSpawnPoint: {fileID: 2329159576667478972}
   spawnPositions:
   - {fileID: 3620862421447246567}
   - {fileID: 3620862422708104393}
@@ -63,6 +64,8 @@ MonoBehaviour:
   EnemyWaves: []
   bossManeger: {fileID: 0}
   listEnemySpawned: []
+  totalEnemy: 0
+  currentSpawn: 0
   enemiesList:
   - enemyObject: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
       type: 3}
@@ -121,6 +124,7 @@ MonoBehaviour:
   initialWaitAmount: 3
   level_enemy_manager: {fileID: 0}
   waveCount: 0
+  WaveCountUI: {fileID: 0}
 --- !u!1 &3620862420802389361
 GameObject:
   m_ObjectHideFlags: 0
