@@ -40,7 +40,7 @@ public class AddressableManager : MonoBehaviour
             HandleObject(handle.Result);
         }
         else {
-            APIManager.instance.RunStatus("اسست مورد نظر دانلود نشد، مجدد امتحان کن!",Color.red);
+            APIManager.instance.RunStatus("Couldn't download assets! try later.",Color.red);
             APIManager.instance.RunStatus(handle.Status.ToString(),Color.red);
         }
     }

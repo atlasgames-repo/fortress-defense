@@ -59,12 +59,13 @@ public class APIManager : MonoBehaviour
     // Start is called before the first frame update
     public async void RunStatus(string message, Color? color = null)
     {
-        Transform root = GameObject.FindGameObjectWithTag("Canves").transform;
+        Transform root = GameObject.FindGameObjectWithTag("StatusCanvas").transform;
+        float added_delay = root.childCount;
         GameObject obj = Instantiate(status, root, false);
         obj.GetComponentInChildren<RTLTMPro.RTLTextMeshPro>().text = message;
         if (color != null)
             obj.GetComponent<Image>().color = (Color)color;
-        await DestroyDelay(obj, status_destroy);
+        await DestroyDelay(obj, status_destroy + added_delay);
     }
     public async Task DestroyDelay(GameObject obj, float delay)
     {
