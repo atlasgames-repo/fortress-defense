@@ -210,8 +210,12 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         healthBar.Init(transform, (Vector3)healthBarOffset);
 
         anim = GetComponent<Animator>();
-        if (is_spine)
-            transform.GetChild(0).TryGetComponent(out skeletonAnimation);
+        if (is_spine) {
+            foreach (Transform item in transform) {
+                item.TryGetComponent(out skeletonAnimation);
+                if (skeletonAnimation) break;
+            }
+        }
         checkTarget = GetComponent<CheckTargetHelper>();
 
         switch (startBehavior)

@@ -55,7 +55,7 @@ MonoBehaviour:
     - wait: 0
       enemy: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
         type: 3}
-      numberEnemy: 6
+      numberEnemy: 10
       rate: 0.5
       customHealth: 0
       customSpeed: 0
@@ -302,15 +302,15 @@ MonoBehaviour:
   - enemyObject: {fileID: 2742581098072274894, guid: e08cd14326358354b9acc253cee4fa3d,
       type: 3}
     initialCount: 5
+  - enemyObject: {fileID: 3697426553599540029, guid: ebf5b7a6fb18dad4c971446be774d569,
+      type: 3}
+    initialCount: 7
   - enemyObject: {fileID: 6513545254321279005, guid: 2c5556c3a69136f43b0397e19407d0e2,
       type: 3}
     initialCount: 6
   - enemyObject: {fileID: 3924842065213229019, guid: e9c59e2fd78df8346a4f538953463f51,
       type: 3}
     initialCount: 6
-  - enemyObject: {fileID: 3697426553599540029, guid: ebf5b7a6fb18dad4c971446be774d569,
-      type: 3}
-    initialCount: 7
   - enemyObject: {fileID: 3697426553599540029, guid: c70568d086a8a824c88c51e4779576e6,
       type: 3}
     initialCount: 7
@@ -357,7 +357,7 @@ MonoBehaviour:
       type: 3}
     initialCount: 14
   type: 0
-  defaultExp: 65
+  defaultExp: 30
   Waves:
   - wait: 0
     enemySpawns:
@@ -422,9 +422,9 @@ MonoBehaviour:
       BossMinExp: 10
       BossMaxExp: 20
   increaseEnemySpeedDifficultyRate: 0.02
-  increaseEnemyAttackDifficultyRate: 0.205
-  increaseEnemyHealthDifficultyRate: 0.126
-  increaseEnemyAmountDifficultyRate: 0.507
+  increaseEnemyAttackDifficultyRate: 0.1
+  increaseEnemyHealthDifficultyRate: 0.3
+  increaseEnemyAmountDifficultyRate: 0.6
   increaseEnemyWaitDifficultyRate: 0.445
   initialWaitAmount: 0.276
   level: 1001
