@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using UnityEngine.Android;
 using UnityEditor;
+using UnityEngine.AI;
 
 public class APIManager : MonoBehaviour
 {
@@ -59,18 +60,22 @@ public class APIManager : MonoBehaviour
     // Start is called before the first frame update
     public async void RunStatus(string message, Color? color = null)
     {
-        Transform root = GameObject.FindGameObjectWithTag("StatusCanvas").transform;
+        Transform top_parent = GameObject.FindGameObjectWithTag("StatusCanvas").transform;
+        GameObject root_parent = top_parent.transform.GetChild(0).gameObject;
+        Transform root = top_parent.transform.GetChild(0).GetChild(0).GetChild(0);
+        if (!root_parent.activeInHierarchy) root_parent.SetActive(true);
         float added_delay = root.childCount;
         GameObject obj = Instantiate(status, root, false);
         obj.GetComponentInChildren<RTLTMPro.RTLTextMeshPro>().text = message;
         if (color != null)
             obj.GetComponent<Image>().color = (Color)color;
-        await DestroyDelay(obj, status_destroy + added_delay);
+        await DestroyDelay(obj, status_destroy + added_delay, root);
     }
-    public async Task DestroyDelay(GameObject obj, float delay)
+    public async Task DestroyDelay(GameObject obj, float delay, Transform root)
     {
         await Task.Delay((int)delay * 1000);
         DestroyImmediate(obj);
+        if (root.childCount <= 0) root.transform.parent.parent.gameObject.SetActive(false);
     }
     public IEnumerator LoadAsynchronously()
     {
