@@ -108,7 +108,6 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         //    AffectZoneManager.Instance.ActiveZone(AffectZoneType.Cure, this);
         StartCoroutine(AffectZoneManager.Instance.Cure(this,coolDown));
         SoundManager.Click();
-        Debug.LogError("Cure clicked");
     }
 
     void ActiveFrozen()

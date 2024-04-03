@@ -59,12 +59,13 @@ public class APIManager : MonoBehaviour
     // Start is called before the first frame update
     public async void RunStatus(string message, Color? color = null)
     {
-        Transform root = GameObject.FindGameObjectWithTag("Canves").transform;
+        Transform root = GameObject.FindGameObjectWithTag("StatusCanvas").transform;
+        float added_delay = root.childCount;
         GameObject obj = Instantiate(status, root, false);
         obj.GetComponentInChildren<RTLTMPro.RTLTextMeshPro>().text = message;
         if (color != null)
             obj.GetComponent<Image>().color = (Color)color;
-        await DestroyDelay(obj, status_destroy);
+        await DestroyDelay(obj, status_destroy + added_delay);
     }
     public async Task DestroyDelay(GameObject obj, float delay)
     {
@@ -96,9 +97,9 @@ public class APIManager : MonoBehaviour
         string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
         await Get<object>(route: "/achivements/add", auth_token: User.Token, parameters: param);
     }
-    public async Task<AchievementModel[]> Get_achivements()
+    public async Task<AchievementModel> Get_achivements()
     {
-        return await Get<AchievementModel[]>(route: "/achivements", auth_token: User.Token);
+        return await Get<AchievementModel>(route: "/achivements", auth_token: User.Token);
     }
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
@@ -113,6 +114,10 @@ public class APIManager : MonoBehaviour
     public async Task<UserResponse> Check_token()
     {
         UserResponse res = await Get<UserResponse>(route: "/user/details", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        return res;
+    }
+    public async Task<UserResponse> GetRXP() {
+        UserResponse res = await Get<UserResponse>(route: "/user/xp", parameters:$"?game_id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
 
@@ -131,12 +136,27 @@ public class APIManager : MonoBehaviour
         return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
     }
 
+    public async Task<LeaderBoardResponseModel> Get_leader_board()
+    {
+        LeaderBoardParams param = new LeaderBoardParams {
+            game_id = GAME_ID,
+            type = "all"
+        };
+        return await Get<LeaderBoardResponseModel>(route: "/games/rankings", auth_token: User.Token,parameters:param.ToParams);
+    }
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
         route: "/user/gem",
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
         auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
+    }
+    public async Task<RxpRequestModel> Request_Rxp(RxpRequestModel parames = null)
+    {
+        return await Get<RxpRequestModel>(
+            route: "/user/xp",
+            parameters: parames == null ? new RxpRequestModel().ToParams : parames.ToParams,
+            auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }
     #endregion
 
@@ -240,6 +260,9 @@ public class APIManager : MonoBehaviour
             {
                 throw new System.Exception(message: "Task cancelled");
             }
+            print(req.downloadHandler.text);
+            print(res);
+            print(User.Token);
             return res;
         }
     }
