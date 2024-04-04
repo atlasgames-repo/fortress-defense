@@ -941,6 +941,8 @@ MonoBehaviour:
   - {fileID: 1326299604}
   isChecking: 0
   isAffectZoneWorking: 0
+  healAmount: 0
+  cureSound: {fileID: 0}
 --- !u!114 &241749797 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5233113077639169449, guid: d1f8bad16af5bd6408637fda60294854,
@@ -7709,6 +7711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 0
   affectType: 2
   ownBtn: {fileID: 0}
   delayOnStart: 5
@@ -9392,6 +9395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b26a8cc76953e419a91cce5b7b24ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Key: 0
   timeSpeedUp: 2
   blinkingObj: {fileID: 2840579089220216803}
   speedTxt: {fileID: 6938511239251144656}
@@ -11756,6 +11760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 0
   affectType: 0
   ownBtn: {fileID: 0}
   delayOnStart: 5
@@ -11802,6 +11807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 0
   affectType: 1
   ownBtn: {fileID: 0}
   delayOnStart: 5
@@ -12322,6 +12328,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6168901444282779537, guid: c944f95f26027e34a9597b919fcef8ee,
+        type: 3}
+      propertyPath: objectsToPreload.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168901444282779537, guid: c944f95f26027e34a9597b919fcef8ee,
+        type: 3}
+      propertyPath: objectsToPreload.Array.data[9]
+      value: 
+      objectReference: {fileID: 2801727373539943079, guid: 37c1388434a012b428a32a09dd04855b,
+        type: 3}
+    - target: {fileID: 6168901444282779537, guid: c944f95f26027e34a9597b919fcef8ee,
+        type: 3}
+      propertyPath: objectsToPreloadTimes.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168901444282779537, guid: c944f95f26027e34a9597b919fcef8ee,
+        type: 3}
+      propertyPath: objectsToPreloadTimes.Array.data[9]
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6168901444282779541, guid: c944f95f26027e34a9597b919fcef8ee,
         type: 3}
       propertyPath: m_Name
