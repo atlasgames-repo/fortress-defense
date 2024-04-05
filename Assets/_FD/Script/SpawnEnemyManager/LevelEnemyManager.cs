@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelEnemyManager : MonoBehaviour, IListener
 {
     public static LevelEnemyManager Instance;
-    public GameObject FX_Smoke, FX_Blow;
+    public GameObject FX_Smoke, FX_Blow, FX_Explosion;
     public SimpleProjectile bullet;
     public Transform BossSpawnPoint;
     public Transform[] spawnPositions;
@@ -105,8 +105,8 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                             var throwAttack1 = _temp.GetComponent<EnemyThrowAttack>();
                             if (throwAttack1)
                             {
-                                throwAttack1.FX_Blow = FX_Blow;
-                                throwAttack1.FX_Smoke = FX_Smoke;
+                                throwAttack1.FX_Smoke = FX_Explosion;
+                                throwAttack1.FX_Blow = FX_Explosion;
                             }
 
                             if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
