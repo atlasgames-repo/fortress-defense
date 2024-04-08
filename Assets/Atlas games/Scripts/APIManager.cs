@@ -60,7 +60,8 @@ public class APIManager : MonoBehaviour
     // Start is called before the first frame update
     public async void RunStatus(string message, Color? color = null)
     {
-        Transform top_parent = GameObject.FindGameObjectWithTag("StatusCanvas").transform;
+        GameObject top_parent = GameObject.FindGameObjectWithTag("StatusCanvas");
+        if (!top_parent) return;
         GameObject root_parent = top_parent.transform.GetChild(0).gameObject;
         Transform root = top_parent.transform.GetChild(0).GetChild(0).GetChild(0);
         if (!root_parent.activeInHierarchy) root_parent.SetActive(true);

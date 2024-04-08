@@ -20,13 +20,14 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     }
 
     [HideInInspector]public int totalEnemy, currentSpawn;
-
+    public LevelWave.LevelType levelType;
     // Start is called before the first frame update
     void Start()
     {
+        levelType = GameLevelSetup.Instance.type();
         if (GameLevelSetup.Instance)
         {
-            if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Normal)
+            if (levelType == LevelWave.LevelType.Normal)
             {
                 bool is_true = TryGetComponent(out EndlessWaveGenerator waveGenerator);
                 if (is_true) waveGenerator.enabled = false;

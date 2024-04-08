@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject UI;
     public GameObject VictotyUI;
     public GameObject FailUI;
+    public GameObject LeaderBoardUI;
     public GameObject PauseUI;
     public GameObject LoadingUI;
     public GameObject HelperUI;
@@ -133,6 +134,7 @@ public class MenuManager : MonoBehaviour, IListener
     {
         UI.SetActive(false);
 
+        if (LevelEnemyManager.Instance.levelType == LevelWave.LevelType.Endless) LeaderBoardUI.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         FailUI.SetActive(true);
         if (LifeTTRSource.Life <= 1)
