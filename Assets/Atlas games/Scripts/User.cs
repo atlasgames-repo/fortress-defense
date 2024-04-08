@@ -105,7 +105,9 @@ public class User : MonoBehaviour
         user_response.coin = UserProfile.coin;
         user_response.uxp = UserProfile.uxp;
         user_response.rxp = user_rxp_response.xp;
+        user_response.points = user_rxp_response.points;
         user_response.rxpTotal = UserProfile.rxpTotal;
+        user_response.rank = user_rxp_response.rank;
         UserProfile = user_response;
     }
 

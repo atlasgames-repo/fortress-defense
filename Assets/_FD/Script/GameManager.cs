@@ -38,11 +38,11 @@ public class GameManager : MonoBehaviour
     }
 
     #region EXP
-    [ReadOnly] public int currentExp = 200;
+    public int currentExp = 200;
 
     public void UpdateXp(int amount, Transform instigator)
     {
-        if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Endless) {
+        if (LevelEnemyManager.Instance.levelType == LevelWave.LevelType.Endless) {
             AddRxp(amount,transform); 
             AddTotalRxp(amount);
             AddExp(amount, instigator);

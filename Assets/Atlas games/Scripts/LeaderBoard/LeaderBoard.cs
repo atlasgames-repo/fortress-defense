@@ -5,19 +5,35 @@ using System.Linq;
 using Mopsicus.InfiniteScroll;
 using Newtonsoft.Json;
 using Spine;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Networking;
 
 public class LeaderBoard : MonoBehaviour
 {
     public GameObject errorText;
     public GameObject loadingText;
+    public int items_height = 150;
+    public LeaderboardListItem self_object;
     public LeaderboardList listOfUsers;
     public  InfiniteScroll scroll;
     private LeaderBoardResponseModel _leaderboardResponse;
-    public void LoadLeaderboard()
-    {
-        GetData();
+    public bool in_game_mode = false;
+    private void OnEnable() {
+        if (in_game_mode) {
+            GetData();
+            OnSubmitData(User.UserProfile);
+        }
+    }
+    private void OnSubmitData(UserResponse user_data) {
+        if (!self_object) return;
+        LeaderboardData data = new LeaderboardData(){
+            user_name = user_data.display_name,
+            rank = user_data.rank,
+            points = user_data.points,
+        };
+        self_object.SetData(data,false);
     }
 
 
@@ -32,7 +48,7 @@ public class LeaderBoard : MonoBehaviour
 
      int OnHeightItem(int index)
     {
-        return 150;
+        return items_height;
     }
 
      void OnFillItem(int index, GameObject item)
