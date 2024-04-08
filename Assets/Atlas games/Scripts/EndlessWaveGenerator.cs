@@ -36,9 +36,9 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
     void Awake()
     {
-        levelType = GameLevelSetup.Instance.type();
         if (GameLevelSetup.Instance)
         {
+        levelType = GameLevelSetup.Instance.type();
             if (levelType == LevelWave.LevelType.Endless)
             {
                 level_enemy_manager.enabled = false;

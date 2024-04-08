@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MainMenuHomeScene : MonoBehaviour
 {
     public static MainMenuHomeScene Instance;
+    public GameObject HomeUI;
     public GameObject MapUI;
     public GameObject ShopUI;
     public GameObject TrophyUI,TrophyUIV2;
@@ -27,6 +28,8 @@ public class MainMenuHomeScene : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        if (HomeUI)
+            HomeUI.SetActive(false);
         if (Loading != null)
             Loading.SetActive(false);
         if (MapUI != null)
@@ -35,7 +38,18 @@ public class MainMenuHomeScene : MonoBehaviour
             Settings.SetActive(false);
         if (ShopUI)
             ShopUI.SetActive(false);
-
+        if (TrophyUI)
+            TrophyUI.SetActive(false);
+        if (TrophyUIV2)
+            TrophyUIV2.SetActive(false);
+        if (EventUI)
+            EventUI.SetActive(false);
+        if (CoinShopUI)
+            CoinShopUI.SetActive(false);
+        if (UpgradeUI)
+            UpgradeUI.SetActive(false);
+        if (LeaderBoardUI)
+            LeaderBoardUI.SetActive(false);
     }
 
     public void LoadScene()
@@ -66,6 +80,8 @@ public class MainMenuHomeScene : MonoBehaviour
             SoundManager.Instance.PauseMusic(false);
             SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
         }
+        yield return new WaitForSeconds(2);
+        HomeUI.SetActive(true);
     }
 
     void Update()

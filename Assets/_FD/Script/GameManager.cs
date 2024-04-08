@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region EXP
-    [ReadOnly] public int currentExp = 200;
+    public int currentExp = 200;
 
     public void UpdateXp(int amount, Transform instigator)
     {

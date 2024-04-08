@@ -24,9 +24,9 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     // Start is called before the first frame update
     void Start()
     {
-        levelType = GameLevelSetup.Instance.type();
         if (GameLevelSetup.Instance)
         {
+        levelType = GameLevelSetup.Instance.type();
             if (levelType == LevelWave.LevelType.Normal)
             {
                 bool is_true = TryGetComponent(out EndlessWaveGenerator waveGenerator);
