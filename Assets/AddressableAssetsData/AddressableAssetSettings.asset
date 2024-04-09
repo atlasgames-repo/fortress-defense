@@ -43,13 +43,31 @@ MonoBehaviour:
       - m_Id: eeb2aafc84add794b8b5791d28a098ae
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: 271cedcc7b9e491468edc41abf772cb9
-        m_Value: Bundles/[BuildTarget]
+        m_Value: Assets/StreamingAssets/com.unity.addressables/[Version]/[BuildTarget]
       - m_Id: 593c8154d5bad12418ea444ad734dc0f
-        m_Value: http://atlasgames.org:9000/fortress-defense/[BuildTarget]
+        m_Value: '{UnityEngine.Application.dataPath}/StreamingAssets/com.unity.addressables/[Version]/[BuildTarget]'
       - m_Id: a89257981047b394cad8cea7b312540d
-        m_Value: Bundles/[BuildTarget]
+        m_Value: Bundles/[Version]/[BuildTarget]
       - m_Id: 52c828c2f6c87304e90e6a4ef3d583ea
-        m_Value: http://atlasgames.org:9000/fortress-defense/[BuildTarget]
+        m_Value: http://atlasgames.org:9000/fortress-defense/[Version]/[BuildTarget]
+      - m_Id: 4e7ae2615a6460f489cbe4495dd02efc
+        m_Value: v1
+    - m_InheritedParent: 
+      m_Id: 73f49a480c15c2e4d8627f9c1c7cd820
+      m_ProfileName: local
+      m_Values:
+      - m_Id: eeb2aafc84add794b8b5791d28a098ae
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: 271cedcc7b9e491468edc41abf772cb9
+        m_Value: Assets/StreamingAssets/com.unity.addressables/[Version]/[BuildTarget]
+      - m_Id: 593c8154d5bad12418ea444ad734dc0f
+        m_Value: '{UnityEngine.Application.dataPath}/StreamingAssets/com.unity.addressables/[Version]/[BuildTarget]'
+      - m_Id: a89257981047b394cad8cea7b312540d
+        m_Value: Bundles/[Version]/[BuildTarget]
+      - m_Id: 52c828c2f6c87304e90e6a4ef3d583ea
+        m_Value: http://localhost:9000/fortress-defense/[Version]/[BuildTarget]
+      - m_Id: 4e7ae2615a6460f489cbe4495dd02efc
+        m_Value: v1
     m_ProfileEntryNames:
     - m_Id: eeb2aafc84add794b8b5791d28a098ae
       m_Name: BuildTarget
@@ -65,6 +83,9 @@ MonoBehaviour:
       m_InlineUsage: 0
     - m_Id: 52c828c2f6c87304e90e6a4ef3d583ea
       m_Name: RemoteLoadPath
+      m_InlineUsage: 0
+    - m_Id: 4e7ae2615a6460f489cbe4495dd02efc
+      m_Name: Version
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
@@ -87,5 +108,6 @@ MonoBehaviour:
   m_HostingServicesManager:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}
-    m_NextInstanceId: 0
-    m_RegisteredServiceTypeRefs: []
+    m_NextInstanceId: 2
+    m_RegisteredServiceTypeRefs:
+    - UnityEditor.AddressableAssets.HostingServices.HttpHostingService, Unity.Addressables.Editor
