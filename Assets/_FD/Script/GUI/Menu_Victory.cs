@@ -14,6 +14,7 @@ public class Menu_Victory : MonoBehaviour
     public GameObject Star1;
     public GameObject Star2;
     public GameObject Star3;
+    public GameObject Confetti_VFX;
 
     void Awake()
     {
@@ -23,11 +24,13 @@ public class Menu_Victory : MonoBehaviour
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
+        Confetti_VFX.SetActive(false);
     }
 
     IEnumerator Start()
     {
         SoundManager.PlaySfx(SoundManager.Instance.soundVictoryPanel);
+        Confetti_VFX.SetActive(true);
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
