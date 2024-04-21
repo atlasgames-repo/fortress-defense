@@ -1,6 +1,9 @@
 name: Unity Build Addressable
 
 on:
+    push:
+        branches:
+            - fix-content-build
     workflow_dispatch:
         inputs:
             customParameters:
