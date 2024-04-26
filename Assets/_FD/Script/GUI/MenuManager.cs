@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject StartUI;
     public GameObject UI;
     public GameObject VictotyUI;
+    public GameObject VictotyUIVFX;
     public GameObject FailUI;
     public GameObject PauseUI;
     public GameObject LoadingUI;
@@ -31,6 +32,7 @@ public class MenuManager : MonoBehaviour, IListener
         Instance = this;
         StartUI.SetActive(false);
         VictotyUI.SetActive(false);
+        VictotyUIVFX.SetActive(false);
         FailUI.SetActive(false);
         PauseUI.SetActive(false);
         LoadingUI.SetActive(false);
@@ -110,7 +112,7 @@ public class MenuManager : MonoBehaviour, IListener
         UI.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         VictotyUI.SetActive(true);
-
+        VictotyUIVFX.SetActive(true);
     }
 
 
