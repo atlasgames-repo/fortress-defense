@@ -41,7 +41,6 @@ public class AddressableManager : MonoBehaviour
         }
         else {
             APIManager.instance.RunStatus("Couldn't download assets! try later.",Color.red);
-            APIManager.instance.RunStatus(handle.Status.ToString(),Color.red);
         }
     }
     public void HandleObject(GameObject obj) {
