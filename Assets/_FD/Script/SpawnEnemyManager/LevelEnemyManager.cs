@@ -151,6 +151,25 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                                     _nightModeMultiplier);
                             }
 
+                            if (_temp.GetComponent<GiveCoinWhenDie>().useCustomNightMultiplierOnly)
+                            {
+                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax = Mathf.RoundToInt(
+                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax *
+                                    _temp.GetComponent<GiveCoinWhenDie>().customNightMultiplier);
+                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin = Mathf.RoundToInt(
+                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin *
+                                    _temp.GetComponent<GiveCoinWhenDie>().customNightMultiplier);
+                            }
+                            else
+                            {
+                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax = Mathf.RoundToInt(
+                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax *
+                                    _nightModeMultiplier);
+                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin = Mathf.RoundToInt(
+                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin *
+                                    _nightModeMultiplier);
+                            }
+                            
                             if (_temp.GetComponent<GiveExpWhenDie>().useCustomNightMultiplierOnly)
                             {
                                 _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(
