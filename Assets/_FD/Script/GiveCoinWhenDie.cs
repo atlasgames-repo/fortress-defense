@@ -6,6 +6,8 @@ public class GiveCoinWhenDie : MonoBehaviour
 {
     public int coinGiveMin = 5;
     public int coinGiveMax = 10;
+    [Space(3)] [Header("NightMode")] public int customNightMultiplier = 2;
+    public bool useCustomNightMultiplierOnly = false;
 
     public void GiveCoin()
     {

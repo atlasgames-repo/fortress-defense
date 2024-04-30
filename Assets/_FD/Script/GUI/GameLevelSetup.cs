@@ -144,12 +144,22 @@ public class GameLevelSetup : MonoBehaviour
         foreach (var obj in levelWaves)
         {
             if (obj.level == GlobalValue.levelPlaying)
-                return obj.nightXpMultiplier;
+                return obj.nightMultiplierFixedAmount;
         }
 
         return 1;
     }
 
+    public bool isNightModeMultiplierFixed()
+    {
+        foreach (var obj in levelWaves)
+        {
+            if (obj.level == GlobalValue.levelPlaying)
+                return obj.fixedNightMultiplier;
+        }
+
+        return false;
+    }
     public int getTotalLevels()
     {
         return levelWaves.Count;

@@ -28,5 +28,6 @@ public class LevelWave : MonoBehaviour
     public int level = 1;
     public Sprite backgroundSprite;
     public bool nightMode;
-    public float nightXpMultiplier = 1.2f;
+    public float nightMultiplierFixedAmount = 2f;
+    public bool fixedNightMultiplier = false;
 }

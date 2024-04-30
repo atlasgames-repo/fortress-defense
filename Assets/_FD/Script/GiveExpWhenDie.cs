@@ -6,6 +6,8 @@ public class GiveExpWhenDie : MonoBehaviour
 {
     public int expMin = 5;
     public int expMax = 7;
+    [Space(3)] [Header("NightMode")] public int customNightMultiplier = 2;
+    public bool useCustomNightMultiplierOnly = false;
 
     public void GiveExp()
     {

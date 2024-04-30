@@ -27,6 +27,9 @@ public class EnemyRangeAttack : MonoBehaviour
     float lastShoot = 0;
     [HideInInspector] public GameObject GunObj;
     Vector3 dir = Vector3.right;
+    [Space(3)] [Header("NightMode")] public float customNightMultiplier = 2f;
+    public bool useCustomNightMultiplierOnly = false;
+    
     public bool isAttacking { get; set; }
 
     WeaponEffect hasWeaponEffect;

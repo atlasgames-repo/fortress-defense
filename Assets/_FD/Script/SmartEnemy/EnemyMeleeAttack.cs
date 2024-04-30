@@ -21,6 +21,8 @@ public class EnemyMeleeAttack : MonoBehaviour
     public float soundAttacksVol = 0.5f;
     public AudioClip[] soundAttacks;
     WeaponEffect hasWeaponEffect;
+    [Space(3)] [Header("NightMode")] public float customNightMultiplier = 2f;
+    public bool useCustomNightMultiplierOnly = false;
 
     public bool AllowAction()
     {

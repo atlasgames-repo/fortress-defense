@@ -21,6 +21,8 @@ public class EnemyThrowAttack : MonoBehaviour
     public Transform checkPoint;
     public float radiusDetectPlayer = 5;
     public bool isAttacking { get; set; }
+    [Space(3)] [Header("NightMode")] public float customNightMultiplier = 2f;
+    public bool useCustomNightMultiplierOnly = false;
 
     public bool AllowAction()
     {

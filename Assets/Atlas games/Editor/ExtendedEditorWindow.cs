@@ -71,7 +71,8 @@ public class ExtendedEditorWindow : EditorWindow
         level.backgroundSprite = obj.levels[0].backgroundSprite;
         level.Waves = obj.levels[0].Waves;
         level.nightMode = obj.levels[0].nightMode;
-        level.nightXpMultiplier = obj.levels[0].nightModeXpMultiplier;
+        level.nightMultiplierFixedAmount = obj.levels[0].nightModeXpMultiplier;
+        level.fixedNightMultiplier = obj.levels[0].nightModeFixedAmount;
         // Create the new Prefab and log whether Prefab was saved successfully.
         bool prefabSuccess;
 
@@ -97,7 +98,8 @@ public class ExtendedEditorWindow : EditorWindow
         level.backgroundSprite = obj.levels[0].backgroundSprite;
         level.Waves = obj.levels[0].Waves;
         level.nightMode = obj.levels[0].nightMode;
-        level.nightXpMultiplier = obj.levels[0].nightModeXpMultiplier;
+        level.nightMultiplierFixedAmount = obj.levels[0].nightModeXpMultiplier;
+        level.fixedNightMultiplier = obj.levels[0].nightModeFixedAmount;
         Apply();
 
         EditorUtility.SetDirty(level.gameObject);
@@ -112,7 +114,8 @@ public class ExtendedEditorWindow : EditorWindow
         obj.levels[0].backgroundSprite = level.backgroundSprite;
         obj.levels[0].Waves = level.Waves;
         obj.levels[0].nightMode = level.nightMode;
-        obj.levels[0].nightModeXpMultiplier = level.nightXpMultiplier;
+        obj.levels[0].nightModeXpMultiplier = level.nightMultiplierFixedAmount;
+        obj.levels[0].nightModeFixedAmount = level.fixedNightMultiplier;
         serializedObject = new SerializedObject(obj);
         Apply();
         AssetDatabase.Refresh();
