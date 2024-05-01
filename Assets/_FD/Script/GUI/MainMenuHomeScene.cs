@@ -222,4 +222,3 @@ public class MainMenuHomeScene : MonoBehaviour
             GameMode.Instance.ResetDATA();
     }
 }
-
