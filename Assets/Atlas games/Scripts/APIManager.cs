@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using UnityEngine.Android;
 using UnityEditor;
+using UnityEngine.AI;
 
 public class APIManager : MonoBehaviour
 {
@@ -59,17 +60,23 @@ public class APIManager : MonoBehaviour
     // Start is called before the first frame update
     public async void RunStatus(string message, Color? color = null)
     {
-        Transform root = GameObject.FindGameObjectWithTag("Canves").transform;
+        GameObject top_parent = GameObject.FindGameObjectWithTag("StatusCanvas");
+        if (!top_parent) return;
+        GameObject root_parent = top_parent.transform.GetChild(0).gameObject;
+        Transform root = top_parent.transform.GetChild(0).GetChild(0).GetChild(0);
+        if (!root_parent.activeInHierarchy) root_parent.SetActive(true);
+        float added_delay = root.childCount;
         GameObject obj = Instantiate(status, root, false);
         obj.GetComponentInChildren<RTLTMPro.RTLTextMeshPro>().text = message;
         if (color != null)
             obj.GetComponent<Image>().color = (Color)color;
-        await DestroyDelay(obj, status_destroy);
+        await DestroyDelay(obj, status_destroy + added_delay, root);
     }
-    public async Task DestroyDelay(GameObject obj, float delay)
+    public async Task DestroyDelay(GameObject obj, float delay, Transform root)
     {
         await Task.Delay((int)delay * 1000);
         DestroyImmediate(obj);
+        if (root.childCount <= 0) root.transform.parent.parent.gameObject.SetActive(false);
     }
     public IEnumerator LoadAsynchronously()
     {
@@ -96,9 +103,9 @@ public class APIManager : MonoBehaviour
         string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
         await Get<object>(route: "/achivements/add", auth_token: User.Token, parameters: param);
     }
-    public async Task<AchievementModel[]> Get_achivements()
+    public async Task<AchievementModel> Get_achivements()
     {
-        return await Get<AchievementModel[]>(route: "/achivements", auth_token: User.Token);
+        return await Get<AchievementModel>(route: "/achivements", auth_token: User.Token);
     }
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
@@ -113,6 +120,10 @@ public class APIManager : MonoBehaviour
     public async Task<UserResponse> Check_token()
     {
         UserResponse res = await Get<UserResponse>(route: "/user/details", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        return res;
+    }
+    public async Task<UserResponse> GetRXP() {
+        UserResponse res = await Get<UserResponse>(route: "/user/xp", parameters:$"?game_id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
 
@@ -131,12 +142,27 @@ public class APIManager : MonoBehaviour
         return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
     }
 
+    public async Task<LeaderBoardResponseModel> Get_leader_board()
+    {
+        LeaderBoardParams param = new LeaderBoardParams {
+            game_id = GAME_ID,
+            type = "all"
+        };
+        return await Get<LeaderBoardResponseModel>(route: "/games/rankings", auth_token: User.Token,parameters:param.ToParams);
+    }
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
         route: "/user/gem",
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
         auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
+    }
+    public async Task<RxpRequestModel> Request_Rxp(RxpRequestModel parames = null)
+    {
+        return await Get<RxpRequestModel>(
+            route: "/user/xp",
+            parameters: parames == null ? new RxpRequestModel().ToParams : parames.ToParams,
+            auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }
     #endregion
 
@@ -240,6 +266,9 @@ public class APIManager : MonoBehaviour
             {
                 throw new System.Exception(message: "Task cancelled");
             }
+            print(req.downloadHandler.text);
+            print(res);
+            print(User.Token);
             return res;
         }
     }

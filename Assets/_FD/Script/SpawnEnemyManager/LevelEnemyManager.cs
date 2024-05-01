@@ -7,6 +7,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public static LevelEnemyManager Instance;
     public GameObject FX_Smoke, FX_Blow;
     public SimpleProjectile bullet;
+    public Transform BossSpawnPoint;
     public Transform[] spawnPositions;
     public EnemyWave[] EnemyWaves;
     public BossUIManager bossManeger;
@@ -21,16 +22,18 @@ public class LevelEnemyManager : MonoBehaviour, IListener
         Instance = this;
     }
 
-    int totalEnemy, currentSpawn;
-
+    [HideInInspector]public int totalEnemy, currentSpawn;
+    public LevelWave.LevelType levelType;
     // Start is called before the first frame update
     void Start()
     {
         if (GameLevelSetup.Instance)
         {
-            if (GameLevelSetup.Instance.type() == LevelWave.LevelType.Normal)
+        levelType = GameLevelSetup.Instance.type();
+            if (levelType == LevelWave.LevelType.Normal)
             {
-                GetComponent<EndlessWaveGenerator>().enabled = false;
+                bool is_true = TryGetComponent(out EndlessWaveGenerator waveGenerator);
+                if (is_true) waveGenerator.enabled = false;
             }
 
             EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
@@ -204,7 +207,33 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                                 _temp.GetComponent<GiveExpWhenDie>().customNightMultiplier);
                         }
                     }
-
+                        Vector2 spawnPos = Vector2.zero;
+                        if (enemySpawn.boosType == EnemySpawn.isBoss.NONE)
+                            spawnPos = (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position;
+                        else
+                            spawnPos = (Vector2)BossSpawnPoint.position;
+                        GameObject _temp = Instantiate(enemySpawn.enemy,spawnPos,Quaternion.identity) as GameObject;
+                        var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
+                        if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
+                            {
+                                bossManeger.enemy = _temp.GetComponent<Enemy>();
+                                if (enemySpawn.BossScale > 1) {
+                                    Vector2 scale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
+                                bossManeger.enemy.gameObject.transform.localScale =
+                                 bossManeger.enemy.gameObject.transform.localScale * scale;
+                                }
+                                bossManeger.bossType = enemySpawn.boosType;
+                                bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin =
+                                    enemySpawn.BossMinExp;
+                                bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax =
+                                    enemySpawn.BossMaxExp;
+                                bossManeger.gameObject.SetActive(true);
+                                bossManeger.enemy.is_boss = true;
+                                AudioClip bossMusic = bossManeger.enemy.BossMusic != null
+                                    ? bossManeger.enemy.BossMusic
+                                    : SoundManager.Instance.BossMusicClip;
+                                SoundManager.PlayMusic(bossMusic, 0.5f);
+                            }
                     if (_nightMode)
                     {
                                switch (_temp.GetComponent<SmartEnemyGrounded>().attackType)
@@ -354,6 +383,9 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public void IUnPause()
     {
         //throw new System.NotImplementedException();
+    }
+    public bool IEnabled() {
+        return this.enabled;
     }
 }
 

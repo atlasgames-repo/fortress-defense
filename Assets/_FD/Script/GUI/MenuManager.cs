@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject UI;
     public GameObject VictotyUI;
     public GameObject FailUI;
+    public GameObject LeaderBoardUI;
     public GameObject PauseUI;
     public GameObject LoadingUI;
     public GameObject HelperUI;
@@ -79,6 +80,7 @@ public class MenuManager : MonoBehaviour, IListener
             Time.timeScale = 0;
             UI.SetActive(false);
             PauseUI.SetActive(true);
+            GameManager.Instance.State = GameManager.GameState.Pause;
             // SoundManager.Instance.PauseMusic(true);
         }
         else
@@ -87,6 +89,7 @@ public class MenuManager : MonoBehaviour, IListener
             UI.SetActive(true);
             PauseUI.SetActive(false);
             SoundManager.Instance.PauseMusic(false);
+            GameManager.Instance.State = GameManager.GameState.Playing;
         }
     }
 
@@ -95,6 +98,9 @@ public class MenuManager : MonoBehaviour, IListener
 
     }
 
+    public bool IEnabled() {
+        return this.enabled;
+    }
     public void ISuccess()
     {
         StartCoroutine(VictoryCo());
@@ -128,6 +134,7 @@ public class MenuManager : MonoBehaviour, IListener
     {
         UI.SetActive(false);
 
+        if (LevelEnemyManager.Instance.levelType == LevelWave.LevelType.Endless) LeaderBoardUI.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         FailUI.SetActive(true);
         if (LifeTTRSource.Life <= 1)

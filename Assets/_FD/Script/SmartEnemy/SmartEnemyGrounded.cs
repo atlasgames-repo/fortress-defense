@@ -218,6 +218,26 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                 }
 
                 break;
+
+            case ATTACKTYPE.WIZARD:
+                if (rangeAttack.AllowAction())
+                {
+                    SetEnemyState(ENEMYSTATE.ATTACK);
+
+                    if (rangeAttack.CheckPlayer(isFacingRight()))
+                    {
+                        rangeAttack.Action();
+                        AnimSetTrigger("wizard_attack_dark");
+                        SetSkeletonAnimation(ANIMATION_STATE.IDLE, true);
+                        DetectPlayer();
+                    }
+                    else if (!rangeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
+                    {
+                        SetEnemyState(ENEMYSTATE.WALK);
+                    }
+                }
+
+                break;
             case ATTACKTYPE.MELEE:
                 if (meleeAttack.AllowAction())
                 {

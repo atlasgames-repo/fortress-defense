@@ -40,18 +40,20 @@ public class EnemyThrowAttack : MonoBehaviour
     public void Throw(bool isFacingRight)
     {
         Vector3 throwPos = throwPosition.position;
-        GameObject obj = Instantiate(_Grenade, throwPos, Quaternion.identity) as GameObject;
-        obj.GetComponent<Projectile>().NewDamage = (float)damage;
-        obj.GetComponent<SimpleProjectile>().ExplosionObj = FX_Blow;
-        obj.GetComponent<SimpleProjectile>().DestroyEffect = FX_Smoke;
-
+        GameObject objv2 = Instantiate(_Grenade, throwPos, Quaternion.identity) as GameObject;
+        // GameObject objv2 = SpawnSystemHelper.GetNextObject(_Grenade,false);
+        // objv2.transform.position = throwPos;
+        objv2.GetComponent<Projectile>().NewDamage = (float)damage;
+        objv2.GetComponent<SimpleProjectile>().ExplosionObj = FX_Blow;
+        objv2.GetComponent<SimpleProjectile>().DestroyEffect = FX_Smoke;
+        if (FX_Blow) objv2.GetComponent<SimpleProjectile>().Explosion = true;
         float angle;
         angle = isFacingRight ? angleThrow : 135;
 
-        obj.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        objv2.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        obj.GetComponent<Rigidbody2D>().AddRelativeForce(obj.transform.right * Random.Range(throwForceMin, throwForceMax));
-        obj.GetComponent<Rigidbody2D>().AddTorque(obj.transform.right.x * addTorque);
+        objv2.GetComponent<Rigidbody2D>().AddRelativeForce(objv2.transform.right * Random.Range(throwForceMin, throwForceMax));
+        objv2.GetComponent<Rigidbody2D>().AddTorque(objv2.transform.right.x * addTorque);
 
     }
 
