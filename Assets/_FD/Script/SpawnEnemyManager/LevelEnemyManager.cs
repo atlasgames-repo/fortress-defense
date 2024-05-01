@@ -70,9 +70,12 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                 yield return new WaitForSeconds(enemySpawn.wait);
                 for (int k = 0; k < enemySpawn.numberEnemy; k++)
                 {
-                    GameObject _temp = Instantiate(enemySpawn.enemy,
-                        (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position,
-                        Quaternion.identity) as GameObject;
+                    Vector2 spawnPos = Vector2.zero;
+                    if (enemySpawn.boosType == EnemySpawn.isBoss.NONE)
+                        spawnPos = (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position;
+                    else
+                        spawnPos = (Vector2)BossSpawnPoint.position;
+                    GameObject _temp = Instantiate(enemySpawn.enemy,spawnPos,Quaternion.identity) as GameObject;
                     var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                     if (isEnemy != null)
                     {
@@ -113,9 +116,11 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
                         {
                             bossManeger.enemy = _temp.GetComponent<Enemy>();
-                            if (enemySpawn.BossScale > 1)
+                                if (enemySpawn.BossScale > 1) {
+                                    Vector2 scale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
                                 bossManeger.enemy.gameObject.transform.localScale =
-                                    new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
+                                 bossManeger.enemy.gameObject.transform.localScale * scale;
+                                }
                             bossManeger.bossType = enemySpawn.boosType;
                             bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin =
                                 enemySpawn.BossMinExp;
@@ -207,36 +212,9 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                                 _temp.GetComponent<GiveExpWhenDie>().customNightMultiplier);
                         }
                     }
-                        Vector2 spawnPos = Vector2.zero;
-                        if (enemySpawn.boosType == EnemySpawn.isBoss.NONE)
-                            spawnPos = (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position;
-                        else
-                            spawnPos = (Vector2)BossSpawnPoint.position;
-                        GameObject _temp = Instantiate(enemySpawn.enemy,spawnPos,Quaternion.identity) as GameObject;
-                        var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
-                        if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
-                            {
-                                bossManeger.enemy = _temp.GetComponent<Enemy>();
-                                if (enemySpawn.BossScale > 1) {
-                                    Vector2 scale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
-                                bossManeger.enemy.gameObject.transform.localScale =
-                                 bossManeger.enemy.gameObject.transform.localScale * scale;
-                                }
-                                bossManeger.bossType = enemySpawn.boosType;
-                                bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin =
-                                    enemySpawn.BossMinExp;
-                                bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax =
-                                    enemySpawn.BossMaxExp;
-                                bossManeger.gameObject.SetActive(true);
-                                bossManeger.enemy.is_boss = true;
-                                AudioClip bossMusic = bossManeger.enemy.BossMusic != null
-                                    ? bossManeger.enemy.BossMusic
-                                    : SoundManager.Instance.BossMusicClip;
-                                SoundManager.PlayMusic(bossMusic, 0.5f);
-                            }
                     if (_nightMode)
                     {
-                               switch (_temp.GetComponent<SmartEnemyGrounded>().attackType)
+                        switch (_temp.GetComponent<SmartEnemyGrounded>().attackType)
                     {
                         case ATTACKTYPE.MELEE:
                             if (_temp.GetComponent<EnemyMeleeAttack>().useCustomNightMultiplierOnly)
