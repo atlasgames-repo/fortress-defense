@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Monetization;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class MainMenuHomeScene : MonoBehaviour
     public GameObject ShopUI;
     public GameObject TrophyUI,TrophyUIV2;
     public GameObject EventUI, CoinShopUI, UpgradeUI,LeaderBoardUI;
-
+    public GameObject StoreUI;
     public GameObject Loading;
     public GameObject Settings;
     public string facebookLink;
@@ -130,6 +131,12 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         SoundManager.Click();
         Settings.SetActive(open);
+    }
+
+    public void Store(bool open)
+    {
+        SoundManager.Click();
+        StoreUI.SetActive(open);
     }
     public void OpenUpgradeUI(bool open)
     {

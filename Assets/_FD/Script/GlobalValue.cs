@@ -58,6 +58,16 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("lastDayShowNativeAd3", value); }
     }
 
+    public static int GetChosenShopItem(string itemName)
+    {
+        return PlayerPrefs.GetInt(itemName);
+    }
+
+    public static void IncrementChosenShopItem(string itemName)
+    {
+        PlayerPrefs.SetInt(itemName,GetChosenShopItem(itemName) + 1);
+    }
+
 
 
 
