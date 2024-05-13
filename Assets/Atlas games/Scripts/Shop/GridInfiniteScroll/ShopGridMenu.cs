@@ -18,6 +18,6 @@ public class ShopGridMenu : MonoBehaviour
           //  contentDatas.Add(new ScrollItemData(i));
         }
         
-        _content.InitScrollContent(contentDatas);
+      //  _content.InitScrollContent(contentDatas);
     }
 }
