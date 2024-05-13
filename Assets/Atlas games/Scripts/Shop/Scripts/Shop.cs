@@ -28,6 +28,7 @@ public class Shop : MonoBehaviour
     private List<ShopItemData> _chosenItems;
     public void OpenMenu(string menuName)
     {
+        SoundManager.Instance.PauseMusic(true);
         switch (menuName)
         {
             case "pets":

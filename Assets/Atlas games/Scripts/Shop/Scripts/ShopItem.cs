@@ -17,6 +17,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
     public Button purchaseButton;
     public Image itemImage;
     public Image deactivationHandler;
+    public ShopPopup popup;
     protected override void InitItemData(ScrollItemData data)
     {
         Init(data.Data);
@@ -31,6 +32,18 @@ public class ShopItem : ScrollItem<ScrollItemData>
         itemPrice = itemData.itemPrice;
         itemName = itemData.itemName;
 
+        Vector2 originalSize = new Vector2(itemImage.rectTransform.sizeDelta.x,itemImage.rectTransform.sizeDelta.y);
+        itemImage.SetNativeSize();
+        if (itemImage.rectTransform.sizeDelta.x > itemImage.rectTransform.sizeDelta.y)
+        {
+            float aspectRatio = (float)itemImage.rectTransform.sizeDelta.x / itemImage.rectTransform.sizeDelta.y;
+            itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x, originalSize.y / aspectRatio);
+        }
+        else
+        {
+            float aspectRatio = (float)itemImage.rectTransform.sizeDelta.y / itemImage.rectTransform.sizeDelta.x;
+            itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x / aspectRatio, originalSize.y);
+        }
         itemPriceText.text = itemPrice.ToString();
         int itemCount = GlobalValue.GetChosenShopItem(itemName);
         itemNameText.text = itemName;
@@ -69,6 +82,8 @@ public class ShopItem : ScrollItem<ScrollItemData>
         GlobalValue.IncrementChosenShopItem(itemName);
         int itemCount = GlobalValue.GetChosenShopItem(itemName);
         itemCountText.text = itemCount.ToString();
+        SoundManager.Click();
+
         User.Coin = -itemPrice;
         if (User.Coin> itemPrice)
         {
@@ -95,6 +110,18 @@ public class ShopItem : ScrollItem<ScrollItemData>
         {
             purchaseButton.interactable = false;
             deactivationHandler.gameObject.SetActive(true);
+        }
+    }
+
+    public void HandleDeactivation()
+    {
+        popup.gameObject.SetActive(true);
+        if (User.Coin < itemPrice)
+        {
+            popup.OpenDialog(true);
+        }else if (hasMaxValue && maxAmount == GlobalValue.GetChosenShopItem(itemName))
+        {
+            popup.OpenDialog(false);
         }
     }
 }
