@@ -137,6 +137,7 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         SoundManager.Click();
         StoreUI.SetActive(open);
+        StoreUI.GetComponent<Shop>().OpenMenu("features");
     }
     public void OpenUpgradeUI(bool open)
     {
