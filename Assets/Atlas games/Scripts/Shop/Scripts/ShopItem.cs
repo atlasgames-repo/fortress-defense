@@ -18,6 +18,9 @@ public class ShopItem : ScrollItem<ScrollItemData>
     public Image itemImage;
     public Image deactivationHandler;
     public ShopPopup popup;
+    public GameObject coinImage;
+    public GameObject expImage;
+    private Shop.ItemPurchaseType _purchaseType;
     protected override void InitItemData(ScrollItemData data)
     {
         Init(data.Data);
@@ -31,7 +34,17 @@ public class ShopItem : ScrollItem<ScrollItemData>
         itemImage.sprite = itemData.itemImage;
         itemPrice = itemData.itemPrice;
         itemName = itemData.itemName;
-
+        _purchaseType = itemData.purchaseType;
+        if (_purchaseType == Shop.ItemPurchaseType.Coin)
+        {
+            coinImage.SetActive(true);
+            expImage.SetActive(false);
+        }
+        else
+        {
+            expImage.SetActive(true);
+            coinImage.SetActive(false);
+        }
         Vector2 originalSize = new Vector2(itemImage.rectTransform.sizeDelta.x,itemImage.rectTransform.sizeDelta.y);
         itemImage.SetNativeSize();
         if (itemImage.rectTransform.sizeDelta.x > itemImage.rectTransform.sizeDelta.y)
@@ -78,13 +91,20 @@ public class ShopItem : ScrollItem<ScrollItemData>
 
     public void BuyItem()
     {
-        
+
         GlobalValue.IncrementChosenShopItem(itemName);
         int itemCount = GlobalValue.GetChosenShopItem(itemName);
         itemCountText.text = itemCount.ToString();
         SoundManager.Click();
+        if (_purchaseType == Shop.ItemPurchaseType.Coin)
+        {
+            User.Coin = -itemPrice;
+        }
+        else
+        {
+            User.Uxp = -itemPrice;
+        }
 
-        User.Coin = -itemPrice;
         if (User.Coin> itemPrice)
         {
             if (hasMaxValue)

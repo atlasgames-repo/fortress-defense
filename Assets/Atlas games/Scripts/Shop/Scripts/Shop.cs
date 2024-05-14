@@ -13,6 +13,11 @@ public class Shop : MonoBehaviour
     {
         Pet,Feature,Magic,Monster,Website
     }
+
+    public enum ItemPurchaseType
+    {
+        Exp,Coin
+    }
     [Serializable]
     public class ShopItemData
     {
@@ -22,6 +27,7 @@ public class Shop : MonoBehaviour
         public int itemMaxValue;
         public bool hasMaxValue;
         public ItemTypes type;
+        public ItemPurchaseType purchaseType;
     }
     public ShopItemData[] shopItems;
     ItemTypes _chosenType;
