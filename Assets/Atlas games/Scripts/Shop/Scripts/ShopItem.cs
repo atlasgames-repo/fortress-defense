@@ -105,31 +105,63 @@ public class ShopItem : ScrollItem<ScrollItemData>
             User.Uxp = -itemPrice;
         }
 
-        if (User.Coin> itemPrice)
+        if (_purchaseType == Shop.ItemPurchaseType.Coin)
         {
-            if (hasMaxValue)
+            if (User.Coin> itemPrice)
             {
-                if (itemCount < maxAmount)
+                if (hasMaxValue)
+                {
+                    if (itemCount < maxAmount)
+                    {
+                        purchaseButton.interactable = true;
+                        deactivationHandler.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        purchaseButton.interactable = false;
+                        deactivationHandler.gameObject.SetActive(true);
+                    }
+                }
+                else
                 {
                     purchaseButton.interactable = true;
                     deactivationHandler.gameObject.SetActive(false);
                 }
-                else
-                {
-                    purchaseButton.interactable = false;
-                    deactivationHandler.gameObject.SetActive(true);
-                }
             }
             else
             {
-                purchaseButton.interactable = true;
-                deactivationHandler.gameObject.SetActive(false);
+                purchaseButton.interactable = false;
+                deactivationHandler.gameObject.SetActive(true);
             }
         }
         else
         {
-            purchaseButton.interactable = false;
-            deactivationHandler.gameObject.SetActive(true);
+            if (User.Uxp> itemPrice)
+            {
+                if (hasMaxValue)
+                {
+                    if (itemCount < maxAmount)
+                    {
+                        purchaseButton.interactable = true;
+                        deactivationHandler.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        purchaseButton.interactable = false;
+                        deactivationHandler.gameObject.SetActive(true);
+                    }
+                }
+                else
+                {
+                    purchaseButton.interactable = true;
+                    deactivationHandler.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                purchaseButton.interactable = false;
+                deactivationHandler.gameObject.SetActive(true);
+            }
         }
     }
 
