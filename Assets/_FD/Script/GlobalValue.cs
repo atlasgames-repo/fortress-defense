@@ -96,7 +96,7 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("ItemPoison", 3); }
         set { PlayerPrefs.SetInt("ItemPoison", value); }
     }
-    public static bool NightMode
+    public static bool DoubleXp
     {
         get
         {
@@ -132,11 +132,11 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("DoubleXPDuration", 0); }
         set { PlayerPrefs.SetInt("DoubleXPDuration", value); }
     }
-    public static int DoubleXpActive
-    {
-        get { return PlayerPrefs.GetInt("DoubleXpActive", 0); }
-        set { PlayerPrefs.SetInt("DoubleXpActive", value); }
-    }
+  //  public static int DoubleXpActive
+  //  {
+  //      get { return PlayerPrefs.GetInt("DoubleXpActive", 0); }
+  //      set { PlayerPrefs.SetInt("DoubleXpActive", value); }
+  //  }
     public static float StrongWallExtra
     {
         get { return PlayerPrefs.GetFloat("StrongWallExtra", 0); }

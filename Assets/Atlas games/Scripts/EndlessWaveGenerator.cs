@@ -219,11 +219,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     listEnemySpawned.Add(_temp);
 
                 
-                    if (GlobalValue.DoubleXpActive == 1)
-                    {
-                        _temp.GetComponent<GiveExpWhenDie>().expMax *= 2;
-                        _temp.GetComponent<GiveExpWhenDie>().expMin *= 2;
-                    }
+                   
                     currentSpawn++;
                     MenuManager.Instance.UpdateEnemyWavePercent(currentSpawn, totalEnemy);
 

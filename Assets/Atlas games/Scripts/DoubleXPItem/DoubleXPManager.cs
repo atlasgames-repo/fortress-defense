@@ -39,11 +39,11 @@ public class DoubleXPManager : MonoBehaviour
         if (_currentGlobalDateTime > ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                 .AddHours(GlobalValue.DoubleXPDuration))
         {
-            GlobalValue.DoubleXpActive = 0;
+            GlobalValue.DoubleXp = false;
         }
         else
         {
-            GlobalValue.DoubleXpActive = 1;
+            GlobalValue.DoubleXp = true;
         }
 
         if (PlayerPrefs.GetFloat("MainTimeDifference") == 0)
@@ -79,13 +79,13 @@ public class DoubleXPManager : MonoBehaviour
 
     void Update()
     {
-        if (GlobalValue.DoubleXpActive==1)
+        if (GlobalValue.DoubleXp)
         {
             if (DateTime.Now.AddSeconds(PlayerPrefs.GetFloat("MainTimeDifference")) >
                 ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                     .AddHours(GlobalValue.DoubleXPDuration))
             {
-                GlobalValue.DoubleXpActive = 0;
+                GlobalValue.DoubleXp = false;
             }
         }
     }
@@ -97,7 +97,7 @@ public class DoubleXPManager : MonoBehaviour
 
     public static string CounterText()
     {
-        if (GlobalValue.DoubleXpActive == 1)
+        if (GlobalValue.DoubleXp)
         {
             DateTime dueDateTime = ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                 .AddHours(GlobalValue.DoubleXPDuration);
@@ -118,7 +118,7 @@ public class DoubleXPManager : MonoBehaviour
         extractedDate = dateTimeString.Substring(0, 10);
         extractedTime = dateTimeString.Substring(11, 8);
         GlobalValue.DoubleXpActivationTime = extractedDate + extractedTime;
-        GlobalValue.DoubleXpActive = 1;
+        GlobalValue.DoubleXp = true;
         if (duration == DoubleXpDuration.Hour)
         {
             GlobalValue.DoubleXPDuration = 1;

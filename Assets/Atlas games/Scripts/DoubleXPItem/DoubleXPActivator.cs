@@ -14,15 +14,15 @@ public class DoubleXPActivator : MonoBehaviour
     }
     void CheckValue()
     {
-        if (GlobalValue.DoubleXpActive != 1)
-        {
-            buttonText.gameObject.SetActive(true);
-            counterText.gameObject.SetActive(false);
-        }
-        else
+        if (GlobalValue.DoubleXp)
         {
             buttonText.gameObject.SetActive(false);
             counterText.gameObject.SetActive(true);
+        }
+        else
+        {
+            buttonText.gameObject.SetActive(true);
+            counterText.gameObject.SetActive(false);
             counterText.text = DoubleXPManager.CounterText();
         }
     }
@@ -31,9 +31,8 @@ public class DoubleXPActivator : MonoBehaviour
     {
         buttonText.gameObject.SetActive(false);
         counterText.gameObject.SetActive(true);
-        if (GlobalValue.DoubleXpActive == 0)
+        if (!GlobalValue.DoubleXp)
         {
-          
             if (h24duration)
             {
                 DoubleXPManager.GetTime(DoubleXPManager.DoubleXpDuration.Day);
