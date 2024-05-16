@@ -4,6 +4,7 @@ public class GlobalValue : MonoBehaviour
 {
     public static bool isFirstOpenMainMenu = true;
     public static int worldPlaying = 1;
+    
     public static int levelPlaying = 1;
     public static Level.LeveType levelType = Level.LeveType.MISSION;
     //public static int finishGameAtLevel = 50;

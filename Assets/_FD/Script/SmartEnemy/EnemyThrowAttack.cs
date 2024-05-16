@@ -21,7 +21,7 @@ public class EnemyThrowAttack : MonoBehaviour
     public Transform checkPoint;
     public float radiusDetectPlayer = 5;
     public bool isAttacking { get; set; }
-    [Space(3)] [Header("NightMode")] public float customNightMultiplier = 2f;
+    [Space(3)] [Header("Night Mode")] public float customNightMultiplier = 2f;
     public bool useCustomNightMultiplierOnly = false;
 
     public bool AllowAction()
@@ -36,7 +36,21 @@ public class EnemyThrowAttack : MonoBehaviour
     //		lastShoot = Time.time;
     //		SoundManager.PlaySfx (soundAttack);
     //	}
-
+    void Start()
+    {
+        float initialDamage = damage;
+        if (GameLevelSetup.Instance.NightMode())
+        {
+            if (useCustomNightMultiplierOnly)
+            {
+                damage = customNightMultiplier * initialDamage;
+            }
+            else
+            {
+                damage = initialDamage * GameLevelSetup.Instance.NightModeXpMultiplier();
+            }
+        }
+    }
     public void Throw(bool isFacingRight)
     {
         Vector3 throwPos = throwPosition.position;

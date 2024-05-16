@@ -28,15 +28,12 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     public float increaseEnemyWaitDifficultyRate = 0.2f;
     private float[] _enemyCounts;
     public float initialWaitAmount = 3;
-    private bool _nightMode = false;
     public LevelEnemyManager level_enemy_manager;
     [HideInInspector] public int waveCount;
     public GameObject WaveCountUI;
 
 
     int totalEnemy, currentSpawn;
-    private float _nightModeMultiplier = 1f;
-    private bool _isNightMultiplierFixed;
 
     void Awake()
     {
@@ -53,9 +50,6 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                 return;
             }
 
-            _nightMode = GameLevelSetup.Instance.NightMode();
-            _nightModeMultiplier = GameLevelSetup.Instance.NightModeXpMultiplier();
-            _isNightMultiplierFixed = GameLevelSetup.Instance.isNightModeMultiplierFixed();
             enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
             increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();
             increaseEnemyAttackDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAttackDifficultyRate();
@@ -223,155 +217,13 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     _temp.SetActive(true);
                     //_temp.transform.localPosition = Vector2.zero;
                     listEnemySpawned.Add(_temp);
-                           if (_nightMode )
-                    {
-                        if (_isNightMultiplierFixed)
-                        {
-                            if (_temp.GetComponent<SmartEnemyGrounded>().useCustomNightMultiplierOnly)
-                            {
-                                _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(
-                                    _temp.GetComponent<SmartEnemyGrounded>().health *
-                                    _temp.GetComponent<SmartEnemyGrounded>().customNightMultiplier);
-                            }
-                            else
-                            {
-                                _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(
-                                    _temp.GetComponent<SmartEnemyGrounded>().health *
-                                    _nightModeMultiplier);
-                            }
 
-                            if (_temp.GetComponent<GiveCoinWhenDie>().useCustomNightMultiplierOnly)
-                            {
-                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax *
-                                    _temp.GetComponent<GiveCoinWhenDie>().customNightMultiplier);
-                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin *
-                                    _temp.GetComponent<GiveCoinWhenDie>().customNightMultiplier);
-                            }
-                            else
-                            {
-                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMax *
-                                    _nightModeMultiplier);
-                                _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveCoinWhenDie>().coinGiveMin *
-                                    _nightModeMultiplier);
-                            }
-                            
-                            if (_temp.GetComponent<GiveExpWhenDie>().useCustomNightMultiplierOnly)
-                            {
-                                _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveExpWhenDie>().expMax *
-                                    _temp.GetComponent<GiveExpWhenDie>().customNightMultiplier);
-                                _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveExpWhenDie>().expMin *
-                                    _temp.GetComponent<GiveExpWhenDie>().customNightMultiplier);
-                            }
-                            else
-                            {
-                                _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveExpWhenDie>().expMax *
-                                    _nightModeMultiplier);
-                                _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(
-                                    _temp.GetComponent<GiveExpWhenDie>().expMin *
-                                    _nightModeMultiplier);
-                            }
-                          
-                           
-                        }
-                        else
-                        {
-                            _temp.GetComponent<SmartEnemyGrounded>().health = Mathf.RoundToInt(
-                                _temp.GetComponent<SmartEnemyGrounded>().health *
-                                _temp.GetComponent<SmartEnemyGrounded>().customNightMultiplier);
-                            _temp.GetComponent<GiveExpWhenDie>().expMax = Mathf.RoundToInt(
-                                _temp.GetComponent<GiveExpWhenDie>().expMax *
-                                _temp.GetComponent<GiveExpWhenDie>().customNightMultiplier);
-                            _temp.GetComponent<GiveExpWhenDie>().expMin = Mathf.RoundToInt(
-                                _temp.GetComponent<GiveExpWhenDie>().expMin *
-                                _temp.GetComponent<GiveExpWhenDie>().customNightMultiplier);
-                        }
-                    }
-
-                    if (_nightMode)
-                    {
-                               switch (_temp.GetComponent<SmartEnemyGrounded>().attackType)
-                    {
-                        case ATTACKTYPE.MELEE:
-                            if (_temp.GetComponent<EnemyMeleeAttack>().useCustomNightMultiplierOnly)
-                            {
-                                _temp.GetComponent<EnemyMeleeAttack>().dealDamage =
-                                    _temp.GetComponent<EnemyMeleeAttack>().dealDamage *
-                                    _temp.GetComponent<EnemyMeleeAttack>().customNightMultiplier;
-                            }
-                            else
-                            {
-                                if (_nightMode && _isNightMultiplierFixed)
-                                {
-                                    _temp.GetComponent<EnemyMeleeAttack>().dealDamage =
-                                        _temp.GetComponent<EnemyMeleeAttack>().dealDamage * _nightModeMultiplier;
-                                }
-                                else if (_nightMode)
-                                {
-                                    _temp.GetComponent<EnemyMeleeAttack>().dealDamage =
-                                        _temp.GetComponent<EnemyMeleeAttack>().dealDamage *
-                                        _temp.GetComponent<EnemyMeleeAttack>().customNightMultiplier;
-                                }
-                            }
-
-                            break;
-                        case ATTACKTYPE.RANGE:
-                            if (_temp.GetComponent<EnemyRangeAttack>().useCustomNightMultiplierOnly)
-                            {
-                                _temp.GetComponent<EnemyRangeAttack>().damage =
-                                    _temp.GetComponent<EnemyRangeAttack>().damage *
-                                    _temp.GetComponent<EnemyRangeAttack>().customNightMultiplier;
-                            }
-                            else
-                            {
-                                if (_nightMode && _isNightMultiplierFixed)
-                                {
-                                    _temp.GetComponent<EnemyRangeAttack>().damage =
-                                        _temp.GetComponent<EnemyRangeAttack>().damage * _nightModeMultiplier;
-                                }
-                                else if (_nightMode)
-                                {
-                                    _temp.GetComponent<EnemyRangeAttack>().damage =
-                                        _temp.GetComponent<EnemyRangeAttack>().damage *
-                                        _temp.GetComponent<EnemyRangeAttack>().customNightMultiplier;
-                                }
-                            }
-
-                            break;
-                        case ATTACKTYPE.THROW:
-                            if (_temp.GetComponent<EnemyThrowAttack>().useCustomNightMultiplierOnly)
-                            {
-                                _temp.GetComponent<EnemyThrowAttack>().damage =
-                                    _temp.GetComponent<EnemyThrowAttack>().damage *
-                                    _temp.GetComponent<EnemyThrowAttack>().customNightMultiplier;
-                            }
-                            else
-                            {
-                                if (_nightMode && _isNightMultiplierFixed)
-                                {
-                                    _temp.GetComponent<EnemyThrowAttack>().damage =
-                                        _temp.GetComponent<EnemyThrowAttack>().damage * _nightModeMultiplier;
-                                }
-                                else if (_nightMode)
-                                {
-                                    _temp.GetComponent<EnemyThrowAttack>().damage =
-                                        _temp.GetComponent<EnemyThrowAttack>().damage *
-                                        _temp.GetComponent<EnemyThrowAttack>().customNightMultiplier;
-                                }
-                            }
-
-                            break;
-                    }
-
-                    }
                 
-
+                    if (GlobalValue.DoubleXpActive == 1)
+                    {
+                        _temp.GetComponent<GiveExpWhenDie>().expMax *= 2;
+                        _temp.GetComponent<GiveExpWhenDie>().expMin *= 2;
+                    }
                     currentSpawn++;
                     MenuManager.Instance.UpdateEnemyWavePercent(currentSpawn, totalEnemy);
 

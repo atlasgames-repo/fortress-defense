@@ -8,7 +8,24 @@ public class GiveCoinWhenDie : MonoBehaviour
     public int coinGiveMax = 10;
     [Space(3)] [Header("NightMode")] public int customNightMultiplier = 2;
     public bool useCustomNightMultiplierOnly = false;
-
+    void Start()
+    {
+        int initialMinCoin = coinGiveMin;
+        int initialMaxCoin = coinGiveMax;
+        if (GameLevelSetup.Instance.NightMode())
+        {
+            if (useCustomNightMultiplierOnly)
+            {
+                coinGiveMax = Mathf.RoundToInt(initialMaxCoin * customNightMultiplier);
+                coinGiveMin = Mathf.RoundToInt(initialMinCoin * customNightMultiplier);
+            }
+            else
+            {
+                coinGiveMax =  Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier() * initialMaxCoin);
+                coinGiveMin = Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier() * initialMinCoin);
+            }
+        }
+    }
     public void GiveCoin()
     {
         SoundManager.PlaySfx(SoundManager.Instance.coinCollect);

@@ -33,11 +33,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     SpawnItemHelper spawnItem;
 
 
-    [Space(3)] [Header("NightMode")] public float customNightMultiplier = 2f;
-    public bool useCustomNightMultiplierOnly = false;
 
     public override void Start()
     {
+       
         base.Start();
 
         controller = GetComponent<Controller2D>();
