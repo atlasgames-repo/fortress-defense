@@ -119,6 +119,23 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("UpgradeStrongWall", 0); }
         set { PlayerPrefs.SetInt("UpgradeStrongWall", value); }
     }
+    
+    public static string DoubleXpActivationTime
+    {
+        get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", ""); }
+        set { PlayerPrefs.SetString("DoubleXp1HourDurationActivationTime", value); }
+    }
+
+    public static int DoubleXPDuration
+    {
+        get { return PlayerPrefs.GetInt("DoubleXPDuration", 0); }
+        set { PlayerPrefs.SetInt("DoubleXPDuration", value); }
+    }
+    public static int DoubleXpActive
+    {
+        get { return PlayerPrefs.GetInt("DoubleXpActive", 0); }
+        set { PlayerPrefs.SetInt("DoubleXpActive", value); }
+    }
     public static float StrongWallExtra
     {
         get { return PlayerPrefs.GetFloat("StrongWallExtra", 0); }
