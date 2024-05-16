@@ -8,33 +8,32 @@ public class DoubleXPActivator : MonoBehaviour
     public Text counterText;
     public Text buttonText;
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        StartCoroutine(CheckValue());
+        CheckValue();
     }
-
-    IEnumerator CheckValue()
+    void CheckValue()
     {
-        while (true)
+        if (GlobalValue.DoubleXpActive != 1)
         {
-            if (GlobalValue.DoubleXpActive == 0)
-            {
-                buttonText.gameObject.SetActive(true);
-                counterText.gameObject.SetActive(false);
-                break;
-            }
+            buttonText.gameObject.SetActive(true);
+            counterText.gameObject.SetActive(false);
+        }
+        else
+        {
             buttonText.gameObject.SetActive(false);
             counterText.gameObject.SetActive(true);
             counterText.text = DoubleXPManager.CounterText();
-            yield return new WaitForSeconds(1f);
         }
     }
 
     public void ActivateDoubleXp(bool h24duration)
     {
+        buttonText.gameObject.SetActive(false);
+        counterText.gameObject.SetActive(true);
         if (GlobalValue.DoubleXpActive == 0)
         {
-            StartCoroutine(CheckValue());
+          
             if (h24duration)
             {
                 DoubleXPManager.GetTime(DoubleXPManager.DoubleXpDuration.Day);
