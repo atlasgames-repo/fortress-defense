@@ -206,21 +206,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 261684717, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 359506823, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
       propertyPath: m_Name
       value: Coin
       objectReference: {fileID: 0}
+    - target: {fileID: 703512947, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_Text
+      value: 'You don''t have enough coins
+
+        or exp to buy this item. '
+      objectReference: {fileID: 0}
     - target: {fileID: 718940837, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1023514779, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: popupAnimator
+      value: 
+      objectReference: {fileID: 336538383}
+    - target: {fileID: 1505240084, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1505240084, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1505240084, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1667985263, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -254,6 +268,34 @@ PrefabInstance:
       propertyPath: coinImage
       value: 
       objectReference: {fileID: 336538381}
+    - target: {fileID: 1928476727, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928476727, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928476727, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928476727, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -400.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928476727, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 923.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928476727, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 146.465
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928476727, guid: f7b61c43a896034459daeb79cb15c17d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 558.61
+      objectReference: {fileID: 0}
     - target: {fileID: 1804118848227060858, guid: f7b61c43a896034459daeb79cb15c17d,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -396,6 +438,12 @@ GameObject:
 --- !u!224 &336538382 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 412111618, guid: f7b61c43a896034459daeb79cb15c17d,
+    type: 3}
+  m_PrefabInstance: {fileID: 336538379}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &336538383 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1023514780, guid: f7b61c43a896034459daeb79cb15c17d,
     type: 3}
   m_PrefabInstance: {fileID: 336538379}
   m_PrefabAsset: {fileID: 0}

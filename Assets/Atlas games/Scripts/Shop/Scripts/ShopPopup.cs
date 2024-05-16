@@ -6,13 +6,13 @@ public class ShopPopup : MonoBehaviour
 {
     public GameObject notEnoughCoinText;
     public GameObject maxAmountText;
-    private Animator _anim;
+    public Animator popupAnimator;
 
 
     public void OpenDialog(bool notEnoughCoins)
     {
-        _anim = GetComponent<Animator>();
-        _anim.SetTrigger("Open");
+        popupAnimator = GetComponent<Animator>();
+        popupAnimator.SetTrigger("Open");
         if (notEnoughCoins)
         {
             notEnoughCoinText.SetActive(true);
@@ -27,7 +27,7 @@ public class ShopPopup : MonoBehaviour
 
     public void CloseDialog()
     {
-        _anim.SetTrigger("Close");
+        popupAnimator.SetTrigger("Close");
     }
     
     public void DisablePopup()
