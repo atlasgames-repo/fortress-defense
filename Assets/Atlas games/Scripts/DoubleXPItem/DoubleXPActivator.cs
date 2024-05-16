@@ -34,7 +34,6 @@ public class DoubleXPActivator : MonoBehaviour
     {
         if (GlobalValue.DoubleXpActive == 0)
         {
-            print("Fuck");
             StartCoroutine(CheckValue());
             if (h24duration)
             {

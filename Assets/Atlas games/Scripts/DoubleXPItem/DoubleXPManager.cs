@@ -22,17 +22,21 @@ public class DoubleXPManager : MonoBehaviour
     async void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        SetDate();
+        
+          await SetDate();
+
     }
 
+    private static float newDifferenceSeconds=0;
+    private DateTime _currentGlobalDateTime;
     async Task SetDate()
     {
         _globalDate = await APIManager.instance.GetCurrentDateAndTime();
         dateTimeString = _globalDate.datetime;
         string time = dateTimeString.Substring(11, 8);
         string dateString = dateTimeString.Substring(0, 10);
-        DateTime currentGlobalDateTime = ConvertedStringToDate(dateString + time);
-        if (currentGlobalDateTime > ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
+        _currentGlobalDateTime = ConvertedStringToDate(dateString + time);
+        if (_currentGlobalDateTime > ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                 .AddHours(GlobalValue.DoubleXPDuration))
         {
             GlobalValue.DoubleXpActive = 0;
@@ -41,7 +45,18 @@ public class DoubleXPManager : MonoBehaviour
         {
             GlobalValue.DoubleXpActive = 1;
         }
-        globalTimeDifference = currentGlobalDateTime - DateTime.Now;
+
+        if (PlayerPrefs.GetFloat("MainTimeDifference") == 0)
+        {
+            PlayerPrefs.SetFloat("MainTimeDifference", (float)(_currentGlobalDateTime - DateTime.Now).TotalSeconds);
+        }
+
+        TimeSpan newDifference = _currentGlobalDateTime -
+                                 DateTime.Now.AddSeconds(PlayerPrefs.GetFloat("MainTimeDifference"));
+        if (Math.Abs(newDifference.TotalSeconds) > 100)
+        {
+            newDifferenceSeconds = (float)newDifference.TotalSeconds;
+        }
     }
     static DateTime ConvertedStringToDate(string insertedTime)
     {
@@ -58,7 +73,7 @@ public class DoubleXPManager : MonoBehaviour
     {
         if (GlobalValue.DoubleXpActive==1)
         {
-            if (DateTime.Now.AddSeconds(globalTimeDifference.TotalSeconds) >
+            if (DateTime.Now.AddSeconds(PlayerPrefs.GetFloat("MainTimeDifference")) >
                 ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                     .AddHours(GlobalValue.DoubleXPDuration))
             {
@@ -78,7 +93,7 @@ public class DoubleXPManager : MonoBehaviour
         {
             DateTime dueDateTime = ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                 .AddHours(GlobalValue.DoubleXPDuration);
-            TimeSpan timeDifference = dueDateTime - DateTime.Now.AddSeconds(globalTimeDifference.TotalSeconds);
+            TimeSpan timeDifference = dueDateTime - DateTime.Now.AddSeconds(PlayerPrefs.GetFloat("MainTimeDifference")+newDifferenceSeconds);
             string countdownText = CountDownText(timeDifference);
             return countdownText;
         }
