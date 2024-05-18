@@ -33,8 +33,99 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     SpawnItemHelper spawnItem;
 
 
+    [Space(3)] [Header("Spawning from Underground")]
+    public bool spawnFromUnderground;
+    public GameObject undergroundSandPile;
+    private GameObject _spawningArea;
+    private Vector2 _spawnPos;
+    public SpriteRenderer[] characterSprites;
+    public float undergroundPileScale = 1f;
+    public float climbingTime = 1f;
+    public float maskYScale = 2f;
+    public float climbDepth = 1f;
+    private bool _canMove = false;
+    public float xOffset = 0.3f;
+    public float secondaryHeight = 0.8f;
+    public float xDistanceFromEnemy = 1.5f;
+    public float holeAnimationTime = 0.5f;
+    IEnumerator Climb()
+    {
+        yield return new WaitForSeconds(climbingTime);
+        _canMove = true;
+    }
+    IEnumerator ClimbUp(Vector3 start, Vector3 end)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < climbingTime)
+        {
+            transform.position = Vector3.Lerp(start, end, elapsedTime / climbingTime);
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait until the next frame
+        }
+
+        transform.position = end; // Ensure the object reaches the end position
+    }
+
+    IEnumerator SpawnFromUnderTheGround()
+    {
+        yield return new WaitForSeconds(0f);
+        _canMove = false;
+            foreach (SpriteRenderer sprite in characterSprites)
+            {
+                sprite.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+            }
+
+            StartCoroutine(Climb());
+            GameObject[] playerWarriors = GameObject.FindGameObjectsWithTag("Warrior");
+            if (playerWarriors.Length == 0)
+            {
+                _spawningArea = GameObject.FindWithTag("UndergroundSpawn");
+                Bounds bounds = _spawningArea.GetComponent<SpriteRenderer>().bounds;
+                float randomX = Random.Range(bounds.min.x, bounds.max.x);
+                float randomY = Random.Range(bounds.min.y, bounds.max.y);
+                _spawnPos = new Vector2(randomX, randomY);
+            }
+            else
+            {
+                float[] warriorXPositions = new float[playerWarriors.Length];
+                for (int i = 0; i < warriorXPositions.Length; i++)
+                {
+                    warriorXPositions[i] = 1000f;
+                }
+                    int chosenWarrior =0;
+                for (int i = 0; i < playerWarriors.Length; i++)
+                {
+                    warriorXPositions[i] = playerWarriors[i].transform.position.x;
+                    float xPosition = Mathf.Min(warriorXPositions);
+                    if (xPosition == playerWarriors[i].transform.position.x)
+                    {
+                        chosenWarrior = i;
+                    }
+                }
+
+                Transform chosenWarriorTransform = playerWarriors[chosenWarrior].transform;
+                float spawnPosY = chosenWarriorTransform.position.y +
+                                  chosenWarriorTransform.GetComponent<BoxCollider2D>().offset.y -
+                                  (chosenWarriorTransform.GetComponent<BoxCollider2D>().size.y / 2) - secondaryHeight;
+                float spawnPosX = chosenWarriorTransform.position.x - xDistanceFromEnemy;
+                _spawnPos = new Vector2(spawnPosX, spawnPosY);
+
+            }
+            UndergroundHole hole = Instantiate(undergroundSandPile, _spawnPos, Quaternion.identity).GetComponent<UndergroundHole>();
+            hole.Init(climbingTime,maskYScale,undergroundPileScale);
+            transform.position = new Vector3(_spawnPos.x + xOffset, _spawnPos.y - climbDepth);
+            Vector2 groundPos = new Vector2(transform.position.x, transform.position.y + secondaryHeight);
+            yield return new WaitForSeconds(holeAnimationTime);
+            StartCoroutine(ClimbUp(transform.position,groundPos));
+    }
     public override void Start()
     {
+        if (spawnFromUnderground)
+        {
+            StartCoroutine(SpawnFromUnderTheGround());
+        }
+
         base.Start();
 
         controller = GetComponent<Controller2D>();
@@ -103,8 +194,24 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             velocity = Vector2.zero;
             return;
         }
+        float targetVelocityX = 0;
+        if (spawnFromUnderground)
+        {                
 
-        float targetVelocityX = _direction.x * moveSpeed;
+            if (_canMove)
+            {
+                targetVelocityX = _direction.x * moveSpeed;
+            }
+            else
+            {
+              targetVelocityX = 0;
+            }
+        }
+        else
+        {
+            targetVelocityX = _direction.x * moveSpeed;
+        }
+
         if (isSocking || enemyEffect == ENEMYEFFECT.SHOKING)
         {
             targetVelocityX = 0;

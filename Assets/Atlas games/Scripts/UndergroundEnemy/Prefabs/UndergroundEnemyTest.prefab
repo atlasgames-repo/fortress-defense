@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005229114725494676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.46, y: 0.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 531377019925013706}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: ae6dc2ecc9674824d94bfe878a0e266d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!1 &2430528491003249514
 GameObject:
@@ -299,6 +299,17 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  spawnFromUnderground: 1
+  undergroundSandPile: {fileID: 2967936131171522836, guid: a8798ad5383bdbd4ca79e8cee187891a,
+    type: 3}
+  characterSprites:
+  - {fileID: 342703509439631173}
+  undergroundPileScale: 1
+  climbingTime: 1
+  maskYScale: 2
+  climbDepth: 1
+  xOffset: 0.4
+  secondaryHeight: 0.8
 --- !u!114 &5277746606921616321
 MonoBehaviour:
   m_ObjectHideFlags: 0
