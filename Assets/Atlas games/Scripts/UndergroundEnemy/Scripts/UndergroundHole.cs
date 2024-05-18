@@ -31,4 +31,14 @@ public class UndergroundHole : MonoBehaviour
         yield return new WaitForSeconds(fadeTime);
         _anim.SetTrigger("Fade");
     }
+
+    public void DisableHole()
+    {
+        Invoke("DeactivateHole", 0.01f);
+    }
+
+    void DeactivateHole()
+    {
+        gameObject.SetActive(false);
+    }
 }
