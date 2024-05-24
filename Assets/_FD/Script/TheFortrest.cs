@@ -103,10 +103,13 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
             ShakeCoDo = ShakeCo(shakeTime);
             StartCoroutine(ShakeCoDo);
+
+            //shake the camera
+            CameraShake.instance.StartShake(0.2f, 0.2f);
         }
 
         //update fortrest state
-    UpdateFortressState();
+        UpdateFortressState();
     }
 
     public void HealFortress(float healAmount)
