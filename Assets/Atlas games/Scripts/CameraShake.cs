@@ -10,31 +10,21 @@ public class CameraShake : MonoBehaviour {
         instance = this;
     }
 
-    // Original position of the camera to reset after shaking
-    private Vector3 originalPosition;
-
     // Internal timer to keep track of shake duration
     private float shakeTimeRemaining;
     // Magnitude of the shake effect
     private float shakeMagnitude;
 
-    void Start() {
-        // Store the original position of the camera
-        originalPosition = transform.localPosition;
-    }
-
+    // Update is called once per frame
     void Update() {
-        // If there's remaining shake time, apply the shake effect
         if (shakeTimeRemaining > 0)
         {
-            transform.localPosition = originalPosition + (Vector3)Random.insideUnitCircle * shakeMagnitude;
+            // Add random shake offset directly to the global position
+            Vector3 shakeOffset = (Vector3)Random.insideUnitCircle * shakeMagnitude;
+            transform.position += shakeOffset;
             shakeTimeRemaining -= Time.deltaTime;
         }
-        else
-        {
-            // Reset to the original position once the shake effect is over
-            transform.localPosition = originalPosition;
-        }
+
     }
 
     // Method to start the camera shake with specified duration and magnitude

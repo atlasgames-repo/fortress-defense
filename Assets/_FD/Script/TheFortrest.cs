@@ -105,7 +105,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
             StartCoroutine(ShakeCoDo);
 
             //shake the camera
-            CameraShake.instance.StartShake(0.2f, 0.2f);
+            CameraShake.instance.StartShake(0.1f, 0.1f);
         }
 
         //update fortrest state

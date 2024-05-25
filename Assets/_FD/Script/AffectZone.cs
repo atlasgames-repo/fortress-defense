@@ -153,7 +153,7 @@ public class AffectZone : MonoBehaviour
                                 if (lightingFX)
                                     SpawnSystemHelper.GetNextObject(lightingFX, true).transform.position =
                                         target.gameObject.transform.position;
-                                CameraShake.instance.StartShake(0.1f, 0.1f);
+                                CameraShake.instance.StartShake(0.05f, 0.05f);
                                 SoundManager.PlaySfx(lightingSound);
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
