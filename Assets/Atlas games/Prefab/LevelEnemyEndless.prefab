@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6534493661185011523}
   m_Layer: 0
   m_Name: LevelEnemyEndless
-  m_TagString: EditorLEM
+  m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480071122214238694}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51dc5e60fa631ee4b8ccd071ae8debee, type: 3}
   m_Name: 
@@ -61,7 +61,35 @@ MonoBehaviour:
   - {fileID: 242366090253687157}
   - {fileID: 2329159576667478972}
   - {fileID: 8973944176769065048}
-  EnemyWaves: []
+  EnemyWaves:
+  - wait: 0
+    enemySpawns:
+    - wait: 0
+      enemy: {fileID: 3697426553599540029, guid: ec2d1c87b32a1e44498264d6be439280,
+        type: 3}
+      numberEnemy: 1
+      rate: 1
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1.001
+      BossMinExp: 25
+      BossMaxExp: 50
+  - wait: 0
+    enemySpawns:
+    - wait: 0
+      enemy: {fileID: 3697426553599540029, guid: ec2d1c87b32a1e44498264d6be439280,
+        type: 3}
+      numberEnemy: 1
+      rate: 1
+      customHealth: 0
+      customSpeed: 0
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 1.001
+      BossMinExp: 25
+      BossMaxExp: 50
   bossManeger: {fileID: 0}
   listEnemySpawned: []
   totalEnemy: 0
