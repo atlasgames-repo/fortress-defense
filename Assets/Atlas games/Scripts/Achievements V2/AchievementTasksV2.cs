@@ -26,6 +26,7 @@ public class AchievementTasksV2 : BasePlayerPrefs<AchievementModel>
         {
             Destroy(gameObject);
         }
+        init();
         if (_dispatcher == null)
             _dispatcher = StartCoroutine(Listener());
 
@@ -38,7 +39,6 @@ public class AchievementTasksV2 : BasePlayerPrefs<AchievementModel>
             achievements[i] = new AchievementEventsV2(DictArray[i]);
         }
         // AddNewAchievements(models);
-        yield return new WaitForSeconds(InitialDelaySeconds);
         while (true)
         {
             foreach (AchievementEventsV2 item in achievements)
