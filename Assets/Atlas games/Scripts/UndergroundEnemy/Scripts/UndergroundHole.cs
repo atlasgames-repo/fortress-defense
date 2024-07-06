@@ -5,29 +5,32 @@ using UnityEngine;
 public class UndergroundHole : MonoBehaviour
 {
     public Transform spriteMaskTransform;
-    public GameObject holeBehind;
-    public GameObject holeFront;
+    public GameObject sprite2DMask;
     private Animator _anim;
+    public GameObject meshMask;
     public float fadeTime = 3.5f;
-    private AudioSource _source;
-    private float _climbingTime;
-    public void Init(float climbingTime, float yScale,float pileScale,float holeAnimationTime)
+    public AudioClip diggingSound;
+    public float diggingVolume = 0.5f;
+
+    public void Init(float climbingTime, float yScale, float pileScale, float holeAnimationTime,bool isSpine)
     {
-        _source = GetComponent<AudioSource>();
-        _source.Play();
+        SoundManager.PlaySfx(diggingSound, diggingVolume);
         _anim = GetComponent<Animator>();
         _anim.SetTrigger("Open");
         transform.localScale *= pileScale;
         spriteMaskTransform.localScale = new Vector3(1, yScale, 1);
-        _climbingTime = climbingTime;
-        StartCoroutine(DisableMask(_climbingTime,holeAnimationTime));
+        sprite2DMask.SetActive(!isSpine);
+            meshMask.gameObject.SetActive(isSpine);
+            meshMask.transform.position = new Vector3(meshMask.transform.position.x, meshMask.transform.position.y, 3);
         StartCoroutine(AnimateFade());
     }
-    IEnumerator DisableMask(float climbTime, float holeAnimationTime)
+
+     public void DisableMask()
     {
-        yield return new WaitForSeconds(climbTime + holeAnimationTime);
-        spriteMaskTransform.GetChild(0).gameObject.SetActive(false);
+        sprite2DMask.SetActive(false);
+        meshMask.gameObject.SetActive(false);
     }
+
     IEnumerator AnimateFade()
     {
         yield return new WaitForSeconds(fadeTime);
