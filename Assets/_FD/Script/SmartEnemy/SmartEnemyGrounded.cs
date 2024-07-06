@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [AddComponentMenu("ADDP/Enemy AI/Smart Enemy Ground Control")]
 [RequireComponent(typeof(Controller2D))]
@@ -52,6 +53,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     {
         yield return new WaitForSeconds(climbingTime);
         _canMove = true;
+        GetComponent<SortingGroup>().sortingOrder = 0;
     }
     IEnumerator ClimbUp(Vector3 start, Vector3 end)
     {
@@ -71,6 +73,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     {
         yield return new WaitForSeconds(0f);
         _canMove = false;
+        GetComponent<SortingGroup>().sortingOrder = -2;
             foreach (SpriteRenderer sprite in characterSprites)
             {
                 sprite.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
