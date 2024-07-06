@@ -113,7 +113,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
             }
             UndergroundHole hole = Instantiate(undergroundSandPile, _spawnPos, Quaternion.identity).GetComponent<UndergroundHole>();
-            hole.Init(climbingTime,maskYScale,undergroundPileScale);
+            hole.Init(climbingTime,maskYScale,undergroundPileScale, holeAnimationTime);
             transform.position = new Vector3(_spawnPos.x + xOffset, _spawnPos.y - climbDepth);
             Vector2 groundPos = new Vector2(transform.position.x, transform.position.y + secondaryHeight);
             yield return new WaitForSeconds(holeAnimationTime);
