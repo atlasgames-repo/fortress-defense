@@ -42,7 +42,6 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     private GameObject _spawningArea;
     private Vector2 _spawnPos;
     public SpriteRenderer[] characterSprites;
-    public SkeletonAnimation[] characterSkeleton;
     public float undergroundPileScale = 1f;
     public float climbingTime = 1f;
     public float maskYScale = 2f;
@@ -79,10 +78,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                 _zPos);
         if (is_spine)
         {
-            foreach (SkeletonAnimation skeleton in characterSkeleton)
-            {
-                skeleton.enabled = true;
-            }
+            SetSkeletonAnimation(ANIMATION_STATE.WALK, true);
+
         }
 
         if (shadow)
@@ -104,10 +101,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         GetComponent<SortingGroup>().sortingOrder = -2;
         if (is_spine)
         {
-            foreach (SkeletonAnimation skeleton in characterSkeleton)
-            {
-                skeleton.enabled = false;
-            }
+            SetSkeletonAnimation(ANIMATION_STATE.IDLE, true);
         }
         else
         {
