@@ -11,9 +11,13 @@ public class UndergroundHole : MonoBehaviour
     public float fadeTime = 3.5f;
     public AudioClip diggingSound;
     public float diggingVolume = 0.5f;
-
+    public GameObject topHoleSection;
+    Transform _mainCamera;
     public void Init(float climbingTime, float yScale, float pileScale, float holeAnimationTime,bool isSpine)
     {
+        _mainCamera = GameObject.FindWithTag("MainCamera").transform;
+        topHoleSection.transform.position = new Vector3(topHoleSection.transform.position.x,
+            topHoleSection.transform.position.y, topHoleSection.transform.position.z + 1f);
         SoundManager.PlaySfx(diggingSound, diggingVolume);
         _anim = GetComponent<Animator>();
         _anim.SetTrigger("Open");
