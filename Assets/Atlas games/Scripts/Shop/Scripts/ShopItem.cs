@@ -20,7 +20,9 @@ public class ShopItem : ScrollItem<ScrollItemData>
     public GameObject coinImage;
     public GameObject expImage;
     private Shop.ItemPurchaseType _purchaseType;
-
+    public Text levelLockText;
+    public GameObject itemCountTag;
+    public GameObject levelLockBG;
     protected override void InitItemData(ScrollItemData data)
     {
         Init(data.Data);
@@ -36,34 +38,89 @@ public class ShopItem : ScrollItem<ScrollItemData>
         itemPrice = itemData.itemPrice;
         itemName = itemData.itemName;
         _purchaseType = itemData.purchaseType;
-        if (_purchaseType == Shop.ItemPurchaseType.Coin)
+        if (itemData.levelLock)
         {
-            coinImage.SetActive(true);
-            expImage.SetActive(false);
+            if (GlobalValue.LevelPass < itemData.levelToUnlock - 1)
+            {
+                purchaseButton.interactable = false;
+                itemNameText.gameObject.SetActive(false);
+                itemCountTag.SetActive(false);
+                levelLockBG.SetActive(true);
+                levelLockText.text = "Reach Level " + itemData.levelToUnlock + " To Unlock!";
+            }
+            else
+            {
+                purchaseButton.interactable = true;
+                itemNameText.gameObject.SetActive(true);
+                itemCountTag.SetActive(true);
+                levelLockBG.SetActive(false );
+                if (_purchaseType == Shop.ItemPurchaseType.Coin)
+                {
+                    coinImage.SetActive(true);
+                    expImage.SetActive(false);
+                }
+                else
+                {
+                    expImage.SetActive(true);
+                    coinImage.SetActive(false);
+                }
+
+                Vector2 originalSize =
+                    new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
+                itemImage.SetNativeSize();
+                if (itemImage.rectTransform.sizeDelta.x > itemImage.rectTransform.sizeDelta.y)
+                {
+                    float aspectRatio = (float)itemImage.rectTransform.sizeDelta.x / itemImage.rectTransform.sizeDelta.y;
+                    itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x, originalSize.y / aspectRatio);
+                }
+                else
+                {
+                    float aspectRatio = (float)itemImage.rectTransform.sizeDelta.y / itemImage.rectTransform.sizeDelta.x;
+                    itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x / aspectRatio, originalSize.y);
+                }
+
+                itemPriceText.text = itemPrice.ToString();
+                int itemCount = GlobalValue.GetChosenShopItem(itemName);
+                itemNameText.text = itemName;
+                itemCountText.text = itemCount.ToString();
+            }
         }
         else
         {
-            expImage.SetActive(true);
-            coinImage.SetActive(false);
-        }
+            purchaseButton.interactable = true;
+            itemNameText.gameObject.SetActive(true);
+            itemCountTag.SetActive(true);
+            levelLockBG.SetActive(false );
+            if (_purchaseType == Shop.ItemPurchaseType.Coin)
+            {
+                coinImage.SetActive(true);
+                expImage.SetActive(false);
+            }
+            else
+            {
+                expImage.SetActive(true);
+                coinImage.SetActive(false);
+            }
 
-        Vector2 originalSize = new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
-        itemImage.SetNativeSize();
-        if (itemImage.rectTransform.sizeDelta.x > itemImage.rectTransform.sizeDelta.y)
-        {
-            float aspectRatio = (float)itemImage.rectTransform.sizeDelta.x / itemImage.rectTransform.sizeDelta.y;
-            itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x, originalSize.y / aspectRatio);
-        }
-        else
-        {
-            float aspectRatio = (float)itemImage.rectTransform.sizeDelta.y / itemImage.rectTransform.sizeDelta.x;
-            itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x / aspectRatio, originalSize.y);
-        }
+            Vector2 originalSize =
+                new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
+            itemImage.SetNativeSize();
+            if (itemImage.rectTransform.sizeDelta.x > itemImage.rectTransform.sizeDelta.y)
+            {
+                float aspectRatio = (float)itemImage.rectTransform.sizeDelta.x / itemImage.rectTransform.sizeDelta.y;
+                itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x, originalSize.y / aspectRatio);
+            }
+            else
+            {
+                float aspectRatio = (float)itemImage.rectTransform.sizeDelta.y / itemImage.rectTransform.sizeDelta.x;
+                itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x / aspectRatio, originalSize.y);
+            }
 
-        itemPriceText.text = itemPrice.ToString();
-        int itemCount = GlobalValue.GetChosenShopItem(itemName);
-        itemNameText.text = itemName;
-        itemCountText.text = itemCount.ToString();
+            itemPriceText.text = itemPrice.ToString();
+            int itemCount = GlobalValue.GetChosenShopItem(itemName);
+            itemNameText.text = itemName;
+            itemCountText.text = itemCount.ToString();
+        }
     }
 
     public void BuyItem()
