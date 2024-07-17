@@ -12,12 +12,12 @@ public class AddressableManager : MonoBehaviour
     void Start() {
         SceneManager.sceneLoaded += OnSceneLoaded;
         if (!bundles.obj) StartCoroutine(DownloadProcess(bundles));
-        else HandleObject(bundles.obj);
+        else StartCoroutine(HandleObject(bundles.obj));
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1) {
         if (!bundles.obj) StartCoroutine(DownloadProcess(bundles));
-        else HandleObject(bundles.obj);
+        else StartCoroutine(HandleObject(bundles.obj));
     }
 
     // public void DownloadAsset(AssetBundleGeneratorV2 assetbundle)
@@ -37,18 +37,19 @@ public class AddressableManager : MonoBehaviour
     {
 
         if (handle.Status == AsyncOperationStatus.Succeeded){
-            HandleObject(handle.Result);
+            StartCoroutine(HandleObject(handle.Result));
         }
         else {
             APIManager.instance.RunStatus("Couldn't download assets! try later.",Color.red);
         }
     }
-    public void HandleObject(GameObject obj) {
+    IEnumerator HandleObject(GameObject obj) {
         bundles.obj = obj;
         if (bundles.scene_name != SceneManager.GetActiveScene().name) {
             bundles.is_complete = true;
-            return;
+            yield break;
         }
+        yield return new WaitForEndOfFrame();
         GameObject _obj;
         if (!bundles.is_root_world) {
             GameObject root_obj = GameObject.Find(bundles.root);
