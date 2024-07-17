@@ -98,11 +98,7 @@ public class SoundManager : MonoBehaviour
     {
         PlaySfx(Instance.soundClick);
     }
-
-    public void DiggingSound()
-    {
-        
-    }
+    
     public void ClickBut()
     {
         PlaySfx(soundClick);
