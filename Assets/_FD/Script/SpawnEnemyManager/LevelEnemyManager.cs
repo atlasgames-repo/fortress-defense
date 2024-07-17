@@ -73,6 +73,10 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         else
                             spawnPos = (Vector2)BossSpawnPoint.position;
                         GameObject _temp = Instantiate(enemySpawn.enemy,spawnPos,Quaternion.identity) as GameObject;
+                        if (enemySpawn.spawnFromUnderground)
+                        {
+                            _temp.GetComponent<SmartEnemyGrounded>().StartClimbing();
+                        }
                         var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                         if (isEnemy != null)
                         {

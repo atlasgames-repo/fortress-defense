@@ -159,12 +159,14 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         StartCoroutine(ClimbUp(transform.position, groundPos));
     }
 
+    public void StartClimbing()
+    {
+        StartCoroutine(SpawnFromUnderTheGround());
+    }
+
     public override void Start()
     {
-        if (spawnFromUnderground)
-        {
-            StartCoroutine(SpawnFromUnderTheGround());
-        }
+      
 
         base.Start();
 
