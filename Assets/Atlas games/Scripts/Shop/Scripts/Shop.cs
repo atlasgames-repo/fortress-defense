@@ -7,6 +7,7 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
 
+    public DynamicScrollRect.DynamicScrollRect dynamicScrollRect;
     public ScrollContent content;
     public Transform scrollContentParent;
     public enum ItemTypes
@@ -28,6 +29,8 @@ public class Shop : MonoBehaviour
         public bool hasMaxValue;
         public ItemTypes type;
         public ItemPurchaseType purchaseType;
+        public bool levelLock;
+        public int levelToUnlock;
     }
     public ShopItemData[] shopItems;
     ItemTypes _chosenType;
@@ -69,6 +72,15 @@ public class Shop : MonoBehaviour
                 Destroy(scrollContentParent.GetChild(i).gameObject);
             }            
         }
-        content.InitScrollContent(contentDatas);
+
+        if (contentDatas.Count > 0)
+        {
+            dynamicScrollRect.vertical = true;
+            content.InitScrollContent(contentDatas);
+        }
+        else
+        {
+            dynamicScrollRect.vertical = false;
+        }
     }
 }
