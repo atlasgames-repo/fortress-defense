@@ -420,4 +420,28 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             archer.GetComponent<Player_Archer>().manual_targeted_enemy = this.gameObject;
         }
     }
+
+    private float _mainMoveSpeed;
+    private Transform _enemyParent;
+
+    public void HitLog(float rollBackTime, Transform logTransform)
+    {
+        print("hello");
+        StartCoroutine(RollBackForLog(rollBackTime, logTransform));
+    }
+    IEnumerator RollBackForLog(float rollBackTime,Transform logTransform)
+    {
+        yield return new WaitForSeconds(0.01f);
+        if (transform.parent)
+        {
+            _enemyParent = transform.parent;
+        }
+
+        _mainMoveSpeed = moveSpeed;
+        moveSpeed = 0;
+        transform.SetParent(logTransform);
+        yield return new WaitForSeconds(rollBackTime);
+        transform.SetParent(_enemyParent);
+        moveSpeed = _mainMoveSpeed;
+    }
 }
