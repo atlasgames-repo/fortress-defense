@@ -81,7 +81,7 @@ public class MainMenuHomeScene : MonoBehaviour
             SoundManager.Instance.PauseMusic(false);
             SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         HomeUI.SetActive(true);
     }
 
