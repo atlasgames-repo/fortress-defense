@@ -33,7 +33,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     public GameObject WaveCountUI;
 
 
-    int totalEnemy, currentSpawn;
+   new int _totalEnemy, _currentSpawn;
 
     void Awake()
     {
@@ -220,8 +220,8 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
                 
                    
-                    currentSpawn++;
-                    MenuManager.Instance.UpdateEnemyWavePercent(currentSpawn, totalEnemy);
+                    _currentSpawn++;
+                    MenuManager.Instance.UpdateEnemyWavePercent(_currentSpawn, _totalEnemy);
 
                     yield return new WaitForSeconds(enemySpawn.rate);
                 }
