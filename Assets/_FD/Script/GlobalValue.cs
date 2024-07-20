@@ -123,7 +123,7 @@ public class GlobalValue : MonoBehaviour
     
     public static string DoubleXpActivationTime
     {
-        get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", ""); }
+        get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", "0001-01-0000:00:00"); }
         set { PlayerPrefs.SetString("DoubleXp1HourDurationActivationTime", value); }
     }
 
@@ -141,6 +141,11 @@ public class GlobalValue : MonoBehaviour
     {
         get { return PlayerPrefs.GetFloat("StrongWallExtra", 0); }
         set { PlayerPrefs.SetFloat("StrongWallExtra", value); }
+    }
+    public static float MainTimeDifference
+    {
+        get { return PlayerPrefs.GetFloat("MainTimeDifference", 0); }
+        set { PlayerPrefs.SetFloat("MainTimeDifference", value); }
     }
  
     // Achievements

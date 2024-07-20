@@ -29,7 +29,6 @@ public class DoubleXPManager : MonoBehaviour
 
     private static float newDifferenceSeconds = 0;
     private DateTime _currentGlobalDateTime;
-    private bool _doubleXPStatus = false;
 
     async Task SetDate()
     {
@@ -37,8 +36,8 @@ public class DoubleXPManager : MonoBehaviour
         dateTimeString = _globalDate.datetime;
         string time = dateTimeString.Substring(11, 8);
         string dateString = dateTimeString.Substring(0, 10);
-        print(dateString+time);
-        _currentGlobalDateTime = ConvertedStringToDate(dateString + time);
+        string finalDateTime = dateString + time;
+        _currentGlobalDateTime = ConvertedStringToDate(finalDateTime);
         if (_currentGlobalDateTime > ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                 .AddHours(GlobalValue.DoubleXPDuration))
         {
@@ -49,13 +48,13 @@ public class DoubleXPManager : MonoBehaviour
             GlobalValue.DoubleXp = true;
         }
 
-        if (PlayerPrefs.GetFloat("MainTimeDifference") == 0)
+        if (GlobalValue.MainTimeDifference == 0)
         {
-            PlayerPrefs.SetFloat("MainTimeDifference", (float)(_currentGlobalDateTime - DateTime.Now).TotalSeconds);
+            GlobalValue.MainTimeDifference = (float)(_currentGlobalDateTime - DateTime.Now).TotalSeconds;
         }
 
         TimeSpan newDifference = _currentGlobalDateTime -
-                                 DateTime.Now.AddSeconds(PlayerPrefs.GetFloat("MainTimeDifference"));
+                                 DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference);
         if (Math.Abs(newDifference.TotalSeconds) > 100)
         {
             newDifferenceSeconds = (float)newDifference.TotalSeconds;
@@ -66,29 +65,33 @@ public class DoubleXPManager : MonoBehaviour
     {
         try
         {
-        //    int year = int.Parse(insertedTime.Substring(0, 4));
-        //    int month = int.Parse(insertedTime.Substring(5, 2));
-        //    int day = int.Parse(insertedTime.Substring(8, 2));
-        //    int hour = int.Parse(insertedTime.Substring(10, 2));
-        //    int minute = int.Parse(insertedTime.Substring(13, 2));
-        //    int second = int.Parse(insertedTime.Substring(16, 2));
-        //    return new DateTime(year, month, day, hour, minute, second);
-        string format = "yyyy-MM-ddHH:mm:ss";
-        return DateTime.ParseExact(insertedTime, format, null);
+            int year = int.Parse(insertedTime.Substring(0, 4));
+            int month = int.Parse(insertedTime.Substring(5, 2));
+            int day = int.Parse(insertedTime.Substring(8, 2));
+            int hour = int.Parse(insertedTime.Substring(10, 2));
+            int minute = int.Parse(insertedTime.Substring(13, 2));
+            int second = int.Parse(insertedTime.Substring(16, 2));
+            return new DateTime(year, month, day, hour, minute, second);
+       // string format = "yyyy-MM-ddHH:mm:ss";
+       // return DateTime.ParseExact(insertedTime, format, null);
         }
         catch (Exception e)
         {
             Debug.Log(e);
-                         return DateTime.MinValue;
+                         return new DateTime();
         }
     }
 
     void Update()
     {
-        CheckDoubleXpStatus();
-        if (_doubleXPStatus)
+        DateTime dueDateTime = ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
+            .AddHours(GlobalValue.DoubleXPDuration);
+        TimeSpan timeDifference = dueDateTime -
+                                  DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
+                                                          newDifferenceSeconds);
+        if (GlobalValue.DoubleXp)
         {
-            if (DateTime.Now.AddSeconds(PlayerPrefs.GetFloat("MainTimeDifference")) >
+            if (DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference) >
                 ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                     .AddHours(GlobalValue.DoubleXPDuration))
             {
@@ -98,25 +101,13 @@ public class DoubleXPManager : MonoBehaviour
     }
 
 
-    private async void CheckDoubleXpStatus()
-    {
-        _doubleXPStatus = await Task.Run(() =>
-        {
-            try
-            {
-                return GlobalValue.DoubleXp;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        });
-    }
+   
 
     static string CountDownText(TimeSpan timeDifference)
     {
+        int totalHours = (int)timeDifference.TotalHours; // Get the total hours as an integer
         return string.Format("{0:D2}:{1:D2}:{2:D2}",
-            timeDifference.Hours, timeDifference.Minutes, timeDifference.Seconds);
+            totalHours, timeDifference.Minutes, timeDifference.Seconds);
     }
 
     public static string CounterText()
@@ -126,7 +117,7 @@ public class DoubleXPManager : MonoBehaviour
             DateTime dueDateTime = ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
                 .AddHours(GlobalValue.DoubleXPDuration);
             TimeSpan timeDifference = dueDateTime -
-                                      DateTime.Now.AddSeconds(PlayerPrefs.GetFloat("MainTimeDifference") +
+                                      DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
                                                               newDifferenceSeconds);
             string countdownText = CountDownText(timeDifference);
             return countdownText;
@@ -156,3 +147,4 @@ public class DoubleXPManager : MonoBehaviour
         }
     }
 }
+

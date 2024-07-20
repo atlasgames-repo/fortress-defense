@@ -18,12 +18,13 @@ public class DoubleXPActivator : MonoBehaviour
         {
             buttonText.gameObject.SetActive(false);
             counterText.gameObject.SetActive(true);
+            counterText.text = DoubleXPManager.CounterText();
         }
         else
         {
             buttonText.gameObject.SetActive(true);
             counterText.gameObject.SetActive(false);
-            counterText.text = DoubleXPManager.CounterText();
+           
         }
     }
 
