@@ -112,7 +112,7 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("ItemFreeze", value); }
     }
 
-
+   
 
     public static int UpgradeStrongWall
     {
@@ -124,7 +124,12 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetFloat("StrongWallExtra", 0); }
         set { PlayerPrefs.SetFloat("StrongWallExtra", value); }
     }
- 
+
+    public static float SlowDownRate
+    {
+        get { return PlayerPrefs.GetFloat("SlowDownRate", 1f); }
+        set { PlayerPrefs.SetFloat("SlowDownRate", value); }
+    }
     // Achievements
     public static int LevelPass
     {

@@ -32,11 +32,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     EnemyCallMinion callMinion;
     SpawnItemHelper spawnItem;
 
-
+    private float _initialMoveSpeed;
     public override void Start()
     {
         base.Start();
-
         controller = GetComponent<Controller2D>();
         _direction = isFacingRight() ? Vector2.right : Vector2.left;
 
@@ -77,7 +76,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                 rangeAttack.damage = upgradedCharacterID.UpgradeRangeDamage;
             }
         }
+        _initialMoveSpeed = moveSpeed;
     }
+
+
 
     public override void Update()
     {
@@ -89,7 +91,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             velocity.x = 0;
             return;
         }
-
+        
+        
         if (checkTarget.CheckTarget(isFacingRight() ? 1 : -1))
             DetectPlayer(delayChasePlayerWhenDetect);
     }
@@ -145,6 +148,8 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         {
             CheckAttack();
         }
+        // set slow down rate here : 
+        moveSpeed = _initialMoveSpeed * GlobalValue.SlowDownRate;
     }
 
     void Flip()
