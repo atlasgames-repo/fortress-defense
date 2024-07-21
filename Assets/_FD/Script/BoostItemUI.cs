@@ -53,7 +53,17 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     public Animator boostItemAnim;
     public Animator boostButtonAnim;
     public float boostItemautoHide = 3;
+    
+    [Header("Slowdown Enemies")]
+    public float SD_Rate = 0.3f;
+    public float SD_Time = 3f;
+    
+    [Header("Log item")]
+    public GameObject TL_Prefab;
+    public Transform TL_SpawnPos;
 
+    [Header("Fortress Shield")] public float FS_health = 300f;
+    
     [Space]
     public GameObject activeIcons;
 
@@ -172,6 +182,9 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
         StartCoroutine(PoisonArrowTimerCo());
     }
 
+    
+    
+    
     IEnumerator PoisonArrowTimerCo()
     {
         PA_Icon.SetActive(true);
@@ -262,6 +275,32 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
         boostItemAnim.SetBool("show", false);
         boostButtonAnim.SetBool("on", false);
     }
+    
 
+    #endregion
+    #region Throw Log
+    public void ThrowLog()
+    {
+        Instantiate(TL_Prefab,TL_SpawnPos.position, Quaternion.identity);
+    }
+    #endregion
+    #region SlowDown
+    public void SlowDownEnemies()
+    {
+        GlobalValue.SlowDownRate = SD_Rate;
+        StartCoroutine(DisableSlowDown());
+    }
+    IEnumerator DisableSlowDown()
+    {
+        yield return new WaitForSeconds(SD_Time);
+        GlobalValue.SlowDownRate = 1f;
+    }
+    #endregion
+    #region Fortress Shield
+
+    public void FortressShield()
+    {
+        FindObjectOfType<TheFortrest>().ActivateShield(FS_health);
+    }
     #endregion
 }

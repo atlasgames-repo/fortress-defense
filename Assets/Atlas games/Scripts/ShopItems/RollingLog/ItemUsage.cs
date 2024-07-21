@@ -17,17 +17,15 @@ public class ItemUsage : MonoBehaviour
     {
         if (itemName == "Log")
         {
-            Instantiate(logPrefab,itemSpawnPos.position, Quaternion.identity);
+         
         }else if (itemName == "SlowDown")
         {
-            GlobalValue.SlowDownRate = slowedDownRate;
-            StartCoroutine(DisableSlowDown());
+           
+        }else if (itemName == "FortressShield")
+        {
+            
         }
     }
 
-    IEnumerator DisableSlowDown()
-    {
-        yield return new WaitForSeconds(slowDownTime);
-        GlobalValue.SlowDownRate = 1f;
-    }
+   
 }
