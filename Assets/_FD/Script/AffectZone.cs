@@ -72,6 +72,8 @@ public class AffectZone : MonoBehaviour
     {
         get { return zoneType; }
     }
+    [Range(1,500)]
+    public int min_xp_consum, max_xp_consum;
 
 
     Animator anim;
@@ -94,8 +96,13 @@ public class AffectZone : MonoBehaviour
 
     public void Active(AffectZoneType _type)
     {
+
         if (!isActived)
         {
+            // Consume XP from user.
+            int XPconsume = Random.Range(min_xp_consum,max_xp_consum+1);
+            GameManager.Instance.currentExp -= XPconsume;
+            FloatingTextManager.Instance.ShowText("-" + XPconsume + " XP", Vector2.up * 1, Color.red, transform.position,40);
             zoneType = _type;
             StartCoroutine(ActiveCo());
             switch (zoneType)
