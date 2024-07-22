@@ -14,6 +14,7 @@ public class AffectZoneManager : MonoBehaviour
     [Header("CURE")] public float healAmount;
     public AudioClip cureSound;
     AffectZoneButton pickedBtn;
+    public float disable_affectzone_countdown_cooldown = 5;
     private void OnEnable()
     {
 
@@ -76,6 +77,14 @@ public class AffectZoneManager : MonoBehaviour
                         isChecking = false;
                         isAffectZoneWorking = true;
                     }
+                } else { // deactivating affectzone
+                    foreach (var zone in affectZoneList)
+                    {
+                        zone.Stop();
+                    }
+                    pickedBtn.StartCountingDown(disable_affectzone_countdown_cooldown);
+                    isAffectZoneWorking = false;
+                    isChecking = false;
                 }
             }
         }

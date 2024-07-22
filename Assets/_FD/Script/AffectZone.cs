@@ -364,7 +364,7 @@ public class AffectZone : MonoBehaviour
         Destroy(_aero);
         tempAeroList.Clear();   
     }
-    void Stop()
+    public void Stop()
     {
 
         AffectZoneManager.Instance.FinishAffect();
