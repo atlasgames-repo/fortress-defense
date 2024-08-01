@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Spine.Unity;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [AddComponentMenu("ADDP/Enemy AI/Smart Enemy Ground Control")]
 [RequireComponent(typeof(Controller2D))]
@@ -9,10 +11,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     public bool isSocking { get; set; }
     public bool isDead { get; set; }
 
-     public bool magnet = false;
+    public bool magnet = false;
     [HideInInspector] public Vector3 magnetPos;
     [HideInInspector] public float magnetAttractionSpeed;
-    [HideInInspector] public float minMagnetDistance=1;
+    [HideInInspector] public float minMagnetDistance = 1;
     [HideInInspector] public Vector3 velocity;
     private Vector2 _direction;
     [HideInInspector] public Controller2D controller;
@@ -33,8 +35,139 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     SpawnItemHelper spawnItem;
 
 
+    [Space(3)] [Header("Spawning from Underground")]
+    public bool spawnFromUnderground;
+
+    public GameObject undergroundSandPile;
+    private GameObject _spawningArea;
+    private Vector2 _spawnPos;
+    public SpriteRenderer[] characterSprites;
+    public float undergroundPileScale = 1f;
+    public float climbingTime = 1f;
+    public float maskYScale = 2f;
+    public float climbDepth = 1f;
+    private bool _canMove = false;
+    public float xOffset = 0.3f;
+    public float secondaryHeight = 0.8f;
+    public float xDistanceFromEnemy = 1.5f;
+    public float holeAnimationTime = 0.5f;
+    public string warriorTag = "Warrior";
+    private float _zPos;
+    public GameObject shadow;
+    IEnumerator Climb()
+    {
+        yield return new WaitForSeconds(climbingTime);
+        _canMove = true;
+    }
+
+    IEnumerator ClimbUp(Vector3 start, Vector3 end)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < climbingTime)
+        {
+            transform.position = Vector3.Lerp(start, end, elapsedTime / climbingTime);
+            elapsedTime += Time.deltaTime;
+            yield return null; 
+        }
+
+        GetComponent<SortingGroup>().sortingOrder = 0;
+        transform.position = end;
+        transform.position =
+            new Vector3(transform.position.x, transform.position.y,
+                _zPos);
+        if (is_spine)
+        {
+            SetSkeletonAnimation(ANIMATION_STATE.WALK, true);
+
+        }
+
+        if (shadow)
+        {
+            shadow.SetActive(true);
+        }
+        _hole.DisableMask();
+    }
+
+    private UndergroundHole _hole;
+    IEnumerator SpawnFromUnderTheGround()
+    {
+        yield return null;
+        _canMove = false;
+        if (shadow)
+        {
+            shadow.SetActive(false);
+        }
+        GetComponent<SortingGroup>().sortingOrder = -2;
+        if (is_spine)
+        {
+            SetSkeletonAnimation(ANIMATION_STATE.IDLE, true);
+        }
+        else
+        {
+            foreach (SpriteRenderer sprite in characterSprites)
+            {
+                sprite.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+            }
+        }
+        StartCoroutine(Climb());
+        GameObject[] playerWarriors = GameObject.FindGameObjectsWithTag(warriorTag);
+        if (playerWarriors.Length == 0)
+        {
+            _spawningArea = GameObject.FindWithTag("UndergroundSpawn");
+            Bounds bounds = _spawningArea.GetComponent<SpriteRenderer>().bounds;
+            float randomX = Random.Range(bounds.min.x, bounds.max.x);
+            float randomY = Random.Range(bounds.min.y, bounds.max.y);
+            _spawnPos = new Vector2(randomX, randomY);
+        }
+        else
+        {
+            float[] warriorXPositions = new float[playerWarriors.Length];
+            int chosenWarrior = 0;
+            for (int i = 0; i < playerWarriors.Length; i++)
+            {
+                warriorXPositions[i] = 1000f;
+                warriorXPositions[i] = playerWarriors[i].transform.position.x;
+                float xPosition = Mathf.Min(warriorXPositions);
+                if (xPosition == playerWarriors[i].transform.position.x)
+                {
+                    chosenWarrior = i;
+                }
+            }
+
+            Transform chosenWarriorTransform = playerWarriors[chosenWarrior].transform;
+            float spawnPosY = chosenWarriorTransform.position.y +
+                              chosenWarriorTransform.GetComponent<BoxCollider2D>().offset.y -
+                              (chosenWarriorTransform.GetComponent<BoxCollider2D>().size.y / 2) - secondaryHeight;
+            float spawnPosX = chosenWarriorTransform.position.x - xDistanceFromEnemy;
+            _spawnPos = new Vector2(spawnPosX, spawnPosY);
+        }
+
+        _hole = Instantiate(undergroundSandPile, _spawnPos, Quaternion.identity)
+            .GetComponent<UndergroundHole>();
+        _hole.Init(climbingTime, maskYScale, undergroundPileScale, holeAnimationTime, is_spine);
+        transform.position = new Vector3(_spawnPos.x + xOffset, _spawnPos.y - climbDepth);
+        Vector2 groundPos = new Vector2(transform.position.x, transform.position.y + secondaryHeight);
+        if (is_spine)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y,
+                _hole.meshMask.transform.position.z + 10);
+            _zPos = transform.position.z;
+        }
+
+        yield return new WaitForSeconds(holeAnimationTime);
+        StartCoroutine(ClimbUp(transform.position, groundPos));
+    }
+
+    public void StartClimbing()
+    {
+        StartCoroutine(SpawnFromUnderTheGround());
+    }
+
     public override void Start()
     {
+      
+
         base.Start();
 
         controller = GetComponent<Controller2D>();
@@ -104,7 +237,23 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             return;
         }
 
-        float targetVelocityX = _direction.x * moveSpeed;
+        float targetVelocityX = 0;
+        if (spawnFromUnderground)
+        {
+            if (_canMove)
+            {
+                targetVelocityX = _direction.x * moveSpeed;
+            }
+            else
+            {
+                targetVelocityX = 0;
+            }
+        }
+        else
+        {
+            targetVelocityX = _direction.x * moveSpeed;
+        }
+
         if (isSocking || enemyEffect == ENEMYEFFECT.SHOKING)
         {
             targetVelocityX = 0;
