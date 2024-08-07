@@ -130,6 +130,12 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetFloat("SlowDownRate", 1f); }
         set { PlayerPrefs.SetFloat("SlowDownRate", value); }
     }
+
+    public static float AttackDamageRate
+    {
+        get { return PlayerPrefs.GetFloat("AttackDamageRate", 1f); }
+        set { PlayerPrefs.SetFloat("AttackDamageRate", value); }
+    }
     // Achievements
     public static int LevelPass
     {

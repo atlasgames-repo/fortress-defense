@@ -63,10 +63,12 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     public Transform TL_SpawnPos;
 
     [Header("Fortress Shield")] public float FS_health = 300f;
-    
+
+    [Header("Attack Damage")] public float AD_Time = 3f;
+    public float AD_Multiplier = 2f;
     [Space]
     public GameObject activeIcons;
-
+    
     private void Awake()
     {
         Instance = this;
@@ -302,5 +304,21 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     {
         FindObjectOfType<TheFortrest>().ActivateShield(FS_health);
     }
+    #endregion
+    
+    #region Attack Damage
+
+    public void AttackDamage()
+    {
+        GlobalValue.AttackDamageRate = AD_Multiplier;
+        StartCoroutine(ResetAttackDamageRate());
+    }
+
+    IEnumerator ResetAttackDamageRate()
+    {
+        yield return new WaitForSeconds(AD_Time);
+        GlobalValue.AttackDamageRate = 1f;
+    }
+
     #endregion
 }

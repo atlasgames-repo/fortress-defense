@@ -413,6 +413,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     private void CheckDamagePerFrame(float _damage)
     {
+        
         if (enemyState == ENEMYSTATE.DEATH)
             return;
         currentHealth -= (int)_damage;
@@ -765,7 +766,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         //store parameters
         _bodyPart = bodyPart;
         _bodyPartForce = force;
-        _damage = damage;
+        _damage = damage * GlobalValue.AttackDamageRate;
         hitPos = hitPoint;
         bool isExplosion = false;
         WEAPON_EFFECT effect = weaponEffect != null ? forceEffect != WEAPON_EFFECT.NONE ? forceEffect : weaponEffect.effectType : WEAPON_EFFECT.NONE;
