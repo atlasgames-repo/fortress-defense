@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 176525205}
   - component: {fileID: 176525204}
   m_Layer: 5
-  m_Name: Shield
+  m_Name: LightningAlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6236543548756082483}
         m_TargetAssemblyTypeName: BoostItemUI, Assembly-CSharp
-        m_MethodName: FortressShield
+        m_MethodName: ActivateLightnings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -448,6 +448,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6236543548756082480}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &337325505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2923729149368637389, guid: 8a0e29f3917ea1c43a968d0f5f9e33e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2923729149305670975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926aee6e7507c96499e54a47730a8b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &457427447
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,6 +866,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterManager: {fileID: 6320282220373068748}
+--- !u!114 &860303215 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2923729148667357559, guid: 8a0e29f3917ea1c43a968d0f5f9e33e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2923729149305670975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926aee6e7507c96499e54a47730a8b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &870689479 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6236543548493764087, guid: 2c58b6bb9e506924398a8a7728a42ab3,
@@ -1084,6 +1108,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b050c7e6cad25be4c84067c1994eceec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1293045865 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2923729148563666459, guid: 8a0e29f3917ea1c43a968d0f5f9e33e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2923729149305670975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926aee6e7507c96499e54a47730a8b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1346331241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,7 +1190,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shield
+  m_Text: Lightning All
 --- !u!222 &1346331244
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1749,6 +1785,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b7c48852249cbe4bb6345b8cd63bdae, type: 3}
+--- !u!114 &1934588904 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2923729150051896175, guid: 8a0e29f3917ea1c43a968d0f5f9e33e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2923729149305670975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926aee6e7507c96499e54a47730a8b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2030259970
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,6 +3332,31 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1444355694254516114, guid: 2c58b6bb9e506924398a8a7728a42ab3,
+        type: 3}
+      propertyPath: zones.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1444355694254516114, guid: 2c58b6bb9e506924398a8a7728a42ab3,
+        type: 3}
+      propertyPath: zones.Array.data[0]
+      value: 
+      objectReference: {fileID: 337325505}
+    - target: {fileID: 1444355694254516114, guid: 2c58b6bb9e506924398a8a7728a42ab3,
+        type: 3}
+      propertyPath: zones.Array.data[1]
+      value: 
+      objectReference: {fileID: 1293045865}
+    - target: {fileID: 1444355694254516114, guid: 2c58b6bb9e506924398a8a7728a42ab3,
+        type: 3}
+      propertyPath: zones.Array.data[2]
+      value: 
+      objectReference: {fileID: 860303215}
+    - target: {fileID: 1444355694254516114, guid: 2c58b6bb9e506924398a8a7728a42ab3,
+        type: 3}
+      propertyPath: zones.Array.data[3]
+      value: 
+      objectReference: {fileID: 1934588904}
     - target: {fileID: 1662527727235482234, guid: 2c58b6bb9e506924398a8a7728a42ab3,
         type: 3}
       propertyPath: m_AnchorMax.x

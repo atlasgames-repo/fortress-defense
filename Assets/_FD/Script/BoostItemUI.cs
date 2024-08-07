@@ -19,7 +19,6 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     public static BoostItemUI Instance;
     [ReadOnly] public WEAPON_EFFECT currentEffect = WEAPON_EFFECT.NONE;
     [ReadOnly] public NumberArrow currentNumberOfArrows = NumberArrow.Single;
-
     [Header("Double Arrow")]
     public Text DA_remainTxt;
     public Button DA_Button;
@@ -68,7 +67,8 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     public float AD_Multiplier = 2f;
     [Space]
     public GameObject activeIcons;
-    
+
+    [Header("Lightning Global")] public AffectZone[] zones;
     private void Awake()
     {
         Instance = this;
@@ -319,6 +319,18 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
         yield return new WaitForSeconds(AD_Time);
         GlobalValue.AttackDamageRate = 1f;
     }
+    
+    #endregion
+    
+    #region LightningGlobal
 
+    public void ActivateLightnings()
+    {
+        foreach (AffectZone zone in zones)
+        {
+            zone.gameObject.SetActive(true);
+            zone.Active(AffectZoneType.Lighting);
+        }
+    }
     #endregion
 }
