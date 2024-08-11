@@ -30,7 +30,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
     }
 
     // Start is called before the first frame update
-    public void Init(Shop.ShopItemData itemData)
+    public void Init(ShopItemData.ShopItem itemData)
     {
         hasMaxValue = itemData.hasMaxValue;
         maxAmount = itemData.itemMaxValue;

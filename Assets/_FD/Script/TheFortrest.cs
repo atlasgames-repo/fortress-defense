@@ -39,7 +39,9 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     IEnumerator ShakeCoDo;
 
     [Header("Shield")] [HideInInspector] public bool shield = false;
-    public GameObject shieldBubble;
+    public GameObject shieldBubbleMaxHealth;
+    public GameObject shieldBubbleMedHealth;
+    public GameObject shieldBubbleMinHealth;
     private float _shieldCurrentHealth;
     private float _maxShieldHealth;
 
@@ -90,7 +92,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
     public void ActivateShield(float shieldHP)
     {
-        shieldBubble.SetActive(true);
+        shieldBubbleMaxHealth.SetActive(true);
         shield = true;
         _maxShieldHealth = shieldHP;
         _shieldCurrentHealth = shieldHP;
@@ -99,7 +101,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
     public void DeActivateShield()
     {
-        shieldBubble.SetActive(false);
+        shieldBubbleMinHealth.SetActive(false);
         shield = false;
         MenuManager.Instance.DeactivateShield();
     }
@@ -119,6 +121,23 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
             ShakeCoDo = ShakeCo(shakeTime);
             StartCoroutine(ShakeCoDo);
+
+            if (_shieldCurrentHealth < _maxShieldHealth * 2 / 3 && _shieldCurrentHealth >= _maxShieldHealth / 3)
+            {
+                shieldBubbleMaxHealth.SetActive(false);
+                shieldBubbleMedHealth.SetActive(true);
+            }else if (_shieldCurrentHealth< _maxShieldHealth /3)
+            {
+                shieldBubbleMinHealth.SetActive(true);
+                shieldBubbleMedHealth.SetActive(false);
+            }
+            else
+            {
+                shieldBubbleMaxHealth.SetActive(true);
+                shieldBubbleMedHealth.SetActive(false);
+                shieldBubbleMinHealth.SetActive(false);
+            }
+            
             if (_shieldCurrentHealth <= 0)
             {
                 DeActivateShield();

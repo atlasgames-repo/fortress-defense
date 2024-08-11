@@ -300,7 +300,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     #endregion
     #region Fortress Shield
 
-    public void FortressShield()
+    public void ActivateFortressShield()
     {
         FindObjectOfType<TheFortrest>().ActivateShield(FS_health);
     }

@@ -2,9 +2,9 @@
 {
     public class ScrollItemData
     {
-        public Shop.ShopItemData Data { get; }
+        public ShopItemData.ShopItem Data { get; }
 
-        public ScrollItemData(Shop.ShopItemData data)
+        public ScrollItemData(ShopItemData.ShopItem data)
         {
             Data =data;
         }

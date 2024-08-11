@@ -19,22 +19,9 @@ public class Shop : MonoBehaviour
     {
         Exp,Coin
     }
-    [Serializable]
-    public class ShopItemData
-    {
-        public string itemName;
-        public Sprite itemImage;
-        public int itemPrice;
-        public int itemMaxValue;
-        public bool hasMaxValue;
-        public ItemTypes type;
-        public ItemPurchaseType purchaseType;
-        public bool levelLock;
-        public int levelToUnlock;
-    }
-    public ShopItemData[] shopItems;
+
+    public ShopItemData data;
     ItemTypes _chosenType;
-    private List<ShopItemData> _chosenItems;
     public void OpenMenu(string menuName)
     {
         SoundManager.Instance.PauseMusic(true);
@@ -57,11 +44,11 @@ public class Shop : MonoBehaviour
                 break;
         }
         List<ScrollItemData> contentDatas = new List<ScrollItemData>();
-        for (int i = 0; i < shopItems.Length; i++)
+        for (int i = 0; i < data.ShopData.Length; i++)
         {
-            if (shopItems[i].type == _chosenType)
+            if (data.ShopData[i].type == _chosenType)
             {
-                contentDatas.Add(new ScrollItemData(shopItems[i]));
+                contentDatas.Add(new ScrollItemData(data.ShopData[i]));
             }
         }
 
