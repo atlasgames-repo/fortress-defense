@@ -111,7 +111,8 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         yield return null;
         BlackScreenUI.instance.Show(0.2f);
-        MapUI.SetActive(open);
+        inventory.SetActive(open);
+        inventory.GetComponent<Inventory>().InitSlots();
         BlackScreenUI.instance.Hide(0.2f);
     }
     IEnumerator OpenMapCo(bool open)
