@@ -50,14 +50,9 @@ public class Inventory : MonoBehaviour
             {
                 if (chosenMagics[i] == itemsData[j].id)
                 {
-                    if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
-                    {
-                        magicSlotsUI[i].Init(FallBackItem(Shop.ItemTypes.Magic).itemImage);
-                    }
-                    else
-                    {
+                    
                         magicSlotsUI[i].Init(itemsData[j].itemImage);
-                    }
+                    
                 }
             }
         }
@@ -72,7 +67,7 @@ public class Inventory : MonoBehaviour
                 {
                     if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
                     {
-                        itemSlotsUI[i].Init(FallBackItem(Shop.ItemTypes.Item).itemImage);
+                        itemSlotsUI[i].Init(FallBackItem().itemImage);
                     }
                     else
                     {
@@ -89,14 +84,9 @@ public class Inventory : MonoBehaviour
             {
                 if (chosenPet[i] == itemsData[j].id)
                 {
-                    if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
-                    {
-                        petSlotsUI[i].Init(FallBackItem(Shop.ItemTypes.Pet).itemImage);
-                    }
-                    else
-                    {
+                    
                         petSlotsUI[i].Init(itemsData[j].itemImage);
-                    }
+                    
                 }
             }
         }
@@ -108,14 +98,10 @@ public class Inventory : MonoBehaviour
             {
                 if (chosenTower[i] == itemsData[j].id)
                 {
-                    if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
-                    {
-                        towerSlotsUI[i].Init(FallBackItem(Shop.ItemTypes.Towers).itemImage);
-                    }
-                    else
-                    {
+                    
+                    
                         towerSlotsUI[i].Init(itemsData[j].itemImage);
-                    }
+                    
                 }
             }
         }
@@ -198,91 +184,24 @@ public class Inventory : MonoBehaviour
     {
         bool shouldBreak = false;
         int itemID = -1;
-        switch (type)
+        for (int i = 0; i < chosenInitialItemsID.Length; i++)
         {
-            case Shop.ItemTypes.Item:
-                for (int i = 0; i < chosenInitialItemsID.Length; i++)
+            for (int j = 0; j < chosenItems.Length; j++)
+            {
+                if (chosenItems[j] != chosenInitialItemsID[i])
                 {
-                    for (int j = 0; j < chosenItems.Length; j++)
-                    {
-                        if (chosenItems[j] != chosenInitialItemsID[i])
-                        {
-                            itemID = chosenInitialItemsID[i];
-                            chosenItems[j] = chosenInitialItemsID[i];
-                            shouldBreak = true;
-                            GlobalValue.inventoryItem = string.Join(",", chosenItems);
-                        }
-                    }
-
-                    if (shouldBreak)
-                    {
-                        break;
-                    }
+                    itemID = chosenInitialItemsID[i];
+                    chosenItems[j] = chosenInitialItemsID[i];
+                    shouldBreak = true;
+                    GlobalValue.inventoryItem = string.Join(",", chosenItems);
                 }
-                break;
-            case Shop.ItemTypes.Magic:
-                for (int i = 0; i < chosenInitialMagicsID.Length; i++)
-                {
-                    for (int j = 0; j < chosenMagics.Length; j++)
-                    {
-                        if (chosenMagics[j] != chosenInitialMagicsID[i])
-                        {
-                            itemID = chosenInitialMagicsID[i];
-                            chosenMagics[j] = chosenInitialMagicsID[i];
-                            shouldBreak = true;
-                            GlobalValue.inventoryMagic = string.Join(",", chosenMagics);
-                        }
-                    }
+            }
 
-                    if (shouldBreak)
-                    {
-                        break;
-                    }
-                }
+            if (shouldBreak)
+            {
                 break;
-            case Shop.ItemTypes.Pet:
-                for (int i = 0; i < chsenInitialPetsID.Length; i++)
-                {
-                    for (int j = 0; j < chosenPet.Length; j++)
-                    {
-                        if (chosenPet[j] != chsenInitialPetsID[i])
-                        {
-                            itemID = chsenInitialPetsID[i];
-                            chosenPet[j] = chsenInitialPetsID[i];
-                            shouldBreak = true;
-                            GlobalValue.inventoryPets = string.Join(",", chosenPet);
-                        }
-                    }
-
-                    if (shouldBreak)
-                    {
-                        break;
-                    }
-                }
-                break;
-            case Shop.ItemTypes.Towers:
-                for (int i = 0; i < chosenInitialTowersID.Length; i++)
-                {
-                    for (int j = 0; j < chosenTower.Length; j++)
-                    {
-                        if (chosenTower[j] != chosenInitialTowersID[i])
-                        {
-                            itemID = chosenInitialTowersID[i];
-                            chosenTower[j] = chosenInitialTowersID[i];
-                            shouldBreak = true;
-                                            GlobalValue.inventoryTowers = string.Join(",", chosenTower);
-                        }
-                    }
-
-                    if (shouldBreak)
-                    {
-                        break;
-                    }
-                }
-                break;
-                
+            }
         }
-
         ShopItemData.ShopItem item = new ShopItemData.ShopItem();
         for (int i = 0; i < data.ShopData.Length; i++)
         {
