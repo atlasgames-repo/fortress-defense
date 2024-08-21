@@ -157,6 +157,12 @@ public class Inventory : MonoBehaviour
         itemPicker.Init(data,chosenTower,Shop.ItemTypes.Towers);
     }
 
+    public void CloseItemPicker()
+    {
+        itemPicker.ClearItems();
+        itemPicker.gameObject.SetActive(false);
+        SoundManager.Click();
+    }
     public void ChangeChosenItem(ShopItemData.ShopItem item)
     {
         switch (_edittedType)
@@ -182,6 +188,7 @@ public class Inventory : MonoBehaviour
                 GlobalValue.inventoryTowers = string.Join(",", chosenTower);
                 break;
         }
+        CloseItemPicker();
     }
 
 

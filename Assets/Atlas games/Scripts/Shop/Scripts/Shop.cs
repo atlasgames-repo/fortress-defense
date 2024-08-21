@@ -73,4 +73,10 @@ public class Shop : MonoBehaviour
             dynamicScrollRect.vertical = false;
         }
     }
+    
+    //delete
+    void Start()
+    {
+        User.Coin = 1000;
+    }
 }

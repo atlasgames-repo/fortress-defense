@@ -23,6 +23,8 @@ public class ShopItem : ScrollItem<ScrollItemData>
     public Text levelLockText;
     public GameObject itemCountTag;
     public GameObject levelLockBG;
+    private bool _oneTimePurchase;
+    public GameObject ownedText;
     protected override void InitItemData(ScrollItemData data)
     {
         Init(data.Data);
@@ -32,6 +34,8 @@ public class ShopItem : ScrollItem<ScrollItemData>
     // Start is called before the first frame update
     public void Init(ShopItemData.ShopItem itemData)
     {
+        itemCountTag.SetActive(false);
+        _oneTimePurchase = itemData.oneTimePurchase;
         hasMaxValue = itemData.hasMaxValue;
         maxAmount = itemData.itemMaxValue;
         itemImage.sprite = itemData.itemImage;
@@ -52,7 +56,10 @@ public class ShopItem : ScrollItem<ScrollItemData>
             {
                 purchaseButton.interactable = true;
                 itemNameText.gameObject.SetActive(true);
-                itemCountTag.SetActive(true);
+                if (!itemData.oneTimePurchase)
+                {
+                    itemCountTag.SetActive(true);
+                }
                 levelLockBG.SetActive(false );
                 if (_purchaseType == Shop.ItemPurchaseType.Coin)
                 {
@@ -89,7 +96,10 @@ public class ShopItem : ScrollItem<ScrollItemData>
         {
             purchaseButton.interactable = true;
             itemNameText.gameObject.SetActive(true);
-            itemCountTag.SetActive(true);
+            if (!itemData.oneTimePurchase)
+            {
+                itemCountTag.SetActive(true);
+            }
             levelLockBG.SetActive(false );
             if (_purchaseType == Shop.ItemPurchaseType.Coin)
             {
@@ -121,6 +131,18 @@ public class ShopItem : ScrollItem<ScrollItemData>
             itemNameText.text = itemName;
             itemCountText.text = itemCount.ToString();
         }
+
+        if (_oneTimePurchase && GlobalValue.GetChosenShopItem(itemName)>0)
+        {
+            expImage.gameObject.SetActive(false);
+            coinImage.gameObject.SetActive(false);
+            itemPriceText.text = "";
+            ownedText.SetActive(true);
+        }
+        else
+        {
+            ownedText.SetActive(false);
+        }
     }
 
     public void BuyItem()
@@ -128,7 +150,9 @@ public class ShopItem : ScrollItem<ScrollItemData>
         int itemCount = GlobalValue.GetChosenShopItem(itemName);
         SoundManager.Click();
 
-            if (itemCount < maxAmount)
+        if (!_oneTimePurchase)
+        {
+               if (itemCount < maxAmount)
             {
                 if (_purchaseType == Shop.ItemPurchaseType.Coin)
                 {
@@ -139,7 +163,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                             if (itemCount < maxAmount)
                             {
                                 GlobalValue.IncrementChosenShopItem(itemName);
-                                itemCountText.text = itemCount.ToString();
+                                itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
                                 User.Coin = -itemPrice;
                             }
                             else
@@ -151,7 +175,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                         else
                         {
                             GlobalValue.IncrementChosenShopItem(itemName);
-                            itemCountText.text = itemCount.ToString();
+                            itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
                             User.Coin = -itemPrice;
                         }
                     }
@@ -170,7 +194,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                             if (itemCount < maxAmount)
                             {
                                 GlobalValue.IncrementChosenShopItem(itemName);
-                                itemCountText.text = itemCount.ToString();
+                                itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
                                 User.Uxp = -itemPrice;
                             }
                             else
@@ -182,7 +206,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                         else
                         {
                             GlobalValue.IncrementChosenShopItem(itemName);
-                            itemCountText.text = itemCount.ToString();
+                            itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
                             User.Uxp = -itemPrice;
                         }
                     }
@@ -199,6 +223,92 @@ public class ShopItem : ScrollItem<ScrollItemData>
                 popup.OpenDialog(false);
             }
         
+        }
+        else
+        {
+            if (GlobalValue.GetChosenShopItem(itemName) < 1)
+            {
+                  if (_purchaseType == Shop.ItemPurchaseType.Coin)
+                {
+                    if (User.Coin > itemPrice)
+                    {
+                        if (hasMaxValue)
+                        {
+                            if (itemCount < maxAmount)
+                            {
+                                expImage.gameObject.SetActive(false);
+                                coinImage.gameObject.SetActive(false);
+                                itemPriceText.text = "";
+                                            ownedText.SetActive(true);
+                                GlobalValue.IncrementChosenShopItem(itemName);
+                                itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
+                                User.Coin = -itemPrice;
+                            }
+                            else
+                            {
+                                popup.gameObject.SetActive(true);
+                                popup.OpenDialog(false);
+                            }
+                        }
+                        else
+                        {
+                            expImage.gameObject.SetActive(false);
+                            coinImage.gameObject.SetActive(false);
+                            itemPriceText.text = "";
+                                        ownedText.SetActive(true);
+                            GlobalValue.IncrementChosenShopItem(itemName);
+                            itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
+                            User.Coin = -itemPrice;
+                        }
+                    }
+                    else
+                    {
+                        popup.gameObject.SetActive(true);
+                        popup.OpenDialog(true);
+                    }
+                }
+                else
+                {
+                    if (User.Uxp > itemPrice)
+                    {
+                        if (hasMaxValue)
+                        {
+                            if (itemCount < maxAmount)
+                            {
+                            expImage.gameObject.SetActive(false);
+            coinImage.gameObject.SetActive(false);
+            itemPriceText.text = "";
+                        ownedText.SetActive(true);
+                                GlobalValue.IncrementChosenShopItem(itemName);
+                                itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
+                                User.Uxp = -itemPrice;
+                            }
+                            else
+                            {
+                                popup.gameObject.SetActive(true);
+                                popup.OpenDialog(false);
+                            }
+                        }
+                        else
+                        {
+                        expImage.gameObject.SetActive(false);
+            coinImage.gameObject.SetActive(false);
+            itemPriceText.text = "";
+                        ownedText.SetActive(true);
+                            GlobalValue.IncrementChosenShopItem(itemName);
+                            itemCountText.text = GlobalValue.GetChosenShopItem(itemName).ToString();
+                            User.Uxp = -itemPrice;
+                        }
+                    }
+                    else
+                    {
+                        popup.gameObject.SetActive(true);
+                        popup.OpenDialog(true);
+                    }
+                }
+        
+            }
+        }
     }
 
     public void HandleDeactivation()

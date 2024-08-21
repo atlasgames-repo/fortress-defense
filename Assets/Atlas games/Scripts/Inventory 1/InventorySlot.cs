@@ -6,22 +6,34 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     public Image chosenItemImage;
-
+    private Vector2 originalSize;
+    private bool _checkedSize;
     public void ChangeSlotSprite(Sprite itemSprite)
     {
+        CheckSize();
         chosenItemImage.sprite = itemSprite;
         ResizeSprite();
     }
 
+    void CheckSize()
+    {
+        if (!_checkedSize)
+        {
+            _checkedSize = true;
+            originalSize =
+                new Vector2(chosenItemImage.rectTransform.sizeDelta.x, chosenItemImage.rectTransform.sizeDelta.y);
+        }
+    }
     public void Init(Sprite initalSprite)
     {
+      CheckSize();
         chosenItemImage.sprite = initalSprite;
+        ResizeSprite();
     }
 
     void ResizeSprite()
     {
-        Vector2 originalSize =
-            new Vector2(chosenItemImage.rectTransform.sizeDelta.x, chosenItemImage.rectTransform.sizeDelta.y);
+        
         chosenItemImage.SetNativeSize();
         if (chosenItemImage.rectTransform.sizeDelta.x > chosenItemImage.rectTransform.sizeDelta.y)
         {

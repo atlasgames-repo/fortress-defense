@@ -16,14 +16,10 @@ public class ItemPicker : MonoBehaviour
         {
             if (data.ShopData[i].type == category && GlobalValue.GetChosenShopItem(data.ShopData[i].itemName)>0)
             {
-               // for (int j = 0; j < data.ShopData.Length; j++)
-               // {
-               //     
-               // }
                 contentDatas.Add(new ScrollItemData(data.ShopData[i]));
-                content.InitScrollContent(contentDatas);
             }
         }
+        content.InitScrollContent(contentDatas);
     }
 
     public void ClearItems()

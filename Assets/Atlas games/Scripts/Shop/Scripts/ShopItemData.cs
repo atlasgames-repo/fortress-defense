@@ -19,6 +19,7 @@ public class ShopItemData : ScriptableObject
         public int levelToUnlock;
         public int id;
         public bool isFree;
+        public bool oneTimePurchase;
     }
     public ShopItem[] ShopData;
 }

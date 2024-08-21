@@ -11,6 +11,7 @@ public class InventoryItem : ScrollItem<ScrollItemData>
     public GameObject selectedHighlight;
     private ShopItemData.ShopItem _itemData;
     private bool _isChosen;
+    private Vector2 originalSize;
     void Init(ShopItemData.ShopItem data)
     {
         selectedHighlight.SetActive(false);
@@ -24,6 +25,7 @@ public class InventoryItem : ScrollItem<ScrollItemData>
                     if (data.id == inventory.chosenTower[i])
                     {
                         _isChosen = true;
+                        break;
                     }
                     else
                     {
@@ -37,6 +39,7 @@ public class InventoryItem : ScrollItem<ScrollItemData>
                     if (data.id == inventory.chosenMagics[i])
                     {
                         _isChosen = true;
+                        break;
                     }
                     else
                     {
@@ -50,6 +53,7 @@ public class InventoryItem : ScrollItem<ScrollItemData>
                     if (data.id == inventory.chosenItems[i])
                     {
                         _isChosen = true;
+                        break;
                     }
                     else
                     {
@@ -63,6 +67,7 @@ public class InventoryItem : ScrollItem<ScrollItemData>
                     if (data.id == inventory.chosenPet[i])
                     {
                         _isChosen = true;
+                        break;
                     }
                     else
                     {
@@ -72,7 +77,7 @@ public class InventoryItem : ScrollItem<ScrollItemData>
                 break;
         }
         selectedHighlight.SetActive(_isChosen);
-        Vector2 originalSize =
+         originalSize =
             new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
         itemImage.SetNativeSize();
         if (itemImage.rectTransform.sizeDelta.x > itemImage.rectTransform.sizeDelta.y)
@@ -89,10 +94,18 @@ public class InventoryItem : ScrollItem<ScrollItemData>
     protected override void InitItemData(ScrollItemData data)
     {
         Init(data.Data);
+        base.InitItemData(data);
     }
     public void ChooseItem()
     {
-        inventory.ChangeChosenItem(_itemData);
-        SoundManager.Click();
+        if (!_isChosen)
+        {
+            inventory.ChangeChosenItem(_itemData);
+            SoundManager.Click(); 
+        }
+        else
+        {
+            SoundManager.Click();
+        }
     }
 }
