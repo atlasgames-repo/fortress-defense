@@ -123,6 +123,7 @@ public class Inventory : MonoBehaviour
     }
     public void OpenPets()
     {
+        SoundManager.Click();
         _editingSlot = 0;
         _edittedType = Shop.ItemTypes.Pet;
         itemPicker.gameObject.SetActive(true);
@@ -131,6 +132,7 @@ public class Inventory : MonoBehaviour
 
     public void OpenItems(int slot)
     {
+        SoundManager.Click();
         _editingSlot = slot;
         _edittedType = Shop.ItemTypes.Item;
         itemPicker.gameObject.SetActive(true);
@@ -139,6 +141,7 @@ public class Inventory : MonoBehaviour
 
     public void OpenMagics(int slot)
     {
+        SoundManager.Click();
         _editingSlot = slot;
         _edittedType = Shop.ItemTypes.Magic;
         itemPicker.gameObject.SetActive(true);
@@ -147,6 +150,7 @@ public class Inventory : MonoBehaviour
 
     public void OpenTowers()
     {
+        SoundManager.Click();
         _editingSlot = 0;
         _edittedType = Shop.ItemTypes.Towers;
         itemPicker.gameObject.SetActive(true);

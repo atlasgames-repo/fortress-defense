@@ -93,5 +93,6 @@ public class InventoryItem : ScrollItem<ScrollItemData>
     public void ChooseItem()
     {
         inventory.ChangeChosenItem(_itemData);
+        SoundManager.Click();
     }
 }
