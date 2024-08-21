@@ -10,6 +10,7 @@ public class ShopItemData : ScriptableObject
     {
         public string itemName;
         public Sprite itemImage;
+        public Sprite buttonImage;
         public int itemPrice;
         public int itemMaxValue;
         public bool hasMaxValue;

@@ -92,7 +92,10 @@ public class GlobalValue : MonoBehaviour
     {
         PlayerPrefs.SetInt(itemName,GetChosenShopItem(itemName) + 1);
     }
-
+    public static void DecrementChosenShopItem(string itemName)
+    {
+        PlayerPrefs.SetInt(itemName,GetChosenShopItem(itemName) - 1);
+    }
 
 
 
