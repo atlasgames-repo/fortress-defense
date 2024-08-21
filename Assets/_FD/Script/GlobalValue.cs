@@ -37,13 +37,38 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd1", 0); }
         set { PlayerPrefs.SetInt("lastDayShowNativeAd1", value); }
     }
+
+    
+    
     public static int lastDayShowNativeAd2
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd2", 0); }
         set { PlayerPrefs.SetInt("lastDayShowNativeAd2", value); }
     }
+    public static string inventoryMagic
+    {
+        get { return PlayerPrefs.GetString("InventoryMagic", "[0,1,2]"); }
+        set { PlayerPrefs.SetString("InventoryMagic", value); }
+    }
 
-
+    public static string inventoryItem
+    {
+        get { return PlayerPrefs.GetString("InventoryItem", "[3,4,5]"); }
+        set { PlayerPrefs.SetString("InventoryItem", value); }
+    }
+    
+    public static string inventoryPets
+    {
+        get { return PlayerPrefs.GetString("InventoryPet", "[6]"); }
+        set { PlayerPrefs.SetString("InventoryPet", value); }
+    }
+    
+    public static string inventoryTowers
+    {
+        get { return PlayerPrefs.GetString("inventoryTowers", "[7]"); }
+        set { PlayerPrefs.SetString("inventoryTowers", value); }
+    }
+    
     public static int GetTutorialState(string tutorialName)
     {
         return PlayerPrefs.GetInt("tutorial :"+tutorialName, 0);
