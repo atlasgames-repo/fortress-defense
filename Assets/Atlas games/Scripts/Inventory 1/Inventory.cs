@@ -203,6 +203,7 @@ public class Inventory : MonoBehaviour
                             itemID = chosenInitialItemsID[i];
                             chosenItems[j] = chosenInitialItemsID[i];
                             shouldBreak = true;
+                            GlobalValue.inventoryItem = string.Join(",", chosenItems);
                         }
                     }
 
@@ -222,6 +223,7 @@ public class Inventory : MonoBehaviour
                             itemID = chosenInitialMagicsID[i];
                             chosenMagics[j] = chosenInitialMagicsID[i];
                             shouldBreak = true;
+                            GlobalValue.inventoryMagic = string.Join(",", chosenMagics);
                         }
                     }
 
@@ -241,6 +243,7 @@ public class Inventory : MonoBehaviour
                             itemID = chsenInitialPetsID[i];
                             chosenPet[j] = chsenInitialPetsID[i];
                             shouldBreak = true;
+                            GlobalValue.inventoryPets = string.Join(",", chosenPet);
                         }
                     }
 
@@ -260,6 +263,7 @@ public class Inventory : MonoBehaviour
                             itemID = chosenInitialTowersID[i];
                             chosenTower[j] = chosenInitialTowersID[i];
                             shouldBreak = true;
+                                            GlobalValue.inventoryTowers = string.Join(",", chosenTower);
                         }
                     }
 
