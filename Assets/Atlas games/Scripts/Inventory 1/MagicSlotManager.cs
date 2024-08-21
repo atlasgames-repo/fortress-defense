@@ -11,7 +11,6 @@ public class MagicSlotManager : MonoBehaviour
     void Start()
     {
         _chosenMagics = new int[slots.Length];
-        print(GlobalValue.inventoryMagic);
         string[] chosenMagicsDecode = GlobalValue.inventoryMagic.Split(',');
         for (int i = 0; i < chosenMagicsDecode.Length; i++)
         {

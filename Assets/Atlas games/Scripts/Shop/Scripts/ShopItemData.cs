@@ -21,6 +21,7 @@ public class ShopItemData : ScriptableObject
         public int id;
         public bool isFree;
         public bool oneTimePurchase;
+        public GameObject pet;
     }
     public ShopItem[] ShopData;
 }
