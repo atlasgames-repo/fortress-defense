@@ -180,7 +180,7 @@ public class Inventory : MonoBehaviour
 
     
     // if item supply is consumed completely chooses a fall back item wich is free and unlimited and isn't chosen yet in the slots
-    ShopItemData.ShopItem FallBackItem(Shop.ItemTypes type)
+    ShopItemData.ShopItem FallBackItem()
     {
         bool shouldBreak = false;
         int itemID = -1;
