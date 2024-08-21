@@ -54,6 +54,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     public string warriorTag = "Warrior";
     private float _zPos;
     public GameObject shadow;
+    private float _initialMoveSpeed;
     IEnumerator Climb()
     {
         yield return new WaitForSeconds(climbingTime);

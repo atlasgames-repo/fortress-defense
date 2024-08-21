@@ -17,6 +17,8 @@ public class ShopItemData : ScriptableObject
         public Shop.ItemPurchaseType purchaseType;
         public bool levelLock;
         public int levelToUnlock;
+        public int id;
+        public bool isFree;
     }
     public ShopItem[] ShopData;
 }

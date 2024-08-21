@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Monetization;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,6 +14,7 @@ public class MainMenuHomeScene : MonoBehaviour
     public GameObject StoreUI;
     public GameObject Loading;
     public GameObject Settings;
+    public GameObject inventory;
     public string facebookLink;
     public string twitterLink = "https://twitter.com/";
     public string playingLevelName = "Playing atlas";
@@ -101,6 +101,19 @@ public class MainMenuHomeScene : MonoBehaviour
         StartCoroutine(OpenMapCo(open));
     }
 
+    public void OpenInventory(bool open)
+    {
+        SoundManager.Click();
+        StartCoroutine(OpenInventoryCo(open));
+    }
+
+    IEnumerator OpenInventoryCo(bool open)
+    {
+        yield return null;
+        BlackScreenUI.instance.Show(0.2f);
+        MapUI.SetActive(open);
+        BlackScreenUI.instance.Hide(0.2f);
+    }
     IEnumerator OpenMapCo(bool open)
     {
         yield return null;

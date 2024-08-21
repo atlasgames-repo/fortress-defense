@@ -12,7 +12,7 @@ public class Shop : MonoBehaviour
     public Transform scrollContentParent;
     public enum ItemTypes
     {
-        Pet,Feature,Magic,Monster,Website
+        Pet,Item,Magic,Monster,Website,Towers
     }
 
     public enum ItemPurchaseType
@@ -30,8 +30,8 @@ public class Shop : MonoBehaviour
             case "pets":
                 _chosenType = ItemTypes.Pet;
                 break;
-            case "features":
-                _chosenType = ItemTypes.Feature;
+            case "items":
+                _chosenType = ItemTypes.Item;
                 break;
             case "magics":
                 _chosenType = ItemTypes.Magic;
@@ -42,11 +42,14 @@ public class Shop : MonoBehaviour
             case "website":
                 _chosenType = ItemTypes.Website;
                 break;
+            case "tower":
+                _chosenType = ItemTypes.Towers;
+                break;
         }
         List<ScrollItemData> contentDatas = new List<ScrollItemData>();
         for (int i = 0; i < data.ShopData.Length; i++)
         {
-            if (data.ShopData[i].type == _chosenType)
+            if (data.ShopData[i].type == _chosenType && !data.ShopData[i].isFree)
             {
                 contentDatas.Add(new ScrollItemData(data.ShopData[i]));
             }
