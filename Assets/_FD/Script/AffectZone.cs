@@ -167,11 +167,12 @@ public class AffectZone : MonoBehaviour
                             case AffectZoneType.Fire:
                                 target.TakeDamage(fireDamage, Vector2.zero, target.gameObject.transform.position,
                                     gameObject);
-                                target.Freeze(fireAffectTime, gameObject);
-                                if (darkFX)
+                               // target.Freeze(fireAffectTime, gameObject);
+                                if (fireFX)
                                 {
-                                    var _fx = SpawnSystemHelper.GetNextObject(fireFX, true);
-                                    _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
+                                  //  var _fx = SpawnSystemHelper.GetNextObject(fireFX, true);
+                                                                  GameObject _fx = Instantiate(fireFX);
+                                  _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
                                     _fx.transform.position = target.gameObject.transform.position;
                                 }
 
