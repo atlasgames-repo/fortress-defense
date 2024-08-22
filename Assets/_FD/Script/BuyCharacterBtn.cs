@@ -10,6 +10,7 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
     {
         OnBtnClick();
     }
+    public LayerMask targetLayerForPet;
     public ShopItemData data;
     private int[] _chosenPet;
     public int petToSpawn = 0;
@@ -58,13 +59,13 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
         }
 
         character = pets[petToSpawn];
-        character.GetComponent<SmartEnemyGrounded>().startBehavior = STARTBEHAVIOR.WALK_LEFT;
-        character.layer = LayerMask.NameToLayer("Player");
-        character.tag = "Warrior";
-        character.GetComponent<EnemyMeleeAttack>().targetLayer = 31;
-        character.GetComponent<EnemyMeleeAttack>().targetLayer = LayerMask.NameToLayer("Enemy");
-        character.GetComponent<CheckTargetHelper>().targetLayer = 31;
-        character.GetComponent<CheckTargetHelper>().targetLayer = LayerMask.NameToLayer("Enemy");
+      // character.GetComponent<SmartEnemyGrounded>().startBehavior = STARTBEHAVIOR.WALK_LEFT;
+      // character.layer = LayerMask.NameToLayer("Player");
+      // character.tag = "Warrior";
+      // character.GetComponent<EnemyMeleeAttack>().targetLayer = 31;
+      // character.GetComponent<EnemyMeleeAttack>().targetLayer = LayerMask.NameToLayer("Enemy");
+      // character.GetComponent<CheckTargetHelper>().targetLayer = 31;
+      // character.GetComponent<CheckTargetHelper>().targetLayer = LayerMask.NameToLayer("Enemy");
         
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
@@ -153,7 +154,7 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
         if (GameManager.Instance.currentExp >= price)
         {
             //SoundManager.PlaySfx(SoundManager.Instance.buyCharacter);
-            CharacterManager.Instance.SpawnCharacter(this);
+            CharacterManager.Instance.SpawnCharacter(this, targetLayerForPet);
             GlobalValue.BoughtGroundUnit++;
         }
     }
