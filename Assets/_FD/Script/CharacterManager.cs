@@ -33,6 +33,7 @@ public class CharacterManager : MonoBehaviour
     {
         var character = Instantiate(currentBtnPicked.character, pos, Quaternion.identity) as GameObject;
         character.GetComponent<SmartEnemyGrounded>().startBehavior = STARTBEHAVIOR.WALK_LEFT;
+        character.GetComponent<SmartEnemyGrounded>().isPet = true;
         switch (character.GetComponent<SmartEnemyGrounded>().attackType)
         {
              case ATTACKTYPE.MELEE:

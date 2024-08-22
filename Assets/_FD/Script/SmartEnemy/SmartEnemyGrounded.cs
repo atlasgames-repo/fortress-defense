@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Controller2D))]
 public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 {
+    [HideInInspector] public bool isPet;
     public bool isSocking { get; set; }
     public bool isDead { get; set; }
 
@@ -299,7 +300,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             CheckAttack();
         }
         // set slow down rate here : 
-        moveSpeed = _initialMoveSpeed * GlobalValue.SlowDownRate;
+        if (isPet)
+        {
+            moveSpeed = _initialMoveSpeed * GlobalValue.SlowDownRate;
+        }
     }
 
     void Flip()
