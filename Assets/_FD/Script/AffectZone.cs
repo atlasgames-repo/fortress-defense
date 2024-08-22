@@ -68,6 +68,14 @@ public class AffectZone : MonoBehaviour
     // Start is called before the first frame update
     public List<Enemy> listEnemyInZone;
     AffectZoneType zoneType;
+
+
+    [Header("Armagdon")] public GameObject fireBall;
+    public float aramgdonFallTime = 1.3f;
+    private GameObject[] _spawnedArmagdons;
+    public Vector2 fireBallSpawnOffset;
+    public AudioClip impaceSfx;
+    public float offset;
     public AffectZoneType getAffectZoneType
     {
         get { return zoneType; }
@@ -172,14 +180,13 @@ public class AffectZone : MonoBehaviour
                                 {
                                   //  var _fx = SpawnSystemHelper.GetNextObject(fireFX, true);
                                                                   GameObject _fx = Instantiate(fireFX);
-                                  _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
+                                                                  _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
                                     _fx.transform.position = target.gameObject.transform.position;
                                 }
 
                                 SoundManager.PlaySfx(fireSound);
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
-
                             case AffectZoneType.Frozen:
                                 target.TakeDamage(frozenDamage, Vector2.zero, target.gameObject.transform.position,
                                     gameObject);
@@ -270,7 +277,9 @@ public class AffectZone : MonoBehaviour
                                                                     SoundManager.PlaySfx(aeroSound);
                                 // code for magnet
                                 break;
-
+                            case AffectZoneType.Armagdon:
+                                
+                                break;
                         }
                     }
                 }
@@ -393,6 +402,20 @@ public class AffectZone : MonoBehaviour
         // Debug.LogError(collision.gameObject + "list: " + listEnemyInZone.Count);
     }
 
+    public void ActivateArmagdon()
+    {
+        GameObject spawnedFireBall =
+            Instantiate(fireBall, (Vector2)transform.position + fireBallSpawnOffset, Quaternion.identity);
+        Vector2 direction = (Vector2)transform.position - (Vector2)spawnedFireBall.transform.position;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        angle += offset;
+
+        spawnedFireBall.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        StartCoroutine(ThrowFireBall(spawnedFireBall, spawnedFireBall.transform.position, transform.position,
+            aramgdonFallTime));
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -405,5 +428,23 @@ public class AffectZone : MonoBehaviour
             }
         }
         // Debug.LogError(collision.gameObject);
+    }
+    private IEnumerator ThrowFireBall(GameObject fireBall, Vector3 startPos, Vector3 target, float time)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < time)
+        {
+            fireBall.transform.position = Vector3.Lerp(startPos, target, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+            yield return null; 
+        }
+        CameraShake.instance.StartShake(0.1f, 0.1f);
+        fireBall.transform.position = target;
+        SoundManager.PlaySfx(impaceSfx);
+     //   GameObject fireFx = Instantiate(fireFX, target, Quaternion.identity);
+     //   fireFx.GetComponent<AutoDestroy>().Init(fireAffectTime);
+        Active(AffectZoneType.Fire);
+        Destroy(fireBall);
     }
 }

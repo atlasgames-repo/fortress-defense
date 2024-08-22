@@ -94,7 +94,6 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     {
         timeCounter = new float[itemButtons.Length];
         _chosenItems = new int[itemButtons.Length];
-        print(GlobalValue.inventoryMagic);
         string[] chosenMagicsDecode = GlobalValue.inventoryItem.Split(',');
         for (int i = 0; i < chosenMagicsDecode.Length; i++)
         {
@@ -434,17 +433,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     
     #endregion
     
-    #region LightningGlobal
-
-    public void ActivateLightnings()
-    {
-        foreach (AffectZone zone in zones)
-        {
-            zone.gameObject.SetActive(true);
-            zone.Active(AffectZoneType.Lighting);
-        }
-    }
-    #endregion
+    
     
     ShopItemData.ShopItem GetItemData(int id)
     {

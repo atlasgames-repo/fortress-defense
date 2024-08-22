@@ -77,9 +77,21 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
             ownBtn.interactable = canUse && fortressHealth > 0;
         canvasGroup.interactable = canUse;
     }
+    #region LightningGlobal
 
+    public void ActivateLightnings()
+    {
+        AffectZoneManager.Instance.LightningAll();
+    }
+    #endregion
+
+    public void ActivateArmagdon()
+    {
+        AffectZoneManager.Instance.Armagdon();
+    }
     void ActiveLighting()
     {
+        print("wtf");
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Lighting, this);
         SoundManager.Click();
     }
@@ -166,6 +178,12 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
                 break;
             case AffectZoneType.Dark:
                 ActiveDark();
+                break;
+            case AffectZoneType.LightningAll:
+                ActivateLightnings();
+                break;
+            case AffectZoneType.Armagdon:
+                ActivateArmagdon();
                 break;
         }
 
