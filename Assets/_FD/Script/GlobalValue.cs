@@ -123,7 +123,7 @@ public class GlobalValue : MonoBehaviour
     
     public static string DoubleXpActivationTime
     {
-        get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", "1970-01-0100:00:01"); }
+        get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", "1970-01-01T00:00:01"); }
         set { PlayerPrefs.SetString("DoubleXp1HourDurationActivationTime", value); }
     }
 
