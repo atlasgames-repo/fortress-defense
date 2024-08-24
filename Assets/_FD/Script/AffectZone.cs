@@ -73,9 +73,10 @@ public class AffectZone : MonoBehaviour
     [Header("Armagdon")] public GameObject fireBall;
     public float aramgdonFallTime = 1.3f;
     private GameObject[] _spawnedArmagdons;
-    public Vector2 fireBallSpawnOffset;
+    public Vector2[] fireBallSpawnOffset;
     public AudioClip impaceSfx;
     public float offset;
+    public float fireBallSpeed = 2f;
     public AffectZoneType getAffectZoneType
     {
         get { return zoneType; }
@@ -178,9 +179,8 @@ public class AffectZone : MonoBehaviour
                                // target.Freeze(fireAffectTime, gameObject);
                                 if (fireFX)
                                 {
-                                  //  var _fx = SpawnSystemHelper.GetNextObject(fireFX, true);
-                                                                  GameObject _fx = Instantiate(fireFX);
-                                                                  _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
+                                    var _fx = SpawnSystemHelper.GetNextObject(fireFX, true);
+                                    _fx.GetComponent<AutoDestroy>().Init(fireAffectTime);
                                     _fx.transform.position = target.gameObject.transform.position;
                                 }
 
@@ -404,17 +404,23 @@ public class AffectZone : MonoBehaviour
 
     public void ActivateArmagdon()
     {
-        GameObject spawnedFireBall =
-            Instantiate(fireBall, (Vector2)transform.position + fireBallSpawnOffset, Quaternion.identity);
-        Vector2 direction = (Vector2)transform.position - (Vector2)spawnedFireBall.transform.position;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        angle += offset;
-
-        spawnedFireBall.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        StartCoroutine(ThrowFireBall(spawnedFireBall, spawnedFireBall.transform.position, transform.position,
-            aramgdonFallTime));
+        Vector2 firstOffsetTarget = new Vector2();
+        for (int i = 0; i < fireBallSpawnOffset.Length; i++)
+        {
+            Vector2 newTarget = new Vector2();
+            if (i == 0)
+            {
+                firstOffsetTarget = fireBallSpawnOffset[i];
+            }
+            else
+            {
+                newTarget = fireBallSpawnOffset[i] - firstOffsetTarget;
+            }
+            var spawnedFireBall = SpawnSystemHelper.GetNextObject(fireBall, true);
+            spawnedFireBall.transform.position = (Vector2)transform.position + fireBallSpawnOffset[i] + firstOffsetTarget;
+            StartCoroutine(ThrowFireBall(spawnedFireBall.gameObject, spawnedFireBall.transform.position, (Vector2)transform.position + newTarget));
+        }
+      
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -429,22 +435,34 @@ public class AffectZone : MonoBehaviour
         }
         // Debug.LogError(collision.gameObject);
     }
-    private IEnumerator ThrowFireBall(GameObject fireBall, Vector3 startPos, Vector3 target, float time)
+    private IEnumerator ThrowFireBall(GameObject fireBall, Vector3 startPos, Vector3 target)
     {
-        float elapsedTime = 0f;
+        fireBall.transform.position = startPos;
+       
+       
 
-        while (elapsedTime < time)
+        while (Vector3.Distance(fireBall.transform.position, target) > 0.01f)
         {
-            fireBall.transform.position = Vector3.Lerp(startPos, target, elapsedTime / time);
-            elapsedTime += Time.deltaTime;
-            yield return null; 
+            Vector3 direction = (target - fireBall.transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            angle += offset;
+
+            fireBall.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            fireBall.transform.Translate(direction * fireBallSpeed * Time.deltaTime,Space.World);
+           print("hey");
+            yield return null;
         }
-        CameraShake.instance.StartShake(0.1f, 0.1f);
+
+        Destroy(fireBall);
+        GameObject fireFx = SpawnSystemHelper.GetNextObject(fireFX, true);
+        fireFx.GetComponent<AutoDestroy>().Init(fireAffectTime);
+        fireFx.transform.position = target ;
         fireBall.transform.position = target;
         SoundManager.PlaySfx(impaceSfx);
-     //   GameObject fireFx = Instantiate(fireFX, target, Quaternion.identity);
-     //   fireFx.GetComponent<AutoDestroy>().Init(fireAffectTime);
         Active(AffectZoneType.Fire);
-        Destroy(fireBall);
+        CameraShake.instance.StartShake(0.1f, 0.1f);
     }
+    
+    
 }
