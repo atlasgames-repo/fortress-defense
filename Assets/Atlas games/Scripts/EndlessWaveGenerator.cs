@@ -163,6 +163,10 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     GameObject _temp = Instantiate(enemySpawn.enemy,
                         (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position,
                         Quaternion.identity) as GameObject;
+                    if (enemySpawn.spawnFromUnderground)
+                    {
+                        _temp.GetComponent<SmartEnemyGrounded>().StartClimbing();
+                    }
                     var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                     if (isEnemy != null)
                     {

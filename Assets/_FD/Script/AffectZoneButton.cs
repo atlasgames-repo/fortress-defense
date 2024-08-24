@@ -124,10 +124,10 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 
 
 
-    public void StartCountingDown()
+    public void StartCountingDown(float custom_cooldown = 0)
     {
         allowCounting = true;
-        coolDownCounter = coolDown;
+        coolDownCounter = custom_cooldown > 0 ? custom_cooldown : coolDown;
     }
 
     private void OnBtnClick()
