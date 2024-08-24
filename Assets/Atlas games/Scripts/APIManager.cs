@@ -165,7 +165,9 @@ public class APIManager : MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log("Failed to get time: " + www.error);
-                return null;
+                TimeAndDateResponseModel time = new TimeAndDateResponseModel();
+                time.datetime = DateTime.Now.ToString();
+                return new TimeAndDateResponseModel();
             }
             else
             {
