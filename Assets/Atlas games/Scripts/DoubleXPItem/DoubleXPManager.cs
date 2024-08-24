@@ -19,10 +19,15 @@ public class DoubleXPManager : MonoBehaviour
 
     TimeAndDateResponseModel _globalDate;
     static TimeSpan globalTimeDifference;
-
+    public static DoubleXPManager self;
     async void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (self == null){
+            self = this;
+            DontDestroyOnLoad(this);
+        } else {
+            Destroy(this);
+        }
 
         await SetDate();
     }
