@@ -68,23 +68,9 @@ public class DoubleXPManager : MonoBehaviour
 
     static DateTime ConvertedStringToDate(string insertedTime)
     {
-        try
-        {
-            int year = int.Parse(insertedTime.Substring(0, 4));
-            int month = int.Parse(insertedTime.Substring(5, 2));
-            int day = int.Parse(insertedTime.Substring(8, 2));
-            int hour = int.Parse(insertedTime.Substring(10, 2));
-            int minute = int.Parse(insertedTime.Substring(13, 2));
-            int second = int.Parse(insertedTime.Substring(16, 2));
-            return new DateTime(year, month, day, hour, minute, second);
-       // string format = "yyyy-MM-ddHH:mm:ss";
-       // return DateTime.ParseExact(insertedTime, format, null);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-                         return new DateTime();
-        }
+        DateTime parsedDate;
+        DateTime.TryParseExact(insertedTime,"yyyy-MM-ddTHH:mm:ss",null,DateTimeStyles.None,out parsedDate);
+        return parsedDate;
     }
 
     void Update()
