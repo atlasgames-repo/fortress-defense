@@ -59,7 +59,7 @@ public class GlobalValue : MonoBehaviour
     
     public static string inventoryPets
     {
-        get { return PlayerPrefs.GetString("InventoryPet", "6"); }
+        get { return PlayerPrefs.GetString("InventoryPet", "23"); }
         set { PlayerPrefs.SetString("InventoryPet", value); }
     }
     

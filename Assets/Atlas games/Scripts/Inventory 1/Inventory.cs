@@ -67,7 +67,7 @@ public class Inventory : MonoBehaviour
                 {
                     if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
                     {
-                        if (!FallBackItem().itemImage)
+                        if (FallBackItem().itemImage == null)
                         {
                             itemSlotsUI[i].chosenItemImage.gameObject.SetActive(false);
                         }
@@ -196,7 +196,7 @@ public class Inventory : MonoBehaviour
         {
             for (int j = 0; j < chosenItems.Length; j++)
             {
-                if (chosenItems[j] != chosenInitialItemsID[i] && GlobalValue.GetChosenShopItem(GetShopItem(itemID).itemName)>0)
+                if (chosenItems[j] != chosenInitialItemsID[i] && GlobalValue.GetChosenShopItem(GetShopItem(chosenInitialItemsID[i]).itemName)>0)
                 {
                     itemID = chosenInitialItemsID[i];
                     chosenItems[j] = chosenInitialItemsID[i];
@@ -211,15 +211,17 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (GetShopItem(itemID) != null)
+        ShopItemData.ShopItem item = new ShopItemData.ShopItem(); 
+        if (GetShopItem(itemID) == null)
         {
-            return GetShopItem(itemID);
+            item = GetShopItem(itemID);
         }
         else
         {
-            return null;
+            item = new ShopItemData.ShopItem();
         }
 
+        return item;
     }
 
     ShopItemData.ShopItem GetShopItem(int itemID)

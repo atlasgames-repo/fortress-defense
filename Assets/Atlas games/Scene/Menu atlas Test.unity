@@ -1633,6 +1633,7 @@ GameObject:
   - component: {fileID: 322067807}
   - component: {fileID: 322067809}
   - component: {fileID: 322067810}
+  - component: {fileID: 322067811}
   m_Layer: 5
   m_Name: ItemPlaceholder  (1)
   m_TagString: Untagged
@@ -1740,6 +1741,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chosenItemImage: {fileID: 776064207}
+--- !u!114 &322067811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322067805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: Items
+  isClickable: 0
 --- !u!1 &336024152
 GameObject:
   m_ObjectHideFlags: 0
@@ -3751,11 +3766,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameTutorialSetup
       objectReference: {fileID: 0}
-    - target: {fileID: 9025448714370054785, guid: eb8c6ff486af75f41920231b3812a286,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9025448714370054791, guid: eb8c6ff486af75f41920231b3812a286,
         type: 3}
       propertyPath: m_RootOrder
@@ -4315,8 +4325,9 @@ GameObject:
   - component: {fileID: 776064206}
   - component: {fileID: 776064208}
   - component: {fileID: 776064207}
+  - component: {fileID: 776064209}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4379,6 +4390,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776064205}
   m_CullTransparentMesh: 1
+--- !u!114 &776064209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776064205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: Items
+  isClickable: 0
 --- !u!1 &779117265
 GameObject:
   m_ObjectHideFlags: 0
@@ -6199,8 +6224,9 @@ GameObject:
   - component: {fileID: 1215554449}
   - component: {fileID: 1215554451}
   - component: {fileID: 1215554450}
+  - component: {fileID: 1215554452}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6263,6 +6289,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215554448}
   m_CullTransparentMesh: 1
+--- !u!114 &1215554452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215554448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: Magic
+  isClickable: 0
 --- !u!1 &1242520238
 GameObject:
   m_ObjectHideFlags: 0
@@ -6350,6 +6390,7 @@ GameObject:
   - component: {fileID: 1262810925}
   - component: {fileID: 1262810924}
   - component: {fileID: 1262810923}
+  - component: {fileID: 1262810926}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -6433,6 +6474,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1262810926}
+        m_TargetAssemblyTypeName: UITutorialTrigger, Assembly-CSharp
+        m_MethodName: OpenTutorial
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Inventory
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1262810924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6471,6 +6524,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262810921}
   m_CullTransparentMesh: 0
+--- !u!114 &1262810926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262810921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9ff88aa5b512eb46a9c915e17dc89d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialName: Inventory
+  runAutomatically: 0
 --- !u!1001 &1268052993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6943,6 +7010,7 @@ GameObject:
   - component: {fileID: 1412025255}
   - component: {fileID: 1412025257}
   - component: {fileID: 1412025256}
+  - component: {fileID: 1412025258}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -7007,6 +7075,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412025254}
   m_CullTransparentMesh: 1
+--- !u!114 &1412025258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412025254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: Tower
+  isClickable: 0
 --- !u!114 &1450856678 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1928476723, guid: f7b61c43a896034459daeb79cb15c17d,
@@ -8129,8 +8211,9 @@ GameObject:
   - component: {fileID: 2038004096}
   - component: {fileID: 2038004098}
   - component: {fileID: 2038004097}
+  - component: {fileID: 2038004099}
   m_Layer: 5
-  m_Name: Image (7)
+  m_Name: ItemPlaceholder  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8193,6 +8276,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038004095}
   m_CullTransparentMesh: 1
+--- !u!114 &2038004099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038004095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: Pets
+  isClickable: 0
 --- !u!1 &2045234054
 GameObject:
   m_ObjectHideFlags: 0
@@ -8566,7 +8663,7 @@ GameObject:
   - component: {fileID: 2109302375}
   - component: {fileID: 2109302376}
   m_Layer: 5
-  m_Name: ItemPlaceholder
+  m_Name: ItemPlaceholder  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

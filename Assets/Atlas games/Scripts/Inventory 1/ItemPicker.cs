@@ -23,7 +23,7 @@ public class ItemPicker : MonoBehaviour
             }
             else
             {
-                if (data.ShopData[i].type == category && GlobalValue.LevelPass > data.ShopData[i].levelToUnlock)
+                if (data.ShopData[i].type == category && GlobalValue.LevelPass >= data.ShopData[i].levelToUnlock)
                 {
                     contentDatas.Add(new ScrollItemData(data.ShopData[i]));
                 }
