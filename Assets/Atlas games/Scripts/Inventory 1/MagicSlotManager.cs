@@ -43,6 +43,9 @@ public class MagicSlotManager : MonoBehaviour
                 case "LightningAll":
                     slots[i].affectType = AffectZoneType.LightningAll;
                     break;
+                case "DefenseWall":
+                    slots[i].affectType = AffectZoneType.DefenseWall;
+                    break;
             }
         }
     }
