@@ -7,6 +7,7 @@ public class DoubleXPActivator : MonoBehaviour
 {
     public Text counterText;
     public Text buttonText;
+    public string itemName;
     // Start is called before the first frame update
     void Update()
     {
@@ -18,7 +19,7 @@ public class DoubleXPActivator : MonoBehaviour
         {
             buttonText.gameObject.SetActive(false);
             counterText.gameObject.SetActive(true);
-            counterText.text = DoubleXPManager.CounterText();
+            counterText.text = TimedItemManager.CounterText();
         }
         else
         {
@@ -36,11 +37,11 @@ public class DoubleXPActivator : MonoBehaviour
         {
             if (h24duration)
             {
-                DoubleXPManager.GetTime(DoubleXPManager.DoubleXpDuration.Day);
+                TimedItemManager.GetTime(TimedItemManager.ItemDuration.Day);
             }
             else
             {
-                DoubleXPManager.GetTime(DoubleXPManager.DoubleXpDuration.Hour);
+                TimedItemManager.GetTime(TimedItemManager.ItemDuration.Hour);
             }
         }
     }

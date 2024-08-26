@@ -5,14 +5,14 @@ using System.Globalization;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class DoubleXPManager : MonoBehaviour
+public class TimedItemManager : MonoBehaviour
 {
     static TimeAndDateResponseModel date;
     static string extractedDate;
     static string extractedTime;
     static string dateTimeString;
-
-    public enum DoubleXpDuration
+    public static string itemName;
+    public enum ItemDuration
     {
         Day,
         Hour
@@ -20,7 +20,8 @@ public class DoubleXPManager : MonoBehaviour
 
     TimeAndDateResponseModel _globalDate;
     static TimeSpan globalTimeDifference;
-    public static DoubleXPManager self;
+    public static TimedItemManager self;
+    public static ItemDuration duration;
     async void Awake()
     {
         if (self == null){
@@ -36,6 +37,10 @@ public class DoubleXPManager : MonoBehaviour
     private static float newDifferenceSeconds = 0;
     private DateTime _currentGlobalDateTime;
 
+    static double itemDuration()
+    {
+        return duration == ItemDuration.Day ? 24 : 1;
+    }
     async Task SetDate()
     {
         _globalDate = await APIManager.instance.GetCurrentDateAndTime();
@@ -44,8 +49,8 @@ public class DoubleXPManager : MonoBehaviour
         string dateString = dateTimeString.Substring(0, 10);
         string finalDateTime = dateString + time;
         _currentGlobalDateTime = ConvertedStringToDate(finalDateTime);
-        if (_currentGlobalDateTime > ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
-                .AddHours(GlobalValue.DoubleXPDuration))
+        if (_currentGlobalDateTime > ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
+                .AddHours(itemDuration()))
         {
             GlobalValue.DoubleXp = false;
         }
@@ -76,16 +81,16 @@ public class DoubleXPManager : MonoBehaviour
 
     void Update()
     {
-        DateTime dueDateTime = ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
-            .AddHours(GlobalValue.DoubleXPDuration);
+        DateTime dueDateTime = ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
+            .AddHours(itemDuration());
         TimeSpan timeDifference = dueDateTime -
                                   DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
                                                           newDifferenceSeconds);
         if (GlobalValue.DoubleXp)
         {
             if (DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference) >
-                ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
-                    .AddHours(GlobalValue.DoubleXPDuration))
+                ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
+                    .AddHours(itemDuration()))
             {
                 GlobalValue.DoubleXp = false;
             }
@@ -106,8 +111,8 @@ public class DoubleXPManager : MonoBehaviour
     {
         if (GlobalValue.DoubleXp)
         {
-            DateTime dueDateTime = ConvertedStringToDate(GlobalValue.DoubleXpActivationTime)
-                .AddHours(GlobalValue.DoubleXPDuration);
+            DateTime dueDateTime = ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
+                .AddHours(itemDuration());
             TimeSpan timeDifference = dueDateTime -
                                       DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
                                                               newDifferenceSeconds);
@@ -120,22 +125,22 @@ public class DoubleXPManager : MonoBehaviour
         }
     }
 
-    public static async void GetTime(DoubleXpDuration duration)
+    public static async void GetTime(ItemDuration duration)
     {
         date = await APIManager.instance.GetCurrentDateAndTime();
         dateTimeString = date.datetime;
         extractedDate = dateTimeString.Substring(0, 10);
         extractedTime = dateTimeString.Substring(11, 8);
-        GlobalValue.DoubleXpActivationTime = extractedDate + extractedTime;
+        GlobalValue.SetItemActivationTime(itemName,extractedDate + extractedTime);
         GlobalValue.DoubleXp = true;
-        if (duration == DoubleXpDuration.Hour)
+        if (duration == ItemDuration.Hour)
         {
-            GlobalValue.DoubleXPDuration = 1;
+            GlobalValue.SetItemDuration(itemName,1);
         }
 
-        if (duration == DoubleXpDuration.Day)
+        if (duration == ItemDuration.Day)
         {
-            GlobalValue.DoubleXPDuration = 24;
+            GlobalValue.SetItemDuration(itemName,24);
         }
     }
 }

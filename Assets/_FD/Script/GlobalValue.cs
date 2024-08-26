@@ -159,17 +159,36 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("UpgradeStrongWall", value); }
     }
     
-    public static string DoubleXpActivationTime
+  //  public static string DoubleXpActivationTime
+  //  {
+  //      get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", "1970-01-01T00:00:01"); }
+  //      set { PlayerPrefs.SetString("DoubleXp1HourDurationActivationTime", value); }
+  //  }
+
+    public static string ItemOpened(string itemName)
     {
-        get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", "1970-01-01T00:00:01"); }
-        set { PlayerPrefs.SetString("DoubleXp1HourDurationActivationTime", value); }
+        return PlayerPrefs.GetString(itemName, "1970-01-01T00:00:01");
     }
 
-    public static int DoubleXPDuration
+    public static void SetItemActivationTime(string itemName, string value)
     {
-        get { return PlayerPrefs.GetInt("DoubleXPDuration", 0); }
-        set { PlayerPrefs.SetInt("DoubleXPDuration", value); }
+        PlayerPrefs.SetString(itemName, value);
     }
+
+    public static int ItemDuration(string itemName)
+    {
+        return PlayerPrefs.GetInt(itemName + "duration", 0);
+    }
+
+    public static void SetItemDuration(string itemName, int duration)
+    {
+        PlayerPrefs.SetInt(itemName + "duration",duration);
+    }
+  //  public static int DoubleXPDuration
+  //  {
+  //      get { return PlayerPrefs.GetInt("DoubleXPDuration", 0); }
+  //      set { PlayerPrefs.SetInt("DoubleXPDuration", value); }
+  //  }
   //  public static int DoubleXpActive
   //  {
   //      get { return PlayerPrefs.GetInt("DoubleXpActive", 0); }

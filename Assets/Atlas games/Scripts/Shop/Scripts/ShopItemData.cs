@@ -4,7 +4,7 @@ using  UnityEngine;
 [CreateAssetMenu(fileName = "ShopData", menuName = "ScriptableObjects/ShopData", order = 1)]
 public class ShopItemData : ScriptableObject
 {
-
+    
     [Serializable]
     public class ShopItem
     {
@@ -22,6 +22,7 @@ public class ShopItemData : ScriptableObject
         public bool isFree;
         public bool oneTimePurchase;
         public GameObject pet;
+        public bool timedItem = false;
     }
     public ShopItem[] ShopData;
 }
