@@ -27,12 +27,28 @@ public class EnemyRangeAttack : MonoBehaviour
     float lastShoot = 0;
     [HideInInspector] public GameObject GunObj;
     Vector3 dir = Vector3.right;
+    [Space(3)] [Header("Night Mode")] public float customNightMultiplier = 2f;
+    public bool useCustomNightMultiplierOnly = false;
+    
     public bool isAttacking { get; set; }
 
     WeaponEffect hasWeaponEffect;
     void Start()
     {
-
+        
+            float initialDamage = damage;
+            if (GameLevelSetup.Instance.NightMode())
+            {
+                if (useCustomNightMultiplierOnly)
+                {
+                    damage = customNightMultiplier * initialDamage;
+                }
+                else
+                {
+                    damage = initialDamage * GameLevelSetup.Instance.NightModeXpMultiplier();
+                }
+            }
+        
         if (GetComponent<Enemy>() && GetComponent<Enemy>().upgradedCharacterID)
             hasWeaponEffect = GetComponent<Enemy>().upgradedCharacterID.weaponEffect;
     }
