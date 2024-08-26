@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AffectZoneType { Lighting, Frozen, Poison, Magnet, Cure, Fire, Dark, Aero,LightningAll,Armagdon }
+public enum AffectZoneType { Lighting, Frozen, Poison, Magnet, Cure, Fire, Dark, Aero,LightningAll,Armagdon, DefenseWall }
 public class AffectZoneManager : MonoBehaviour
 {
     public static AffectZoneManager Instance;

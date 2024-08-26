@@ -77,6 +77,10 @@ public class AffectZone : MonoBehaviour
     public AudioClip impaceSfx;
     public float offset;
     public float fireBallSpeed = 2f;
+
+    [Header("Fortress wall")] public GameObject defenseWall;
+    public Transform wallPosition;
+    public int wallHealth = 150;
     public AffectZoneType getAffectZoneType
     {
         get { return zoneType; }
@@ -277,8 +281,8 @@ public class AffectZone : MonoBehaviour
                                                                     SoundManager.PlaySfx(aeroSound);
                                 // code for magnet
                                 break;
-                            case AffectZoneType.Armagdon:
-                                
+                            case AffectZoneType.DefenseWall:
+                                ActivateDefenseWall();
                                 break;
                         }
                     }
@@ -308,6 +312,7 @@ public class AffectZone : MonoBehaviour
                 case AffectZoneType.Aero:
                     yield return new WaitForSeconds(aeroRate);
                     break;
+                
             }
 
             yield return null;
@@ -421,6 +426,13 @@ public class AffectZone : MonoBehaviour
             StartCoroutine(ThrowFireBall(spawnedFireBall.gameObject, spawnedFireBall.transform.position, (Vector2)transform.position + newTarget));
         }
       
+    }
+
+    public void ActivateDefenseWall()
+    {
+        var newWall = SpawnSystemHelper.GetNextObject(defenseWall);
+        newWall.transform.position = wallPosition.position;
+        newWall.GetComponent<DefenseWall>().Init(wallHealth,GetComponent<AffectZone>());
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

@@ -89,9 +89,14 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     {
         AffectZoneManager.Instance.Armagdon();
     }
+
+    public void ActivateDefenseWall()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.DefenseWall, this);
+        SoundManager.Click();
+    }
     void ActiveLighting()
     {
-        print("wtf");
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Lighting, this);
         SoundManager.Click();
     }
@@ -184,6 +189,9 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
                 break;
             case AffectZoneType.Armagdon:
                 ActivateArmagdon();
+                break;
+            case AffectZoneType.DefenseWall :
+                ActivateDefenseWall();
                 break;
         }
 

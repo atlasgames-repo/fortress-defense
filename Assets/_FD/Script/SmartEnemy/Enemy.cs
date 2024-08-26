@@ -200,9 +200,17 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
             gravity = 0;
         currentHealth = health;
         moveSpeed = walkSpeed;
-        if (IsAutoHealthBar){
-            BoxCollider2D box = transform.GetComponent<BoxCollider2D>();
-            healthBarOffset.y = Mathf.Abs(box.bounds.size.y + AutoHealthBarOffset);
+        if (IsAutoHealthBar ){
+            if (transform.GetComponent<BoxCollider2D>())
+            {
+                BoxCollider2D box = transform.GetComponent<BoxCollider2D>();
+                healthBarOffset.y = Mathf.Abs(box.bounds.size.y + AutoHealthBarOffset);
+            }else if (transform.GetComponent<PolygonCollider2D>())
+            {
+                PolygonCollider2D poly = transform.GetComponent<PolygonCollider2D>();
+                healthBarOffset.y = Mathf.Abs(poly.bounds.size.y + AutoHealthBarOffset);
+            }
+         
             
         }
         var healthBarObj = (HealthBarEnemyNew)Resources.Load("HealthBar", typeof(HealthBarEnemyNew));
