@@ -24,14 +24,20 @@ public class TimedItemManager : MonoBehaviour
     public static ItemDuration duration;
     async void Awake()
     {
-        if (self == null){
-            self = this;
-            DontDestroyOnLoad(this);
-        } else {
-            Destroy(this);
-        }
+     //  if (self == null){
+     //      self = this;
+     //      DontDestroyOnLoad(this);
+     //  } else {
+     //      Destroy(this);
+     //  }
+     
+     await SetDate();
+    }
 
-        await SetDate();
+    public void Init(string name,ItemDuration dur)
+    {
+        itemName = name;
+        duration = dur;
     }
 
     private static float newDifferenceSeconds = 0;
@@ -52,11 +58,11 @@ public class TimedItemManager : MonoBehaviour
         if (_currentGlobalDateTime > ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
                 .AddHours(itemDuration()))
         {
-            GlobalValue.DoubleXp = false;
+            GlobalValue.SetItemState(false, itemName);
         }
         else
         {
-            GlobalValue.DoubleXp = true;
+            GlobalValue.SetItemState(true, itemName);
         }
 
         if (GlobalValue.MainTimeDifference == 0)
@@ -86,13 +92,13 @@ public class TimedItemManager : MonoBehaviour
         TimeSpan timeDifference = dueDateTime -
                                   DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
                                                           newDifferenceSeconds);
-        if (GlobalValue.DoubleXp)
+        if (GlobalValue.GetItemState(itemName))
         {
             if (DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference) >
                 ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
                     .AddHours(itemDuration()))
             {
-                GlobalValue.DoubleXp = false;
+                GlobalValue.SetItemState(false,itemName);
             }
         }
     }
@@ -107,11 +113,11 @@ public class TimedItemManager : MonoBehaviour
             totalHours, timeDifference.Minutes, timeDifference.Seconds);
     }
 
-    public static string CounterText()
+    public static string CounterText(string theItemName)
     {
-        if (GlobalValue.DoubleXp)
+        if (GlobalValue.GetItemState(theItemName))
         {
-            DateTime dueDateTime = ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
+            DateTime dueDateTime = ConvertedStringToDate(GlobalValue.ItemOpened(theItemName))
                 .AddHours(itemDuration());
             TimeSpan timeDifference = dueDateTime -
                                       DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
@@ -132,7 +138,7 @@ public class TimedItemManager : MonoBehaviour
         extractedDate = dateTimeString.Substring(0, 10);
         extractedTime = dateTimeString.Substring(11, 8);
         GlobalValue.SetItemActivationTime(itemName,extractedDate + extractedTime);
-        GlobalValue.DoubleXp = true;
+        GlobalValue.SetItemState(true,itemName);
         if (duration == ItemDuration.Hour)
         {
             GlobalValue.SetItemDuration(itemName,1);

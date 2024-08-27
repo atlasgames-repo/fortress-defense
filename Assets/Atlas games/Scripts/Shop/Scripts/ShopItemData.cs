@@ -22,7 +22,7 @@ public class ShopItemData : ScriptableObject
         public bool isFree;
         public bool oneTimePurchase;
         public GameObject pet;
-        public bool timedItem = false;
+        public TimedItemManager.ItemDuration duration;
     }
     public ShopItem[] ShopData;
 }

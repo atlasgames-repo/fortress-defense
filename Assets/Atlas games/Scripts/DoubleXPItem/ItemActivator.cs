@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DoubleXPActivator : MonoBehaviour
+public class ItemActivator : MonoBehaviour
 {
     public Text counterText;
     public Text buttonText;
-    public string itemName;
+    [HideInInspector]public string itemName;
     // Start is called before the first frame update
     void Update()
     {
@@ -15,11 +15,11 @@ public class DoubleXPActivator : MonoBehaviour
     }
     void CheckValue()
     {
-        if (GlobalValue.DoubleXp)
+        if (GlobalValue.GetItemState(itemName))
         {
             buttonText.gameObject.SetActive(false);
             counterText.gameObject.SetActive(true);
-            counterText.text = TimedItemManager.CounterText();
+            counterText.text = TimedItemManager.CounterText(itemName);
         }
         else
         {
@@ -33,7 +33,7 @@ public class DoubleXPActivator : MonoBehaviour
     {
         buttonText.gameObject.SetActive(false);
         counterText.gameObject.SetActive(true);
-        if (!GlobalValue.DoubleXp)
+        if (!GlobalValue.GetItemState(itemName))
         {
             if (h24duration)
             {

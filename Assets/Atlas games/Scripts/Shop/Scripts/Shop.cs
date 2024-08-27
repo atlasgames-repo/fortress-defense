@@ -12,7 +12,7 @@ public class Shop : MonoBehaviour
     public Transform scrollContentParent;
     public enum ItemTypes
     {
-        Pet,Item,Magic,Monster,Website,Towers
+        Pet,Item,Magic,Monster,Website,Towers,Timed
     }
 
     public enum ItemPurchaseType

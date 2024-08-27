@@ -30,6 +30,10 @@ public class GiveExpWhenDie : MonoBehaviour
                     expMin = Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier() * initialExpMin);
                 }
         }
+        else
+        {
+            
+        }
     }
     public void GiveExp()
     {

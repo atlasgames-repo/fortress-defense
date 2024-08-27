@@ -143,6 +143,13 @@ public class ShopItem : ScrollItem<ScrollItemData>
         {
             ownedText.SetActive(false);
         }
+
+        if (itemData.type == Shop.ItemTypes.Timed)
+        {
+            GetComponent<TimedItemManager>().Init(itemData.itemName,itemData.duration);
+            GetComponent<ItemActivator>().itemName = itemData.itemName;
+            ownedText.SetActive(false);
+        }
     }
 
     public void BuyItem()

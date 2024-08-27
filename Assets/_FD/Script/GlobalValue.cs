@@ -134,17 +134,27 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("ItemPoison", 3); }
         set { PlayerPrefs.SetInt("ItemPoison", value); }
     }
-    public static bool DoubleXp
+
+    public static void SetItemState(bool state,string itemName)
     {
-        get
-        {
-            return PlayerPrefs.GetInt("Night") == 1;
-        }
-        set
-        {
-            PlayerPrefs.SetInt("Night", value ? 1 : 0 );
-        }
+        PlayerPrefs.SetInt(itemName + "activation state", state ? 1 : 0);
     }
+
+    public static bool GetItemState(string itemName)
+    {
+        return PlayerPrefs.GetInt(itemName + "activation state") == 1 ? true : false;
+    }
+   // public static bool DoubleXp
+   // {
+   //     get
+   //     {
+   //         return PlayerPrefs.GetInt("Night") == 1;
+   //     }
+   //     set
+   //     {
+   //         PlayerPrefs.SetInt("Night", value ? 1 : 0 );
+   //     }
+   // }
     public static int ItemFreeze
     {
         get { return PlayerPrefs.GetInt("ItemFreeze", 3); }
