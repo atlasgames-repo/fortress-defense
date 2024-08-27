@@ -10,11 +10,12 @@ public class GiveExpWhenDie : MonoBehaviour
     public int expMax = 7;
     [Space(3)] [Header("NightMode")] public int customNightMultiplier = 2;
     public bool useCustomNightMultiplierOnly = false;
-
+    public string[] affectedItems;
     private bool _isEndless = false;
-
+    private ShopItemData.ShopItem[] _data;
     void Start()
     {
+        _data = FindObjectOfType<ItemChecker>().data.ShopData;
         int initialExpMin = expMin;
         int initialExpMax = expMax;
         if (GameLevelSetup.Instance.NightMode())
@@ -32,8 +33,31 @@ public class GiveExpWhenDie : MonoBehaviour
         }
         else
         {
+            bool breakLoop = false;
+            for (int i = 0; i < _data.Length; i++)
+            {
+                for (int j = 0; j < affectedItems.Length; j++)
+                {
+                    if (_data[i].itemName == affectedItems[j])
+                    {
+                        breakLoop = true;
+                        expMax = Mathf.RoundToInt(initialExpMax * 2);
+                        expMin = Mathf.RoundToInt(initialExpMin * 2);
+                        if (breakLoop)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (breakLoop)
+                {
+                    break;
+                }
+            }
             
         }
+        
     }
     public void GiveExp()
     {
