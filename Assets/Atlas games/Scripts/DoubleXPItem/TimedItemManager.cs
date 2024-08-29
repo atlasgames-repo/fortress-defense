@@ -89,9 +89,6 @@ public class TimedItemManager : MonoBehaviour
     {
         DateTime dueDateTime = ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
             .AddHours(itemDuration());
-        TimeSpan timeDifference = dueDateTime -
-                                  DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
-                                                          newDifferenceSeconds);
         if (GlobalValue.GetItemState(itemName))
         {
             if (DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference) >
