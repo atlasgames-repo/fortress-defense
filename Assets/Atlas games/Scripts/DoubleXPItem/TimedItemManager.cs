@@ -87,8 +87,6 @@ public class TimedItemManager : MonoBehaviour
 
     void Update()
     {
-        DateTime dueDateTime = ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
-            .AddHours(itemDuration());
         if (GlobalValue.GetItemState(itemName))
         {
             if (DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference) >
