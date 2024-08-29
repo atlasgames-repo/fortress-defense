@@ -136,47 +136,5 @@ public class ItemChecker : MonoBehaviour
     }
    
 
-  //static string CountDownText(TimeSpan timeDifference)
-  //{
-  //    int totalHours = (int)timeDifference.TotalHours; // Get the total hours as an integer
-  //    return string.Format("{0:D2}:{1:D2}:{2:D2}",
-  //        totalHours, timeDifference.Minutes, timeDifference.Seconds);
-  //}
 
- // public static string CounterText(string theItemName)
- // {
- //     if (GlobalValue.GetItemState(theItemName))
- //     {
- //         DateTime dueDateTime = ConvertedStringToDate(GlobalValue.ItemOpened(theItemName))
- //             .AddHours(itemDuration());
- //         TimeSpan timeDifference = dueDateTime -
- //                                   DateTime.Now.AddSeconds(GlobalValue.MainTimeDifference +
- //                                                           newDifferenceSeconds);
- //         string countdownText = CountDownText(timeDifference);
- //         return countdownText;
- //     }
- //     else
- //     {
- //         return null;
- //     }
- // }
-
-  //  public static async void GetTime(ItemDuration duration)
-  //  {
-  //      date = await APIManager.instance.GetCurrentDateAndTime();
-  //      dateTimeString = date.datetime;
-  //      extractedDate = dateTimeString.Substring(0, 10);
-  //      extractedTime = dateTimeString.Substring(11, 8);
-  //      GlobalValue.SetItemActivationTime(itemName,extractedDate + extractedTime);
-  //      GlobalValue.SetItemState(true,itemName);
-  //      if (duration == ItemDuration.Hour)
-  //      {
-  //          GlobalValue.SetItemDuration(itemName,1);
-  //      }
-//
-  //      if (duration == ItemDuration.Day)
-  //      {
-  //          GlobalValue.SetItemDuration(itemName,24);
-  //      }
-  //  }
 }
