@@ -475,6 +475,4 @@ public class AffectZone : MonoBehaviour
         Active(AffectZoneType.Fire);
         CameraShake.instance.StartShake(0.1f, 0.1f);
     }
-    
-    
 }
