@@ -941,6 +941,8 @@ MonoBehaviour:
   - {fileID: 1326299604}
   isChecking: 0
   isAffectZoneWorking: 0
+  healAmount: 0
+  cureSound: {fileID: 0}
 --- !u!114 &241749797 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5233113077639169449, guid: d1f8bad16af5bd6408637fda60294854,
@@ -3250,6 +3252,22 @@ PrefabInstance:
       propertyPath: bossManeger
       value: 
       objectReference: {fileID: 2065812795}
+    - target: {fileID: 2789320161115064299, guid: 14c62279b37e6c24d81d4bce87c6ded6,
+        type: 3}
+      propertyPath: EnemyWaves.Array.data[0].enemySpawns.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2789320161115064299, guid: 14c62279b37e6c24d81d4bce87c6ded6,
+        type: 3}
+      propertyPath: EnemyWaves.Array.data[0].enemySpawns.Array.data[0].enemy
+      value: 
+      objectReference: {fileID: 3697426553599540029, guid: e06632b9b48dc8044bd4f2b05da435ab,
+        type: 3}
+    - target: {fileID: 2789320161115064299, guid: 14c62279b37e6c24d81d4bce87c6ded6,
+        type: 3}
+      propertyPath: EnemyWaves.Array.data[0].enemySpawns.Array.data[0].numberEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3558667912981391227, guid: 14c62279b37e6c24d81d4bce87c6ded6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7709,6 +7727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 0
   affectType: 2
   ownBtn: {fileID: 0}
   delayOnStart: 5
@@ -9392,6 +9411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b26a8cc76953e419a91cce5b7b24ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Key: 0
   timeSpeedUp: 2
   blinkingObj: {fileID: 2840579089220216803}
   speedTxt: {fileID: 6938511239251144656}
@@ -11756,6 +11776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 0
   affectType: 0
   ownBtn: {fileID: 0}
   delayOnStart: 5
@@ -11802,6 +11823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c07cae1f4b234e9550df006096d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 0
   affectType: 1
   ownBtn: {fileID: 0}
   delayOnStart: 5
