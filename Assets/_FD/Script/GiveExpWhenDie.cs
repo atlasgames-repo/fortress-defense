@@ -17,7 +17,7 @@ public class GiveExpWhenDie : MonoBehaviour
     {
         int initialExpMin = expMin;
         int initialExpMax = expMax;
-        if (GameLevelSetup.Instance.NightMode())
+        if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
         {
             if (useCustomNightMultiplierOnly)
                 {
