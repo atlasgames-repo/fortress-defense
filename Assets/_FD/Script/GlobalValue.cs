@@ -4,6 +4,7 @@ public class GlobalValue : MonoBehaviour
 {
     public static bool isFirstOpenMainMenu = true;
     public static int worldPlaying = 1;
+    
     public static int levelPlaying = 1;
     public static Level.LeveType levelType = Level.LeveType.MISSION;
     //public static int finishGameAtLevel = 50;
@@ -44,6 +45,14 @@ public class GlobalValue : MonoBehaviour
     }
 
 
+    public static int GetTutorialState(string tutorialName)
+    {
+        return PlayerPrefs.GetInt("tutorial :"+tutorialName, 0);
+    }
+    public static void SetTutorialState(string tutorialName, int value)
+    {
+        PlayerPrefs.SetInt("tutorial :"+tutorialName, value);
+    }
     public static int lastDayShowNativeAd3
     {
         get { return PlayerPrefs.GetInt("lastDayShowNativeAd3", 0); }
@@ -87,7 +96,17 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("ItemPoison", 3); }
         set { PlayerPrefs.SetInt("ItemPoison", value); }
     }
-
+    public static bool DoubleXp
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("Night") == 1;
+        }
+        set
+        {
+            PlayerPrefs.SetInt("Night", value ? 1 : 0 );
+        }
+    }
     public static int ItemFreeze
     {
         get { return PlayerPrefs.GetInt("ItemFreeze", 3); }
@@ -101,16 +120,34 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("UpgradeStrongWall", 0); }
         set { PlayerPrefs.SetInt("UpgradeStrongWall", value); }
     }
+    
+    public static string DoubleXpActivationTime
+    {
+        get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", "1970-01-01T00:00:01"); }
+        set { PlayerPrefs.SetString("DoubleXp1HourDurationActivationTime", value); }
+    }
+
+    public static int DoubleXPDuration
+    {
+        get { return PlayerPrefs.GetInt("DoubleXPDuration", 0); }
+        set { PlayerPrefs.SetInt("DoubleXPDuration", value); }
+    }
+  //  public static int DoubleXpActive
+  //  {
+  //      get { return PlayerPrefs.GetInt("DoubleXpActive", 0); }
+  //      set { PlayerPrefs.SetInt("DoubleXpActive", value); }
+  //  }
     public static float StrongWallExtra
     {
         get { return PlayerPrefs.GetFloat("StrongWallExtra", 0); }
         set { PlayerPrefs.SetFloat("StrongWallExtra", value); }
     }
-    public static int GameTutorialOpened
+    public static float MainTimeDifference
     {
-        get { return PlayerPrefs.GetInt("GameTutorialOpened", 0); }
-        set { PlayerPrefs.SetInt("GameTutorialOpened", value); }
+        get { return PlayerPrefs.GetFloat("MainTimeDifference", 0); }
+        set { PlayerPrefs.SetFloat("MainTimeDifference", value); }
     }
+ 
     // Achievements
     public static int LevelPass
     {
@@ -162,3 +199,4 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetString("GameStartTimerMinutes", DateTime.Now.AddMinutes(value).ToString("yyyy-MM-dd HH:mm:ss")); }
     }
 }
+

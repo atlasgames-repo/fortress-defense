@@ -8,6 +8,7 @@ public enum ATTACKTYPE
     MELEE,
     THROW,
     //CALLMINION,
+    WIZARD,
     NONE
 }
 public static class ANIMATION_STATE
@@ -102,6 +103,8 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     [HideInInspector] public Vector2 randomHitPoint = new Vector2(0.2f, 0.2f);
     [HideInInspector] public Vector2 randomBloodPuddlePoint = new Vector2(0.5f, 0.25f);
     public Vector2 healthBarOffset = new Vector2(0, 1.5f);
+    public float AutoHealthBarOffset = 0.2f;
+    public bool IsAutoHealthBar = true;
 
     [ReadOnly] public ENEMYSTATE enemyState = ENEMYSTATE.IDLE;
     protected ENEMYEFFECT enemyEffect;
@@ -176,6 +179,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     public bool is_spine;
     public SkeletonAnimation skeletonAnimation;
 
+    [Space(3)]
+    [Header("Night Mode")] public float customNightMultiplier = 2f;
+    public bool useCustomNightMultiplier = false;
     public bool isFacingRight()
     {
         return transform.rotation.eulerAngles.y == 180 ? true : false;
@@ -192,20 +198,40 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     public virtual void Start()
     {
-
+        int initialHealth = health;
+        if (GameLevelSetup.Instance.NightMode())
+        {
+            if (useCustomNightMultiplier)
+            {
+                health = Mathf.RoundToInt(initialHealth * customNightMultiplier);
+            }
+            else
+            {
+                health = Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier());
+            }
+        }
+        
         if (!useGravity)
             gravity = 0;
         currentHealth = health;
         moveSpeed = walkSpeed;
-
+        if (IsAutoHealthBar){
+            BoxCollider2D box = transform.GetComponent<BoxCollider2D>();
+            healthBarOffset.y = Mathf.Abs(box.bounds.size.y + AutoHealthBarOffset);
+            
+        }
         var healthBarObj = (HealthBarEnemyNew)Resources.Load("HealthBar", typeof(HealthBarEnemyNew));
         healthBar = (HealthBarEnemyNew)Instantiate(healthBarObj, healthBarOffset, Quaternion.identity);
 
         healthBar.Init(transform, (Vector3)healthBarOffset);
 
         anim = GetComponent<Animator>();
-        if (is_spine)
-            transform.GetChild(0).TryGetComponent(out skeletonAnimation);
+        if (is_spine) {
+            foreach (Transform item in transform) {
+                item.TryGetComponent(out skeletonAnimation);
+                if (skeletonAnimation) break;
+            }
+        }
         checkTarget = GetComponent<CheckTargetHelper>();
 
         switch (startBehavior)
@@ -269,6 +295,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         enemyEffect = effect;
     }
 
+    public bool IEnabled() {
+        return this.enabled;
+    }
     public virtual void Update()
     {
 

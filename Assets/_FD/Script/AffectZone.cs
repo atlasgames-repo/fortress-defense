@@ -72,6 +72,8 @@ public class AffectZone : MonoBehaviour
     {
         get { return zoneType; }
     }
+    [Range(1,500)]
+    public int min_xp_consum, max_xp_consum;
 
 
     Animator anim;
@@ -94,8 +96,13 @@ public class AffectZone : MonoBehaviour
 
     public void Active(AffectZoneType _type)
     {
+
         if (!isActived)
         {
+            // Consume XP from user.
+            int XPconsume = Random.Range(min_xp_consum,max_xp_consum+1);
+            GameManager.Instance.currentExp -= XPconsume;
+            FloatingTextManager.Instance.ShowText("-" + XPconsume + " XP", Vector2.up * 1, Color.red, transform.position,40);
             zoneType = _type;
             StartCoroutine(ActiveCo());
             switch (zoneType)
@@ -135,7 +142,6 @@ public class AffectZone : MonoBehaviour
             anim.SetBool("isActivating", true);
         while (true)
         {
-//            Debug.LogError($"AffectZone Stat: {listEnemyInZone.Count}");
             if (listEnemyInZone.Count > 0)
             {
                 List<Enemy> _tempList = new List<Enemy>(listEnemyInZone);
@@ -154,6 +160,7 @@ public class AffectZone : MonoBehaviour
                                 if (lightingFX)
                                     SpawnSystemHelper.GetNextObject(lightingFX, true).transform.position =
                                         target.gameObject.transform.position;
+                                CameraShake.instance.StartShake(0.05f, 0.05f);
                                 SoundManager.PlaySfx(lightingSound);
                                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
                                 break;
@@ -357,7 +364,7 @@ public class AffectZone : MonoBehaviour
         Destroy(_aero);
         tempAeroList.Clear();   
     }
-    void Stop()
+    public void Stop()
     {
 
         AffectZoneManager.Instance.FinishAffect();
