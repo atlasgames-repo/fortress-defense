@@ -1,8 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum AffectZoneType { Lighting, Frozen, Poison, Magnet, Cure, Fire, Dark, Aero }
+
+[Serializable]
+public class AffectZoneXPConsume{
+    public AffectZoneType Type;
+    [Range(1,500)]
+    public int XP;
+}
+
 public class AffectZoneManager : MonoBehaviour
 {
     public static AffectZoneManager Instance;
@@ -15,6 +24,14 @@ public class AffectZoneManager : MonoBehaviour
     public AudioClip cureSound;
     AffectZoneButton pickedBtn;
     public float disable_affectzone_countdown_cooldown = 5;
+    public AffectZoneXPConsume[] XPConsumes;
+    public int XPconsume(AffectZoneType type) {
+        foreach (AffectZoneXPConsume item in XPConsumes) {
+            if (item.Type == type)
+                return item.XP;
+        }
+        return 0;
+    }
     private void OnEnable()
     {
 
