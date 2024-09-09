@@ -37,7 +37,7 @@ public class EnemyRangeAttack : MonoBehaviour
     {
         
             float initialDamage = damage;
-            if (GameLevelSetup.Instance.NightMode())
+            if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
             {
                 if (useCustomNightMultiplierOnly)
                 {
