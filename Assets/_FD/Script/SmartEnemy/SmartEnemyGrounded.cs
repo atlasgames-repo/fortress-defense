@@ -37,7 +37,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
     [Space(3)] [Header("Spawning from Underground")]
     public bool spawnFromUnderground;
-
+    public bool testMode = false; 
     public GameObject undergroundSandPile;
     private GameObject _spawningArea;
     private Vector2 _spawnPos;
@@ -166,8 +166,13 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
     public override void Start()
     {
-      
 
+        if (testMode && spawnFromUnderground)
+        {
+            StartClimbing();
+        }
+        
+        
         base.Start();
 
         controller = GetComponent<Controller2D>();
