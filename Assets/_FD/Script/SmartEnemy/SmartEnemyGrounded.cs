@@ -166,11 +166,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
     public override void Start()
     {
-
-        if (spawnFromUnderground)
-        {
-            StartClimbing();
-        }
+      
 
         base.Start();
 
