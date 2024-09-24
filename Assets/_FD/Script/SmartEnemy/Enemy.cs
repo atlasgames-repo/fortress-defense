@@ -179,6 +179,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     public bool is_spine;
     public SkeletonAnimation skeletonAnimation;
 
+    [Space(3)]
+    [Header("Night Mode")] public float customNightMultiplier = 2f;
+    public bool useCustomNightMultiplier = false;
     public bool isFacingRight()
     {
         return transform.rotation.eulerAngles.y == 180 ? true : false;
@@ -195,7 +198,19 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     public virtual void Start()
     {
-
+        int initialHealth = health;
+        if (GameLevelSetup.Instance && GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
+        {
+            if (useCustomNightMultiplier)
+            {
+                health = Mathf.RoundToInt(initialHealth * customNightMultiplier);
+            }
+            else
+            {
+                health = Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier());
+            }
+        }
+        
         if (!useGravity)
             gravity = 0;
         currentHealth = health;
