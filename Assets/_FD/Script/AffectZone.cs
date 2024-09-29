@@ -112,10 +112,6 @@ public class AffectZone : MonoBehaviour
 
         if (!isActived)
         {
-            // Consume XP from user.
-            int XPconsume = Random.Range(min_xp_consum,max_xp_consum+1);
-            GameManager.Instance.currentExp -= XPconsume;
-            FloatingTextManager.Instance.ShowText("-" + XPconsume + " XP", Vector2.up * 1, Color.red, transform.position,40);
             zoneType = _type;
             StartCoroutine(ActiveCo());
             switch (zoneType)
@@ -142,6 +138,12 @@ public class AffectZone : MonoBehaviour
                     StartCoroutine(StopActiveCo());
                     break;
             }
+            // Consume XP from user.
+            int XPConsume = AffectZoneManager.Instance.XPconsume(_type);
+            if (GameManager.Instance.currentExp < XPConsume)
+                return; // dont do anything if accidently we end up here and we dont have enough xp to spend
+            GameManager.Instance.currentExp -= XPConsume;
+            FloatingTextManager.Instance.ShowText("-" + XPConsume + " XP", Vector2.up * 1, Color.red, transform.position,40);
         }
     }
     

@@ -12,7 +12,7 @@ public class GiveCoinWhenDie : MonoBehaviour
     {
         int initialMinCoin = coinGiveMin;
         int initialMaxCoin = coinGiveMax;
-        if (GameLevelSetup.Instance.NightMode())
+        if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
         {
             if (useCustomNightMultiplierOnly)
             {

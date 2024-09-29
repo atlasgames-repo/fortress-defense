@@ -1,8 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum AffectZoneType { Lighting, Frozen, Poison, Magnet, Cure, Fire, Dark, Aero,LightningAll,Armagdon, DefenseWall }
+
+
+[Serializable]
+public class AffectZoneXPConsume{
+    public AffectZoneType Type;
+    [Range(1,500)]
+    public int XP;
+}
+
 public class AffectZoneManager : MonoBehaviour
 {
     public static AffectZoneManager Instance;
@@ -18,6 +28,14 @@ public class AffectZoneManager : MonoBehaviour
     public float timeDifferenceBetweenFireBalls = 0.4f;
 
     public float disable_affectzone_countdown_cooldown = 5;
+    public AffectZoneXPConsume[] XPConsumes;
+    public int XPconsume(AffectZoneType type) {
+        foreach (AffectZoneXPConsume item in XPConsumes) {
+            if (item.Type == type)
+                return item.XP;
+        }
+        return 0;
+    }
     private void OnEnable()
     {
 

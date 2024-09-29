@@ -199,7 +199,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     public virtual void Start()
     {
         int initialHealth = health;
-        if (GameLevelSetup.Instance.NightMode())
+        if (GameLevelSetup.Instance && GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
         {
             if (useCustomNightMultiplier)
             {
