@@ -35,8 +35,8 @@ public class UI_UI : MonoBehaviour
     {
         healthValue = 1;
         enemyWaveValue = 0;
-
         healthSlider.value = 1;
+        healthSlider.gameObject.SetActive(false);
         enemyWavePercentSlider.value = 0;
         levelName.text = "Level " + GlobalValue.levelPlaying;
     }

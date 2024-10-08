@@ -73,8 +73,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     
     [Header("Log item")]
     public GameObject TL_Prefab;
-    public Transform TL_SpawnPos;
-
+    public string logSpawnPosTag = "LogSpawnPosition";
     [Header("Fortress Shield")] public float FS_health = 300f;
 
     [Header("Attack Damage")] public float AD_Time = 3f;
@@ -82,7 +81,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     [Space]
     public GameObject activeIcons;
 
-    [Header("Lightning Global")] public AffectZone[] zones;
+  //  [Header("Lightning Global")] public AffectZone[] zones;
     
     private void Awake()
     {
@@ -394,6 +393,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     #region Throw Log
     public void ThrowLog()
     {
+        Transform TL_SpawnPos = GameObject.FindWithTag(logSpawnPosTag).transform;
         Instantiate(TL_Prefab,TL_SpawnPos.position, Quaternion.identity);
     }
     #endregion

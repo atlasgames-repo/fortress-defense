@@ -45,6 +45,8 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     private float _shieldCurrentHealth;
     private float _maxShieldHealth;
 
+    
+    
     void Awake()
     {
         startingPos = transform.position;
