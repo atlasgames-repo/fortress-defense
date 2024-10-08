@@ -39,30 +39,32 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     IEnumerator ShakeCoDo;
 
     [Header("Shield")] [HideInInspector] public bool shield = false;
+
+    [Tooltip("Propper order is from min health to max health bubbles")]
     public GameObject[] shieldHealthBubbles;
-   // public GameObject shieldBubbleMaxHealth;
-   // public GameObject shieldBubbleMedHealth;
-   // public GameObject shieldBubbleMinHealth;
+    // public GameObject shieldBubbleMaxHealth;
+    // public GameObject shieldBubbleMedHealth;
+    // public GameObject shieldBubbleMinHealth;
     public float[] shieldHealthLevels;
     public bool useDefaultShieldHealthLevels = true;
     private float _shieldCurrentHealth;
     private float _maxShieldHealth;
 
-    
-    
+
     void Awake()
     {
         startingPos = transform.position;
-
+      
+        
         if (useDefaultShieldHealthLevels)
         {
             shieldHealthLevels = new float[shieldHealthBubbles.Length];
-            for (int i = shieldHealthLevels.Length;i<0; i--)
+            for (int i = 0; i < shieldHealthLevels.Length; i++)
             {
-                shieldHealthLevels[i] = maxHealth / i;
+                shieldHealthLevels[i] = (maxHealth/shieldHealthLevels.Length) * (i);
             }
         }
-        
+
         //defaultLevel = healthCharacter == HEALTH_CHARACTER.PLAYER ? GlobalValue.UpgradeStrongWall : defaultFortrest - 1;
         //if (healthCharacter == HEALTH_CHARACTER.PLAYER)
         //{
@@ -135,35 +137,24 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
             ShakeCoDo = ShakeCo(shakeTime);
             StartCoroutine(ShakeCoDo);
-            for (int i = 0; i < shieldHealthBubbles.Length - 1; i++)
+            if (_shieldCurrentHealth > shieldHealthLevels[shieldHealthLevels.Length - 1])
             {
-                if (_shieldCurrentHealth < shieldHealthLevels[i + 1] && _shieldCurrentHealth >= shieldHealthLevels[i])
+                shieldHealthBubbles[shieldHealthBubbles.Length-1].SetActive(true);
+            }
+            else
+            {
+                for (int i = 1; i < shieldHealthBubbles.Length; i++)
                 {
-                    shieldHealthBubbles[i].SetActive(true);
-                }
-                else
-                {
-                    shieldHealthBubbles[i].SetActive(false);
+                    if (_shieldCurrentHealth < shieldHealthLevels[i] && _shieldCurrentHealth >= shieldHealthLevels[i-1])
+                    {
+                        shieldHealthBubbles[i].SetActive(true);
+                    }
+                    else
+                    {
+                        shieldHealthBubbles[i].SetActive(false);
+                    }
                 }
             }
-            
-       //   
-       //   if (_shieldCurrentHealth < _maxShieldHealth * 2 / 3 && _shieldCurrentHealth >= _maxShieldHealth / 3)
-       //   {
-       //       shieldBubbleMaxHealth.SetActive(false);
-       //       shieldBubbleMedHealth.SetActive(true);
-       //   }else if (_shieldCurrentHealth< _maxShieldHealth /3)
-       //   {
-       //       shieldBubbleMinHealth.SetActive(true);
-       //       shieldBubbleMedHealth.SetActive(false);
-       //   }
-       //   else
-       //   {
-       //       shieldBubbleMaxHealth.SetActive(true);
-       //       shieldBubbleMedHealth.SetActive(false);
-       //       shieldBubbleMinHealth.SetActive(false);
-       //   }
-            
             if (_shieldCurrentHealth <= 0)
             {
                 DeActivateShield();

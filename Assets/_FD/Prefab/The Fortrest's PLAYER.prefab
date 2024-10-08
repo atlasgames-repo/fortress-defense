@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 103141353}
   - component: {fileID: 103141352}
   m_Layer: 0
-  m_Name: Bubble (2)
+  m_Name: BubbleMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 321691157}
   - component: {fileID: 321691156}
   m_Layer: 0
-  m_Name: Bubble (1)
+  m_Name: BubbleMed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 457427449}
   - component: {fileID: 457427448}
   m_Layer: 0
-  m_Name: Bubble
+  m_Name: BubbleMin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2641,9 +2641,12 @@ MonoBehaviour:
   shakeX: 1
   shakeY: 0
   shield: 0
-  shieldBubbleMaxHealth: {fileID: 457427447}
-  shieldBubbleMedHealth: {fileID: 321691155}
-  shieldBubbleMinHealth: {fileID: 103141351}
+  shieldHealthBubbles:
+  - {fileID: 457427447}
+  - {fileID: 321691155}
+  - {fileID: 103141351}
+  shieldHealthLevels: []
+  useDefaultShieldHealthLevels: 1
 --- !u!60 &2583819630124595366
 PolygonCollider2D:
   m_ObjectHideFlags: 0
