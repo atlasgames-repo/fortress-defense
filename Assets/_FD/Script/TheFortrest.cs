@@ -39,9 +39,12 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     IEnumerator ShakeCoDo;
 
     [Header("Shield")] [HideInInspector] public bool shield = false;
-    public GameObject shieldBubbleMaxHealth;
-    public GameObject shieldBubbleMedHealth;
-    public GameObject shieldBubbleMinHealth;
+    public GameObject[] shieldHealthBubbles;
+   // public GameObject shieldBubbleMaxHealth;
+   // public GameObject shieldBubbleMedHealth;
+   // public GameObject shieldBubbleMinHealth;
+    public float[] shieldHealthLevels;
+    public bool useDefaultShieldHealthLevels = true;
     private float _shieldCurrentHealth;
     private float _maxShieldHealth;
 
@@ -51,6 +54,15 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     {
         startingPos = transform.position;
 
+        if (useDefaultShieldHealthLevels)
+        {
+            shieldHealthLevels = new float[shieldHealthBubbles.Length];
+            for (int i = shieldHealthLevels.Length;i<0; i--)
+            {
+                shieldHealthLevels[i] = maxHealth / i;
+            }
+        }
+        
         //defaultLevel = healthCharacter == HEALTH_CHARACTER.PLAYER ? GlobalValue.UpgradeStrongWall : defaultFortrest - 1;
         //if (healthCharacter == HEALTH_CHARACTER.PLAYER)
         //{
@@ -94,7 +106,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
     public void ActivateShield(float shieldHP)
     {
-        shieldBubbleMaxHealth.SetActive(true);
+        shieldHealthBubbles[shieldHealthBubbles.Length].SetActive(true);
         shield = true;
         _maxShieldHealth = shieldHP;
         _shieldCurrentHealth = shieldHP;
@@ -103,7 +115,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
     public void DeActivateShield()
     {
-        shieldBubbleMinHealth.SetActive(false);
+        shieldHealthBubbles[0].SetActive(false);
         shield = false;
         MenuManager.Instance.DeactivateShield();
     }
@@ -123,22 +135,34 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
             ShakeCoDo = ShakeCo(shakeTime);
             StartCoroutine(ShakeCoDo);
-
-            if (_shieldCurrentHealth < _maxShieldHealth * 2 / 3 && _shieldCurrentHealth >= _maxShieldHealth / 3)
+            for (int i = 0; i < shieldHealthBubbles.Length - 1; i++)
             {
-                shieldBubbleMaxHealth.SetActive(false);
-                shieldBubbleMedHealth.SetActive(true);
-            }else if (_shieldCurrentHealth< _maxShieldHealth /3)
-            {
-                shieldBubbleMinHealth.SetActive(true);
-                shieldBubbleMedHealth.SetActive(false);
+                if (_shieldCurrentHealth < shieldHealthLevels[i + 1] && _shieldCurrentHealth >= shieldHealthLevels[i])
+                {
+                    shieldHealthBubbles[i].SetActive(true);
+                }
+                else
+                {
+                    shieldHealthBubbles[i].SetActive(false);
+                }
             }
-            else
-            {
-                shieldBubbleMaxHealth.SetActive(true);
-                shieldBubbleMedHealth.SetActive(false);
-                shieldBubbleMinHealth.SetActive(false);
-            }
+            
+       //   
+       //   if (_shieldCurrentHealth < _maxShieldHealth * 2 / 3 && _shieldCurrentHealth >= _maxShieldHealth / 3)
+       //   {
+       //       shieldBubbleMaxHealth.SetActive(false);
+       //       shieldBubbleMedHealth.SetActive(true);
+       //   }else if (_shieldCurrentHealth< _maxShieldHealth /3)
+       //   {
+       //       shieldBubbleMinHealth.SetActive(true);
+       //       shieldBubbleMedHealth.SetActive(false);
+       //   }
+       //   else
+       //   {
+       //       shieldBubbleMaxHealth.SetActive(true);
+       //       shieldBubbleMedHealth.SetActive(false);
+       //       shieldBubbleMinHealth.SetActive(false);
+       //   }
             
             if (_shieldCurrentHealth <= 0)
             {
