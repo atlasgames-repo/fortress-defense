@@ -9,6 +9,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public SimpleProjectile bullet;
     public Transform BossSpawnPoint;
     public Transform[] spawnPositions;
+    public Transform[] underground_spawn_positions;
     public EnemyWave[] EnemyWaves;
     public BossUIManager bossManeger;
     int currentWave = 0;
