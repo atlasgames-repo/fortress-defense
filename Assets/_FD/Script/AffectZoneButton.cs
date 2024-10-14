@@ -21,10 +21,12 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     public float coolDown = 3f;
     float coolDownCounter = 0;
     public Image image;
-    public Text timerTxt;
+    public Text timerTxt, XPTxt;
     bool allowWork = true;
     bool allowCounting = false;
     bool canUse = true;
+    bool can_pay = true;
+    int XPConsume;
     float holdCounter = 0;
 
 
@@ -33,6 +35,8 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 
     void Start()
     {
+        XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
+        XPTxt.text = $"-xp{XPConsume}";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
         if (affectType == AffectZoneType.Cure)
@@ -73,9 +77,10 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
 
         canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
+        can_pay = GameManager.Instance.currentExp >= XPConsume;
         if (affectType == AffectZoneType.Cure)
-            ownBtn.interactable = canUse && fortressHealth > 0;
-        canvasGroup.interactable = canUse;
+            ownBtn.interactable = canUse && fortressHealth > 0 && can_pay;
+        canvasGroup.interactable = canUse && can_pay;
     }
 
     void ActiveLighting()

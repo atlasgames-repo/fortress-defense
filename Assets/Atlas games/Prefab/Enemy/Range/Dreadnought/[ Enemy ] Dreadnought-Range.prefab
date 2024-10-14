@@ -256,6 +256,8 @@ MonoBehaviour:
   delayChasePlayerWhenDetect: 0
   is_spine: 0
   skeletonAnimation: {fileID: 0}
+  customNightMultiplier: 2
+  useCustomNightMultiplier: 0
   magnet: 0
   magnetPos: {x: 0, y: 0, z: 0}
   magnetAttractionSpeed: 0
@@ -264,7 +266,13 @@ MonoBehaviour:
   controller: {fileID: 0}
   is_targeted: 0
   spawnFromUnderground: 0
+<<<<<<< Updated upstream
+  undergroundSandPile: {fileID: 2967936131171522836, guid: a8798ad5383bdbd4ca79e8cee187891a,
+    type: 3}
+=======
+  testMode: 0
   undergroundSandPile: {fileID: 0}
+>>>>>>> Stashed changes
   characterSprites: []
   undergroundPileScale: 1
   climbingTime: 1
@@ -290,6 +298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinGiveMin: 3
   coinGiveMax: 8
+  customNightMultiplier: 2
+  useCustomNightMultiplierOnly: 0
 --- !u!114 &1950496935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expMin: 3
   expMax: 6
+  customNightMultiplier: 2
+  useCustomNightMultiplierOnly: 0
 --- !u!61 &1950496934
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -380,6 +392,8 @@ MonoBehaviour:
   multiShoot: 1
   multiShootRate: 0.2
   GunObj: {fileID: 0}
+  customNightMultiplier: 2
+  useCustomNightMultiplierOnly: 0
 --- !u!1 &8835841617553682194
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,13 +418,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8835841617553682194}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -0.1, z: 0}
+  m_LocalRotation: {x: 0.003275526, y: -0, z: -0, w: 0.99999464}
+  m_LocalPosition: {x: -0.039999485, y: 0.17, z: 0}
   m_LocalScale: {x: 2.536, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3697426553599540031}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.375, y: 0, z: 0}
 --- !u!212 &2101254386559981091
 SpriteRenderer:
   m_ObjectHideFlags: 0

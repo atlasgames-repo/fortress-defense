@@ -17,6 +17,7 @@ using UnityEngine.AI;
 public class APIManager : MonoBehaviour
 {
     public static APIManager instance;
+    public string timeApiUrl = "https://worldtimeapi.org/api/timezone/Asia/Tehran";
     public string BASE_URL = "https://hokm-url.herokuapp.com", assetbundle_dir = "DownloadedBundles";
     public static readonly string GAME_ID = "442";
     public bool IS_DEBUG = true;
@@ -150,6 +151,33 @@ public class APIManager : MonoBehaviour
         };
         return await Get<LeaderBoardResponseModel>(route: "/games/rankings", auth_token: User.Token,parameters:param.ToParams);
     }
+
+   public async Task<TimeAndDateResponseModel> GetCurrentDateAndTime()
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(timeApiUrl))
+        {
+            var asyncOperation = www.SendWebRequest();
+            while (!asyncOperation.isDone)
+            {
+                await Task.Delay(100);
+            }
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Failed to get time: " + www.error);
+                TimeAndDateResponseModel time = new TimeAndDateResponseModel();
+                time.datetime = DateTime.Now.ToString();
+                return new TimeAndDateResponseModel();
+            }
+            else
+            {
+                string jsonResponse = www.downloadHandler.text;
+                TimeAndDateResponseModel responseModel = JsonConvert.DeserializeObject<TimeAndDateResponseModel>(jsonResponse);
+                return responseModel;
+            }
+        }
+    }
+
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
