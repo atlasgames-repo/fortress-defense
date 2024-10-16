@@ -142,7 +142,7 @@ public class GlobalValue : MonoBehaviour
 
     public static bool GetItemState(string itemName)
     {
-        return PlayerPrefs.GetInt(itemName + "activation state") == 1 ? true : false;
+        return PlayerPrefs.GetInt(itemName + "activation state",0) == 1 ? true : false;
     }
    // public static bool DoubleXp
    // {
@@ -169,20 +169,16 @@ public class GlobalValue : MonoBehaviour
         set { PlayerPrefs.SetInt("UpgradeStrongWall", value); }
     }
     
-  //  public static string DoubleXpActivationTime
-  //  {
-  //      get { return PlayerPrefs.GetString("DoubleXp1HourDurationActivationTime", "1970-01-01T00:00:01"); }
-  //      set { PlayerPrefs.SetString("DoubleXp1HourDurationActivationTime", value); }
-  //  }
+
 
     public static string ItemOpened(string itemName)
     {
-        return PlayerPrefs.GetString(itemName, "1970-01-01T00:00:01");
+        return PlayerPrefs.GetString(itemName  + "activation");
     }
 
     public static void SetItemActivationTime(string itemName, string value)
     {
-        PlayerPrefs.SetString(itemName, value);
+        PlayerPrefs.SetString(itemName + "activation", value);
     }
 
     public static int ItemDuration(string itemName)

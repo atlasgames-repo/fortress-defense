@@ -15,6 +15,7 @@ public class ShopItemData : ScriptableObject
         public int itemMaxValue;
         public bool hasMaxValue;
         public Shop.ItemTypes type;
+        public bool isTimed;
         public Shop.ItemPurchaseType purchaseType;
         public bool levelLock;
         public int levelToUnlock;

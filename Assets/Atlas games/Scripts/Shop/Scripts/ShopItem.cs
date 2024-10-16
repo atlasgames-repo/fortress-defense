@@ -25,6 +25,8 @@ public class ShopItem : ScrollItem<ScrollItemData>
     public GameObject levelLockBG;
     private bool _oneTimePurchase;
     public GameObject ownedText;
+    private bool _isTimedItem;
+    private TimedItemManager.ItemDuration _duration;
     protected override void InitItemData(ScrollItemData data)
     {
         Init(data.Data);
@@ -34,6 +36,8 @@ public class ShopItem : ScrollItem<ScrollItemData>
     // Start is called before the first frame update
     public void Init(ShopItemData.ShopItem itemData)
     {
+        _duration = itemData.duration;
+        _isTimedItem = itemData.isTimed;
         itemCountTag.SetActive(false);
         _oneTimePurchase = itemData.oneTimePurchase;
         hasMaxValue = itemData.hasMaxValue;
@@ -144,11 +148,11 @@ public class ShopItem : ScrollItem<ScrollItemData>
             ownedText.SetActive(false);
         }
 
-        if (itemData.type == Shop.ItemTypes.Timed)
+        if (itemData.isTimed)
         {
             GetComponent<TimedItemManager>().Init(itemData.itemName,itemData.duration);
-            GetComponent<ItemActivator>().itemName = itemData.itemName;
             ownedText.SetActive(false);
+            print("timed item");
         }
     }
 
@@ -156,8 +160,9 @@ public class ShopItem : ScrollItem<ScrollItemData>
     {
         int itemCount = GlobalValue.GetChosenShopItem(itemName);
         SoundManager.Click();
-
-        if (!_oneTimePurchase)
+        if (!_isTimedItem)
+        {
+                 if (!_oneTimePurchase)
         {
                if (itemCount < maxAmount)
             {
@@ -316,7 +321,47 @@ public class ShopItem : ScrollItem<ScrollItemData>
         
             }
         }
-    }
+        }
+        else
+        {
+                    if (_purchaseType == Shop.ItemPurchaseType.Coin)
+                {
+                    if (User.Coin > itemPrice)
+                    {
+                                expImage.gameObject.SetActive(false);
+                                coinImage.gameObject.SetActive(false);
+                                itemPriceText.text = "";
+                            GetComponent<TimedItemManager>().ActivateDoubleXp(_duration== TimedItemManager.ItemDuration.Day);
+                                User.Coin = -itemPrice;
+                    }
+                    else
+                    {
+                        popup.gameObject.SetActive(true);
+                        popup.OpenDialog(true);
+                    }
+                }
+                else
+                {
+                    if (User.Uxp > itemPrice)
+                    {
+                     
+
+                            expImage.gameObject.SetActive(false);
+                            coinImage.gameObject.SetActive(false);
+                            itemPriceText.text = "";
+                            GetComponent<TimedItemManager>().ActivateDoubleXp(_duration== TimedItemManager.ItemDuration.Day);
+                            User.Uxp = -itemPrice;
+                        
+                    }
+                        else
+                        {
+                            popup.gameObject.SetActive(true);
+                            popup.OpenDialog(true);
+                        }
+                    }
+                } 
+        }
+      
 
     public void HandleDeactivation()
     {

@@ -15,7 +15,7 @@ public class GiveExpWhenDie : MonoBehaviour
     private ShopItemData.ShopItem[] _data;
     void Start()
     {
-        _data = FindObjectOfType<ItemChecker>().data.ShopData;
+        _data = FindObjectOfType<TimeChecker>().data.ShopData;
         int initialExpMin = expMin;
         int initialExpMax = expMax;
         if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
