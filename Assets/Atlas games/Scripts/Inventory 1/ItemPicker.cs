@@ -14,18 +14,21 @@ public class ItemPicker : MonoBehaviour
         List<ScrollItemData> contentDatas = new List<ScrollItemData>();
         for (int i = 0; i < data.ShopData.Length; i++)
         {
-            if (category != Shop.ItemTypes.Pet)
+            if (!data.ShopData[i].isTimed)
             {
-                if (data.ShopData[i].type == category && GlobalValue.GetChosenShopItem(data.ShopData[i].itemName)>0)
+                if (category != Shop.ItemTypes.Pet)
                 {
-                    contentDatas.Add(new ScrollItemData(data.ShopData[i]));
+                    if (data.ShopData[i].type == category && GlobalValue.GetChosenShopItem(data.ShopData[i].itemName)>0)
+                    {
+                        contentDatas.Add(new ScrollItemData(data.ShopData[i]));
+                    }
                 }
-            }
-            else
-            {
-                if (data.ShopData[i].type == category && GlobalValue.LevelPass >= data.ShopData[i].levelToUnlock)
+                else
                 {
-                    contentDatas.Add(new ScrollItemData(data.ShopData[i]));
+                    if (data.ShopData[i].type == category && GlobalValue.LevelPass >= data.ShopData[i].levelToUnlock)
+                    {
+                        contentDatas.Add(new ScrollItemData(data.ShopData[i]));
+                    }
                 }
             }
            

@@ -10,9 +10,9 @@ public class TimedItemManager : MonoBehaviour
 {
     public Text counterText;
     public Text buttonText;
-    public string itemName;
+    [HideInInspector]public string itemName;
 
-    public bool isInit;
+  [HideInInspector]  public bool isInit;
 
     public enum ItemDuration
     {
@@ -21,7 +21,7 @@ public class TimedItemManager : MonoBehaviour
     }
 
 
-    public ItemDuration duration;
+    [HideInInspector]public ItemDuration duration;
 
 
     public void Init(string name, ItemDuration dur)
