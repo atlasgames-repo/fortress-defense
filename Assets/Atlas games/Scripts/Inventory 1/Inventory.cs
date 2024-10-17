@@ -41,6 +41,8 @@ public class Inventory : MonoBehaviour
                 GlobalValue.IncrementChosenShopItem(itemsData[i].itemName);
             }
         }
+
+
         // decodes chosen items from player prefs global value and put them in slots
         string[] chosenMagicsDecode = GlobalValue.inventoryMagic.Split(',');
         for (int i = 0; i < chosenMagicsDecode.Length; i++)
@@ -50,71 +52,108 @@ public class Inventory : MonoBehaviour
             {
                 if (chosenMagics[i] == itemsData[j].id)
                 {
-                    
-                        magicSlotsUI[i].Init(itemsData[j].itemImage);
-                    
+
+                    magicSlotsUI[i].Init(itemsData[j].itemImage);
+
                 }
             }
         }
-        
-        string[] chosenItemsDecode = GlobalValue.inventoryItem.Split(',');
-        for (int i = 0; i < chosenItemsDecode.Length; i++)
+
+
+        int itemsOwned = 0;
+        List<int> itemIds = new List<int>();
+        foreach (ShopItemData.ShopItem shopData in data.ShopData)
         {
-            chosenItems[i] = int.Parse(chosenItemsDecode[i]);
-            for (int j = 0; j < itemsData.Length; j++)
+            if (GlobalValue.GetChosenShopItem(shopData.itemName) > 0 && shopData.type == Shop.ItemTypes.Item)
             {
-                if (chosenItems[i] == itemsData[j].id)
+                if (itemsOwned <= 3)
                 {
-                    if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
-                    {
-                        if (FallBackItem().itemImage == null)
-                        {
-                            itemSlotsUI[i].chosenItemImage.gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
-                            itemSlotsUI[i].Init(FallBackItem().itemImage);
-                        }
-                    }
-                    else
-                    {
-                        itemSlotsUI[i].Init(itemsData[j].itemImage);
-                    }
+                    itemsOwned++;
+                    itemIds.Add(shopData.id);
                 }
             }
         }
-        string[] chosenPetsDecode = GlobalValue.inventoryPets.Split(',');
-        for (int i = 0; i < chosenPetsDecode.Length; i++)
+print("owned items" +string.Join(",", itemIds) );
+print(GlobalValue.inventoryItem + "initial items");
+        for (int i = 0; i < itemSlotsUI.Length; i++)
         {
-            chosenPet[i] = int.Parse(chosenPetsDecode[i]);
-            for (int j = 0; j < itemsData.Length; j++)
+            itemSlotsUI[i].chosenItemImage.gameObject.SetActive(false);
+        }
+        if (itemsOwned>0)
+        {
+            for (int i = 0; i < chosenItems.Length; i++)
             {
-                if (chosenPet[i] == itemsData[j].id)
+                chosenItems[i] = -1;
+            }
+            string[] chosenItemsDecode = GlobalValue.inventoryItem.Split(',');
+            for (int i = 0; i < itemIds.Count; i++)
+            {
+                    itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
+                    itemSlotsUI[i].Init(GetShopItem(itemIds[i]).itemImage);
+                    _editingSlot = i;
+                    _edittedType = Shop.ItemTypes.Item;
+                    ChangeChosenItem(GetShopItem(itemIds[i]));
+            }
+        }
+
+        //      string[] chosenItemsDecode = GlobalValue.inventoryItem.Split(',');
+        //   for (int i = 0; i < chosenItemsDecode.Length; i++)
+        //   {
+        //      chosenItems[i] = ;
+        //    for (int j = 0; j < itemsData.Length; j++)
+        {
+            //   if (chosenItems[i] == itemsData[j].id)
+            //   {
+            //       if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
+            //       {
+            //           
+            //           else
+            //           {
+            //             
+            //             
+            //           }
+            //       }
+            //       else
+            //       {
+            //           itemSlotsUI[i].Init(itemsData[j].itemImage);
+            //       }
+            //   }
+            //       }
+            //     }
+            string[] chosenPetsDecode = GlobalValue.inventoryPets.Split(',');
+            for (int i = 0; i < chosenPetsDecode.Length; i++)
+            {
+                chosenPet[i] = int.Parse(chosenPetsDecode[i]);
+                for (int j = 0; j < itemsData.Length; j++)
                 {
-                    
+                    if (chosenPet[i] == itemsData[j].id)
+                    {
+
                         petSlotsUI[i].Init(itemsData[j].itemImage);
-                    
+
+                    }
                 }
             }
-        }
-        string[] chosenTowerDecode = GlobalValue.inventoryTowers.Split(',');
-        for (int i = 0; i < chosenTowerDecode.Length; i++)
-        {
-            chosenTower[i] = int.Parse(chosenTowerDecode[i]);
-            for (int j = 0; j < itemsData.Length; j++)
+
+            string[] chosenTowerDecode = GlobalValue.inventoryTowers.Split(',');
+            for (int i = 0; i < chosenTowerDecode.Length; i++)
             {
-                if (chosenTower[i] == itemsData[j].id)
+                chosenTower[i] = int.Parse(chosenTowerDecode[i]);
+                for (int j = 0; j < itemsData.Length; j++)
                 {
-                    
-                    
+                    if (chosenTower[i] == itemsData[j].id)
+                    {
+
+
                         towerSlotsUI[i].Init(itemsData[j].itemImage);
-                    
+
+                    }
                 }
             }
+
         }
-        
     }
+
     public void OpenPets()
     {
         SoundManager.Click();
