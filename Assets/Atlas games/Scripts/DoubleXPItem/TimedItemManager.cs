@@ -22,13 +22,26 @@ public class TimedItemManager : MonoBehaviour
 
 
     [HideInInspector]public ItemDuration duration;
+    private string[] _allTimedItems;
+    private bool _activeItem;
+    private string _activeItemName;
 
-
-    public void Init(string name, ItemDuration dur)
+    public void Init(string name, ItemDuration dur,string[] otherItems)
     {
+        _allTimedItems = otherItems;
         itemName = name;
         duration = dur;
-        if (GlobalValue.GetItemState(itemName))
+        _activeItem = false;
+        for (int i = 0; i < _allTimedItems.Length; i++)
+        {
+            if (GlobalValue.GetItemState(_allTimedItems[i]))
+            {
+                _activeItemName = _allTimedItems[i];
+                _activeItem = true;
+                break;
+            }
+        }
+        if (_activeItem)
         {
             isInit = true;
             UpdateWithTimeTick();
@@ -39,27 +52,41 @@ public class TimedItemManager : MonoBehaviour
     
     public void UpdateWithTimeTick()
     {
+        print(isInit);
+        _activeItem = false;
+        for (int i = 0; i < _allTimedItems.Length; i++)
+        {
+            if (GlobalValue.GetItemState(_allTimedItems[i]))
+            {
+                _activeItemName = _allTimedItems[i];
+                _activeItem = true;
+            }
+        }
+        if (_activeItem && !isInit)
+        {
+            isInit = true;
+            buttonText.gameObject.SetActive(false);
+            counterText.gameObject.SetActive(true);
+        }
         if (isInit)
         {
-              if (GlobalValue.GetItemState(itemName))
-            {
+                counterText.text = CountDownText();
                 if (ConvertedStringToDate(TimeChecker.Instance.GetCurrentDateTimeString()) >
-                    ConvertedStringToDate(GlobalValue.ItemOpened(itemName))
-                        .AddHours(itemDuration()))
+                    ConvertedStringToDate(GlobalValue.ItemOpened(_activeItemName))
+                        .AddHours(itemDuration()) && _activeItemName == itemName)
                 {
                     isInit = false;
                     GlobalValue.SetItemState(false, itemName);
                     buttonText.gameObject.SetActive(true);
                     counterText.gameObject.SetActive(false);
                 }
-                else
-                {
-                    buttonText.gameObject.SetActive(false);
-                    counterText.gameObject.SetActive(true);
-                    counterText.text = CountDownText();
-                    isInit = true;  
-                }
-            }
+            //   else
+            //   {
+            //       buttonText.gameObject.SetActive(false);
+            //       counterText.gameObject.SetActive(true);
+            //       isInit = true;  
+            //   }
+            
         }
     }
     
@@ -78,7 +105,7 @@ public class TimedItemManager : MonoBehaviour
 
      string CountDownText()
     {
-        return (ConvertedStringToDate(GlobalValue.ItemOpened(itemName)).AddHours(GlobalValue.ItemDuration(itemName)) -
+        return (ConvertedStringToDate(GlobalValue.ItemOpened(_activeItemName)).AddHours(GlobalValue.ItemDuration(_activeItemName)) -
                 ConvertedStringToDate(TimeChecker.Instance.GetCurrentDateTimeString())).ToString();
     }
     

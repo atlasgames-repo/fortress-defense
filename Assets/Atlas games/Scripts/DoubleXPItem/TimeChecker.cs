@@ -64,17 +64,21 @@ public class TimeChecker : MonoBehaviour
             extractedDate = _syncedGlobalDateTime.ToString("yyyy-MM-dd");
             extractedTime = _syncedGlobalDateTime.ToString("HH:mm:ss");
             SyncTimers();
+            print("synced items");
             StartCoroutine(SyncTimeEverySecond());
     }
 
     void SyncTimers()
     {
-        _items = new TimedItemManager[0];
          _items = FindObjectsOfType<TimedItemManager>();
-        for (int i = 0; i < _items.Length; i++)
-        {
-            _items[i].UpdateWithTimeTick();
-        }
+         print(_items.Length);
+         if (_items.Length > 0)
+         {
+             for (int i = 0; i < _items.Length; i++)
+             {
+                 _items[i].UpdateWithTimeTick();
+             }
+         }
     }
 
     public string GetCurrentDateTimeString()
