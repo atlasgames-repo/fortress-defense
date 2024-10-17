@@ -118,10 +118,10 @@ public class Inventory : MonoBehaviour
     public void OpenPets()
     {
         SoundManager.Click();
-        _editingSlot = 0;
-        _edittedType = Shop.ItemTypes.Pet;
         itemPicker.gameObject.SetActive(true);
         itemPicker.Init(data,chosenPet,Shop.ItemTypes.Pet);
+        _editingSlot = 0;
+        _edittedType = Shop.ItemTypes.Pet;
     }
 
     public void OpenItems(int slot)

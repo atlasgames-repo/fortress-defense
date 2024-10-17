@@ -86,16 +86,16 @@ public class GlobalValue : MonoBehaviour
 
     public static int GetChosenShopItem(string itemName)
     {
-        return PlayerPrefs.GetInt(itemName);
+        return PlayerPrefs.GetInt(itemName  + "amount");
     }
 
     public static void IncrementChosenShopItem(string itemName)
     {
-        PlayerPrefs.SetInt(itemName,GetChosenShopItem(itemName) + 1);
+        PlayerPrefs.SetInt(itemName + "amount",GetChosenShopItem(itemName) + 1);
     }
     public static void DecrementChosenShopItem(string itemName)
     {
-        PlayerPrefs.SetInt(itemName,GetChosenShopItem(itemName) - 1);
+        PlayerPrefs.SetInt(itemName + "amount",GetChosenShopItem(itemName) - 1);
     }
 
 

@@ -8,12 +8,14 @@ public class ItemPicker : MonoBehaviour
     public DynamicScrollRect.DynamicScrollRect dynamicScrollRect;
     public ScrollContent content;
     public Transform scrollContentParent;
+    public List<ScrollItemData> petData;
     public void Init(ShopItemData data,int[] chosenItems, Shop.ItemTypes category)
     {
         ClearItems();
         List<ScrollItemData> contentDatas = new List<ScrollItemData>();
         for (int i = 0; i < data.ShopData.Length; i++)
         {
+
             if (!data.ShopData[i].isTimed)
             {
                 if (category != Shop.ItemTypes.Pet)
@@ -25,15 +27,18 @@ public class ItemPicker : MonoBehaviour
                 }
                 else
                 {
-                    if (data.ShopData[i].type == category && GlobalValue.LevelPass >= data.ShopData[i].levelToUnlock)
+                    if (data.ShopData[i].type == Shop.ItemTypes.Pet)
                     {
-                        contentDatas.Add(new ScrollItemData(data.ShopData[i]));
+                        if (GlobalValue.GetChosenShopItem(data.ShopData[i].itemName) > 0||data.ShopData[i].isFree)
+                        {
+                            contentDatas.Add(new ScrollItemData(data.ShopData[i]));
+                        }
+                        }
                     }
                 }
             }
-           
-        }
         content.InitScrollContent(contentDatas);
+        petData = contentDatas;
     }
 
     public void ClearItems()

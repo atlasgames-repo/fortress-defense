@@ -1,5 +1,8 @@
-﻿namespace DynamicScrollRect
+﻿using System;
+
+namespace DynamicScrollRect
 {
+    [Serializable]
     public class ScrollItemData
     {
         public ShopItemData.ShopItem Data { get; }
