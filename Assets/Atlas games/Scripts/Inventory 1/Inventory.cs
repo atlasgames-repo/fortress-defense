@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class Inventory : MonoBehaviour
 {
     public ShopItemData data;
@@ -20,10 +20,10 @@ public class Inventory : MonoBehaviour
     public int[] chosenInitialTowersID;
     private int _editingSlot;
     private Shop.ItemTypes _edittedType;
-    void Start()
-    {
-        InitSlots();
-    }
+  // void Start()
+  // {
+  //     InitSlots();
+  // }
 
     public void InitSlots()
     {
@@ -59,99 +59,99 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        //choose tower from saved
+        string[] chosenTowerDecode = GlobalValue.inventoryTowers.Split(',');
+        for (int i = 0; i < chosenTowerDecode.Length; i++)
+        {
+            chosenTower[i] = int.Parse(chosenTowerDecode[i]);
+            for (int j = 0; j < itemsData.Length; j++)
+            {
+                if (chosenTower[i] == itemsData[j].id)
+                {
 
-        int itemsOwned = 0;
+
+                    towerSlotsUI[i].Init(itemsData[j].itemImage);
+
+                }
+            }
+        }
+        
+        // choose pets from saved
+        string[] chosenPetsDecode = GlobalValue.inventoryPets.Split(',');
+        for (int i = 0; i < chosenPetsDecode.Length; i++)
+        {
+            chosenPet[i] = int.Parse(chosenPetsDecode[i]);
+            for (int j = 0; j < itemsData.Length; j++)
+            {
+                if (chosenPet[i] == itemsData[j].id)
+                {
+
+                    petSlotsUI[i].Init(itemsData[j].itemImage);
+
+                }
+            }
+        }
+
         List<int> itemIds = new List<int>();
         foreach (ShopItemData.ShopItem shopData in data.ShopData)
         {
             if (GlobalValue.GetChosenShopItem(shopData.itemName) > 0 && shopData.type == Shop.ItemTypes.Item)
             {
-                if (itemsOwned <= 3)
-                {
-                    itemsOwned++;
                     itemIds.Add(shopData.id);
-                }
             }
         }
-print("owned items" +string.Join(",", itemIds) );
-print(GlobalValue.inventoryItem + "initial items");
         for (int i = 0; i < itemSlotsUI.Length; i++)
         {
             itemSlotsUI[i].chosenItemImage.gameObject.SetActive(false);
         }
-        if (itemsOwned>0)
+        string[] chosenItemsDecode = GlobalValue.inventoryItem.Split(',');
+        for (int i = 0; i < chosenItemsDecode.Length; i++)
         {
-            for (int i = 0; i < chosenItems.Length; i++)
+            if (int.Parse(chosenItemsDecode[i]) == -1 || GlobalValue.GetChosenShopItem(GetShopItem(int.Parse(chosenItemsDecode[i])).itemName) <=0)
             {
-                chosenItems[i] = -1;
-            }
-            string[] chosenItemsDecode = GlobalValue.inventoryItem.Split(',');
-            for (int i = 0; i < itemIds.Count; i++)
-            {
-                    itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
-                    itemSlotsUI[i].Init(GetShopItem(itemIds[i]).itemImage);
-                    _editingSlot = i;
-                    _edittedType = Shop.ItemTypes.Item;
-                    ChangeChosenItem(GetShopItem(itemIds[i]));
-            }
-        }
-
-        //      string[] chosenItemsDecode = GlobalValue.inventoryItem.Split(',');
-        //   for (int i = 0; i < chosenItemsDecode.Length; i++)
-        //   {
-        //      chosenItems[i] = ;
-        //    for (int j = 0; j < itemsData.Length; j++)
-        {
-            //   if (chosenItems[i] == itemsData[j].id)
-            //   {
-            //       if (GlobalValue.GetChosenShopItem(itemsData[j].itemName) == 0)
-            //       {
-            //           
-            //           else
-            //           {
-            //             
-            //             
-            //           }
-            //       }
-            //       else
-            //       {
-            //           itemSlotsUI[i].Init(itemsData[j].itemImage);
-            //       }
-            //   }
-            //       }
-            //     }
-            string[] chosenPetsDecode = GlobalValue.inventoryPets.Split(',');
-            for (int i = 0; i < chosenPetsDecode.Length; i++)
-            {
-                chosenPet[i] = int.Parse(chosenPetsDecode[i]);
-                for (int j = 0; j < itemsData.Length; j++)
+                bool choseFallbackItem = false;
+                for (int j = 0; j < itemIds.Count; j++)
                 {
-                    if (chosenPet[i] == itemsData[j].id)
+                    if (!chosenItemsDecode.Contains(itemIds[j].ToString())&& !choseFallbackItem)
                     {
-
-                        petSlotsUI[i].Init(itemsData[j].itemImage);
-
+                        chosenItemsDecode[i] = itemIds[j].ToString();
+                        itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
+                        itemSlotsUI[i].Init(GetShopItem(itemIds[j]).itemImage);
+                        _editingSlot = i;
+                        _edittedType = Shop.ItemTypes.Item;
+                        ChangeChosenItem(GetShopItem(itemIds[j]));
+                        choseFallbackItem = true;
                     }
                 }
             }
-
-            string[] chosenTowerDecode = GlobalValue.inventoryTowers.Split(',');
-            for (int i = 0; i < chosenTowerDecode.Length; i++)
+            else if(int.Parse(chosenItemsDecode[i]) != -1 && GlobalValue.GetChosenShopItem(GetShopItem(int.Parse(chosenItemsDecode[i])).itemName) >0)
             {
-                chosenTower[i] = int.Parse(chosenTowerDecode[i]);
-                for (int j = 0; j < itemsData.Length; j++)
-                {
-                    if (chosenTower[i] == itemsData[j].id)
-                    {
-
-
-                        towerSlotsUI[i].Init(itemsData[j].itemImage);
-
-                    }
-                }
+                itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
+                itemSlotsUI[i].Init(GetShopItem(int.Parse(chosenItemsDecode[i])).itemImage);
             }
-
         }
+    
+      //  if (itemIds.Count>0)
+      //  {
+      //      for (int i = 0; i < chosenItems.Length; i++)
+      //      {
+      //          chosenItems[i] = -1;
+      //      }
+      //     
+      //      for (int i = 0; i < itemIds.Count; i++)
+      //      {
+      //              itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
+      //              itemSlotsUI[i].Init(GetShopItem(itemIds[i]).itemImage);
+      //              _editingSlot = i;
+      //              _edittedType = Shop.ItemTypes.Item;
+      //              ChangeChosenItem(GetShopItem(itemIds[i]));
+      //      }
+      //  }
+   
+
+          
+
+        
     }
 
     public void OpenPets()
@@ -223,46 +223,7 @@ print(GlobalValue.inventoryItem + "initial items");
         }
         CloseItemPicker();
     }
-
-
     
-    // if item supply is consumed completely chooses a fall back item wich is free and unlimited and isn't chosen yet in the slots
-    ShopItemData.ShopItem FallBackItem()
-    {
-        bool shouldBreak = false;
-        int itemID = -1;
-        for (int i = 0; i < chosenInitialItemsID.Length; i++)
-        {
-            for (int j = 0; j < chosenItems.Length; j++)
-            {
-                if (chosenItems[j] != chosenInitialItemsID[i] && GlobalValue.GetChosenShopItem(GetShopItem(chosenInitialItemsID[i]).itemName)>0)
-                {
-                    itemID = chosenInitialItemsID[i];
-                    chosenItems[j] = chosenInitialItemsID[i];
-                    shouldBreak = true;
-                    GlobalValue.inventoryItem = string.Join(",", chosenItems);
-                }
-            }
-
-            if (shouldBreak)
-            {
-                break;
-            }
-        }
-
-        ShopItemData.ShopItem item = new ShopItemData.ShopItem(); 
-        if (GetShopItem(itemID) == null)
-        {
-            item = GetShopItem(itemID);
-        }
-        else
-        {
-            item = new ShopItemData.ShopItem();
-        }
-
-        return item;
-    }
-
     ShopItemData.ShopItem GetShopItem(int itemID)
     {
         ShopItemData.ShopItem item = null;
