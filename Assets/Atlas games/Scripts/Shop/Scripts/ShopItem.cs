@@ -150,7 +150,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
 
         if (itemData.isTimed)
         {
-            GetComponent<TimedItemManager>().Init(itemData.itemName,itemData.duration);
+            GetComponent<TimedItemManager>().Init(itemData.itemName,itemData.duration, itemData.otherTimedItems);
             ownedText.SetActive(false);
             print("timed item");
         }
