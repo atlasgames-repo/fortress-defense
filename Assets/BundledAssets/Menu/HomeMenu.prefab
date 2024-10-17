@@ -397,7 +397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -28.6, y: 3.2}
+  m_AnchoredPosition: {x: -1.5, y: 3.2}
   m_SizeDelta: {x: -70.3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &346204314
@@ -435,13 +435,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 90
-    m_Alignment: 5
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 10
+  m_Text: 24:00:00
 --- !u!1 &359506823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,7 +2591,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2798,10 +2798,10 @@ RectTransform:
   m_Father: {fileID: 1049837767}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 144.55, y: -189.85}
+  m_SizeDelta: {x: 289.1, y: 379.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1667985266
 CanvasRenderer:
@@ -2886,7 +2886,12 @@ MonoBehaviour:
   buttonText: {fileID: 1455662466}
   itemName: 
   isInit: 0
+  isTimed: 0
+  coinSprite: {fileID: 359506825}
+  expSprite: {fileID: 261684718}
+  purchaseWithCoin: 0
   duration: 0
+  allTimedItems: []
 --- !u!1 &1814932022
 GameObject:
   m_ObjectHideFlags: 0

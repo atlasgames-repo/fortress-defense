@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimeChecker : MonoBehaviour
 {
@@ -64,21 +65,22 @@ public class TimeChecker : MonoBehaviour
             extractedDate = _syncedGlobalDateTime.ToString("yyyy-MM-dd");
             extractedTime = _syncedGlobalDateTime.ToString("HH:mm:ss");
             SyncTimers();
-            print("synced items");
             StartCoroutine(SyncTimeEverySecond());
     }
 
-    void SyncTimers()
+    public void SyncTimers()
     {
-         _items = FindObjectsOfType<TimedItemManager>();
-         print(_items.Length);
-         if (_items.Length > 0)
-         {
-             for (int i = 0; i < _items.Length; i++)
-             {
-                 _items[i].UpdateWithTimeTick();
-             }
-         }
+        _items = FindObjectsOfType<TimedItemManager>();
+       if (_items.Length > 0)
+       {
+           for (int i = 0; i < _items.Length; i++)
+           {
+               if (_items[i].isInit)
+               {
+                   _items[i].UpdateWithTimeTick();
+               }
+           }
+       }
     }
 
     public string GetCurrentDateTimeString()
@@ -110,5 +112,15 @@ public class TimeChecker : MonoBehaviour
         DateTime parsedDate;
         parsedDate=   DateTime.ParseExact(insertedTime, "M/dd/yyyy h:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture); 
         return parsedDate;
+    }
+
+    public void InitTimedItems()
+    {
+        _items = FindObjectsOfType<TimedItemManager>();
+        for (int i = 0; i < _items.Length; i++)
+        {
+            _items[i].Init(_items[i].itemName,_items[i].duration,_items[i].allTimedItems,_items[i].purchaseWithCoin);
+        }
+        SyncTimers();
     }
 }

@@ -150,7 +150,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
 
         if (itemData.isTimed)
         {
-            GetComponent<TimedItemManager>().Init(itemData.itemName,itemData.duration,itemData.otherTimedItems);
+            GetComponent<TimedItemManager>().Init(itemData.itemName,itemData.duration,itemData.otherTimedItems,itemData.purchaseType== Shop.ItemPurchaseType.Coin);
             ownedText.SetActive(false);
         }
     }
