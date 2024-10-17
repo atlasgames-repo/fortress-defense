@@ -43,6 +43,7 @@ public class TimeChecker : MonoBehaviour
             _currentGlobalDateTime = DateTime.Parse(_globalDate.datetime, null, DateTimeStyles.RoundtripKind);
             _syncedGlobalDateTime = _currentGlobalDateTime;
         }
+        Debug.Log("Fetched time !" + _syncedGlobalDateTime);
         extractedDate = _syncedGlobalDateTime.ToString("yyyy-MM-dd");
         extractedTime = _syncedGlobalDateTime.ToString("HH:mm:ss");
         StartCoroutine(SyncTimeEverySecond());
@@ -101,10 +102,38 @@ public class TimeChecker : MonoBehaviour
             }
         }
     }
-    static DateTime ConvertedStringToDate(string insertedTime)
+    DateTime ConvertedStringToDate(string insertedTime)
     {
-        DateTime parsedDate;
-        parsedDate=   DateTime.ParseExact(insertedTime, "M/dd/yyyy h:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture); 
-        return parsedDate;
+        string dateString = "10/17/2024 9:46:18 AM";
+
+        // Extract the components of the date string using Substring
+        int month = int.Parse(dateString.Substring(0, 2));
+        int day = int.Parse(dateString.Substring(3, 2));
+        int year = int.Parse(dateString.Substring(6, 4));
+        
+        // Handle hour extraction: account for 1 or 2 digit hour values
+        int hourStartIndex = 11;
+        int hourLength = dateString[hourStartIndex + 1] == ':' ? 1 : 2;
+        int hour = int.Parse(dateString.Substring(hourStartIndex, hourLength));
+        
+        int minute = int.Parse(dateString.Substring(hourStartIndex + hourLength + 1, 2));
+        int second = int.Parse(dateString.Substring(hourStartIndex + hourLength + 4, 2));
+        
+        // Extract the AM/PM part
+        string amPm = dateString.Substring(hourStartIndex + hourLength + 7, 2);
+
+        // Convert the hour based on AM/PM
+        if (amPm == "PM" && hour != 12)
+        {
+            hour += 12;  // Convert to 24-hour time for PM
+        }
+        else if (amPm == "AM" && hour == 12)
+        {
+            hour = 0;  // Midnight case
+        }
+
+        DateTime dateTime = new DateTime(year, month, day, hour, minute, second);
+        return dateTime;
     }
+
 }
