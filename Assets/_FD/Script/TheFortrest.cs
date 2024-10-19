@@ -32,6 +32,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     public float speed = 30f; //how fast it shakes
     public float amount = 0.5f; //how much it shakes
     public float shakeTime = 0.3f;
+    public int floatingTextFontSize = 70;
     public bool shakeX, shakeY;
 
     private float _startingHealth;
@@ -84,7 +85,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     public void TakeDamage(float damage, Vector2 force, Vector2 hitPoint, GameObject instigator, BODYPART bodyPart = BODYPART.NONE, WeaponEffect weaponEffect = null, WEAPON_EFFECT forceEffect = WEAPON_EFFECT.NONE)
     {
         currentHealth -= damage;
-        FloatingTextManager.Instance.ShowText("" + (int)damage, Vector2.up * 2, Color.yellow, transform.position);
+        FloatingTextManager.Instance.ShowText("" + (int)damage, Vector2.up * 2, Color.yellow, transform.position,floatingTextFontSize);
 
         MenuManager.Instance.UpdateHealthbar(currentHealth, maxHealth/*, healthCharacter*/);
 
@@ -102,10 +103,13 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
             ShakeCoDo = ShakeCo(shakeTime);
             StartCoroutine(ShakeCoDo);
+
+            //shake the camera
+            CameraShake.instance.StartShake(0.1f, 0.1f);
         }
 
         //update fortrest state
-    UpdateFortressState();
+        UpdateFortressState();
     }
 
     public void HealFortress(float healAmount)
