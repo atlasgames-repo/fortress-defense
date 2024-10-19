@@ -13,8 +13,8 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
     public LayerMask targetLayerForPet;
     public ShopItemData data;
     private int[] _chosenPet;
-    public int petToSpawn = 0;
-    public int petCount = 1;
+    int _petToSpawn = 0;
+    public int _petCount = 1;
     public GameObject[] pets;
     public KeyCode[] KeyType { get { return new KeyCode[] { KeyCode.E }; } }
     public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
@@ -49,16 +49,18 @@ public class BuyCharacterBtn : MonoBehaviour, IKeyboardCall
 
     void Start()
     {
-        _chosenPet = new int[petCount];
-        pets = new GameObject[petCount];
         string[] chosenPetsDecode = GlobalValue.inventoryPets.Split(',');
+        _petCount = chosenPetsDecode.Length;
+        _chosenPet = new int[_petCount];
+        pets = new GameObject[_petCount];
         for (int i = 0; i < chosenPetsDecode.Length; i++)
         {
             _chosenPet[i] = int.Parse(chosenPetsDecode[i]);
             pets[i] = GetPetData(_chosenPet[i]).pet;
         }
-
-        character = pets[petToSpawn];
+        _petToSpawn = _chosenPet[0];
+        character = GetPetData(_petToSpawn).pet;
+        image.sprite = GetPetData(_petToSpawn).buttonImage;
       // character.GetComponent<SmartEnemyGrounded>().startBehavior = STARTBEHAVIOR.WALK_LEFT;
       // character.layer = LayerMask.NameToLayer("Player");
       // character.tag = "Warrior";
