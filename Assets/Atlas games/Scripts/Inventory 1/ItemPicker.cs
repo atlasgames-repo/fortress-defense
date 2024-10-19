@@ -33,7 +33,6 @@ public class ItemPicker : MonoBehaviour
                     {
                         if (GlobalValue.GetChosenShopItem(data.ShopData[i].itemName) > 0||data.ShopData[i].isFree)
                         {
-                            print(data.ShopData[i].itemName);
                             contentDatas.Add(new ScrollItemData(data.ShopData[i]));
                         }
                         }
