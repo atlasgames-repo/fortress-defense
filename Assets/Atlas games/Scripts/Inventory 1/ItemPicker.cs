@@ -8,7 +8,9 @@ public class ItemPicker : MonoBehaviour
     public DynamicScrollRect.DynamicScrollRect dynamicScrollRect;
     public ScrollContent content;
     public Transform scrollContentParent;
-    public List<ScrollItemData> petData;
+    [HideInInspector]public List<ScrollItemData> petData;
+    public GameObject noItemsMessage;
+    public GameObject regularButton;
     public void Init(ShopItemData data,int[] chosenItems, Shop.ItemTypes category)
     {
         ClearItems();
@@ -31,14 +33,27 @@ public class ItemPicker : MonoBehaviour
                     {
                         if (GlobalValue.GetChosenShopItem(data.ShopData[i].itemName) > 0||data.ShopData[i].isFree)
                         {
+                            print(data.ShopData[i].itemName);
                             contentDatas.Add(new ScrollItemData(data.ShopData[i]));
                         }
                         }
                     }
                 }
             }
-        content.InitScrollContent(contentDatas);
-        petData = contentDatas;
+
+        if (contentDatas.Count > 0)
+        {
+            content.InitScrollContent(contentDatas);
+            petData = contentDatas;
+            noItemsMessage.SetActive(false);
+            regularButton.SetActive(true);
+        }else if (category == Shop.ItemTypes.Item)
+        {
+            noItemsMessage.SetActive(true);
+            regularButton.SetActive(false);
+        }
+    
+        
     }
 
     public void ClearItems()

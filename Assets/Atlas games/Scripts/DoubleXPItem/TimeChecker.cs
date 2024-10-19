@@ -18,7 +18,7 @@ public class TimeChecker : MonoBehaviour
     private bool _fetchedTime;
     public ShopItemData data;
     private List<ShopItemData.ShopItem>  _timedItems = new List<ShopItemData.ShopItem>();
-    public TimedItemManager[] _items;
+    [HideInInspector]public TimedItemManager[] _items;
     public static TimeChecker Instance { get; private set; }
     async void Awake()
     {
