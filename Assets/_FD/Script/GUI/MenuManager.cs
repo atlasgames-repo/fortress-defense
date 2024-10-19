@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject StartUI;
     public GameObject UI;
     public GameObject VictotyUI;
+    public GameObject rewardUI;
     public GameObject FailUI;
     public GameObject LeaderBoardUI;
     public GameObject PauseUI;
@@ -27,6 +28,10 @@ public class MenuManager : MonoBehaviour, IListener
 
     UI_UI uiControl;
 
+    [Header("Reward")]
+    public RewardList rewardList;
+    private Reward _currentReward;
+    
     private void Awake()
     {
         Instance = this;
@@ -110,9 +115,37 @@ public class MenuManager : MonoBehaviour, IListener
     {
         UI.SetActive(false);
         yield return new WaitForSeconds(1.5f);
-        VictotyUI.SetActive(true);
-
+        List<int> levelsDefined = new List<int>();
+        int currentLevel = GlobalValue.levelPlaying;
+        foreach (Reward reward in rewardList.rewards)
+        {
+            levelsDefined.Add(reward.rewardLevel);
+        }
+        
+        if (levelsDefined.Contains(currentLevel))
+            {
+                for (int i = 0; i < rewardList.rewards.Length; i++)
+                {
+                    if (currentLevel == rewardList.rewards[i].rewardLevel)
+                    {
+                        _currentReward = rewardList.rewards[i];
+                        rewardUI.SetActive(true);
+                        rewardUI.GetComponent<RewardMenu>().Init(_currentReward,this);
+                    }
+                }
+            }
+        else
+        {
+            VictotyUI.SetActive(true);    
+        }
     }
+
+    public void OpenVictoryMenu()
+    {
+        rewardUI.SetActive(false);
+        VictotyUI.SetActive(true);
+    }
+    
 
 
     public void IPause()
