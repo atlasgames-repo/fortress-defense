@@ -19,17 +19,16 @@ public class RewardToolTip : MonoBehaviour
     private NativeAspectRatio _rewardImageScaler;
     public Text amountText;
     Animator _rewardAnimator;
-    private RectTransform _rect;
-    private Canvas _canvas;
+     RectTransform _rect;
+    public Canvas canvas;
     public float padding = 100;
     public Sprite rxpIcon;
     public Sprite goldIcon;
     void Start()
     {
-        _canvas = FindObjectOfType<Canvas>();
         _rect = rewardTooltip.GetComponent<RectTransform>();
         _rewardAnimator = rewardTooltip.GetComponent<Animator>();
-        rewardTooltip.SetActive(false);
+    //    rewardTooltip.SetActive(false);
         _rewardImageScaler = rewardImage.GetComponent<NativeAspectRatio>();
         List<int> levelsDefined = new List<int>();
         foreach (Reward reward in rewardList.rewards)
@@ -49,6 +48,17 @@ public class RewardToolTip : MonoBehaviour
             }
         }
     }
+    
+    private void OnEnable()
+    {
+        MapControllerUI.OnMapChange += OnElementEnteredCanvas; // Subscribe to the event with int parameter
+    }
+
+    private void OnDisable()
+    {
+        MapControllerUI.OnMapChange -= OnElementEnteredCanvas; // Unsubscribe to avoid memory leaks
+    }
+
 
     void OpenTooltip()
     {
@@ -83,29 +93,12 @@ public class RewardToolTip : MonoBehaviour
         _rewardAnimator.SetTrigger("Open");
     }
     
-    private void OnRectTransformDimensionsChange()
+
+    private void OnElementEnteredCanvas(int enteredMap)
     {
-        if (IsElementVisible())
+        if (enteredMap == _levelToReward/11)
         {
-            OnElementEnteredCanvas(); 
+            OpenTooltip();
         }
-    }
-
-    private bool IsElementVisible()
-    {
-        RectTransform canvasRect = _canvas.GetComponent<RectTransform>();
-        Vector3[] canvasCorners = new Vector3[4];
-        canvasRect.GetWorldCorners(canvasCorners);
-        float leftLimit = canvasCorners[0].x + padding;
-        float rightLimit = canvasCorners[3].x - padding;
-        Vector3[] elementCorners = new Vector3[4];
-        _rect.GetWorldCorners(elementCorners);
-        bool isWithinHorizontalBounds = elementCorners[0].x >= leftLimit && elementCorners[3].x <= rightLimit;
-        return isWithinHorizontalBounds ;
-    }
-
-    private void OnElementEnteredCanvas()
-    {
-        OpenTooltip();
     }
 }
