@@ -19,7 +19,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject HelperUI;
     public GameObject Boss;
     public string HomeMenuName = "Menu atlas";
-
+    public Sprite rewardSprite;
     [Header("Sound and Music")]
     public Image soundImage;
     public Image musicImage;

@@ -18,17 +18,13 @@ public class RewardToolTip : MonoBehaviour
     private Reward _currentReward;
     private NativeAspectRatio _rewardImageScaler;
     public Text amountText;
-    Animator _rewardAnimator;
-     RectTransform _rect;
-    public Canvas canvas;
-    public float padding = 100;
-    public Sprite rxpIcon;
-    public Sprite goldIcon;
+    private Animator _rewardAnimator;
+    private bool _hasReward;
+    private bool _isOpen;
+    public float rewardToolTipDelay = 1f;
     void Start()
     {
-        _rect = rewardTooltip.GetComponent<RectTransform>();
         _rewardAnimator = rewardTooltip.GetComponent<Animator>();
-    //    rewardTooltip.SetActive(false);
         _rewardImageScaler = rewardImage.GetComponent<NativeAspectRatio>();
         List<int> levelsDefined = new List<int>();
         foreach (Reward reward in rewardList.rewards)
@@ -43,6 +39,7 @@ public class RewardToolTip : MonoBehaviour
             {
                 if (_levelToReward == rewardList.rewards[i].rewardLevel)
                 {
+                    _hasReward = true;
                     _currentReward = rewardList.rewards[i];
                 }
             }
@@ -51,31 +48,20 @@ public class RewardToolTip : MonoBehaviour
     
     private void OnEnable()
     {
-        MapControllerUI.OnMapChange += OnElementEnteredCanvas; // Subscribe to the event with int parameter
+        MapControllerUI.OnMapChange += OnElementEnteredCanvas; 
     }
 
     private void OnDisable()
     {
-        MapControllerUI.OnMapChange -= OnElementEnteredCanvas; // Unsubscribe to avoid memory leaks
+        MapControllerUI.OnMapChange -= OnElementEnteredCanvas; 
     }
 
 
     void OpenTooltip()
     {
-        if (GlobalValue.LevelPass > _levelsUnlocked)
+        if (GlobalValue.LevelPass >= _levelToReward)
         {
-            switch (_currentReward.type)
-            {
-                case RewardType.Coin:
-                    _rewardImageScaler.ChangeImage(goldIcon);
-                    break;
-                case RewardType.Exp:
-                    _rewardImageScaler.ChangeImage(rxpIcon);
-                    break;
-                case RewardType.ShopItem:
-                    _rewardImageScaler.ChangeImage(_currentReward.icon);
-                    break;
-            }
+            _rewardImageScaler.ChangeImage(_currentReward.icon);
             mysteryGiftIcon.SetActive(false);
             amountText.gameObject.SetActive(true);
             amountText.text = "x" + _currentReward.amount;
@@ -94,11 +80,20 @@ public class RewardToolTip : MonoBehaviour
     }
     
 
-    private void OnElementEnteredCanvas(int enteredMap)
+    private void OnElementEnteredCanvas(int enteredMap, bool isDelayed)
     {
-        if (enteredMap == _levelToReward/11)
+        if (_hasReward)
         {
-            OpenTooltip();
+            if (enteredMap == _levelToReward/11 && !_isOpen)
+            {
+                _isOpen = true;
+                Invoke("OpenTooltip",isDelayed?rewardToolTipDelay:0f);
+            }
+            else if(_isOpen)
+            {
+                _isOpen = false;
+                _rewardAnimator.SetTrigger("Close");
+            }
         }
     }
 }

@@ -10,16 +10,16 @@ public class NativeAspectRatio : MonoBehaviour
      private RectTransform _rect;
      private Vector2 _initialSize;
      private Image _image;
-
-     void Start()
+     private bool _initialSizeStored;
+     public void ChangeImage(Sprite newImage)
      {
           _rect = GetComponent<RectTransform>();
           _image = GetComponent<Image>();
-          _initialSize = _rect.sizeDelta;
-     }
-     
-     public void ChangeImage(Sprite newImage)
-     {
+          if (!_initialSizeStored)
+          {
+               _initialSize = _rect.sizeDelta;
+               _initialSizeStored = true;
+          }
           _image.sprite = newImage;
           _image.SetNativeSize();
           ScaleToFit();

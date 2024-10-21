@@ -13,7 +13,7 @@ public class MapControllerUI : MonoBehaviour
     private float newPosX = 0;
     public Text worldTxt;
     int currentPos = 0;
-    public static event Action<int> OnMapChange;
+    public static event Action<int,bool> OnMapChange;
     public float shadow_oppasity = 0.15f, shadow_delay = 0.01f;
     public AudioClip music;
     public GameObject life_prefab;
@@ -60,7 +60,6 @@ public class MapControllerUI : MonoBehaviour
         SoundManager.PlayMusic(music);
         createLifes();
         UpdateLifes();
-        OnMapChange?.Invoke(currentPos);
     }
     void UpdateLifes()
     {
@@ -94,13 +93,16 @@ public class MapControllerUI : MonoBehaviour
     public void SetCurrentWorld(int world)
     {
         currentPos += (world - 1);
-
         newPosX -= step * (world - 1);
         newPosX = Mathf.Clamp(newPosX, -step * (howManyBlocks - 1), 0);
-
         SetMapPosition();
-
         SetWorldNumber();
+        Invoke(nameof(MapChangeWithDelay),Time.unscaledDeltaTime);
+    }
+
+   void MapChangeWithDelay()
+    {
+        OnMapChange?.Invoke(currentPos,false);
     }
 
     public void SetMapPosition()
@@ -126,7 +128,7 @@ public class MapControllerUI : MonoBehaviour
         if (newPosX != (-step * (howManyBlocks - 1)))
         {
             currentPos++;
-            OnMapChange?.Invoke(currentPos);
+            OnMapChange?.Invoke(currentPos,true);
             newPosX -= step;
             newPosX = Mathf.Clamp(newPosX, -step * (howManyBlocks - 1), 0);
 
@@ -172,7 +174,7 @@ public class MapControllerUI : MonoBehaviour
         if (newPosX != 0)
         {
             currentPos--;
-            OnMapChange?.Invoke(currentPos);
+            OnMapChange?.Invoke(currentPos,true);
             newPosX += step;
             newPosX = Mathf.Clamp(newPosX, -step * (howManyBlocks - 1), 0);
 
