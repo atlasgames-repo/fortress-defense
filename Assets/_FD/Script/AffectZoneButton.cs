@@ -27,6 +27,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     bool canUse = true;
     bool can_pay = true;
     int XPConsume;
+    public string xp_text_prefix = "xp";
     float holdCounter = 0;
 
 
@@ -36,7 +37,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     void Start()
     {
         XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
-        XPTxt.text = $"-xp{XPConsume}";
+        XPTxt.text = $"{xp_text_prefix}{XPConsume}";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
         if (affectType == AffectZoneType.Cure)
