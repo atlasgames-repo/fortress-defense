@@ -108,7 +108,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
     public void ActivateShield(float shieldHP)
     {
-        shieldHealthBubbles[shieldHealthBubbles.Length].SetActive(true);
+        shieldHealthBubbles[shieldHealthBubbles.Length-1].SetActive(true);
         shield = true;
         _maxShieldHealth = shieldHP;
         _shieldCurrentHealth = shieldHP;
