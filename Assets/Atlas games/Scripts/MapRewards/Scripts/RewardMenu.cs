@@ -63,6 +63,7 @@ public class RewardMenu : MonoBehaviour
                     break;
             }
         }
+        SoundManager.Instance.ClickBut();
         _menuManager.OpenVictoryMenu();
     }
 
