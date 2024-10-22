@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
     public InventorySlot[] petSlotsUI;
     public InventorySlot[] towerSlotsUI;
     [HideInInspector] public int[] chosenMagics;
-    [HideInInspector] public int[] chosenItems;
+     public int[] chosenItems;
     [HideInInspector] public int[] chosenPet;
     [HideInInspector] public int[] chosenTower;
     public int[] chosenInitialItemsID;
@@ -107,27 +107,38 @@ public class Inventory : MonoBehaviour
         string[] chosenItemsDecode = GlobalValue.inventoryItem.Split(',');
         for (int i = 0; i < chosenItemsDecode.Length; i++)
         {
-            if (int.Parse(chosenItemsDecode[i]) == -1 || GlobalValue.GetChosenShopItem(GetShopItem(int.Parse(chosenItemsDecode[i])).itemName) <=0)
+            if (int.Parse(chosenItemsDecode[i]) != 0)
             {
-                bool choseFallbackItem = false;
-                for (int j = 0; j < itemIds.Count; j++)
+                chosenItems[i] = int.Parse(chosenItemsDecode[i]);
+            }
+        }
+        for (int i = 0; i < chosenItemsDecode.Length; i++)
+        {
+            if (int.Parse(chosenItemsDecode[i]) != 0)
+            {
+                if (int.Parse(chosenItemsDecode[i]) == -1 || GlobalValue.GetChosenShopItem(GetShopItem(int.Parse(chosenItemsDecode[i])).itemName) <=0)
                 {
-                    if (!chosenItemsDecode.Contains(itemIds[j].ToString())&& !choseFallbackItem)
+                    bool choseFallbackItem = false;
+                    for (int j = 0; j < itemIds.Count; j++)
                     {
-                        chosenItemsDecode[i] = itemIds[j].ToString();
-                        itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
-                        itemSlotsUI[i].Init(GetShopItem(itemIds[j]).itemImage);
-                        _editingSlot = i;
-                        _edittedType = Shop.ItemTypes.Item;
-                        ChangeChosenItem(GetShopItem(itemIds[j]));
-                        choseFallbackItem = true;
+                        if (!chosenItemsDecode.Contains(itemIds[j].ToString())&& !choseFallbackItem)
+                        {
+                            chosenItemsDecode[i] = itemIds[j].ToString();
+                            itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
+                            itemSlotsUI[i].Init(GetShopItem(itemIds[j]).itemImage);
+                            _editingSlot = i;
+                            _edittedType = Shop.ItemTypes.Item;
+                            ChangeChosenItem(GetShopItem(itemIds[j]));
+                            choseFallbackItem = true;
+                        }
                     }
                 }
-            }
-            else if(int.Parse(chosenItemsDecode[i]) != -1 && GlobalValue.GetChosenShopItem(GetShopItem(int.Parse(chosenItemsDecode[i])).itemName) >0)
-            {
-                itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
-                itemSlotsUI[i].Init(GetShopItem(int.Parse(chosenItemsDecode[i])).itemImage);
+                else if(int.Parse(chosenItemsDecode[i]) != -1 && GlobalValue.GetChosenShopItem(GetShopItem(int.Parse(chosenItemsDecode[i])).itemName) >0)
+                {
+                    itemSlotsUI[i].chosenItemImage.gameObject.SetActive(true);
+                    itemSlotsUI[i].Init(GetShopItem(int.Parse(chosenItemsDecode[i])).itemImage);
+                }
+
             }
         }
     

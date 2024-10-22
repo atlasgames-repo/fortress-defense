@@ -172,6 +172,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
                 break;
         }
         GlobalValue.DecrementChosenShopItem(GetItemData(_chosenItems[index]).itemName);
+        itemRemainingTexts[index].text = "x" + GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName);
         for (int i = 0; i < _chosenItems[index]; i++)
         {
             if (GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName) < 1)

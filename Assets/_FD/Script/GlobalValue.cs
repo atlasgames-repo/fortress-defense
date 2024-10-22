@@ -48,7 +48,7 @@ public class GlobalValue : MonoBehaviour
     }
     public static string inventoryMagic
     {
-        get { return PlayerPrefs.GetString("InventoryMagic","0,1,2"); }
+        get { return PlayerPrefs.GetString("InventoryMagic","28,1,2"); }
         set { PlayerPrefs.SetString("InventoryMagic", value); }
     }
 
