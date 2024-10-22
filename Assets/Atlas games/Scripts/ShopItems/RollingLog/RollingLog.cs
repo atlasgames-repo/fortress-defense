@@ -5,9 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class RollingLog : MonoBehaviour
 {
-
-    public float rollBackTime = 0.5f;
-    public float logDamage = 5f;
+    
     public float logPresenceTime = 5f;
     public float logSpeed = 3f;
     public float scalingDuration = 0.3f;
@@ -15,24 +13,15 @@ public class RollingLog : MonoBehaviour
     public AudioClip logSpawnClip;
     public AudioClip logRollingClip; 
     AudioSource _source;
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.GetComponent<SmartEnemyGrounded>())
-        {
-            SmartEnemyGrounded smartEnemyGrounded = col.GetComponent<SmartEnemyGrounded>();
-            print("Hi");
-            smartEnemyGrounded.HitLog(rollBackTime, transform);
-            smartEnemyGrounded.TakeDamage(logDamage, Vector2.zero, col.transform.position,
-                gameObject, BODYPART.NONE, null);
-        }
-    }
+    public Transform logTransform;
+   
     
     void Start()
     {
         _source = GetComponent<AudioSource>();
         _source.playOnAwake = false;
         StartCoroutine(DestroyLog());
-        StartCoroutine(ScaleLog(transform, new Vector3(0, 0, 0), new Vector3(scale,scale,scale), scalingDuration));
+        StartCoroutine(ScaleLog(logTransform, new Vector3(0, 0, 0), new Vector3(scale,scale,scale), scalingDuration));
     }
 
     IEnumerator DestroyLog()

@@ -11,7 +11,6 @@ public class CharacterManager : MonoBehaviour
     void Start()
     {
         Instance = this;
-        print("Hiii");
         TurnListSpawn(false);
     }
 

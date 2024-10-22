@@ -101,7 +101,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
         for (int i = 0; i < _chosenItems.Length; i++)
         {
             itemIcons[i].SetActive(false);
-            if (_chosenItems[i] == -1 || GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[i]).itemName)<1)
+            if (_chosenItems[i] <1 || GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[i]).itemName)<1)
             {
                 disabledItemIcons[i].SetActive(true);
                 itemButtons[i].interactable = false;
@@ -109,13 +109,14 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
                 {
                     itemButtons[i].image.sprite = emptySprite;
                 }
+                itemRemainingTexts[i].gameObject.SetActive(false);
             }
             else
             {
                 disabledItemIcons[i].SetActive(false);
                 itemButtons[i].interactable = true;
                 itemButtons[i].image.sprite = GetItemData(_chosenItems[i]).buttonImage;
-                itemRemainingTexts[i].text = "x" + GlobalValue.GetChosenShopItem(GetItemData(i).itemName);
+                itemRemainingTexts[i].text = "x" + GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[i]).itemName);
             }
         }
         
@@ -175,16 +176,17 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
         itemRemainingTexts[index].text = "x" + GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName);
         for (int i = 0; i < _chosenItems[index]; i++)
         {
-            if (GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName) < 1)
-            {
-                disabledItemIcons[i].SetActive(true);
-                itemButtons[i].interactable = false;
-            }
-            else
-            {
-                disabledItemIcons[i].SetActive(false);
-                itemButtons[i].interactable = true;
-            }
+                if (GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName) < 1 && _chosenItems[index] != 0)
+                {
+                    disabledItemIcons[i].SetActive(true);
+                    itemRemainingTexts[index].gameObject.SetActive(false);
+                    itemButtons[i].interactable = false;
+                }
+                else
+                {
+                    disabledItemIcons[i].SetActive(false);
+                    itemButtons[i].interactable = true;
+                }
         }
     }
     private void Update()

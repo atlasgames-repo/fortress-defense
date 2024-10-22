@@ -585,7 +585,6 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
     public void HitLog(float rollBackTime, Transform logTransform)
     {
-        print("hello");
         StartCoroutine(RollBackForLog(rollBackTime, logTransform));
     }
     IEnumerator RollBackForLog(float rollBackTime,Transform logTransform)
