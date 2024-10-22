@@ -174,9 +174,9 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
         }
         GlobalValue.DecrementChosenShopItem(GetItemData(_chosenItems[index]).itemName);
         itemRemainingTexts[index].text = "x" + GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName);
-        for (int i = 0; i < _chosenItems[index]; i++)
+        for (int i = 0; i < _chosenItems.Length; i++)
         {
-                if (GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName) < 1 && _chosenItems[index] != 0)
+                if (GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName) < 1 && _chosenItems[index] >1)
                 {
                     disabledItemIcons[i].SetActive(true);
                     itemRemainingTexts[index].gameObject.SetActive(false);

@@ -37,7 +37,6 @@ public class DefenseWall : MonoBehaviour, ICanTakeDamage
   
     void Update()
     {
-        print(currentHealth);
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         if (currentHealth > 0 && currentHealth <= health / 3)
         {

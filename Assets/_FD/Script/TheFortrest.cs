@@ -213,7 +213,25 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
 
         UpdateFortressState();
     }
+  //  void OnEnable()
+  //  {
+  //      MenuManager.Instance.OnSceneReloaded += ResetShield;
+  //  }
+//
+  //  void OnDisable()
+  //  {
+  //       MenuManager.Instance.OnSceneReloaded -= ResetShield;
+  //  }
 
+    void ResetShield()
+    {
+        for (int i = 0; i < shieldHealthBubbles.Length; i++)
+        {
+            shieldHealthBubbles[i].SetActive(false);
+        }
+        shield = false;
+        MenuManager.Instance.DeactivateShield();
+    }
     void UpdateFortressState()
     {
         MenuManager.Instance.UpdateHealthbar(currentHealth, maxHealth /*, healthCharacter*/);

@@ -31,8 +31,18 @@ public class UI_UI : MonoBehaviour
     public Text expTxt;
     public Text levelName;
 
+  //  void OnEnable()
+  //  {
+  //      MenuManager.Instance.OnSceneReloaded += DeactivateShield;
+  //  }
+
+  // void OnDisable()
+  // {
+  //     MenuManager.Instance.OnSceneReloaded -= DeactivateShield;
+  // }
     private void Start()
     {
+        Invoke("DeactivateShield",Time.deltaTime);
         healthValue = 1;
         enemyWaveValue = 0;
         healthSlider.value = 1;
