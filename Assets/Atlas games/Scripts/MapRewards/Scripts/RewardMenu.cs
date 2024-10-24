@@ -47,22 +47,21 @@ public class RewardMenu : MonoBehaviour
 
     public void ClaimReward()
     {
-        for (int i = 0; i < _rewardAmount; i++)
-        {
+
             switch (_currentReward.type)
             {
                 case RewardType.Coin:
-                    User.Coin = 1;
+                    User.Coin = _rewardAmount;
                     break;
                 case RewardType.Exp:
-                    User.Rxp = 1;
+                    User.Rxp = _rewardAmount;
                     break;
                 case RewardType.ShopItem:
                    // this is present in the shop branch, remove the comments after merging with Update !
                     // GlobalValue.IncrementChosenShopItem(_itemName);
                     break;
             }
-        }
+        
         SoundManager.Instance.ClickBut();
         _menuManager.OpenVictoryMenu();
     }
