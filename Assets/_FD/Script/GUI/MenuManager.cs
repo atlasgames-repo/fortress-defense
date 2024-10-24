@@ -115,29 +115,17 @@ public class MenuManager : MonoBehaviour, IListener
     {
         UI.SetActive(false);
         yield return new WaitForSeconds(1.5f);
-        List<int> levelsDefined = new List<int>();
         int currentLevel = GlobalValue.levelPlaying;
-        foreach (Reward reward in rewardList.rewards)
-        {
-            levelsDefined.Add(reward.rewardLevel);
+        var _currentReward =
+            from item in rewardList.rewards
+            where item.rewardLevel == currentLevel
+            select item;
+        foreach (Reward reward in _currentReward) {
+            rewardUI.SetActive(true);
+            rewardUI.GetComponent<RewardMenu>().Init(reward,this);
+            yield break;
         }
-        
-        if (levelsDefined.Contains(currentLevel))
-            {
-                for (int i = 0; i < rewardList.rewards.Length; i++)
-                {
-                    if (currentLevel == rewardList.rewards[i].rewardLevel)
-                    {
-                        _currentReward = rewardList.rewards[i];
-                        rewardUI.SetActive(true);
-                        rewardUI.GetComponent<RewardMenu>().Init(_currentReward,this);
-                    }
-                }
-            }
-        else
-        {
-            VictotyUI.SetActive(true);    
-        }
+        VictotyUI.SetActive(true);
     }
 
     public void OpenVictoryMenu()
