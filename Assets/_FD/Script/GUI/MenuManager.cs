@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+
 public class MenuManager : MonoBehaviour, IListener
 {
     public static MenuManager Instance;
