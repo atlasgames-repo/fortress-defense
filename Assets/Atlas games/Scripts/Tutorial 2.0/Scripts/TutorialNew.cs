@@ -12,11 +12,11 @@ public class TutorialNew : MonoBehaviour
     public Hint hint;
     public int tutorialLevel;
     public string tutorialPlacing;
-    public GameObject darkBackground;
-    public GameObject dialogBackground;
     public Transform pointerObject;
     public Transform pointerIcon;
     public GameObject clickPreventer;
+    public Color transparent;
+    public Color darkBackground;
     private int _tipOrder;
     public float speed = 30f;
     public float initialWait = 0.5f;
