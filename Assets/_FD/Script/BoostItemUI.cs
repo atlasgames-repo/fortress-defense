@@ -8,11 +8,11 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     public void KeyDown(KeyCode data)
     {
         if (data == KeyCode.M)
-            ActiveDoubleArror();
+            UseItem(0);
         if (data == KeyCode.N)
-            ActiveFrezzeArrow();
+            UseItem(1);
         if (data == KeyCode.B)
-            ActivePoisonArrow();
+           UseItem(2);
     }
     public KeyCode[] KeyType { get { return new KeyCode[] { KeyCode.M, KeyCode.N, KeyCode.B }; } }
     public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
