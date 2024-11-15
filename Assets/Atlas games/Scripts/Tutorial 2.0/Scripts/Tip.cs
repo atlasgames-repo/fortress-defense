@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
+
 public enum Direction
 {
     Top,
@@ -11,6 +13,11 @@ public enum Direction
     UpperRight,
     BottomLeft,
     BottomRight
+}
+
+public enum DialogContent
+{
+    Text,Video,Image
 }
 
 public enum TutorialPlacing
@@ -26,6 +33,7 @@ public enum TipType
 public class Tip
 {
     public Direction tipDirection;
+    public DialogContent dialogContentType;
     public TipType tipType;
     public Direction pointerDirection;
     public float delay;
@@ -36,4 +44,8 @@ public class Tip
     public bool isUiInteractible;
     public bool pauseGame;
     public Hint hint;
+    public string tipText;
+    public string tipTitle;
+    public Sprite dialogImage;
+    public VideoClip dialogVideo;
 }
