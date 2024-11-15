@@ -9,6 +9,7 @@ public class FortrestLevel
 {
     public float maxHealth = 1000;
     public Sprite[] stateFortrestSprites;
+    public int fortressId;
 }
 
 public class TheFortrest : MonoBehaviour, ICanTakeDamage
@@ -49,6 +50,7 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
     public bool useDefaultShieldHealthLevels = true;
     private float _shieldCurrentHealth;
     private float _maxShieldHealth;
+    public ShopItemData data;
 
 
     void Awake()
@@ -69,8 +71,17 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
         //if (healthCharacter == HEALTH_CHARACTER.PLAYER)
         //{
         maxHealth = fortrestLevels[Mathf.Min(fortrestLevels.Length - 1, GlobalValue.UpgradeStrongWall)].maxHealth;
-        stateFortrestSprites = fortrestLevels[GlobalValue.UpgradeStrongWall].stateFortrestSprites;
-        fortrestSprite.sprite = stateFortrestSprites[0];
+        int chosenTower = int.Parse(GlobalValue.inventoryTowers);
+        for (int i = 0; i < fortrestLevels.Length; i++)
+        {
+            if (fortrestLevels[i].fortressId == chosenTower)
+            {
+                stateFortrestSprites = fortrestLevels[i].stateFortrestSprites;
+                fortrestSprite.sprite = stateFortrestSprites[0];
+            }
+        }
+      //  stateFortrestSprites = fortrestLevels[GlobalValue.UpgradeStrongWall].stateFortrestSprites;
+      //  fortrestSprite.sprite = stateFortrestSprites[0];
         //}
         //else
         //{

@@ -93,6 +93,10 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     {
         timeCounter = new float[itemButtons.Length];
         _chosenItems = new int[itemButtons.Length];
+        for (int i = 0; i < _chosenItems.Length; i++)
+        {
+            _chosenItems[i] = -2;
+        }
         string[] chosenMagicsDecode = GlobalValue.inventoryItem.Split(',');
         for (int i = 0; i < chosenMagicsDecode.Length; i++)
         {
@@ -176,10 +180,11 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
         itemRemainingTexts[index].text = "x" + GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName);
         for (int i = 0; i < _chosenItems.Length; i++)
         {
-                if (GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[index]).itemName) < 1 && _chosenItems[index] >1)
+            print("item name" + GetItemData(_chosenItems[i]).itemName + " amount" + GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[i]).itemName));
+                if (GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[i]).itemName) < 1)
                 {
                     disabledItemIcons[i].SetActive(true);
-                    itemRemainingTexts[index].gameObject.SetActive(false);
+                    itemRemainingTexts[i].gameObject.SetActive(false);
                     itemButtons[i].interactable = false;
                 }
                 else
