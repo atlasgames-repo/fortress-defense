@@ -207,7 +207,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
                 StartCoroutine(RunTimerCo(itemIcons[index],itemTimerTexts[index],DA_Time,index,itemButtons[index],GetItemData(_chosenItems[index]).id));
                 StartCoroutine(RunCoolDown(fixedCoolDownTime ? coolDownTime : DA_Time));
                 break;
-            case "PosionArrow":
+            case "PoisonArrow":
                 ActivePoisonArrow();
                 StartCoroutine(RunTimerCo(itemIcons[index],itemTimerTexts[index],PA_Time,index,itemButtons[index],GetItemData(_chosenItems[index]).id));
                 StartCoroutine(RunCoolDown(fixedCoolDownTime ? coolDownTime : PA_Time));
