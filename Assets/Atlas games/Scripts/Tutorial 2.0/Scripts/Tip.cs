@@ -27,10 +27,10 @@ public enum TutorialPlacing
 public enum TipType
 {
     Dialog,
-    Tip,
+    Hint,
     Task
 }
-public class Tip
+public class Tip : MonoBehaviour
 {
     public Direction tipDirection;
     public DialogContent dialogContentType;
@@ -43,7 +43,6 @@ public class Tip
     public float circleMaskScale;
     public bool isUiInteractible;
     public bool pauseGame;
-    public Hint hint;
     public string tipText;
     public string tipTitle;
     public Sprite dialogImage;
