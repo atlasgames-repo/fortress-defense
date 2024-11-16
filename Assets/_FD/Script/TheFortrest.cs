@@ -70,12 +70,12 @@ public class TheFortrest : MonoBehaviour, ICanTakeDamage
         //defaultLevel = healthCharacter == HEALTH_CHARACTER.PLAYER ? GlobalValue.UpgradeStrongWall : defaultFortrest - 1;
         //if (healthCharacter == HEALTH_CHARACTER.PLAYER)
         //{
-        maxHealth = fortrestLevels[Mathf.Min(fortrestLevels.Length - 1, GlobalValue.UpgradeStrongWall)].maxHealth;
         int chosenTower = int.Parse(GlobalValue.inventoryTowers);
         for (int i = 0; i < fortrestLevels.Length; i++)
         {
             if (fortrestLevels[i].fortressId == chosenTower)
             {
+                maxHealth = fortrestLevels[i].maxHealth;
                 stateFortrestSprites = fortrestLevels[i].stateFortrestSprites;
                 fortrestSprite.sprite = stateFortrestSprites[0];
             }
