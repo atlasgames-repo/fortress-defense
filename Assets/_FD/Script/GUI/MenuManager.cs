@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class MenuManager : MonoBehaviour, IListener
 
 
     UI_UI uiControl;
+    public event Action OnSceneReloaded;
 
     [Header("Reward")]
     public RewardList rewardList;
@@ -70,7 +72,19 @@ public class MenuManager : MonoBehaviour, IListener
     {
         uiControl.UpdateHealthbar(currentHealth, maxHealth/*, healthBarType*/);
     }
+    public void UpdateShieldHealthbar(float currentShieldHealth, float maxShieldHealth/*, HEALTH_CHARACTER healthBarType*/)
+    {
+        uiControl.UpdateShieldHealthBar(currentShieldHealth, maxShieldHealth/*, healthBarType*/);
+    }
+    public void ActivateShield(float currentShieldHealth, float maxShieldHealth)
+    {
+        uiControl.ActivateShield(currentShieldHealth,maxShieldHealth);
+    }
 
+    public void DeactivateShield()
+    {
+        uiControl.DeactivateShield();
+    }
     public void UpdateEnemyWavePercent(float currentSpawn, float maxValue)
     {
         uiControl.UpdateEnemyWavePercent(currentSpawn, maxValue);
@@ -109,6 +123,7 @@ public class MenuManager : MonoBehaviour, IListener
     }
     public void ISuccess()
     {
+
         StartCoroutine(VictoryCo());
     }
 
@@ -228,6 +243,7 @@ public class MenuManager : MonoBehaviour, IListener
     {
         SoundManager.Click();
         GlobalValue.levelPlaying++;
+        OnSceneReloaded?.Invoke();
         StartCoroutine(LoadAsynchronously(SceneManager.GetActiveScene().name));
     }
 
