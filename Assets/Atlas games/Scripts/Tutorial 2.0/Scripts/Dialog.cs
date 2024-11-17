@@ -12,20 +12,24 @@ public enum DialogAction
 public class Dialog : MonoBehaviour
 {
     Animator _animator;
+    
+    [Header("UI Elements")]
     public VideoPlayer videoPlayer;
     public Image dialogImage;
     public TMP_Text dialogText;
     public TMP_Text dialogTitle;
-    private bool _isOpen;
     public Image dialogImageNext;
     public TMP_Text dialogTextNext;
     public TMP_Text dialogTitleNext;
     public VideoPlayer videoPlayerNext;
-    private Tip _nextTip;
     public Button nextButton;
     public Button previousButton;
-    private int _dialogStep;
     public Animator buttonsAnimator;
+
+    
+    private bool _isOpen;
+    private Tip _nextTip;
+    private int _dialogStep;
     private TutorialNew _tutorial;
     public void OnAnimationFinish()
     {

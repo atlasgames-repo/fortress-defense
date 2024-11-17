@@ -38,7 +38,6 @@ public class Tip : MonoBehaviour
     public Direction pointerDirection;
     public float delay;
     public bool isLastDialog;
-    public Dialog dialog;
     public string uiPartName;
     public float circleMaskScale;
     public bool isUiInteractible;

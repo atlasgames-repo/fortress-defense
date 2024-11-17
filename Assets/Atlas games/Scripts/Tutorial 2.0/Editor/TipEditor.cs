@@ -20,7 +20,7 @@ public class TipInspector : Editor
                 tip.dialogContentType = (DialogContent)EditorGUILayout.EnumPopup("Dialog Content Type", tip.dialogContentType);
                 tip.delay = EditorGUILayout.FloatField("Delay", tip.delay);
                 tip.isLastDialog = EditorGUILayout.Toggle("Is Last Dialog", tip.isLastDialog);
-                tip.dialog = (Dialog)EditorGUILayout.ObjectField("Dialog", tip.dialog, typeof(Dialog), false);
+               // tip.dialog = (Dialog)EditorGUILayout.ObjectField("Dialog", tip.dialog, typeof(Dialog), false);
                 tip.isUiInteractible = EditorGUILayout.Toggle("Is UI Interactible", tip.isUiInteractible);
                 tip.pauseGame = EditorGUILayout.Toggle("Pause Game", tip.pauseGame);
                 tip.tipTitle = EditorGUILayout.TextField("Tip Title", tip.tipTitle);
