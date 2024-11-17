@@ -65,4 +65,9 @@ public class TutorialNew : MonoBehaviour
                 break;
         }
     }
+
+    public void PreviousStep()
+    {
+        
+    }
 }
