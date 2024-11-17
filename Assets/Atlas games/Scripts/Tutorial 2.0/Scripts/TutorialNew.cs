@@ -53,10 +53,11 @@ public class TutorialNew : MonoBehaviour
     public Transform BR_Pos_env;
     public Transform BM_Pos_env;
     
-    
+    public Transform pointerPlacerEnvironment;
+
 
     private Transform _environmentPointer;
-    public Transform _pointerPlacerEnvironment;
+    private float _maxDistance = 0.01f;
     void Start()
     {
         _main = Camera.main;
@@ -93,9 +94,16 @@ public class TutorialNew : MonoBehaviour
             {
                 case TipType.Dialog:
                     dialog.DialogChange(tutorialStep[_tipOrder], DialogAction.Next, this);
+                    clickPreventer.GetComponent<Image>().enabled = true;
+                    circleMask.gameObject.SetActive(false);
+                    Time.timeScale = 0;
                     break;
                 case TipType.Hint:
                     hint.Show(tutorialStep[_tipOrder].tipText, tutorialStep[_tipOrder].tipDirection,this);
+                    Time.timeScale = 0;
+                    clickPreventer.GetComponent<Image>().enabled = true;
+                    circleMask.gameObject.SetActive(true);
+                    StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialStep[_tipOrder].circleMaskScale));
                     break;
                 case TipType.Task:
                     
@@ -163,7 +171,7 @@ public class TutorialNew : MonoBehaviour
                     else
                     {
                         _environmentPointer.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-                        _pointerPlacerEnvironment.transform.position = nextUIPart.transform.position;
+                        pointerPlacerEnvironment.transform.position = nextUIPart.transform.position;
                              float rotationAngle = 0f;
                              Vector3 targetPosition = new Vector3();
                              switch (tutorialStep[_tipOrder].pointerDirection)
@@ -233,5 +241,19 @@ public class TutorialNew : MonoBehaviour
             _tipOrder--;
             ApplyNewStep();
         }   
+    }
+    
+    IEnumerator SmoothTransition(Vector3 targetPosition, float targetScale)
+    {
+        float appliedScale = circleMask.localScale.x;
+        Vector3 maskPosition = circleMask.position;
+        while (Vector3.Distance(circleMask.position, targetPosition) > _maxDistance)
+        {
+            maskPosition = Vector3.Lerp(circleMask.position, targetPosition, Time.unscaledDeltaTime * speed);
+            appliedScale = Mathf.Lerp(circleMask.localScale.x, targetScale, Time.unscaledDeltaTime * speed);
+            circleMask.localScale = new Vector3(appliedScale, appliedScale, appliedScale);
+            circleMask.position = maskPosition;
+            yield return null;
+        }
     }
 }

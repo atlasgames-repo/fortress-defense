@@ -71,6 +71,18 @@ public class TutorialNewInspector : Editor
         tutorial.BL_Pos = (Transform)EditorGUILayout.ObjectField("Bottom Left Position", tutorial.BL_Pos, typeof(Transform), true);
         tutorial.BR_Pos = (Transform)EditorGUILayout.ObjectField("Bottom Right Position", tutorial.BR_Pos, typeof(Transform), true);
         tutorial.BM_Pos = (Transform)EditorGUILayout.ObjectField("Bottom Middle Position", tutorial.BM_Pos, typeof(Transform), true);
+        
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Positions in game", EditorStyles.boldLabel);
+        tutorial.TL_Pos_env = (Transform)EditorGUILayout.ObjectField("Top Left Position", tutorial.TL_Pos_env, typeof(Transform), true);
+        tutorial.TM_Pos_env = (Transform)EditorGUILayout.ObjectField("Top Middle Position", tutorial.TM_Pos_env, typeof(Transform), true);
+        tutorial.TR_Pos_env = (Transform)EditorGUILayout.ObjectField("Top Right Position", tutorial.TR_Pos_env, typeof(Transform), true);
+        tutorial.L_Pos_env = (Transform)EditorGUILayout.ObjectField("Left Position", tutorial.L_Pos_env, typeof(Transform), true);
+        tutorial.R_Pos_env = (Transform)EditorGUILayout.ObjectField("Right Position", tutorial.R_Pos_env, typeof(Transform), true);
+        tutorial.BL_Pos_env = (Transform)EditorGUILayout.ObjectField("Bottom Left Position", tutorial.BL_Pos_env, typeof(Transform), true);
+        tutorial.BR_Pos_env = (Transform)EditorGUILayout.ObjectField("Bottom Right Position", tutorial.BR_Pos_env, typeof(Transform), true);
+        tutorial.BM_Pos_env = (Transform)EditorGUILayout.ObjectField("Bottom Middle Position", tutorial.BM_Pos_env, typeof(Transform), true);
+        tutorial.pointerPlacerEnvironment = (Transform)EditorGUILayout.ObjectField("Bottom Middle Position", tutorial.pointerPlacerEnvironment, typeof(Transform), true);
         // Save changes to the TutorialNew object
         if (GUI.changed)
         {
