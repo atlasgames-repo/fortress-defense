@@ -53,7 +53,6 @@ public class TutorialNewInspector : Editor
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("UI Elements", EditorStyles.boldLabel);
         tutorial.circleMask = (RectTransform)EditorGUILayout.ObjectField("Circle Mask", tutorial.circleMask, typeof(RectTransform), true);
-        tutorial.maskSpeed = EditorGUILayout.FloatField("Mask Speed", tutorial.maskSpeed);
         tutorial.pointerObject = (Transform)EditorGUILayout.ObjectField("Pointer Object", tutorial.pointerObject, typeof(Transform), true);
         tutorial.pointerIcon = (Transform)EditorGUILayout.ObjectField("Pointer Icon", tutorial.pointerIcon, typeof(Transform), true);
         tutorial.clickPreventer = (GameObject)EditorGUILayout.ObjectField("Click Preventer", tutorial.clickPreventer, typeof(GameObject), true);

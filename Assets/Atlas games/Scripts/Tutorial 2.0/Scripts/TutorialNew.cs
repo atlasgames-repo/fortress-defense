@@ -17,7 +17,6 @@ public class TutorialNew : MonoBehaviour
     [Header("UI Elements")]
     [Space(3)]
     public RectTransform circleMask;
-    public float maskSpeed;
     public Transform pointerObject;
     public Transform pointerIcon;
     public GameObject clickPreventer;
