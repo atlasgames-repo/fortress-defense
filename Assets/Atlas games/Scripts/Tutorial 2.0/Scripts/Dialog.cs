@@ -21,7 +21,6 @@ public class Dialog : MonoBehaviour
     public Image dialogImageNext;
     public TMP_Text dialogTextNext;
     public VideoPlayer videoPlayerNext;
-    public Button nextButton;
     public Button previousButton;
     public Animator buttonsAnimator;
 
@@ -30,6 +29,10 @@ public class Dialog : MonoBehaviour
     private Tip _currentTip;
     private int _dialogStep;
     private TutorialNew _tutorial;
+    private Vector2 _nextImageOriginalSize;
+    private Vector2 _imageOriginalSize;
+    private Vector2 _nextVideoOriginalSize;
+    private Vector2 _videoOriginalSize;
     public void OnAnimationFinish()
     {
         dialogText.text = _currentTip.tipText;
@@ -44,12 +47,13 @@ public class Dialog : MonoBehaviour
                 videoPlayer.gameObject.SetActive(false);
                 dialogImage.gameObject.SetActive(true);
                 dialogImage.sprite = _currentTip.dialogImage;
-                dialogImage.sprite = _currentTip.dialogImage;
+                ResizeImage(dialogImage.rectTransform,_imageOriginalSize);
                 break;
             case DialogContent.Video:
                 videoPlayer.gameObject.SetActive(true);
                 dialogImage.gameObject.SetActive(false);
                 videoPlayer.clip = _currentTip.dialogVideo;
+                ResizeImage(videoPlayer.GetComponent<RawImage>().rectTransform, _videoOriginalSize);
                 break;
         }
     }
@@ -89,8 +93,16 @@ public class Dialog : MonoBehaviour
                 _dialogStep++;
                 if (!_isOpen)
                 {
+                    _imageOriginalSize = new Vector2(dialogImage.rectTransform.sizeDelta.x,
+                        dialogImage.rectTransform.sizeDelta.y);
+                    _nextImageOriginalSize = new Vector2(dialogImageNext.rectTransform.sizeDelta.x,
+                        dialogImageNext.rectTransform.sizeDelta.y);
+                    _nextVideoOriginalSize = new Vector2(videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.x,
+                        videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.y);
+                    _videoOriginalSize = new Vector2(videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.x,
+                        videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.y);
                     dialogImage.sprite = _currentTip.dialogImage;
-                    ResizeImage(dialogImage);
+                    ResizeImage(dialogImage.rectTransform, _imageOriginalSize);
                   buttonsAnimator.SetTrigger("OneButton");
                   previousButton.interactable = false;
                   dialogText.text = _currentTip.tipText;
@@ -101,7 +113,7 @@ public class Dialog : MonoBehaviour
                 else
                 {
                     dialogImageNext.sprite = _currentTip.dialogImage;
-                    ResizeImage(dialogImageNext);
+                    ResizeImage(dialogImageNext.rectTransform, _nextImageOriginalSize);
                     dialogTextNext.text = _currentTip.tipText;
                     dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
                     _animator.SetTrigger("Next");
@@ -114,6 +126,7 @@ public class Dialog : MonoBehaviour
                 dialogTextNext.text = _currentTip.tipText;
                 dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
                 dialogImageNext.sprite = _currentTip.dialogImage;
+                ResizeImage(dialogImageNext.rectTransform, _nextImageOriginalSize);
                 _animator.SetTrigger("Previous");
                 if (_dialogStep == 0)
                 {
@@ -141,9 +154,21 @@ public class Dialog : MonoBehaviour
         _tutorial.PreviousStep();
     }
 
-    void ResizeImage(Image image)
+    void ResizeImage(RectTransform itemImage,Vector2 originalSize)
     {
-        
+    //    originalSize =
+    //        new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
+        itemImage.GetComponent<Image>().SetNativeSize();
+        if (itemImage.sizeDelta.x > itemImage.sizeDelta.y)
+        {
+            float aspectRatio = (float)itemImage.sizeDelta.x / itemImage.sizeDelta.y;
+            itemImage.sizeDelta = new Vector2(originalSize.x, originalSize.y / aspectRatio);
+        }
+        else
+        {
+            float aspectRatio = (float)itemImage.sizeDelta.y / itemImage.sizeDelta.x;
+            itemImage.sizeDelta = new Vector2(originalSize.x / aspectRatio, originalSize.y);
+        }
     }
 }
 
