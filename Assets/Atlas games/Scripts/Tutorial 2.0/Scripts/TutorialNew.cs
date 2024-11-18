@@ -17,7 +17,6 @@ public class TutorialNew : MonoBehaviour
     [Header("UI Elements")]
     [Space(3)]
     public RectTransform circleMask;
-    public Transform pointer;
     public float maskSpeed;
     public Transform pointerObject;
     public Transform pointerIcon;
@@ -56,11 +55,12 @@ public class TutorialNew : MonoBehaviour
     public Transform pointerPlacerEnvironment;
 
 
-    private Transform _environmentPointer;
+    public Transform environmentPointer;
     private float _maxDistance = 0.01f;
     void Start()
     {
         _main = Camera.main;
+        InitTutorial();
     }
 
     void InitTutorial()
@@ -93,15 +93,16 @@ public class TutorialNew : MonoBehaviour
             switch (tutorialStep[_tipOrder].tipType)
             {
                 case TipType.Dialog:
-                    dialog.DialogChange(tutorialStep[_tipOrder], DialogAction.Next, this);
+                    dialog.DialogChange(tutorialStep[_tipOrder], DialogAction.Next, tutorialStep[_tipOrder], this);
                     clickPreventer.GetComponent<Image>().enabled = true;
                     circleMask.gameObject.SetActive(false);
                     Time.timeScale = 0;
                     break;
                 case TipType.Hint:
-                    hint.Show(tutorialStep[_tipOrder].tipText, tutorialStep[_tipOrder].tipDirection,this);
+                    hint.Show(tutorialStep[_tipOrder].tipText, tutorialStep[_tipOrder].tipDirection,this, circleMask.rect.position, tutorialStep[_tipOrder].circleMaskScale, _tipOrder);
                     Time.timeScale = 0;
-                    clickPreventer.GetComponent<Image>().enabled = true;
+                    clickPreventer.GetComponent<Image>().enabled = false;
+                    clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = true;
                     circleMask.gameObject.SetActive(true);
                     StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialStep[_tipOrder].circleMaskScale));
                     break;
@@ -112,7 +113,7 @@ public class TutorialNew : MonoBehaviour
                         buttonParent = nextUIPart.transform.parent;
                         childIndex = nextUIPart.transform.GetSiblingIndex();
                         clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts =
-                            tutorialStep[_tipOrder].isUiInteractible;
+                            !tutorialStep[_tipOrder].isUiInteractible;
                         GameObject uiPartClone = Instantiate(nextUIPart, nextUIPart.transform.position,
                             nextUIPart.transform.rotation,
                             nextUIPart.transform.parent);
@@ -170,7 +171,7 @@ public class TutorialNew : MonoBehaviour
                     }
                     else
                     {
-                        _environmentPointer.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+                        environmentPointer.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
                         pointerPlacerEnvironment.transform.position = nextUIPart.transform.position;
                              float rotationAngle = 0f;
                              Vector3 targetPosition = new Vector3();

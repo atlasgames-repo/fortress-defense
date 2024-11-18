@@ -20,7 +20,6 @@ public class Dialog : MonoBehaviour
     public TMP_Text dialogTitle;
     public Image dialogImageNext;
     public TMP_Text dialogTextNext;
-    public TMP_Text dialogTitleNext;
     public VideoPlayer videoPlayerNext;
     public Button nextButton;
     public Button previousButton;
@@ -28,12 +27,14 @@ public class Dialog : MonoBehaviour
 
     
     private bool _isOpen;
-    private Tip _nextTip;
+    private Tip _currentTip;
     private int _dialogStep;
     private TutorialNew _tutorial;
     public void OnAnimationFinish()
     {
-        switch (_nextTip.dialogContentType)
+        dialogText.text = _currentTip.tipText;
+        dialogTitle.text = (_dialogStep + 1).ToString();
+        switch (_currentTip.dialogContentType)
         {
             case DialogContent.Text: 
                 videoPlayer.gameObject.SetActive(false);
@@ -42,12 +43,12 @@ public class Dialog : MonoBehaviour
             case DialogContent.Image:
                 videoPlayer.gameObject.SetActive(false);
                 dialogImage.gameObject.SetActive(true);
-                dialogImage.sprite = _nextTip.dialogImage;
+                dialogImage.sprite = _currentTip.dialogImage;
                 break;
             case DialogContent.Video:
                 videoPlayer.gameObject.SetActive(true);
                 dialogImage.gameObject.SetActive(false);
-                videoPlayer.clip = _nextTip.dialogVideo;
+                videoPlayer.clip = _currentTip.dialogVideo;
                 break;
         }
     }
@@ -56,9 +57,10 @@ public class Dialog : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
-    public void DialogChange(Tip tip,DialogAction action,TutorialNew tutorial)
+    public void DialogChange(Tip tip,DialogAction action,Tip currentTip,TutorialNew tutorial)
     {
-        tutorial = _tutorial;
+        _tutorial = tutorial;
+        _currentTip = currentTip;
         if (action != DialogAction.Close)
         {
             switch (tip.dialogContentType)
@@ -88,18 +90,25 @@ public class Dialog : MonoBehaviour
                 {
                   buttonsAnimator.SetTrigger("OneButton");
                   previousButton.interactable = false;
+                  dialogText.text = _currentTip.tipText;
+                  dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
                     _animator.SetTrigger("Open");
                     _isOpen = true;
                 }
                 else
                 {
-                    _animator.SetTrigger("Switch");
+                    dialogTextNext.text = _currentTip.tipText;
+                    dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
+                    _animator.SetTrigger("Next");
                     buttonsAnimator.SetTrigger("TwoButton");
                     previousButton.interactable = true;
                 }
                 break;
             case DialogAction.Previous:
                 _dialogStep--;
+                dialogTextNext.text = _currentTip.tipText;
+                dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
+                _animator.SetTrigger("Previous");
                 if (_dialogStep == 0)
                 {
                 buttonsAnimator.SetTrigger("OneButton");

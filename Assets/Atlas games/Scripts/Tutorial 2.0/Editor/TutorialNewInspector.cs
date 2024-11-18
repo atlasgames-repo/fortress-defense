@@ -53,7 +53,6 @@ public class TutorialNewInspector : Editor
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("UI Elements", EditorStyles.boldLabel);
         tutorial.circleMask = (RectTransform)EditorGUILayout.ObjectField("Circle Mask", tutorial.circleMask, typeof(RectTransform), true);
-        tutorial.pointer = (Transform)EditorGUILayout.ObjectField("Pointer", tutorial.pointer, typeof(Transform), true);
         tutorial.maskSpeed = EditorGUILayout.FloatField("Mask Speed", tutorial.maskSpeed);
         tutorial.pointerObject = (Transform)EditorGUILayout.ObjectField("Pointer Object", tutorial.pointerObject, typeof(Transform), true);
         tutorial.pointerIcon = (Transform)EditorGUILayout.ObjectField("Pointer Icon", tutorial.pointerIcon, typeof(Transform), true);
@@ -82,7 +81,10 @@ public class TutorialNewInspector : Editor
         tutorial.BL_Pos_env = (Transform)EditorGUILayout.ObjectField("Bottom Left Position", tutorial.BL_Pos_env, typeof(Transform), true);
         tutorial.BR_Pos_env = (Transform)EditorGUILayout.ObjectField("Bottom Right Position", tutorial.BR_Pos_env, typeof(Transform), true);
         tutorial.BM_Pos_env = (Transform)EditorGUILayout.ObjectField("Bottom Middle Position", tutorial.BM_Pos_env, typeof(Transform), true);
-        tutorial.pointerPlacerEnvironment = (Transform)EditorGUILayout.ObjectField("Bottom Middle Position", tutorial.pointerPlacerEnvironment, typeof(Transform), true);
+        tutorial.pointerPlacerEnvironment = (Transform)EditorGUILayout.ObjectField("Pointer Environment", tutorial.pointerPlacerEnvironment, typeof(Transform), true);
+        tutorial.environmentPointer =
+            (Transform)EditorGUILayout.ObjectField("Pointer Environment Icon", tutorial.environmentPointer,typeof(Transform),true);
+EditorGUILayout.Space();
         // Save changes to the TutorialNew object
         if (GUI.changed)
         {

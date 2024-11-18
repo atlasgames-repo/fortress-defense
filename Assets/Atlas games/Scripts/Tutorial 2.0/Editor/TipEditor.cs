@@ -42,9 +42,9 @@ public class TipInspector : Editor
                 tip.uiPartName = EditorGUILayout.TextField("UI Part Name", tip.uiPartName);
                 tip.circleMaskScale = EditorGUILayout.FloatField("Circle Mask Scale", tip.circleMaskScale);
                 tip.pauseGame = EditorGUILayout.Toggle("Pause Game", tip.pauseGame);
+                tip.hintDirection = (Direction)EditorGUILayout.EnumPopup("Hint Direction", tip.hintDirection);
                 break;
 
-            case TipType.Task:
                 tip.uiPartName = EditorGUILayout.TextField("UI Part Name", tip.uiPartName);
                 tip.isUiInteractible = EditorGUILayout.Toggle("Is UI Interactible", tip.isUiInteractible);
                 tip.delay = EditorGUILayout.FloatField("Delay", tip.delay);

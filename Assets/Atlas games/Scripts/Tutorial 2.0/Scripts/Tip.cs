@@ -46,4 +46,5 @@ public class Tip : MonoBehaviour
     public string tipTitle;
     public Sprite dialogImage;
     public VideoClip dialogVideo;
+    public Direction hintDirection;
 }
