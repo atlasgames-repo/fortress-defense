@@ -66,7 +66,7 @@ public class TutorialNew : MonoBehaviour
     {
         _main = Camera.main;
         _tipOrder = -1;
-        Invoke("NextStep",tutorialStep[0].delay);
+        Invoke("NextStep",tutorialStep[0].delay*1000f);
     }
 
     public void ApplyNewStep()
