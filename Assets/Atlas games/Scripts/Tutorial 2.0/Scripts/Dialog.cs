@@ -33,7 +33,7 @@ public class Dialog : MonoBehaviour
     public void OnAnimationFinish()
     {
         dialogText.text = _currentTip.tipText;
-        dialogTitle.text = (_dialogStep + 1).ToString();
+        dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
         switch (_currentTip.dialogContentType)
         {
             case DialogContent.Text: 
@@ -43,6 +43,7 @@ public class Dialog : MonoBehaviour
             case DialogContent.Image:
                 videoPlayer.gameObject.SetActive(false);
                 dialogImage.gameObject.SetActive(true);
+                dialogImage.sprite = _currentTip.dialogImage;
                 dialogImage.sprite = _currentTip.dialogImage;
                 break;
             case DialogContent.Video:
@@ -88,6 +89,8 @@ public class Dialog : MonoBehaviour
                 _dialogStep++;
                 if (!_isOpen)
                 {
+                    dialogImage.sprite = _currentTip.dialogImage;
+                    ResizeImage(dialogImage);
                   buttonsAnimator.SetTrigger("OneButton");
                   previousButton.interactable = false;
                   dialogText.text = _currentTip.tipText;
@@ -97,6 +100,8 @@ public class Dialog : MonoBehaviour
                 }
                 else
                 {
+                    dialogImageNext.sprite = _currentTip.dialogImage;
+                    ResizeImage(dialogImageNext);
                     dialogTextNext.text = _currentTip.tipText;
                     dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
                     _animator.SetTrigger("Next");
@@ -108,6 +113,7 @@ public class Dialog : MonoBehaviour
                 _dialogStep--;
                 dialogTextNext.text = _currentTip.tipText;
                 dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
+                dialogImageNext.sprite = _currentTip.dialogImage;
                 _animator.SetTrigger("Previous");
                 if (_dialogStep == 0)
                 {
@@ -133,6 +139,11 @@ public class Dialog : MonoBehaviour
     public void PreviousStep()
     {
         _tutorial.PreviousStep();
+    }
+
+    void ResizeImage(Image image)
+    {
+        
     }
 }
 
