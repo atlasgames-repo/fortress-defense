@@ -61,18 +61,7 @@ MonoBehaviour:
       BossScale: 1.1
       BossMinExp: 25
       BossMaxExp: 50
-    - wait: 10
-      enemy: {fileID: 3697426553599540029, guid: bb4a391d19b886c41b2c33129326ffa1,
-        type: 3}
-      numberEnemy: 4
-      rate: 1
-      customHealth: 0
-      customSpeed: 0
-      customAttackDmg: 0
-      boosType: 0
-      BossScale: 1.1
-      BossMinExp: 25
-      BossMaxExp: 50
+      spawnFromUnderground: 0
     - wait: 11
       enemy: {fileID: 3697426553599540029, guid: 8d5cd9de2fd6e4a40aa6ab3793c4b0f6,
         type: 3}
@@ -85,6 +74,7 @@ MonoBehaviour:
       BossScale: 2
       BossMinExp: 25
       BossMaxExp: 50
+      spawnFromUnderground: 0
   increaseEnemySpeedDifficultyRate: 0.05
   increaseEnemyAttackDifficultyRate: 0.1
   increaseEnemyHealthDifficultyRate: 0.1
@@ -93,3 +83,5 @@ MonoBehaviour:
   initialWaitAmount: 3
   level: 20
   backgroundSprite: {fileID: 21300000, guid: fdc33d5c7ce20604ab95d438c07656fb, type: 3}
+  nightMode: 0
+  nightMultiplierFixedAmount: 2
