@@ -82,6 +82,8 @@ public class TutorialNewInspector : Editor
         tutorial.circleMask = (RectTransform)EditorGUILayout.ObjectField("Circle Mask", tutorial.circleMask, typeof(RectTransform), true);
         tutorial.pointerObject = (Transform)EditorGUILayout.ObjectField("Pointer Object", tutorial.pointerObject, typeof(Transform), true);
         tutorial.pointerIcon = (Transform)EditorGUILayout.ObjectField("Pointer Icon", tutorial.pointerIcon, typeof(Transform), true);
+        tutorial.pointerPlacerEnvironment = (Transform)EditorGUILayout.ObjectField("Environment Pointer", tutorial.pointerPlacerEnvironment, typeof(Transform), true);
+        tutorial.environmentPointer = (Transform)EditorGUILayout.ObjectField("Environment Pointer Icon", tutorial.environmentPointer, typeof(Transform), true);
         tutorial.clickPreventer = (GameObject)EditorGUILayout.ObjectField("Click Preventer", tutorial.clickPreventer, typeof(GameObject), true);
         tutorial.transparent = EditorGUILayout.ColorField("Transparent", tutorial.transparent);
         tutorial.darkBackground = EditorGUILayout.ColorField("Dark Background", tutorial.darkBackground);

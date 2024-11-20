@@ -69,7 +69,7 @@ public class TutorialNew : MonoBehaviour
         Invoke("NextStep",tutorialSteps[0].delay*1000f);
     }
 
-    public void ApplyNewStep()
+    public void ApplyNewStep(bool previous)
     {
       
             GameObject nextUIPart = new GameObject();
@@ -83,30 +83,32 @@ public class TutorialNew : MonoBehaviour
                     if (uiPart.GetComponent<TutorialFinder>().uiPartName == tutorialSteps[_tipOrder].uiPartName)
                     {
                         nextUIPart = uiPart.gameObject;
+                        print(nextUIPart.name);
                     }
                 }
             }
-            clickPreventer.SetActive(tutorialSteps[_tipOrder].tipType!= TipType.Task);
+  //          clickPreventer.SetActive(tutorialSteps[_tipOrder].tipType!= TipType.Task);
             clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = !tutorialSteps[_tipOrder].isUiInteractible;
             Time.timeScale = tutorialSteps[_tipOrder].pauseGame ? 0f : 1f;
             switch (tutorialSteps[_tipOrder].tipType)
             {
                 case TipType.Dialog:
-                    dialog.DialogChange(tutorialSteps[_tipOrder], DialogAction.Next, tutorialSteps[_tipOrder], this);
-                    clickPreventer.GetComponent<Image>().enabled = true;
+                    dialog.DialogChange(tutorialSteps[_tipOrder], !previous ? DialogAction.Next : DialogAction.Previous, tutorialSteps[_tipOrder], this);
+                    clickPreventer.GetComponent<Image>().color = darkBackground;
                     circleMask.gameObject.SetActive(false);
                     Time.timeScale = 0;
                     break;
                 case TipType.Hint:
+                    dialog.DialogChange(tutorialSteps[_tipOrder], DialogAction.Close, tutorialSteps[_tipOrder], this);
                     hint.Show(tutorialSteps[_tipOrder].tipText, tutorialSteps[_tipOrder].tipDirection,this, circleMask.rect.position, tutorialSteps[_tipOrder].circleMaskScale, _tipOrder);
                     Time.timeScale = 0;
-                    clickPreventer.GetComponent<Image>().enabled = false;
+                    clickPreventer.GetComponent<Image>().color = transparent;
                     clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = true;
                     circleMask.gameObject.SetActive(true);
                     StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialSteps[_tipOrder].circleMaskScale));
                     break;
                 case TipType.Task:
-                    
+                    dialog.DialogChange(tutorialSteps[_tipOrder], DialogAction.Close, tutorialSteps[_tipOrder], this);
                                         if (!tutorialSteps[_tipOrder].isUiInteractible && nextUIPart.GetComponent<Button>())
                     {
                         buttonParent = nextUIPart.transform.parent;
@@ -211,12 +213,13 @@ public class TutorialNew : MonoBehaviour
                                      targetPosition = BR_Pos_env.position;
                                      break;
                              }
+
                              Quaternion pointerRotation = Quaternion.Euler(0, 0, rotationAngle);
-                             pointerIcon.transform.rotation = pointerRotation;
-                             pointerIcon.transform.position = targetPosition;
+                             environmentPointer.transform.rotation = pointerRotation;
+                             environmentPointer.transform.position = targetPosition;
                     }
 
-                    clickPreventer.GetComponent<Image>().enabled = false;
+                    clickPreventer.GetComponent<Image>().color = transparent;
                     circleMask.gameObject.SetActive(false);
                     break;
         }
@@ -227,10 +230,12 @@ public class TutorialNew : MonoBehaviour
         if (_tipOrder < tutorialSteps.Count - 1)
         {
             _tipOrder++;
-            ApplyNewStep();
+            ApplyNewStep(false);
         }
         else
         {
+            Destroy(environmentPointer.gameObject);
+            Destroy(gameObject);
             clickPreventer.GetComponent<Image>().enabled = false;
             clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
@@ -241,7 +246,7 @@ public class TutorialNew : MonoBehaviour
         if (_tipOrder > -1)
         {
             _tipOrder--;
-            ApplyNewStep();
+            ApplyNewStep(true);
         }   
     }
     
