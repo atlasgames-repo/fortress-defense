@@ -274,6 +274,8 @@ EditorGUILayout.Space();
             dialogImage = originalTip.dialogImage,
             dialogVideo = originalTip.dialogVideo,
             pointerDirection = originalTip.pointerDirection,
+            circleMaskScale = originalTip.circleMaskScale,
+            tipDirection = originalTip.tipDirection,
             delay =  originalTip.delay,
         };
     }

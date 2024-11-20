@@ -83,12 +83,10 @@ public class TutorialNew : MonoBehaviour
 
     public void ApplyNewStep(bool previous)
     {
-     //   Thread.Sleep(Mathf.RoundToInt(tutorialSteps[tipOrder].delay * 1000));
             GameObject nextUIPart = new GameObject();
             Transform buttonParent;
             int childIndex = 0;
-            print(tutorialSteps[tipOrder].uiPartName);
-            if (tutorialSteps[tipOrder].tipType == TipType.Task)
+            if (tutorialSteps[tipOrder].tipType != TipType.Dialog)
             {
                 TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
                 foreach (var uiPart in uiParts)
@@ -99,7 +97,6 @@ public class TutorialNew : MonoBehaviour
                     }
                 }
             }
-  //          clickPreventer.SetActive(tutorialSteps[tipOrder].tipType!= TipType.Task);
             clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = !tutorialSteps[tipOrder].isUiInteractible;
             switch (tutorialSteps[tipOrder].tipType)
             {
@@ -110,12 +107,13 @@ public class TutorialNew : MonoBehaviour
                     Time.timeScale = 0;
                     break;
                 case TipType.Hint:
-                    hint.Show(tutorialSteps[tipOrder].tipText, tutorialSteps[tipOrder].tipDirection,this, circleMask.rect.position, tutorialSteps[tipOrder].circleMaskScale, tipOrder);
+                    hint.Show(tutorialSteps[tipOrder].tipText, tutorialSteps[tipOrder].tipDirection,this,   nextUIPart.GetComponent<RectTransform>().position, tutorialSteps[tipOrder].circleMaskScale, tipOrder);
                     Time.timeScale = 0;
                     circleMask.gameObject.SetActive(true);
                     clickPreventer.GetComponent<Image>().color = transparent;
                     clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = true;
                     circleMask.gameObject.SetActive(true);
+                    print(tutorialSteps[tipOrder].circleMaskScale);
                     StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialSteps[tipOrder].circleMaskScale));
                     break;
                 case TipType.Task:
@@ -185,7 +183,6 @@ public class TutorialNew : MonoBehaviour
                     }
                     else
                     {
-                        print(tutorialSteps[tipOrder].pointerDirection);
                         pointerPlacerEnvironment.SetParent(null);
                         environmentPointer.SetParent(null);
                         environmentPointer.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
