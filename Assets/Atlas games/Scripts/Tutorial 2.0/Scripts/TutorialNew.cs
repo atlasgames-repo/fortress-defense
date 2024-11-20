@@ -170,6 +170,8 @@ public class TutorialNew : MonoBehaviour
                     }
                     else
                     {
+                        pointerPlacerEnvironment.SetParent(null);
+                        environmentPointer.SetParent(null);
                         environmentPointer.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
                         pointerPlacerEnvironment.transform.position = nextUIPart.transform.position;
                              float rotationAngle = 0f;
