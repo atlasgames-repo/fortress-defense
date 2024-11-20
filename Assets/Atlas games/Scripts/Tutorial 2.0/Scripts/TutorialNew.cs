@@ -87,6 +87,7 @@ public class TutorialNew : MonoBehaviour
             GameObject nextUIPart = new GameObject();
             Transform buttonParent;
             int childIndex = 0;
+            print(tutorialSteps[tipOrder].uiPartName);
             if (tutorialSteps[tipOrder].tipType == TipType.Task)
             {
                 TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
@@ -179,8 +180,8 @@ public class TutorialNew : MonoBehaviour
                                 break;
                         }
                         Quaternion pointerRotation = Quaternion.Euler(0, 0, rotationAngle);
-                        pointerIcon.transform.rotation = pointerRotation;
-                        pointerIcon.transform.position = targetPos;
+                        pointerIcon.GetComponent<RectTransform>().position = targetPos;
+                        pointerIcon.GetComponent<RectTransform>().rotation = pointerRotation;
                     }
                     else
                     {
@@ -241,7 +242,7 @@ public class TutorialNew : MonoBehaviour
 
     public void NextStep()
     {
-        if (tipOrder < tutorialSteps.Count - 1)
+        if (tipOrder <= tutorialSteps.Count - 1)
         {
             tipOrder++;
             if (tutorialSteps[tipOrder].tipType != TipType.Dialog)

@@ -215,12 +215,12 @@ public class Dialog : MonoBehaviour
     {
         if (_action == DialogAction.Close)
         {
-            _tutorial.NextStep();
+     //       _tutorial.NextStep();
         }
     }
     public void NextStep()
     {
-        if ( _tutorial.tutorialSteps.Count -1 > _tutorial.tipOrder )
+        if ( _tutorial.tutorialSteps.Count -1 >= _tutorial.tipOrder )
         {
             if (_tutorial.tutorialSteps[_tutorial.tipOrder].tipType == TipType.Dialog )
             {
