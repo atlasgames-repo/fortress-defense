@@ -242,7 +242,7 @@ public class TutorialNew : MonoBehaviour
 
     public void NextStep()
     {
-        if (tipOrder <= tutorialSteps.Count - 1)
+        if (tipOrder < tutorialSteps.Count - 1)
         {
             tipOrder++;
             if (tutorialSteps[tipOrder].tipType != TipType.Dialog)

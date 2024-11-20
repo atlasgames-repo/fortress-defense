@@ -82,10 +82,8 @@ public class Dialog : MonoBehaviour
         }
     }
 
-    private DialogAction _action;
     public void DialogChange(Tip tip,DialogAction action,Tip currentTip,TutorialNew tutorial)
     {
-        _action = action;
         if (!_isInit)
         {
             _isInit = true;
@@ -119,7 +117,7 @@ public class Dialog : MonoBehaviour
                     dialogImageNext.gameObject.SetActive(true);
                     dialogTextNext.text = currentTip.tipText;
                     dialogImageNext.sprite = tip.dialogImage;
-                    dialogImageNext.SetNativeSize();
+                   // dialogImageNext.SetNativeSize();
                     nextLayoutGroup.padding.left = _initialPaddingLeft;
                     nextLayoutGroup.padding.right = _initialPaddingRight;
                     nextLayoutGroup.childControlWidth = false;
@@ -132,7 +130,7 @@ public class Dialog : MonoBehaviour
                     videoPlayerNext.clip = tip.dialogVideo;
                     videoPlayerNext.isLooping = true;
                     videoPlayerNext.Play();
-                    videoPlayerNext.GetComponent<RawImage>().SetNativeSize();
+               //     videoPlayerNext.GetComponent<RawImage>().SetNativeSize();
                     dialogImageNext.gameObject.SetActive(false);
                     nextLayoutGroup.padding.left = _initialPaddingLeft;
                     nextLayoutGroup.padding.right = _initialPaddingRight;
@@ -211,16 +209,17 @@ public class Dialog : MonoBehaviour
   
     }
 
+    private bool isLast = false;
     public void OnFinishCloseAnimation()
     {
-        if (_action == DialogAction.Close)
+        if (isLast)
         {
-     //       _tutorial.NextStep();
+            _tutorial.NextStep();
         }
     }
     public void NextStep()
     {
-        if ( _tutorial.tutorialSteps.Count -1 >= _tutorial.tipOrder )
+        if ( _tutorial.tutorialSteps.Count -1 > _tutorial.tipOrder )
         {
             if (_tutorial.tutorialSteps[_tutorial.tipOrder].tipType == TipType.Dialog )
             {
@@ -230,7 +229,7 @@ public class Dialog : MonoBehaviour
         }
         else
         {
-            _action = DialogAction.Close;
+            isLast = true;
             _animator.SetTrigger("Close");
             Time.timeScale = 1;
         }
@@ -247,7 +246,17 @@ public class Dialog : MonoBehaviour
     {
     //    originalSize =
     //        new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
-        itemImage.GetComponent<Image>().SetNativeSize();
+//
+
+
+        if (itemImage.GetComponent<Image>())
+        {
+            itemImage.GetComponent<Image>().SetNativeSize();
+        }else if (itemImage.GetComponent<RawImage>())
+        {
+            itemImage.GetComponent<RawImage>().SetNativeSize();
+        }
+    
         if (itemImage.sizeDelta.x > itemImage.sizeDelta.y)
         {
             float aspectRatio = (float)itemImage.sizeDelta.x / itemImage.sizeDelta.y;
