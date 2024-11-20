@@ -27,7 +27,8 @@ public class Dialog : MonoBehaviour
     public HorizontalLayoutGroup nextLayoutGroup;
     public GameObject pictureContentHolder;
     public GameObject nextPictureContentHolder;
-
+    public int textDialogPadding = 25;
+    
     private int _initialPaddingRight;
     private int _initialPaddingLeft;
     private bool _isOpen;
@@ -50,13 +51,15 @@ public class Dialog : MonoBehaviour
             case DialogContent.Text: 
                 videoPlayer.gameObject.SetActive(false);
                 dialogImage.gameObject.SetActive(false);
-                layoutGroup.padding.left = 0;
-                layoutGroup.padding.right = 0;
+                layoutGroup.padding.left = textDialogPadding;
+                layoutGroup.padding.right = textDialogPadding;
+                layoutGroup.childControlWidth = true;
                 pictureContentHolder.SetActive(false);
                 dialogText.alignment = TextAlignmentOptions.Center;
                 break;
             case DialogContent.Image:
                 pictureContentHolder.SetActive(true);
+                layoutGroup.childControlWidth = false;
                 dialogText.alignment = TextAlignmentOptions.Left;
                 layoutGroup.padding.left = _initialPaddingLeft;
                 layoutGroup.padding.right = _initialPaddingRight;
@@ -66,6 +69,7 @@ public class Dialog : MonoBehaviour
                 ResizeImage(dialogImage.rectTransform,_imageOriginalSize);
                 break;
             case DialogContent.Video:
+                layoutGroup.childControlWidth = false;
                 pictureContentHolder.SetActive(true);
                 layoutGroup.padding.left = _initialPaddingLeft;
                 layoutGroup.padding.right = _initialPaddingRight;
@@ -77,10 +81,11 @@ public class Dialog : MonoBehaviour
                 break;
         }
     }
-    
- 
+
+    private DialogAction _action;
     public void DialogChange(Tip tip,DialogAction action,Tip currentTip,TutorialNew tutorial)
     {
+        _action = action;
         if (!_isInit)
         {
             _isInit = true;
@@ -101,9 +106,10 @@ public class Dialog : MonoBehaviour
                 case DialogContent.Text:
                     videoPlayerNext.gameObject.SetActive(false);
                     dialogImageNext.gameObject.SetActive(false);
-                    nextLayoutGroup.padding.left = 0;
-                    nextLayoutGroup.padding.right = 0;
-                    dialogTextNext.alignment = TextAlignmentOptions.Left;
+                    nextLayoutGroup.padding.left = textDialogPadding;
+                    nextLayoutGroup.padding.right = textDialogPadding;
+                    nextLayoutGroup.childControlWidth = true;
+                    dialogTextNext.alignment = TextAlignmentOptions.Center;
                     dialogTextNext.text = currentTip.tipText;
                     nextPictureContentHolder.SetActive(false);
                     break;
@@ -116,6 +122,7 @@ public class Dialog : MonoBehaviour
                     dialogImageNext.SetNativeSize();
                     nextLayoutGroup.padding.left = _initialPaddingLeft;
                     nextLayoutGroup.padding.right = _initialPaddingRight;
+                    nextLayoutGroup.childControlWidth = false;
                     ResizeImage(dialogImageNext.rectTransform,_nextImageOriginalSize);
                     dialogTextNext.alignment = TextAlignmentOptions.Center;
                     break;
@@ -129,6 +136,7 @@ public class Dialog : MonoBehaviour
                     dialogImageNext.gameObject.SetActive(false);
                     nextLayoutGroup.padding.left = _initialPaddingLeft;
                     nextLayoutGroup.padding.right = _initialPaddingRight;
+                    nextLayoutGroup.childControlWidth = false;
                     dialogTextNext.alignment = TextAlignmentOptions.Center;
                     dialogTextNext.text = currentTip.tipText;
                     ResizeImage(videoPlayerNext.GetComponent<RawImage>().rectTransform,_nextImageOriginalSize);
@@ -138,7 +146,6 @@ public class Dialog : MonoBehaviour
         else
         {
             _animator.SetTrigger("Close");
-  //     buttonsAnimator.SetTrigger("OneButton");
             previousButton.interactable = false;
             _isOpen = false;
             _dialogStep = 0;
@@ -165,6 +172,17 @@ public class Dialog : MonoBehaviour
                         videoPlayer.clip = _currentTip.dialogVideo;
                         videoPlayer.isLooping = true;
                         videoPlayer.Play();
+                    }
+                    else
+                    {
+                        videoPlayer.gameObject.SetActive(false);
+                        dialogImage.gameObject.SetActive(false);
+                        layoutGroup.padding.left = textDialogPadding;
+                        layoutGroup.padding.right = textDialogPadding;
+                        layoutGroup.childControlWidth = true;
+                        dialogText.alignment = TextAlignmentOptions.Center;
+                        dialogText.text = currentTip.tipText;
+                   pictureContentHolder.SetActive(false);
                     }
                previousButton.interactable = false;
                  _animator.SetTrigger("Open");
@@ -193,10 +211,29 @@ public class Dialog : MonoBehaviour
   
     }
 
+    public void OnFinishCloseAnimation()
+    {
+        if (_action == DialogAction.Close)
+        {
+            _tutorial.NextStep();
+        }
+    }
     public void NextStep()
     {
-        _tutorial.NextStep();
-        buttonsAnimator.SetTrigger("TwoButton");
+        if ( _tutorial.tutorialSteps.Count -1 > _tutorial.tipOrder )
+        {
+            if (_tutorial.tutorialSteps[_tutorial.tipOrder].tipType == TipType.Dialog )
+            {
+                buttonsAnimator.SetTrigger("TwoButton");
+                _tutorial.NextStep();
+            }
+        }
+        else
+        {
+            _action = DialogAction.Close;
+            _animator.SetTrigger("Close");
+            Time.timeScale = 1;
+        }
         previousButton.interactable = true;
     }
 

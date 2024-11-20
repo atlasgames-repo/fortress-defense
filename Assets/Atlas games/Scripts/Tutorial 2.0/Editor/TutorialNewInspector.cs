@@ -88,6 +88,7 @@ public class TutorialNewInspector : Editor
         tutorial.transparent = EditorGUILayout.ColorField("Transparent", tutorial.transparent);
         tutorial.darkBackground = EditorGUILayout.ColorField("Dark Background", tutorial.darkBackground);
         tutorial.speed = EditorGUILayout.FloatField("Speed", tutorial.speed);
+        tutorial.initialDelay = EditorGUILayout.FloatField("Initial Delay", tutorial.initialDelay);
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Positions", EditorStyles.boldLabel);
         tutorial.TL_Pos = (Transform)EditorGUILayout.ObjectField("Top Left Position", tutorial.TL_Pos, typeof(Transform), true);
@@ -215,7 +216,8 @@ EditorGUILayout.Space();
     {
         newTip.dialogContentType = (DialogContent)EditorGUILayout.EnumPopup("Dialog Content Type", newTip.dialogContentType);
         newTip.tipText = EditorGUILayout.TextField("Tip Text", newTip.tipText);
- 
+        newTip.delay = EditorGUILayout.FloatField("Delay", newTip.delay);
+
         if (newTip.dialogContentType == DialogContent.Video)
         {
             newTip.dialogVideo = (VideoClip)EditorGUILayout.ObjectField("Dialog Video", newTip.dialogVideo, typeof(VideoClip), false);
@@ -233,6 +235,7 @@ EditorGUILayout.Space();
         newTip.uiPartName = EditorGUILayout.TextField("UI Part Name", newTip.uiPartName);
         newTip.circleMaskScale = EditorGUILayout.FloatField("Circle Mask Scale", newTip.circleMaskScale);
         newTip.pauseGame = EditorGUILayout.Toggle("Pause Game", newTip.pauseGame);
+        newTip.delay = EditorGUILayout.FloatField("Delay", newTip.delay);
     }
 
     private void DisplayTaskFields()
@@ -248,9 +251,8 @@ EditorGUILayout.Space();
         switch (tip.tipType)
         {
             case TipType.Dialog:
-                return !string.IsNullOrEmpty(tip.tipText) &&
-                       ((tip.dialogContentType == DialogContent.Video && tip.dialogVideo != null) ||
-                        (tip.dialogContentType == DialogContent.Image && tip.dialogImage != null));
+                return  (!string.IsNullOrEmpty(tip.tipText) && tip.dialogContentType == DialogContent.Text) ||
+                       ((tip.dialogContentType == DialogContent.Video && tip.dialogVideo != null) || (tip.dialogContentType == DialogContent.Image && tip.dialogImage != null));
             case TipType.Hint:
                 return !string.IsNullOrEmpty(tip.tipText) && !string.IsNullOrEmpty(tip.uiPartName);
             case TipType.Task:
@@ -270,7 +272,9 @@ EditorGUILayout.Space();
             uiPartName = originalTip.uiPartName,
             dialogContentType = originalTip.dialogContentType,
             dialogImage = originalTip.dialogImage,
-            dialogVideo = originalTip.dialogVideo
+            dialogVideo = originalTip.dialogVideo,
+            pointerDirection = originalTip.pointerDirection,
+            delay =  originalTip.delay,
         };
     }
     
