@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 1890978512596342465}
   - component: {fileID: 1765983479661443252}
   - component: {fileID: 3977017340268714229}
+  - component: {fileID: 3355883398380788043}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -180,10 +181,10 @@ RectTransform:
   m_Father: {fileID: 9164969289579788393}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1576.85, y: -1273.41}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 2654.707, y: -519.78754}
+  m_SizeDelta: {x: 1669.414, y: -1273.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1765983479661443252
 CanvasRenderer:
@@ -284,6 +285,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3355883398380788043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357777397126875026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 1669.414
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &1810683589143736419
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +392,7 @@ GameObject:
   - component: {fileID: 7767569905350994163}
   - component: {fileID: 4930647438469288064}
   m_Layer: 5
-  m_Name: Content
+  m_Name: PictureContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -973,6 +994,7 @@ GameObject:
   - component: {fileID: 8103171558075021498}
   - component: {fileID: 3289318131174715284}
   - component: {fileID: 5766165532733211701}
+  - component: {fileID: 3768572559504281625}
   m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
@@ -1060,6 +1082,18 @@ MonoBehaviour:
   m_PartOfParent: 0
   m_IgnoreSelfGraphic: 0
   m_IgnoreSelfStencil: 0
+--- !u!225 &3768572559504281625
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5300951032856566657}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6303796582623882322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,9 +1438,12 @@ MonoBehaviour:
   dialogImageNext: {fileID: 0}
   dialogTextNext: {fileID: 0}
   videoPlayerNext: {fileID: 0}
-  nextButton: {fileID: 0}
   previousButton: {fileID: 0}
   buttonsAnimator: {fileID: 0}
+  layoutGroup: {fileID: 7767569905350994163}
+  nextLayoutGroup: {fileID: 1155073194890063263}
+  pictureContentHolder: {fileID: 2630414687325367923}
+  nextPictureContentHolder: {fileID: 7930931420585821215}
 --- !u!1 &6955728818521878596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,7 +1909,7 @@ GameObject:
   - component: {fileID: 40421456846124564}
   - component: {fileID: 56924968964834666}
   m_Layer: 5
-  m_Name: Image
+  m_Name: PictureContentNext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2018,7 +2055,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8267876728374946797}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2034,6 +2071,7 @@ GameObject:
   - component: {fileID: 136844047799392857}
   - component: {fileID: 492898123896291869}
   - component: {fileID: 6671406001649649551}
+  - component: {fileID: 5142030399171406532}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -2058,7 +2096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 949.20685, y: 539.995}
+  m_AnchoredPosition: {x: 949.20685, y: 539.99414}
   m_SizeDelta: {x: 1128.6946, y: 705.4341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &136844047799392857
@@ -2119,6 +2157,18 @@ MonoBehaviour:
   m_PartOfParent: 0
   m_IgnoreSelfGraphic: 0
   m_IgnoreSelfStencil: 0
+--- !u!225 &5142030399171406532
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8529180877472758654}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8609770270226724160
 GameObject:
   m_ObjectHideFlags: 0

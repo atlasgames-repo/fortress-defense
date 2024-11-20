@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TutorialNew : MonoBehaviour
 {
-    public Tip[] tutorialStep;
+    public List<Tip> tutorialSteps = new List<Tip>();
 
     [Header("Tutorial Placing")] 
     [Space(3)]
@@ -66,7 +66,7 @@ public class TutorialNew : MonoBehaviour
     {
         _main = Camera.main;
         _tipOrder = -1;
-        Invoke("NextStep",tutorialStep[0].delay*1000f);
+        Invoke("NextStep",tutorialSteps[0].delay*1000f);
     }
 
     public void ApplyNewStep()
@@ -75,44 +75,44 @@ public class TutorialNew : MonoBehaviour
             GameObject nextUIPart = new GameObject();
             Transform buttonParent;
             int childIndex = 0;
-            if (tutorialStep[_tipOrder].tipType == TipType.Task)
+            if (tutorialSteps[_tipOrder].tipType == TipType.Task)
             {
                 TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
                 foreach (var uiPart in uiParts)
                 {
-                    if (uiPart.GetComponent<TutorialFinder>().uiPartName == tutorialStep[_tipOrder].uiPartName)
+                    if (uiPart.GetComponent<TutorialFinder>().uiPartName == tutorialSteps[_tipOrder].uiPartName)
                     {
                         nextUIPart = uiPart.gameObject;
                     }
                 }
             }
-            clickPreventer.SetActive(tutorialStep[_tipOrder].tipType!= TipType.Task);
-            clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = !tutorialStep[_tipOrder].isUiInteractible;
-            Time.timeScale = tutorialStep[_tipOrder].pauseGame ? 0f : 1f;
-            switch (tutorialStep[_tipOrder].tipType)
+            clickPreventer.SetActive(tutorialSteps[_tipOrder].tipType!= TipType.Task);
+            clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = !tutorialSteps[_tipOrder].isUiInteractible;
+            Time.timeScale = tutorialSteps[_tipOrder].pauseGame ? 0f : 1f;
+            switch (tutorialSteps[_tipOrder].tipType)
             {
                 case TipType.Dialog:
-                    dialog.DialogChange(tutorialStep[_tipOrder], DialogAction.Next, tutorialStep[_tipOrder], this);
+                    dialog.DialogChange(tutorialSteps[_tipOrder], DialogAction.Next, tutorialSteps[_tipOrder], this);
                     clickPreventer.GetComponent<Image>().enabled = true;
                     circleMask.gameObject.SetActive(false);
                     Time.timeScale = 0;
                     break;
                 case TipType.Hint:
-                    hint.Show(tutorialStep[_tipOrder].tipText, tutorialStep[_tipOrder].tipDirection,this, circleMask.rect.position, tutorialStep[_tipOrder].circleMaskScale, _tipOrder);
+                    hint.Show(tutorialSteps[_tipOrder].tipText, tutorialSteps[_tipOrder].tipDirection,this, circleMask.rect.position, tutorialSteps[_tipOrder].circleMaskScale, _tipOrder);
                     Time.timeScale = 0;
                     clickPreventer.GetComponent<Image>().enabled = false;
                     clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = true;
                     circleMask.gameObject.SetActive(true);
-                    StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialStep[_tipOrder].circleMaskScale));
+                    StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialSteps[_tipOrder].circleMaskScale));
                     break;
                 case TipType.Task:
                     
-                                        if (!tutorialStep[_tipOrder].isUiInteractible && nextUIPart.GetComponent<Button>())
+                                        if (!tutorialSteps[_tipOrder].isUiInteractible && nextUIPart.GetComponent<Button>())
                     {
                         buttonParent = nextUIPart.transform.parent;
                         childIndex = nextUIPart.transform.GetSiblingIndex();
                         clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts =
-                            !tutorialStep[_tipOrder].isUiInteractible;
+                            !tutorialSteps[_tipOrder].isUiInteractible;
                         GameObject uiPartClone = Instantiate(nextUIPart, nextUIPart.transform.position,
                             nextUIPart.transform.rotation,
                             nextUIPart.transform.parent);
@@ -120,7 +120,7 @@ public class TutorialNew : MonoBehaviour
                         pointerObject.gameObject.SetActive(true);
                         pointerIcon.gameObject.SetActive(true);
                     }
-                    Thread.Sleep(Mathf.RoundToInt(tutorialStep[_tipOrder].delay * 1000));
+                    Thread.Sleep(Mathf.RoundToInt(tutorialSteps[_tipOrder].delay * 1000));
                     nextUIPart.GetComponent<TutorialFinder>().isClickable = true;
                     if (nextUIPart.GetComponent<Button>())
                     {
@@ -129,7 +129,7 @@ public class TutorialNew : MonoBehaviour
                         pointerIcon.gameObject.SetActive(true);
                         float rotationAngle=0f;
                         Vector3 targetPos = new Vector3();
-                        switch (tutorialStep[_tipOrder].pointerDirection)
+                        switch (tutorialSteps[_tipOrder].pointerDirection)
                         {
                             case Direction.Bottom:
                                 targetPos= BM_Pos.position;
@@ -176,7 +176,7 @@ public class TutorialNew : MonoBehaviour
                         pointerPlacerEnvironment.transform.position = nextUIPart.transform.position;
                              float rotationAngle = 0f;
                              Vector3 targetPosition = new Vector3();
-                             switch (tutorialStep[_tipOrder].pointerDirection)
+                             switch (tutorialSteps[_tipOrder].pointerDirection)
                              {
                                  case Direction.Top:
                                      rotationAngle = 0f;
@@ -224,7 +224,7 @@ public class TutorialNew : MonoBehaviour
 
     public void NextStep()
     {
-        if (_tipOrder < tutorialStep.Length - 1)
+        if (_tipOrder < tutorialSteps.Count - 1)
         {
             _tipOrder++;
             ApplyNewStep();

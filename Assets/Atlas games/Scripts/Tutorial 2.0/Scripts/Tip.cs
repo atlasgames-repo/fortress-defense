@@ -30,11 +30,13 @@ public enum TipType
     Hint,
     Task
 }
-public class Tip : MonoBehaviour
+
+[System.Serializable]
+public class Tip 
 {
     public Direction tipDirection;
     public DialogContent dialogContentType;
-    public TipType tipType;
+    public TipType tipType = TipType.Dialog;
     public Direction pointerDirection;
     public float delay;
     public bool isLastDialog;

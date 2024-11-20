@@ -24,8 +24,10 @@ public class Dialog : MonoBehaviour
     public Button previousButton;
     public Animator buttonsAnimator;
     public HorizontalLayoutGroup layoutGroup;
+    public HorizontalLayoutGroup nextLayoutGroup;
     public GameObject pictureContentHolder;
-    
+    public GameObject nextPictureContentHolder;
+
     private int _initialPaddingRight;
     private int _initialPaddingLeft;
     private bool _isOpen;
@@ -36,6 +38,9 @@ public class Dialog : MonoBehaviour
     private Vector2 _imageOriginalSize;
     private Vector2 _nextVideoOriginalSize;
     private Vector2 _videoOriginalSize;
+    private Vector2 _originalTextSize;
+    private Vector2 _originalNextTextSize;
+    private bool _isInit;
     public void OnAnimationFinish()
     {
         dialogText.text = _currentTip.tipText;
@@ -73,14 +78,18 @@ public class Dialog : MonoBehaviour
         }
     }
     
-    void Start()
-    {
-        _initialPaddingLeft = layoutGroup.padding.left;
-        _initialPaddingRight = layoutGroup.padding.right;
-        _animator = GetComponent<Animator>();
-    }
+ 
     public void DialogChange(Tip tip,DialogAction action,Tip currentTip,TutorialNew tutorial)
     {
+        if (!_isInit)
+        {
+            _isInit = true;
+            _animator = GetComponent<Animator>();
+            _originalTextSize = dialogText.rectTransform.sizeDelta;
+            _originalNextTextSize = dialogTextNext.rectTransform.sizeDelta;
+            _initialPaddingLeft = layoutGroup.padding.left;
+            _initialPaddingRight = layoutGroup.padding.right;
+        }
         _tutorial = tutorial;
         _currentTip = currentTip;
         if (action != DialogAction.Close)
@@ -90,29 +99,40 @@ public class Dialog : MonoBehaviour
                 case DialogContent.Text:
                     videoPlayerNext.gameObject.SetActive(false);
                     dialogImageNext.gameObject.SetActive(false);
-                    layoutGroup.padding.left = 0;
-                    layoutGroup.padding.right = 0;
+                    nextLayoutGroup.padding.left = 0;
+                    nextLayoutGroup.padding.right = 0;
                     dialogTextNext.alignment = TextAlignmentOptions.Left;
+                    nextPictureContentHolder.SetActive(false);
                     break;
                 case DialogContent.Image:
+                    nextPictureContentHolder.SetActive(true);
                     videoPlayerNext.gameObject.SetActive(false);
                     dialogImageNext.gameObject.SetActive(true);
                     dialogImageNext.sprite = tip.dialogImage;
-                    layoutGroup.padding.left = _initialPaddingLeft;
-                    layoutGroup.padding.right = _initialPaddingRight;
+                    nextLayoutGroup.padding.left = _initialPaddingLeft;
+                    nextLayoutGroup.padding.right = _initialPaddingRight;
                     ResizeImage(dialogImageNext.rectTransform,_nextImageOriginalSize);
                     dialogTextNext.alignment = TextAlignmentOptions.Center;
                     break;
                 case DialogContent.Video:
+                    nextPictureContentHolder.SetActive(true);
                     videoPlayerNext.gameObject.SetActive(true);
                     dialogImageNext.gameObject.SetActive(false);
-                    layoutGroup.padding.left = _initialPaddingLeft;
-                    layoutGroup.padding.right = _initialPaddingRight;
+                    nextLayoutGroup.padding.left = _initialPaddingLeft;
+                    nextLayoutGroup.padding.right = _initialPaddingRight;
                     dialogTextNext.alignment = TextAlignmentOptions.Center;
                     ResizeImage(videoPlayerNext.GetComponent<RawImage>().rectTransform,_nextImageOriginalSize);
                     videoPlayerNext.clip = tip.dialogVideo;
                     break;
             }
+        }
+        else
+        {
+            _animator.SetTrigger("Close");
+            buttonsAnimator.SetTrigger("OneButton");
+            previousButton.interactable = false;
+            _isOpen = false;
+            _dialogStep = 0;
         }
 
         switch (action)
@@ -121,28 +141,14 @@ public class Dialog : MonoBehaviour
                 _dialogStep++;
                 if (!_isOpen)
                 {
-                    _imageOriginalSize = new Vector2(dialogImage.rectTransform.sizeDelta.x,
-                        dialogImage.rectTransform.sizeDelta.y);
-                    _nextImageOriginalSize = new Vector2(dialogImageNext.rectTransform.sizeDelta.x,
-                        dialogImageNext.rectTransform.sizeDelta.y);
-                    _nextVideoOriginalSize = new Vector2(videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.x,
-                        videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.y);
-                    _videoOriginalSize = new Vector2(videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.x,
-                        videoPlayer.GetComponent<RawImage>().rectTransform.sizeDelta.y);
-                    dialogImage.sprite = _currentTip.dialogImage;
-                    ResizeImage(dialogImage.rectTransform, _imageOriginalSize);
-                  buttonsAnimator.SetTrigger("OneButton");
-                  previousButton.interactable = false;
-                  dialogText.text = _currentTip.tipText;
-                  dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
-                    _animator.SetTrigger("Open");
-                    _isOpen = true;
+               buttonsAnimator.SetTrigger("OneButton");
+               previousButton.interactable = false;
+               dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
+                 _animator.SetTrigger("Open");
+                 _isOpen = true;
                 }
                 else
                 {
-                    dialogImageNext.sprite = _currentTip.dialogImage;
-                    ResizeImage(dialogImageNext.rectTransform, _nextImageOriginalSize);
-                    dialogTextNext.text = _currentTip.tipText;
                     dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
                     _animator.SetTrigger("Next");
                     buttonsAnimator.SetTrigger("TwoButton");
@@ -151,23 +157,14 @@ public class Dialog : MonoBehaviour
                 break;
             case DialogAction.Previous:
                 _dialogStep--;
-                dialogTextNext.text = _currentTip.tipText;
-                dialogTitle.text = "Tip #" + (_dialogStep + 1).ToString();
-                dialogImageNext.sprite = _currentTip.dialogImage;
-                ResizeImage(dialogImageNext.rectTransform, _nextImageOriginalSize);
                 _animator.SetTrigger("Previous");
-                if (_dialogStep == 0)
-                {
-                buttonsAnimator.SetTrigger("OneButton");
-                previousButton.interactable = false;
-                }
+               if (_dialogStep == 0)
+               {
+               buttonsAnimator.SetTrigger("OneButton");
+               previousButton.interactable = false;
+               }
                 break;
             case DialogAction.Close:
-                _animator.SetTrigger("Close");
-                buttonsAnimator.SetTrigger("OneButton");
-                previousButton.interactable = false;
-                _isOpen = false;
-                _dialogStep = 0;
                 break;
         }
     }

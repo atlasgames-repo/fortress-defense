@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Video;
@@ -8,34 +10,59 @@ public class TutorialNewInspector : Editor
     private Tip newTip = new Tip();
     private bool showAddTipSection = false;
     private string errorMessage = "";
+    private SerializedObject serializedTutorial;
+    private SerializedProperty tutorialStepProperty;
 
     private void OnEnable()
     {
+        serializedTutorial = new SerializedObject(target);
+        tutorialStepProperty = serializedTutorial.FindProperty("tutorialStep");
         newTip = new Tip(); // Initialize the new tip
     }
 
     public override void OnInspectorGUI()
     {
         TutorialNew tutorial = (TutorialNew)target;
-
-        // Display existing steps
         EditorGUILayout.LabelField("Tutorial Steps", EditorStyles.boldLabel);
         DisplayExistingSteps(tutorial);
 
 
         EditorGUILayout.Space();
-        // Section to add a new tip
         GUILayout.Space(10);
-        showAddTipSection = EditorGUILayout.Foldout(showAddTipSection, "Add New Tip");
+        
+        
+        GUIStyle foldoutStyle = new GUIStyle(EditorStyles.foldout)
+        {
+            fontStyle = FontStyle.Bold,
+            fontSize = 12,
+            normal = new GUIStyleState
+            {
+                textColor = Color.white
+            },
+            richText = true
+        };
+
+        GUIStyle boxStyle = new GUIStyle()
+        {
+            normal = new GUIStyleState()
+            {
+                background = CreateTexture(1, 1, new Color(0.3f, 0.3f, 0.3f)) 
+            },
+            padding = new RectOffset(20, 10, 10, 10) 
+        };
+
+        EditorGUILayout.BeginVertical(boxStyle);
+        showAddTipSection = EditorGUILayout.Foldout(showAddTipSection, "Add New Tip", false);
         if (showAddTipSection)
         {
             DisplayAddTipSection(tutorial);
         }
+        EditorGUILayout.EndVertical();
 
+        EditorGUILayout.Space();
         EditorGUILayout.LabelField("Tutorial Placing", EditorStyles.boldLabel);
         tutorial.placing = (TutorialPlacing)EditorGUILayout.EnumPopup("Placing", tutorial.placing);
 
-        // Conditional display of tutorialName or tutorialLevel
         if (tutorial.placing == TutorialPlacing.Menu)
         {
             tutorial.tutorialName = EditorGUILayout.TextField("Tutorial Name", tutorial.tutorialName);
@@ -84,23 +111,24 @@ public class TutorialNewInspector : Editor
         tutorial.environmentPointer =
             (Transform)EditorGUILayout.ObjectField("Pointer Environment Icon", tutorial.environmentPointer,typeof(Transform),true);
 EditorGUILayout.Space();
-        // Save changes to the TutorialNew object
         if (GUI.changed)
         {
             EditorUtility.SetDirty(tutorial);
-        }
+        }       
     }
 
+  
     private void DisplayExistingSteps(TutorialNew tutorial)
     {
-        if (tutorial.tutorialStep != null && tutorial.tutorialStep.Length > 0)
+        if (tutorial.tutorialSteps == null)
         {
-            for (int i = 0; i < tutorial.tutorialStep.Length; i++)
+            tutorial.tutorialSteps = new List<Tip>();
+        }
+        if (tutorial.tutorialSteps != null && tutorial.tutorialSteps.Count > 0)
+        {
+            for (int i = 0; i < tutorial.tutorialSteps.Count; i++)
             {
-                string stepText = !string.IsNullOrEmpty(tutorial.tutorialStep[i]?.tipText)
-                    ? tutorial.tutorialStep[i].tipText
-                    : $"Step {i + 1} ({tutorial.tutorialStep[i].tipType})";
-                EditorGUILayout.LabelField($"Step {i + 1}", stepText);
+                EditorGUILayout.LabelField($"Step {i + 1}", tutorial.tutorialSteps[i].tipType.ToString());
             }
         }
         else
@@ -112,9 +140,9 @@ EditorGUILayout.Space();
     private void DisplayAddTipSection(TutorialNew tutorial)
     {
         EditorGUILayout.LabelField("New Tip Details", EditorStyles.boldLabel);
+
         newTip.tipType = (TipType)EditorGUILayout.EnumPopup("Tip Type", newTip.tipType);
 
-        // Display fields based on TipType
         switch (newTip.tipType)
         {
             case TipType.Dialog:
@@ -128,45 +156,64 @@ EditorGUILayout.Space();
                 break;
         }
 
-        // Display error message if any
+        EditorGUILayout.Space();
         if (!string.IsNullOrEmpty(errorMessage))
         {
             EditorGUILayout.HelpBox(errorMessage, MessageType.Error);
         }
-
-        // Add Tip Button
-        if (GUILayout.Button("Add Tip", GUILayout.Height(30)))
+        GUIStyle addButtonStyle = new GUIStyle(GUI.skin.button)
+        {
+            normal = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.6f, 0f, 0f)), textColor = Color.white },
+            hover = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.9f, 0f, 0f)) , textColor = Color.white}, 
+            active = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.3f, 0f, 0f)) , textColor = Color.white},
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 12
+        };
+        GUIStyle deleteButtonStyle = new GUIStyle(GUI.skin.button)
+        {
+            normal = new GUIStyleState() { background = MakeTex(2, 2, new Color(0f, 0.6f, 0f)), textColor = Color.white },
+            hover = new GUIStyleState() { background = MakeTex(2, 2, new Color(0f, 0.9f, 0f)) , textColor = Color.white}, 
+            active = new GUIStyleState() { background = MakeTex(2, 2, new Color(0f, 0.3f, 0f)) , textColor = Color.white},
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 12
+        };
+        
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Add Tip",deleteButtonStyle, GUILayout.Height(30)))
         {
             if (ValidateNewTip(newTip))
             {
-                ArrayUtility.Add(ref tutorial.tutorialStep, CloneTip(newTip));
-                newTip = new Tip(); // Reset new tip
-                errorMessage = "";  // Clear error message
-                EditorUtility.SetDirty(tutorial); // Mark as changed
+                AddTipToList(tutorial.tutorialSteps, newTip);
+                newTip = new Tip(); 
+                errorMessage = "";  
+                EditorUtility.SetDirty(tutorial); 
             }
             else
             {
-                errorMessage = "Please fill all required fields for the selected Tip Type.";
+                errorMessage = "Please fill all required fields before adding the tip.";
             }
         }
-
-        // Reset Button
-        if (GUILayout.Button("Reset All Tips", GUILayout.Height(30)))
+EditorGUILayout.Space();
+        if (GUILayout.Button("Reset All Tips",addButtonStyle, GUILayout.Height(30)))
         {
-            tutorial.tutorialStep = new Tip[0]; // Clear all steps
-            EditorUtility.SetDirty(tutorial); // Mark as changed
+            tutorial.tutorialSteps = new List<Tip>(); 
+            EditorUtility.SetDirty(tutorial);
         }
     }
-
+    private void AddTipToList(List<Tip> tutorialStepList, Tip tipToAdd)
+    {
+        if (tutorialStepList == null)
+        {
+            tutorialStepList = new List<Tip>();
+        }
+    
+        tutorialStepList.Add(CloneTip(tipToAdd));
+    }
     private void DisplayDialogFields()
     {
         newTip.dialogContentType = (DialogContent)EditorGUILayout.EnumPopup("Dialog Content Type", newTip.dialogContentType);
-        newTip.tipTitle = EditorGUILayout.TextField("Tip Title", newTip.tipTitle);
         newTip.tipText = EditorGUILayout.TextField("Tip Text", newTip.tipText);
-        newTip.isLastDialog = EditorGUILayout.Toggle("Is Last Dialog", newTip.isLastDialog);
-        newTip.isUiInteractible = EditorGUILayout.Toggle("Is UI Interactible", newTip.isUiInteractible);
-        newTip.pauseGame = EditorGUILayout.Toggle("Pause Game", newTip.pauseGame);
-
+ 
         if (newTip.dialogContentType == DialogContent.Video)
         {
             newTip.dialogVideo = (VideoClip)EditorGUILayout.ObjectField("Dialog Video", newTip.dialogVideo, typeof(VideoClip), false);
@@ -199,7 +246,7 @@ EditorGUILayout.Space();
         switch (tip.tipType)
         {
             case TipType.Dialog:
-                return !string.IsNullOrEmpty(tip.tipTitle) && !string.IsNullOrEmpty(tip.tipText) &&
+                return !string.IsNullOrEmpty(tip.tipText) &&
                        ((tip.dialogContentType == DialogContent.Video && tip.dialogVideo != null) ||
                         (tip.dialogContentType == DialogContent.Image && tip.dialogImage != null));
             case TipType.Hint:
@@ -211,24 +258,41 @@ EditorGUILayout.Space();
         }
     }
 
-    private Tip CloneTip(Tip original)
+    private Tip CloneTip(Tip originalTip)
     {
         return new Tip
         {
-            tipType = original.tipType,
-            tipText = original.tipText,
-            tipTitle = original.tipTitle,
-            dialogContentType = original.dialogContentType,
-            dialogImage = original.dialogImage,
-            dialogVideo = original.dialogVideo,
-            isLastDialog = original.isLastDialog,
-            isUiInteractible = original.isUiInteractible,
-            pauseGame = original.pauseGame,
-            tipDirection = original.tipDirection,
-            pointerDirection = original.pointerDirection,
-            uiPartName = original.uiPartName,
-            circleMaskScale = original.circleMaskScale,
-            delay = original.delay
+            tipType = originalTip.tipType,
+            tipTitle = originalTip.tipTitle,
+            tipText = originalTip.tipText,
+            uiPartName = originalTip.uiPartName,
+            dialogContentType = originalTip.dialogContentType,
+            dialogImage = originalTip.dialogImage,
+            dialogVideo = originalTip.dialogVideo
         };
+    }
+    
+    private Texture2D CreateTexture(int width, int height, Color color)
+    {
+        Texture2D texture = new Texture2D(width, height);
+        Color[] pixels = new Color[width * height];
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = color;
+        }
+
+        texture.SetPixels(pixels);
+        texture.Apply();
+        return texture;
+    }
+    private Texture2D MakeTex(int width, int height, Color color)
+    {
+        Color[] pix = new Color[width * height];
+        for (int i = 0; i < pix.Length; i++) pix[i] = color;
+        Texture2D texture = new Texture2D(width, height);
+        texture.SetPixels(pix);
+        texture.Apply();
+        return texture;
     }
 }
