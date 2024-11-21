@@ -35,8 +35,6 @@ public class Hint : MonoBehaviour
             (direction == Direction.UpperRight || direction == Direction.UpperLeft || direction == Direction.Top ? maskDistance : 0f),
             0f
         );
-        print(direction.ToString());
-        print(offset);
 
         // Convert maskPosition (world space) to UI space
         Vector3 uiMaskPosition = Camera.main.WorldToScreenPoint(maskPosition);

@@ -260,6 +260,8 @@ public class TutorialNew : MonoBehaviour
             Time.timeScale = 1f;
             Destroy(environmentPointer.gameObject);
             Destroy(gameObject);
+            clickPreventer.GetComponent<Image>().enabled = false;
+            clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
     }
 
