@@ -113,6 +113,11 @@ public class TutorialNewInspector : Editor
         tutorial.pointerPlacerEnvironment = (Transform)EditorGUILayout.ObjectField("Pointer Environment", tutorial.pointerPlacerEnvironment, typeof(Transform), true);
         tutorial.environmentPointer =
             (Transform)EditorGUILayout.ObjectField("Pointer Environment Icon", tutorial.environmentPointer,typeof(Transform),true);
+        
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Use when testing the created tutorial", EditorStyles.boldLabel);
+        tutorial.devMode = EditorGUILayout.Toggle("Dev mode", tutorial.devMode);
+
 EditorGUILayout.Space();
         if (GUI.changed)
         {

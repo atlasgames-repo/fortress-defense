@@ -57,22 +57,26 @@ public class TutorialNew : MonoBehaviour
     public float initialDelay;
     public Transform environmentPointer;
     private float _maxDistance = 0.01f;
+
+    [Header("Dev Mode")] public bool devMode;
     void Start()
     {
         clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = false;
         clickPreventer.GetComponent<Image>().color = transparent;
         circleMask.gameObject.SetActive(false);
         _main = Camera.main;
-        InitTutorial();
         pointerIcon.gameObject.SetActive(false);
+        if (devMode)
+        {
+            InitTutorial();
+        }
     }
 
-    void InitTutorial()
+    public void InitTutorial()
     {
         _main = Camera.main;
         tipOrder = -1;
         StartCoroutine(StartTutorial());
-        //  Invoke("NextStep",tutorialSteps[0].delay);
     }
 
     IEnumerator StartTutorial()
@@ -113,7 +117,6 @@ public class TutorialNew : MonoBehaviour
                     clickPreventer.GetComponent<Image>().color = transparent;
                     clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = true;
                     circleMask.gameObject.SetActive(true);
-                    print(tutorialSteps[tipOrder].circleMaskScale);
                     StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialSteps[tipOrder].circleMaskScale));
                     break;
                 case TipType.Task:
@@ -244,13 +247,17 @@ public class TutorialNew : MonoBehaviour
             tipOrder++;
             if (tutorialSteps[tipOrder].tipType != TipType.Dialog)
             {
-                dialog.DialogChange(tutorialSteps[tipOrder], DialogAction.Close, tutorialSteps[tipOrder], this);
+                if (dialog.isOpen)
+                {
+                    dialog.DialogChange(tutorialSteps[tipOrder], DialogAction.Close, tutorialSteps[tipOrder], this);
+                }
                 clickPreventer.GetComponent<Image>().color = transparent;
             }
             StartCoroutine(DelayNextStep());
         }
         else
         {
+            Time.timeScale = 1f;
             Destroy(environmentPointer.gameObject);
             Destroy(gameObject);
             clickPreventer.GetComponent<Image>().enabled = false;

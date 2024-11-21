@@ -17,6 +17,10 @@ public class Hint : MonoBehaviour
     
     public void Show(string text, Direction direction, TutorialNew tutorial, Vector3 maskPosition, float maskScale, int tipIndex)
     {
+        if (!hintAnimator)
+        {
+            hintAnimator = GetComponent<Animator>();
+        }
         titleText.text = "#Tip #" + (tipIndex + 1).ToString();
         _tutorial = tutorial;
         hintText.text = text;

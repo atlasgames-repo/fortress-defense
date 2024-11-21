@@ -31,7 +31,7 @@ public class Dialog : MonoBehaviour
     
     private int _initialPaddingRight;
     private int _initialPaddingLeft;
-    private bool _isOpen;
+    [HideInInspector]public bool isOpen;
     private Tip _currentTip;
     private int _dialogStep;
     private TutorialNew _tutorial;
@@ -145,7 +145,7 @@ public class Dialog : MonoBehaviour
         {
             _animator.SetTrigger("Close");
             previousButton.interactable = false;
-            _isOpen = false;
+            isOpen = false;
             _dialogStep = 0;
         }
 
@@ -154,7 +154,7 @@ public class Dialog : MonoBehaviour
             case DialogAction.Next:
                 _dialogStep++;
                 dialogTitle.text = "Tip #" + (_dialogStep).ToString();
-                if (!_isOpen)
+                if (!isOpen)
                 {
                     dialogText.text = _currentTip.tipText;
                     if (_currentTip.dialogContentType == DialogContent.Image)
@@ -184,7 +184,7 @@ public class Dialog : MonoBehaviour
                     }
                previousButton.interactable = false;
                  _animator.SetTrigger("Open");
-                 _isOpen = true;
+                 isOpen = true;
                 }
                 else if(_dialogStep>0)
                 {
