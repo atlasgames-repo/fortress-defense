@@ -24,7 +24,7 @@ public class TutorialNew : MonoBehaviour
     public Color darkBackground;
     [HideInInspector]public int tipOrder;
     [SerializeField]public float speed = 30f;
-    
+    Camera _main;
     
     [Header("Prefabs")]
     [Space(3)]
@@ -64,6 +64,7 @@ public class TutorialNew : MonoBehaviour
         clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = false;
         clickPreventer.GetComponent<Image>().color = transparent;
         circleMask.gameObject.SetActive(false);
+        _main = Camera.main;
         pointerIcon.gameObject.SetActive(false);
         if (devMode)
         {
@@ -73,7 +74,7 @@ public class TutorialNew : MonoBehaviour
 
     public void InitTutorial()
     {
-       
+        _main = Camera.main;
         tipOrder = -1;
         StartCoroutine(StartTutorial());
     }

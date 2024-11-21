@@ -244,6 +244,11 @@ public class Dialog : MonoBehaviour
 
     void ResizeImage(RectTransform itemImage,Vector2 originalSize)
     {
+    //    originalSize =
+    //        new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
+//
+
+
         if (itemImage.GetComponent<Image>())
         {
             itemImage.GetComponent<Image>().SetNativeSize();

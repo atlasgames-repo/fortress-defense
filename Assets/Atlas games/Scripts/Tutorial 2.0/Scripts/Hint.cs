@@ -7,8 +7,7 @@ public class Hint : MonoBehaviour
 {
     public TMP_Text hintText;
     public TMP_Text titleText;
-    public float verticalDistanceFromMask = 140f;
-    public float horizontalDistanceFromMask = 150f;
+    public float distanceFromMask = 140f;
     public float mainMaskRadius = 50f;
     public Animator hintAnimator;
     private TutorialNew _tutorial;
@@ -27,36 +26,29 @@ public class Hint : MonoBehaviour
         hintText.text = text;
         _isOpen = true;
 
-        float horizontalOffset = 0;
-        float verticalOffset = 0;
+        // Calculate the position offset
+        float maskDistance = mainMaskRadius * maskScale + distanceFromMask;
+        Vector3 offset = new Vector3(
+            (direction == Direction.Left || direction == Direction.BottomLeft || direction == Direction.UpperLeft ? -maskDistance : 0f) +
+            (direction == Direction.BottomRight || direction == Direction.UpperRight || direction == Direction.Right ? maskDistance : 0f),
+            (direction == Direction.BottomRight || direction == Direction.BottomLeft || direction == Direction.Bottom ? -maskDistance : 0f) +
+            (direction == Direction.UpperRight || direction == Direction.UpperLeft || direction == Direction.Top ? maskDistance : 0f),
+            0f
+        );
 
-        if (direction == Direction.Top || direction == Direction.UpperLeft || direction == Direction.UpperRight)
-        {
-            verticalOffset = mainMaskRadius * maskScale + verticalDistanceFromMask;
-        }else if (direction == Direction.Bottom || direction == Direction.BottomLeft ||
-                  direction == Direction.BottomRight)
-        {
-            verticalOffset = -(mainMaskRadius * maskScale + verticalDistanceFromMask);
-        }
-
-        if (direction == Direction.Left || direction == Direction.BottomLeft || direction == Direction.UpperLeft)
-        {
-            horizontalOffset = -(mainMaskRadius * maskScale + horizontalDistanceFromMask);
-        }else if (direction == Direction.Right || direction == Direction.BottomRight ||
-                  direction == Direction.UpperRight)
-        {
-            horizontalOffset = mainMaskRadius * maskScale + horizontalDistanceFromMask;   
-        }
+        // Convert maskPosition (world space) to UI space
         Vector3 uiMaskPosition = Camera.main.WorldToScreenPoint(maskPosition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            (RectTransform)transform.parent, 
+            (RectTransform)transform.parent, // The UI parent canvas
             uiMaskPosition,
             Camera.main,
             out Vector2 localPoint
         );
 
-        Vector3 newHintPosition = new Vector3(localPoint.x + horizontalOffset, localPoint.y + verticalOffset, 0f);
+        // Apply the offset in UI space
+        Vector3 newHintPosition = new Vector3(localPoint.x + offset.x, localPoint.y + offset.y, 0f);
 
+        // Assign the calculated position to the RectTransform
         ((RectTransform)transform).anchoredPosition = newHintPosition;
         hintAnimator.enabled = true;
         hintAnimator.SetTrigger("Open");
