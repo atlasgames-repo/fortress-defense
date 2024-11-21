@@ -46,6 +46,9 @@ public class Hint : MonoBehaviour
         {
             horizontalOffset = mainMaskRadius * maskScale + horizontalDistanceFromMask;   
         }
+
+        Vector2 offsetPosition = new Vector2(horizontalOffset, verticalOffset);
+        print(offsetPosition);
         Vector3 uiMaskPosition = Camera.main.WorldToScreenPoint(maskPosition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             (RectTransform)transform.parent, 
