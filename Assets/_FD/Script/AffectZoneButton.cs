@@ -37,10 +37,10 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     void Start()
     {
         XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
-        XPTxt.text = $"{xp_text_prefix}{XPConsume}";
+        XPTxt.text = GlobalValue.levelPlaying ==1 ? "" : $"{xp_text_prefix}{XPConsume}";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
-        if (affectType == AffectZoneType.Cure)
+        if (affectType == AffectZoneType.Cure && GlobalValue.levelPlaying!=1)
             ownBtn.interactable = false;
 
         if (image == null)
@@ -78,8 +78,8 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
 
         canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
-        can_pay = GameManager.Instance.currentExp >= XPConsume;
-        if (affectType == AffectZoneType.Cure)
+        can_pay = GlobalValue.levelPlaying !=1 ? GameManager.Instance.currentExp >= XPConsume : true;
+        if (affectType == AffectZoneType.Cure && GlobalValue.levelPlaying!=1)
             ownBtn.interactable = canUse && fortressHealth > 0 && can_pay;
         canvasGroup.interactable = canUse && can_pay;
     }
