@@ -6,25 +6,24 @@ using UnityEngine;
 public class GameTutorialManager : MonoBehaviour
 {
     public GameTutorialSetup setup;
-    public float time;
     void Start() {
             setup = FindObjectOfType<GameTutorialSetup>();
             print(GlobalValue.levelPlaying);
             if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0) {
                 GameObject setupObj = setup.SceneTutorial();
                 if (!setupObj) return;
-                GameObject obj = Instantiate(setup.SceneTutorial(), FindObjectOfType<MenuManager>().transform.position, Quaternion.identity, FindObjectOfType<MenuManager>().transform);
-                obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
-                obj.GetComponent<TutorialNew>().InitTutorial();
+                if (setup.SceneTutorial() != null)
+                {
+                    GameObject obj = Instantiate(setup.SceneTutorial(), FindObjectOfType<MenuManager>().transform.position, Quaternion.identity, FindObjectOfType<MenuManager>().transform);
+                    obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
+                    obj.GetComponent<TutorialNew>().InitTutorial();
+                }
+           
                 GlobalValue.SetTutorialState(GlobalValue.levelPlaying.ToString(),1);
             }
     }
 
-    void Update()
-    {
-        time = Time.timeScale;
-    }
-
+ 
     GameObject _tutorialObj;
     public void StartTutorialInMenu(string placing)
     {

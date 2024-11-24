@@ -46,11 +46,17 @@ public class Dialog : MonoBehaviour
     {
         dialogText.text = _currentTip.tipText;
         dialogTitle.text = "Tip #" + (_dialogStep).ToString();
+        videoPlayer.gameObject.SetActive(false);
+        dialogImage.gameObject.SetActive(false);
+        layoutGroup.padding.left = _initialPaddingLeft;
+        layoutGroup.padding.right = _initialPaddingRight;
+        dialogText.alignment = TextAlignmentOptions.Left;
+        pictureContentHolder.SetActive(true);
+        layoutGroup.childControlWidth = false;
+
         switch (_currentTip.dialogContentType)
         {
             case DialogContent.Text: 
-                videoPlayer.gameObject.SetActive(false);
-                dialogImage.gameObject.SetActive(false);
                 layoutGroup.padding.left = textDialogPadding;
                 layoutGroup.padding.right = textDialogPadding;
                 layoutGroup.childControlWidth = true;
@@ -58,26 +64,14 @@ public class Dialog : MonoBehaviour
                 dialogText.alignment = TextAlignmentOptions.Center;
                 break;
             case DialogContent.Image:
-                pictureContentHolder.SetActive(true);
-                layoutGroup.childControlWidth = false;
-                dialogText.alignment = TextAlignmentOptions.Left;
-                layoutGroup.padding.left = _initialPaddingLeft;
-                layoutGroup.padding.right = _initialPaddingRight;
-                videoPlayer.gameObject.SetActive(false);
                 dialogImage.gameObject.SetActive(true);
                 dialogImage.sprite = _currentTip.dialogImage;
                 ResizeImage(dialogImage.rectTransform,_imageOriginalSize);
                 break;
             case DialogContent.Video:
-                layoutGroup.childControlWidth = false;
-                pictureContentHolder.SetActive(true);
-                layoutGroup.padding.left = _initialPaddingLeft;
-                layoutGroup.padding.right = _initialPaddingRight;
                 videoPlayer.gameObject.SetActive(true);
-                dialogImage.gameObject.SetActive(false);
                 videoPlayer.clip = _currentTip.dialogVideo;
                 ResizeImage(videoPlayer.GetComponent<RawImage>().rectTransform, _videoOriginalSize);
-                dialogText.alignment = TextAlignmentOptions.Left;
                 break;
         }
     }
@@ -99,44 +93,34 @@ public class Dialog : MonoBehaviour
         _currentTip = currentTip;
         if (action != DialogAction.Close)
         {
+            videoPlayerNext.gameObject.SetActive(false);
+            dialogImageNext.gameObject.SetActive(false);
+            nextLayoutGroup.childControlWidth = false;
+            nextLayoutGroup.padding.left = _initialPaddingLeft;
+            nextLayoutGroup.padding.right = _initialPaddingRight;
+            dialogText.alignment = TextAlignmentOptions.Left;
+            nextPictureContentHolder.SetActive(true);
+            dialogTextNext.text = currentTip.tipText;
+
             switch (tip.dialogContentType)
             {
                 case DialogContent.Text:
-                    videoPlayerNext.gameObject.SetActive(false);
-                    dialogImageNext.gameObject.SetActive(false);
                     nextLayoutGroup.padding.left = textDialogPadding;
                     nextLayoutGroup.padding.right = textDialogPadding;
                     nextLayoutGroup.childControlWidth = true;
                     dialogTextNext.alignment = TextAlignmentOptions.Center;
-                    dialogTextNext.text = currentTip.tipText;
                     nextPictureContentHolder.SetActive(false);
                     break;
                 case DialogContent.Image:
-                    nextPictureContentHolder.SetActive(true);
-                    videoPlayerNext.gameObject.SetActive(false);
                     dialogImageNext.gameObject.SetActive(true);
-                    dialogTextNext.text = currentTip.tipText;
                     dialogImageNext.sprite = tip.dialogImage;
-                   // dialogImageNext.SetNativeSize();
-                    nextLayoutGroup.padding.left = _initialPaddingLeft;
-                    nextLayoutGroup.padding.right = _initialPaddingRight;
-                    nextLayoutGroup.childControlWidth = false;
                     ResizeImage(dialogImageNext.rectTransform,_nextImageOriginalSize);
-                    dialogTextNext.alignment = TextAlignmentOptions.Center;
                     break;
                 case DialogContent.Video:
-                    nextPictureContentHolder.SetActive(true);
                     videoPlayerNext.gameObject.SetActive(true);
                     videoPlayerNext.clip = tip.dialogVideo;
                     videoPlayerNext.isLooping = true;
                     videoPlayerNext.Play();
-               //     videoPlayerNext.GetComponent<RawImage>().SetNativeSize();
-                    dialogImageNext.gameObject.SetActive(false);
-                    nextLayoutGroup.padding.left = _initialPaddingLeft;
-                    nextLayoutGroup.padding.right = _initialPaddingRight;
-                    nextLayoutGroup.childControlWidth = false;
-                    dialogTextNext.alignment = TextAlignmentOptions.Center;
-                    dialogTextNext.text = currentTip.tipText;
                     ResizeImage(videoPlayerNext.GetComponent<RawImage>().rectTransform,_nextImageOriginalSize);
                     break;
             }
