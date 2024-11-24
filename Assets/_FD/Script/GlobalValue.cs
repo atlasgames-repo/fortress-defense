@@ -229,6 +229,13 @@ public class GlobalValue : MonoBehaviour
         get { return PlayerPrefs.GetInt("LevelReached", 0); }
         set { PlayerPrefs.SetInt("LevelReached", value); }
     }
+
+    public static int IsMagicUsedForTheFirstTime
+    {
+        get { return PlayerPrefs.GetInt("IsMagicUsed"); }
+        set { PlayerPrefs.SetInt("IsMagicUsed", value); }
+    }
+   
     public static int WorldPass
     {
         get { return PlayerPrefs.GetInt("WorldReached", 1); }

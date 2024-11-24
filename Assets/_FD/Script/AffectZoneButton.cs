@@ -36,11 +36,12 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 
     void Start()
     {
+        print(GlobalValue.IsMagicUsedForTheFirstTime);
         XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
-        XPTxt.text = GlobalValue.levelPlaying ==1 ? "" : $"{xp_text_prefix}{XPConsume}";
+        XPTxt.text = GlobalValue.IsMagicUsedForTheFirstTime == 0 ? "" : $"{xp_text_prefix}{XPConsume}";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
-        if (affectType == AffectZoneType.Cure && GlobalValue.levelPlaying!=1)
+        if (affectType == AffectZoneType.Cure)
             ownBtn.interactable = false;
 
         if (image == null)
@@ -78,8 +79,8 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
 
         canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
-        can_pay = GlobalValue.levelPlaying !=1 ? GameManager.Instance.currentExp >= XPConsume : true;
-        if (affectType == AffectZoneType.Cure && GlobalValue.levelPlaying!=1)
+        can_pay = GlobalValue.IsMagicUsedForTheFirstTime == 0 ? true : GameManager.Instance.currentExp >= XPConsume;
+        if (affectType == AffectZoneType.Cure)
             ownBtn.interactable = canUse && fortressHealth > 0 && can_pay;
         canvasGroup.interactable = canUse && can_pay;
     }
@@ -155,6 +156,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 
     private void OnBtnClick()
     {
+        GlobalValue.IsMagicUsedForTheFirstTime += 1;
         if (!canUse)
             return;
 

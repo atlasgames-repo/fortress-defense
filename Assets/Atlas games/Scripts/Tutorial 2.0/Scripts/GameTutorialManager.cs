@@ -8,7 +8,6 @@ public class GameTutorialManager : MonoBehaviour
     public GameTutorialSetup setup;
     void Start() {
             setup = FindObjectOfType<GameTutorialSetup>();
-            print(GlobalValue.levelPlaying);
             if (GlobalValue.GetTutorialState(GlobalValue.levelPlaying.ToString()) == 0) {
                 GameObject setupObj = setup.SceneTutorial();
                 if (!setupObj) return;
