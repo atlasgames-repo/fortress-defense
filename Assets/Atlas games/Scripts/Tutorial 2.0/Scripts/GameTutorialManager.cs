@@ -13,8 +13,13 @@ public class GameTutorialManager : MonoBehaviour
                 if (!setupObj) return;
                 if (setup.SceneTutorial() != null)
                 {
-                    GameObject obj = Instantiate(setup.SceneTutorial(), FindObjectOfType<MenuManager>().transform.position, Quaternion.identity, FindObjectOfType<MenuManager>().transform);
-                    obj.transform.SetSiblingIndex(FindObjectOfType<MenuManager>().transform.childCount - 1);
+                    MenuManager manager = FindObjectOfType<MenuManager>();
+                    if (manager == null) {
+                        // do something logical
+                        return;
+                    }
+                    GameObject obj = Instantiate(setup.SceneTutorial(), manager.transform.position, Quaternion.identity, manager.transform);
+                    obj.transform.SetSiblingIndex(manager.transform.childCount - 1);
                     obj.GetComponent<TutorialNew>().InitTutorial();
                 }
            

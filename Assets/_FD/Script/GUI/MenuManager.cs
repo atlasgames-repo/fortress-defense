@@ -128,19 +128,18 @@ public class MenuManager : MonoBehaviour, IListener
 
     IEnumerator VictoryCo()
     {
-        
         UI.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         int currentLevel = GlobalValue.levelPlaying;
-        print(currentLevel);
-        print("You Win !");
-        for (int i = 0; i < rewardList.rewards.Length; i++)
+        var _currentReward =
+            from item in rewardList.rewards
+            where item.rewardLevel == currentLevel
+            select item;
+        foreach (Reward reward in _currentReward)
         {
-            if (currentLevel == rewardList.rewards[i].rewardLevel)
-            {
-                rewardUI.SetActive(true);
-                rewardUI.GetComponent<RewardMenu>().Init(rewardList.rewards[i],this);
-            }
+            rewardUI.SetActive(true);
+            rewardUI.GetComponent<RewardMenu>().Init(reward, this);
+            yield break;
         }
         VictotyUI.SetActive(true);
     }

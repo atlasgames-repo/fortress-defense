@@ -30,15 +30,18 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     public string xp_text_prefix = "xp";
     float holdCounter = 0;
 
+    private MagicSlotManager _magicSlotManager;
+
+    [HideInInspector]public bool isMagicUsed = false;
 
 
     public CanvasGroup canvasGroup;
 
     void Start()
     {
-        print(GlobalValue.IsMagicUsedForTheFirstTime);
+        _magicSlotManager = transform.parent.GetComponent<MagicSlotManager>();
         XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
-        XPTxt.text = GlobalValue.IsMagicUsedForTheFirstTime == 0 ? "" : $"{xp_text_prefix}{XPConsume}";
+        XPTxt.text = isMagicUsed ?  $"{xp_text_prefix}{XPConsume}" : "";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
         if (affectType == AffectZoneType.Cure)
@@ -79,7 +82,14 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
 
         canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
-        can_pay = GlobalValue.IsMagicUsedForTheFirstTime == 0 ? true : GameManager.Instance.currentExp >= XPConsume;
+        if (isMagicUsed)
+        {
+            can_pay = GameManager.Instance.currentExp >= XPConsume;
+        }
+        else
+        {
+            can_pay = true;
+        }
         if (affectType == AffectZoneType.Cure)
             ownBtn.interactable = canUse && fortressHealth > 0 && can_pay;
         canvasGroup.interactable = canUse && can_pay;
@@ -147,6 +157,12 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     }
 
 
+    public void UpdateXPText()
+    {
+        isMagicUsed = true;
+        XPTxt.text = $"{xp_text_prefix}{XPConsume}";
+        XPTxt.text = $"{xp_text_prefix}{XPConsume}";
+    }
 
     public void StartCountingDown(float custom_cooldown = 0)
     {
@@ -154,9 +170,11 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         coolDownCounter = custom_cooldown > 0 ? custom_cooldown : coolDown;
     }
 
+    
     private void OnBtnClick()
     {
-        GlobalValue.IsMagicUsedForTheFirstTime += 1;
+
+        _magicSlotManager.OnFirstMagicUse();
         if (!canUse)
             return;
 
