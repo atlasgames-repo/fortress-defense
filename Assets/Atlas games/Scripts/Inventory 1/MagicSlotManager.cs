@@ -8,6 +8,8 @@ public class MagicSlotManager : MonoBehaviour
     private int[] _chosenMagics;
     public ShopItemData data;
     public AffectZoneButton[] slots;
+    [HideInInspector]public bool abilityUsed;
+
     void Start()
     {
         _chosenMagics = new int[slots.Length];
@@ -46,6 +48,18 @@ public class MagicSlotManager : MonoBehaviour
                 case "DefenseWall":
                     slots[i].affectType = AffectZoneType.DefenseWall;
                     break;
+            }
+        }
+    }
+
+    public void OnFirstMagicUse()
+    {
+        if (!abilityUsed)
+        {
+            abilityUsed = true;
+            foreach (AffectZoneButton slot in slots)
+            {
+                slot.UpdateXPText();
             }
         }
     }

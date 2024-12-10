@@ -21,7 +21,6 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject HelperUI;
     public GameObject Boss;
     public string HomeMenuName = "Menu atlas";
-    public Sprite rewardSprite;
     [Header("Sound and Music")]
     public Image soundImage;
     public Image musicImage;
@@ -136,14 +135,14 @@ public class MenuManager : MonoBehaviour, IListener
             from item in rewardList.rewards
             where item.rewardLevel == currentLevel
             select item;
-        foreach (Reward reward in _currentReward) {
+        foreach (Reward reward in _currentReward)
+        {
             rewardUI.SetActive(true);
-            rewardUI.GetComponent<RewardMenu>().Init(reward,this);
+            rewardUI.GetComponent<RewardMenu>().Init(reward, this);
             yield break;
         }
         VictotyUI.SetActive(true);
     }
-
     public void OpenVictoryMenu()
     {
         rewardUI.SetActive(false);
