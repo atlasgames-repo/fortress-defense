@@ -306,7 +306,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
             CheckAttack();
         }
         // set slow down rate here : 
-        if (isPet)
+        if (!isPet)
         {
             moveSpeed = _initialMoveSpeed * GlobalValue.SlowDownRate;
         }
