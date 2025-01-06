@@ -19,6 +19,7 @@ public class GameTutorialManager : MonoBehaviour
                         return;
                     }
                     GameObject obj = Instantiate(setup.SceneTutorial(), manager.transform.position, Quaternion.identity, manager.transform);
+                    obj.SetActive(true);
                     obj.transform.SetSiblingIndex(manager.transform.childCount - 1);
                     obj.GetComponent<TutorialNew>().InitTutorial();
                 }
@@ -43,6 +44,7 @@ public class GameTutorialManager : MonoBehaviour
             GameObject spawnedObj = Instantiate(_tutorialObj,
             FindObjectOfType<MainMenuHomeScene>().transform.position, Quaternion.identity,
             FindObjectOfType<MainMenuHomeScene>().transform);
+            spawnedObj.SetActive(true);
             spawnedObj.transform.SetSiblingIndex(FindObjectOfType<MainMenuHomeScene>().transform.childCount - 1);
             spawnedObj.GetComponent<TutorialNew>().InitTutorial();
             GlobalValue.SetTutorialState(placing,1);

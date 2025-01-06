@@ -128,15 +128,78 @@ EditorGUILayout.Space();
   
     private void DisplayExistingSteps(TutorialNew tutorial)
     {
+        GUIStyle addButtonStyle = new GUIStyle(GUI.skin.button)
+        {
+            normal = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.6f, 0f, 0f)), textColor = Color.white },
+            hover = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.9f, 0f, 0f)) , textColor = Color.white}, 
+            active = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.3f, 0f, 0f)) , textColor = Color.white},
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 12
+        };
+        GUIStyle deleteButtonStyle = new GUIStyle(GUI.skin.button)
+        {
+            normal = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.2f, 0.2f, 0.2f)), textColor = Color.white },
+            hover = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.1f, 0.1f, 0.1f)) , textColor = Color.white}, 
+            active = new GUIStyleState() { background = MakeTex(2, 2, new Color(0.2f, 0.05f, 0.2f)) , textColor = Color.white},
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 12
+        };
         if (tutorial.tutorialSteps == null)
         {
             tutorial.tutorialSteps = new List<Tip>();
         }
         if (tutorial.tutorialSteps != null && tutorial.tutorialSteps.Count > 0)
         {
+            bool isDeleted = false;
+            bool isMoving = false;
+            int index = 0;
+            int newIndex = 0;
             for (int i = 0; i < tutorial.tutorialSteps.Count; i++)
             {
-                EditorGUILayout.LabelField($"Step {i + 1}", tutorial.tutorialSteps[i].tipType.ToString());
+                EditorGUILayout.BeginHorizontal();
+                string tooltip = $"Type: {tutorial.tutorialSteps[i].tipType}\n" +
+                                 $"Text: {tutorial.tutorialSteps[i].tipText}\n" +
+                                 $"Delay: {tutorial.tutorialSteps[i].delay}\n" +
+                                 $"UIPartName: {tutorial.tutorialSteps[i].uiPartName}\n" +
+                                 $"Is Intractible: {tutorial.tutorialSteps[i].isUiInteractible}";
+                int tipTexLen = tutorial.tutorialSteps[i].tipText.Length;
+                string tipText = "";
+                if (tipTexLen > 50) {
+                    tipText = tutorial.tutorialSteps[i].tipText.Substring(0, 50);
+                } else {
+                    tipText = tutorial.tutorialSteps[i].tipText;
+                }
+                GUIContent content = new GUIContent($"Step {i + 1}: {tutorial.tutorialSteps[i].tipType} - {tipText}", tooltip);
+                EditorGUILayout.LabelField(content, GUILayout.Width(200));
+                if (GUILayout.Button("-", addButtonStyle, GUILayout.Width(20))) {
+                    index = i;
+                    isDeleted = true;
+                }
+                if (GUILayout.Button("↑", deleteButtonStyle, GUILayout.Width(20))) {
+                    if (i > 0) {
+                        index = i;
+                        isMoving = true;
+                        newIndex = i - 1;
+                    }
+                }
+                if (GUILayout.Button("↓", deleteButtonStyle, GUILayout.Width(20))) {
+                    if (i < tutorial.tutorialSteps.Count - 1) {
+                        index = i;
+                        isMoving = true;
+                        newIndex = i + 1;
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            if (isDeleted) {
+                tutorial.tutorialSteps.RemoveAt(index);
+                EditorUtility.SetDirty(tutorial);
+            }
+            if (isMoving) {
+                var temp = tutorial.tutorialSteps[index];
+                tutorial.tutorialSteps[index] = tutorial.tutorialSteps[newIndex];
+                tutorial.tutorialSteps[newIndex] = temp;
+                EditorUtility.SetDirty(tutorial);
             }
         }
         else
@@ -273,7 +336,7 @@ EditorGUILayout.Space();
         {
             tipType = originalTip.tipType,
             tipTitle = originalTip.tipTitle,
-            tipText = originalTip.tipText,
+            tipText = originalTip.tipText ?? string.Empty,
             uiPartName = originalTip.uiPartName,
             dialogContentType = originalTip.dialogContentType,
             dialogImage = originalTip.dialogImage,
@@ -281,7 +344,7 @@ EditorGUILayout.Space();
             pointerDirection = originalTip.pointerDirection,
             circleMaskScale = originalTip.circleMaskScale,
             tipDirection = originalTip.tipDirection,
-            delay =  originalTip.delay,
+            delay = originalTip.delay,
         };
     }
     
