@@ -40,7 +40,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     {
         _magicSlotManager = transform.parent.GetComponent<MagicSlotManager>();
         XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
-        XPTxt.text = AffectZoneManager.Instance.isZoneUsedFirstTime ?  $"{xp_text_prefix}{XPConsume}" : "";
+        XPTxt.text = AffectZoneManager.Instance.isZoneUsedFirstTime ?  $"{xp_text_prefix}{XPConsume}" : $"{xp_text_prefix}0";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
         if (affectType == AffectZoneType.Cure)
