@@ -32,7 +32,6 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 
     private MagicSlotManager _magicSlotManager;
 
-    [HideInInspector]public bool isMagicUsed = false;
 
 
     public CanvasGroup canvasGroup;
@@ -41,7 +40,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     {
         _magicSlotManager = transform.parent.GetComponent<MagicSlotManager>();
         XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
-        XPTxt.text = isMagicUsed ?  $"{xp_text_prefix}{XPConsume}" : "";
+        XPTxt.text = AffectZoneManager.Instance.isZoneUsedFirstTime ?  $"{xp_text_prefix}{XPConsume}" : "";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
         if (affectType == AffectZoneType.Cure)
@@ -82,7 +81,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
 
         canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
-        if (isMagicUsed)
+        if (AffectZoneManager.Instance.isZoneUsedFirstTime)
         {
             can_pay = GameManager.Instance.currentExp >= XPConsume;
         }
@@ -159,7 +158,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 
     public void UpdateXPText()
     {
-        isMagicUsed = true;
+        // AffectZoneManager.Instance.isZoneUsedFirstTime = true;
         XPTxt.text = $"{xp_text_prefix}{XPConsume}";
         XPTxt.text = $"{xp_text_prefix}{XPConsume}";
     }

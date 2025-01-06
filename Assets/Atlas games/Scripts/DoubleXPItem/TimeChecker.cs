@@ -102,7 +102,6 @@ public class TimeChecker : MonoBehaviour
                 ConvertedStringToDate(GlobalValue.ItemOpened(currentData.itemName))
                     .AddHours(currentData.duration == TimedItemManager.ItemDuration.Day?24:1))
             {
-                print("deactivate bruh" + currentData.itemName);
                 GlobalValue.SetItemState(false,currentData.itemName);
             }
         }
