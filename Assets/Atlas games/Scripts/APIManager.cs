@@ -294,9 +294,6 @@ public class APIManager : MonoBehaviour
             {
                 throw new System.Exception(message: "Task cancelled");
             }
-            print(req.downloadHandler.text);
-            print(res);
-            print(User.Token);
             return res;
         }
     }
