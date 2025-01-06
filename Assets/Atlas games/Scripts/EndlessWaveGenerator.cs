@@ -34,19 +34,43 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
     int _totalEnemy, _currentSpawn;
 
+    private void Start() {
+        if (GameLevelSetup.Instance)
+        {
+        levelType = GameLevelSetup.Instance.type();
+            if (levelType == LevelWave.LevelType.Normal) {
+                this.enabled = false;
+                return;
+            }
+            EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
+        }
+
+        //calculate number of enemies
+        totalEnemy = 0;
+        for (int i = 0; i < EnemyWaves.Length; i++)
+        {
+            for (int j = 0; j < EnemyWaves[i].enemySpawns.Length; j++)
+            {
+                var enemySpawn = EnemyWaves[i].enemySpawns[j];
+                for (int k = 0; k < enemySpawn.numberEnemy; k++)
+                {
+                    totalEnemy++;
+                }
+            }
+        }
+
+        currentSpawn = 0;
+    }
     void Awake()
     {
         if (GameLevelSetup.Instance)
         {
         levelType = GameLevelSetup.Instance.type();
-            if (levelType == LevelWave.LevelType.Endless)
-            {
-                level_enemy_manager.enabled = false;
-                WaveCountUI.SetActive(true);
-            }
-            else {
+            if (levelType == LevelWave.LevelType.Normal) {
                 this.enabled = false;
                 return;
+            } else {
+                WaveCountUI.SetActive(true);
             }
 
             enemiesList = GameLevelSetup.Instance.EndlessInitialWave();

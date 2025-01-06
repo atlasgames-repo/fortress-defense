@@ -226,7 +226,6 @@ public class TutorialNew : MonoBehaviour
                              }
 
                              Quaternion pointerRotation = Quaternion.Euler(0, 0, rotationAngle);
-                             print(rotationAngle);
                              environmentPointer.transform.rotation = pointerRotation;
                              environmentPointer.transform.position = targetPosition;
                     }
