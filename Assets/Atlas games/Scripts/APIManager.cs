@@ -303,7 +303,7 @@ public class APIManager : MonoBehaviour
         {
             headers = new Dictionary<string, string>();
         }
-        using UnityWebRequest req = UnityWebRequest.Post(uri: Base_url + route, postData: data);
+        using UnityWebRequest req = UnityWebRequest.PostWwwForm(uri: Base_url + route, form: data);
         foreach (KeyValuePair<string, string> item in headers)
         {
             req.SetRequestHeader(item.Key, item.Value);
