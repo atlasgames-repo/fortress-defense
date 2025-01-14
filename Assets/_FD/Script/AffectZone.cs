@@ -140,8 +140,10 @@ public class AffectZone : MonoBehaviour
             }
             // Consume XP from user.
             int XPConsume = AffectZoneManager.Instance.XPconsume(_type);
-            if (GameManager.Instance.currentExp < XPConsume)
+            if (GameManager.Instance.currentExp < XPConsume || !AffectZoneManager.Instance.isZoneUsedFirstTime) {
+                AffectZoneManager.Instance.isZoneUsedFirstTime = true;
                 return; // dont do anything if accidently we end up here and we dont have enough xp to spend
+            }
             GameManager.Instance.currentExp -= XPConsume;
             FloatingTextManager.Instance.ShowText("-" + XPConsume + " XP", Vector2.up * 1, Color.red, transform.position,40);
         }
@@ -464,7 +466,6 @@ public class AffectZone : MonoBehaviour
 
             fireBall.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             fireBall.transform.Translate(direction * fireBallSpeed * Time.deltaTime,Space.World);
-           print("hey");
             yield return null;
         }
 

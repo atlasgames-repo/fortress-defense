@@ -29,6 +29,7 @@ public class AffectZoneManager : MonoBehaviour
 
     public float disable_affectzone_countdown_cooldown = 5;
     public AffectZoneXPConsume[] XPConsumes;
+    [HideInInspector]public bool isZoneUsedFirstTime = false;
     public int XPconsume(AffectZoneType type) {
         foreach (AffectZoneXPConsume item in XPConsumes) {
             if (item.Type == type)
