@@ -49,7 +49,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
         Owner = _owner;
         rig = GetComponent<Rigidbody2D>();
         rig.gravityScale = gravityScale;
-        rig.velocity = velocityForce;
+        rig.linearVelocity = velocityForce;
         disableAtYPos = _disableAtYPos;
     }
 
@@ -159,7 +159,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
     IEnumerator DestroyProjectile(float delay = 0)
     {
         var rig = GetComponent<Rigidbody2D>();
-        rig.velocity = Vector2.zero;
+        rig.linearVelocity = Vector2.zero;
         rig.isKinematic = true;
 
         yield return new WaitForSeconds(delay);
