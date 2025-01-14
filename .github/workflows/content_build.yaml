@@ -30,14 +30,14 @@ jobs:
             #   uses: jlumbroso/free-disk-space@main
             #   with:
             #       dotnet: false
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   lfs: true
             - uses: actions/cache@v3
               with:
                   path: Library
                   key: Library-${{ matrix.targetPlatform }}
-            - uses: game-ci/unity-builder@v2
+            - uses: game-ci/unity-builder@v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -55,14 +55,14 @@ jobs:
             group: Default
             labels: ubuntu
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   lfs: true
             - uses: actions/cache@v3
               with:
                   path: Library
                   key: Library-Android
-            - uses: game-ci/unity-builder@v2
+            - uses: game-ci/unity-builder@v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -83,14 +83,14 @@ jobs:
         name: Build for StandaloneOSX
         runs-on: macos-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   lfs: true
             - uses: actions/cache@v3
               with:
                   path: Library
                   key: Library-StandaloneOSX
-            - uses: game-ci/unity-builder@v2
+            - uses: game-ci/unity-builder@v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -104,16 +104,16 @@ jobs:
                   path: Bundles
     buildForWindows:
         name: Build for StandaloneWindows
-        runs-on: windows-2019
+        runs-on: windows-2022
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   lfs: true
             - uses: actions/cache@v3
               with:
                   path: Library
                   key: Library-StandaloneWindows
-            - uses: game-ci/unity-builder@v2
+            - uses: game-ci/unity-builder@v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
