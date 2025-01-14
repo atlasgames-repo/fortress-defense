@@ -21,11 +21,16 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     public float coolDown = 3f;
     float coolDownCounter = 0;
     public Image image;
-    public Text timerTxt;
+    public Text timerTxt, XPTxt;
     bool allowWork = true;
     bool allowCounting = false;
     bool canUse = true;
+    bool can_pay = true;
+    int XPConsume;
+    public string xp_text_prefix = "xp";
     float holdCounter = 0;
+
+    private MagicSlotManager _magicSlotManager;
 
 
 
@@ -33,6 +38,9 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
 
     void Start()
     {
+        _magicSlotManager = transform.parent.GetComponent<MagicSlotManager>();
+        XPConsume = AffectZoneManager.Instance.XPconsume(affectType);
+        XPTxt.text = AffectZoneManager.Instance.isZoneUsedFirstTime ?  $"{xp_text_prefix}{XPConsume}" : $"{xp_text_prefix}0";
         ownBtn = GetComponent<Button>();
         ownBtn.onClick.AddListener(OnBtnClick);
         if (affectType == AffectZoneType.Cure)
@@ -73,11 +81,36 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
 
         canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
+        if (AffectZoneManager.Instance.isZoneUsedFirstTime)
+        {
+            can_pay = GameManager.Instance.currentExp >= XPConsume;
+        }
+        else
+        {
+            can_pay = true;
+        }
         if (affectType == AffectZoneType.Cure)
-            ownBtn.interactable = canUse && fortressHealth > 0;
-        canvasGroup.interactable = canUse;
+            ownBtn.interactable = canUse && fortressHealth > 0 && can_pay;
+        canvasGroup.interactable = canUse && can_pay;
+    }
+    #region LightningGlobal
+
+    public void ActivateLightnings()
+    {
+        AffectZoneManager.Instance.LightningAll();
+    }
+    #endregion
+
+    public void ActivateArmagdon()
+    {
+        AffectZoneManager.Instance.Armagdon();
     }
 
+    public void ActivateDefenseWall()
+    {
+        AffectZoneManager.Instance.ActiveZone(AffectZoneType.DefenseWall, this);
+        SoundManager.Click();
+    }
     void ActiveLighting()
     {
         AffectZoneManager.Instance.ActiveZone(AffectZoneType.Lighting, this);
@@ -123,15 +156,24 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     }
 
 
-
-    public void StartCountingDown()
+    public void UpdateXPText()
     {
-        allowCounting = true;
-        coolDownCounter = coolDown;
+        // AffectZoneManager.Instance.isZoneUsedFirstTime = true;
+        XPTxt.text = $"{xp_text_prefix}{XPConsume}";
+        XPTxt.text = $"{xp_text_prefix}{XPConsume}";
     }
 
+    public void StartCountingDown(float custom_cooldown = 0)
+    {
+        allowCounting = true;
+        coolDownCounter = custom_cooldown > 0 ? custom_cooldown : coolDown;
+    }
+
+    
     private void OnBtnClick()
     {
+
+        _magicSlotManager.OnFirstMagicUse();
         if (!canUse)
             return;
 
@@ -166,6 +208,15 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
                 break;
             case AffectZoneType.Dark:
                 ActiveDark();
+                break;
+            case AffectZoneType.LightningAll:
+                ActivateLightnings();
+                break;
+            case AffectZoneType.Armagdon:
+                ActivateArmagdon();
+                break;
+            case AffectZoneType.DefenseWall :
+                ActivateDefenseWall();
                 break;
         }
 

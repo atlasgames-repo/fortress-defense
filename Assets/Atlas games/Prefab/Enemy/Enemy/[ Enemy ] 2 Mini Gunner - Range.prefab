@@ -49,9 +49,9 @@ GameObject:
   - component: {fileID: -4311634429453305345}
   - component: {fileID: 1912531194315397297}
   - component: {fileID: -2827929167970686724}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: '[ Enemy ] 2 Mini Gunner - Range'
-  m_TagString: Untagged
+  m_TagString: Warrior
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   gravity: 35
   walkSpeed: 1.2
   attackType: 0
-  startBehavior: 3
+  startBehavior: 4
   dieBehavior: 0
   hitBehavior: 0
   spawnDelay: 1
@@ -247,6 +247,21 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  spawnFromUnderground: 0
+  undergroundSandPile: {fileID: 2967936131171522836, guid: a8798ad5383bdbd4ca79e8cee187891a,
+    type: 3}
+  characterSprites:
+  - {fileID: 3770864833954349678}
+  undergroundPileScale: 1.2
+  climbingTime: 1
+  maskYScale: 2
+  climbDepth: 1
+  xOffset: 0
+  secondaryHeight: 1
+  xDistanceFromEnemy: 1.5
+  holeAnimationTime: 0.5
+  warriorTag: Warrior
+  shadow: {fileID: 0}
 --- !u!114 &6359966500989756768
 MonoBehaviour:
   m_ObjectHideFlags: 0

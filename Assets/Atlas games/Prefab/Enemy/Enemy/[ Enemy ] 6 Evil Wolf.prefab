@@ -19,9 +19,9 @@ GameObject:
   - component: {fileID: -3391329345290087093}
   - component: {fileID: 2959593727705545868}
   - component: {fileID: 1379333207073501194}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: '[ Enemy ] 6 Evil Wolf'
-  m_TagString: Untagged
+  m_TagString: Warrior
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   checkTargetType: 0
   targetLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 10
   checkPoint: {fileID: 3505094655897797194}
   detectDistance: 5
   width: 2.65
@@ -157,7 +157,7 @@ MonoBehaviour:
   gravity: 35
   walkSpeed: 1
   attackType: 1
-  startBehavior: 3
+  startBehavior: 4
   dieBehavior: 0
   hitBehavior: 0
   spawnDelay: 1
@@ -217,6 +217,21 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  spawnFromUnderground: 0
+  undergroundSandPile: {fileID: 2967936131171522836, guid: a8798ad5383bdbd4ca79e8cee187891a,
+    type: 3}
+  characterSprites:
+  - {fileID: 3709939928656598729}
+  undergroundPileScale: 1.5
+  climbingTime: 1
+  maskYScale: 3
+  climbDepth: 2
+  xOffset: 0
+  secondaryHeight: 2
+  xDistanceFromEnemy: 1.5
+  holeAnimationTime: 0.5
+  warriorTag: Warrior
+  shadow: {fileID: 0}
 --- !u!114 &7873376231808734327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 10
   checkPoint: {fileID: 4142133550533764231}
   maxTargetPerHit: 1
   radiusCheck: 0.5

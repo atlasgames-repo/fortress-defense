@@ -32,22 +32,47 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     [HideInInspector] public int waveCount;
     public GameObject WaveCountUI;
 
-    
+    int _totalEnemy, _currentSpawn;
 
+    private void Start() {
+        if (GameLevelSetup.Instance)
+        {
+        levelType = GameLevelSetup.Instance.type();
+            if (levelType == LevelWave.LevelType.Normal) {
+                this.enabled = false;
+                return;
+            }
+            EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
+        }
+
+        //calculate number of enemies
+        totalEnemy = 0;
+        for (int i = 0; i < EnemyWaves.Length; i++)
+        {
+            for (int j = 0; j < EnemyWaves[i].enemySpawns.Length; j++)
+            {
+                var enemySpawn = EnemyWaves[i].enemySpawns[j];
+                for (int k = 0; k < enemySpawn.numberEnemy; k++)
+                {
+                    totalEnemy++;
+                }
+            }
+        }
+
+        currentSpawn = 0;
+    }
     void Awake()
     {
         if (GameLevelSetup.Instance)
         {
         levelType = GameLevelSetup.Instance.type();
-            if (levelType == LevelWave.LevelType.Endless)
-            {
-                level_enemy_manager.enabled = false;
-                WaveCountUI.SetActive(true);
-            }
-            else {
+            if (levelType == LevelWave.LevelType.Normal) {
                 this.enabled = false;
                 return;
+            } else {
+                WaveCountUI.SetActive(true);
             }
+
             enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
             increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();
             increaseEnemyAttackDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAttackDifficultyRate();
@@ -55,7 +80,6 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             increaseEnemyAmountDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAmountDifficultyRate();
             increaseEnemyWaitDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyWaitDifficultyRate();
             initialWaitAmount = GameLevelSetup.Instance.InitialWaitAmount();
-
         }
 
         _enemies = new GameObject[enemiesList.Length];
@@ -65,11 +89,7 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             _enemyCounts[a] = enemiesList[a].initialCount;
             _enemies[a] = enemiesList[a].enemyObject;
         }
-
     }
-
-
-
 
 
     // generate a new wave harder than last
@@ -167,6 +187,10 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     GameObject _temp = Instantiate(enemySpawn.enemy,
                         (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position,
                         Quaternion.identity) as GameObject;
+                    if (enemySpawn.spawnFromUnderground)
+                    {
+                        _temp.GetComponent<SmartEnemyGrounded>().StartClimbing();
+                    }
                     var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                     if (isEnemy != null)
                     {
@@ -221,8 +245,10 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                     //_temp.transform.localPosition = Vector2.zero;
                     listEnemySpawned.Add(_temp);
 
-                    currentSpawn++;
-                    MenuManager.Instance.UpdateEnemyWavePercent(currentSpawn, totalEnemy);
+                
+                   
+                    _currentSpawn++;
+                    MenuManager.Instance.UpdateEnemyWavePercent(_currentSpawn, _totalEnemy);
 
                     yield return new WaitForSeconds(enemySpawn.rate);
                 }
@@ -234,11 +260,9 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
             }
 
             EnemyWaves = new EnemyWave[0];
-
-
-
         }
     }
+
     void Update()
     {
         if (EnemyWaves.Length == 0)
@@ -257,6 +281,4 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
         return false;
     }
-
-
 }

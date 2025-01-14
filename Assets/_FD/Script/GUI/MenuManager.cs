@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class MenuManager : MonoBehaviour, IListener
 {
@@ -11,6 +13,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject StartUI;
     public GameObject UI;
     public GameObject VictotyUI;
+    public GameObject rewardUI;
     public GameObject FailUI;
     public GameObject LeaderBoardUI;
     public GameObject PauseUI;
@@ -18,7 +21,6 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject HelperUI;
     public GameObject Boss;
     public string HomeMenuName = "Menu atlas";
-
     [Header("Sound and Music")]
     public Image soundImage;
     public Image musicImage;
@@ -26,7 +28,12 @@ public class MenuManager : MonoBehaviour, IListener
 
 
     UI_UI uiControl;
+    public event Action OnSceneReloaded;
 
+    [Header("Reward")]
+    public RewardList rewardList;
+    private Reward _currentReward;
+    
     private void Awake()
     {
         Instance = this;
@@ -64,7 +71,19 @@ public class MenuManager : MonoBehaviour, IListener
     {
         uiControl.UpdateHealthbar(currentHealth, maxHealth/*, healthBarType*/);
     }
+    public void UpdateShieldHealthbar(float currentShieldHealth, float maxShieldHealth/*, HEALTH_CHARACTER healthBarType*/)
+    {
+        uiControl.UpdateShieldHealthBar(currentShieldHealth, maxShieldHealth/*, healthBarType*/);
+    }
+    public void ActivateShield(float currentShieldHealth, float maxShieldHealth)
+    {
+        uiControl.ActivateShield(currentShieldHealth,maxShieldHealth);
+    }
 
+    public void DeactivateShield()
+    {
+        uiControl.DeactivateShield();
+    }
     public void UpdateEnemyWavePercent(float currentSpawn, float maxValue)
     {
         uiControl.UpdateEnemyWavePercent(currentSpawn, maxValue);
@@ -103,6 +122,7 @@ public class MenuManager : MonoBehaviour, IListener
     }
     public void ISuccess()
     {
+
         StartCoroutine(VictoryCo());
     }
 
@@ -110,9 +130,25 @@ public class MenuManager : MonoBehaviour, IListener
     {
         UI.SetActive(false);
         yield return new WaitForSeconds(1.5f);
+        int currentLevel = GlobalValue.levelPlaying;
+        var _currentReward =
+            from item in rewardList.rewards
+            where item.rewardLevel == currentLevel
+            select item;
+        foreach (Reward reward in _currentReward)
+        {
+            rewardUI.SetActive(true);
+            rewardUI.GetComponent<RewardMenu>().Init(reward, this);
+            yield break;
+        }
         VictotyUI.SetActive(true);
-
     }
+    public void OpenVictoryMenu()
+    {
+        rewardUI.SetActive(false);
+        VictotyUI.SetActive(true);
+    }
+    
 
 
     public void IPause()
@@ -206,6 +242,7 @@ public class MenuManager : MonoBehaviour, IListener
     {
         SoundManager.Click();
         GlobalValue.levelPlaying++;
+        OnSceneReloaded?.Invoke();
         StartCoroutine(LoadAsynchronously(SceneManager.GetActiveScene().name));
     }
 
