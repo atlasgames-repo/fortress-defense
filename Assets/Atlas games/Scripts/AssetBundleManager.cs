@@ -30,7 +30,6 @@ public class AssetBundleManager : MonoBehaviour
         Add_target_platform(ref bundle_name, 0);
         var updates = await APIManager.instance.Check_for_updates(type: bundle_name);
         string file_name = Address_to_name(updates.list[0]);
-        Debug.LogError(updates.list[0]);
         if (file_name == "") return;
         if (File.Exists(APIManager.instance.GetFilePath(file_name)))
         {
@@ -80,9 +79,6 @@ public class AssetBundleManager : MonoBehaviour
     }
     public void Add_target_platform(ref string pattern, int index = 2)
     {
-#if UNITY_STANDALONE
-        pattern = pattern.Insert(index, "StandaloneWindows64");
-#endif
 #if UNITY_ANDROID
         pattern = pattern.Insert(index, "Android");
 #endif
@@ -97,6 +93,9 @@ public class AssetBundleManager : MonoBehaviour
 #endif
 #if UNITY_STANDALONE_WIN && !UNITY_64 
         pattern = pattern.Insert(index, "StandaloneWindows");
+#endif
+#if UNITY_STANDALONE_WIN && UNITY_64
+        pattern = pattern.Insert(index, "StandaloneWindows64");
 #endif
     }
 

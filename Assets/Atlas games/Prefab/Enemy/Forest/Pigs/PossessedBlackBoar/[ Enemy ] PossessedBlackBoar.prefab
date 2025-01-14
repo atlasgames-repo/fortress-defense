@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3697426553599540031}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1315889781
 GameObject:
@@ -58,7 +58,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3697426553599540031}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &138415178151213016
 GameObject:
@@ -293,7 +293,7 @@ Transform:
   - {fileID: 764691941035119268}
   - {fileID: 364653847669706021}
   m_Father: {fileID: 3697426553599540031}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &784454490044291405
 SpriteRenderer:
@@ -467,11 +467,11 @@ Transform:
   m_LocalPosition: {x: -5.63, y: -2.64, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
+  - {fileID: 5302841712264848057}
   - {fileID: 8257972245121983181}
   - {fileID: 3991322440258641104}
   - {fileID: 781253066}
   - {fileID: 1315889782}
-  - {fileID: 5302841712264848057}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -613,8 +613,8 @@ MonoBehaviour:
   explosionFX: []
   randomHitPoint: {x: 0.2, y: 0.2}
   randomBloodPuddlePoint: {x: 0.5, y: 0.25}
-  healthBarOffset: {x: 0, y: 1.5}
-  AutoHealthBarOffset: 0.2
+  healthBarOffset: {x: 0, y: 1}
+  AutoHealthBarOffset: 0.1
   IsAutoHealthBar: 1
   enemyState: 0
   weaknessMultiplier: 1
@@ -658,6 +658,26 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  spawnFromUnderground: 0
+  undergroundSandPile: {fileID: 2967936131171522836, guid: a8798ad5383bdbd4ca79e8cee187891a,
+    type: 3}
+  characterSprites:
+  - {fileID: 784454490044291405}
+  - {fileID: 784454489811831041}
+  - {fileID: 784454490056863874}
+  - {fileID: 7387339000876279475}
+  - {fileID: 784454488900615277}
+  - {fileID: 2874933141375304042}
+  undergroundPileScale: 1.7
+  climbingTime: 1.5
+  maskYScale: 2
+  climbDepth: 1.5
+  xOffset: 0
+  secondaryHeight: 1.5
+  xDistanceFromEnemy: 1.5
+  holeAnimationTime: 0.5
+  warriorTag: Warrior
+  shadow: {fileID: 8835841617553682194}
 --- !u!114 &1950496936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,7 +1008,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3697426553599540031}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2101254386559981091
 SpriteRenderer:
@@ -1053,35 +1073,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: target
       objectReference: {fileID: 0}
-    - target: {fileID: 3457596577293859471, guid: 4c79c1b537c6fcf4da407c934d03d329,
+    - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}
-      propertyPath: m_Enabled
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
-        type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.58
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}

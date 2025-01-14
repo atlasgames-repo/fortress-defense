@@ -314,8 +314,8 @@ MonoBehaviour:
   explosionFX: []
   randomHitPoint: {x: 0.2, y: 0.2}
   randomBloodPuddlePoint: {x: 0.5, y: 0.25}
-  healthBarOffset: {x: 0, y: 1.5}
-  AutoHealthBarOffset: 0.2
+  healthBarOffset: {x: 0, y: 1}
+  AutoHealthBarOffset: 0.1
   IsAutoHealthBar: 1
   enemyState: 0
   weaknessMultiplier: 1
@@ -359,6 +359,21 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  spawnFromUnderground: 0
+  undergroundSandPile: {fileID: 2967936131171522836, guid: a8798ad5383bdbd4ca79e8cee187891a,
+    type: 3}
+  characterSprites:
+  - {fileID: 3737532654831477741}
+  undergroundPileScale: 1.5
+  climbingTime: 1
+  maskYScale: 3
+  climbDepth: 1.5
+  xOffset: 0
+  secondaryHeight: 1.5
+  xDistanceFromEnemy: 1.5
+  holeAnimationTime: 0.5
+  warriorTag: Warrior
+  shadow: {fileID: 0}
 --- !u!114 &168968656300767376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,12 +480,12 @@ PrefabInstance:
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.078
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}

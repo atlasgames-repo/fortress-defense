@@ -3,7 +3,6 @@ name: Unity Testing
 on:
     push:
         branches:
-            - "*"
             - "!master"
             - "!update**"
     workflow_dispatch: {}
@@ -48,9 +47,7 @@ jobs:
         needs: checklicense
         if: needs.checklicense.outputs.is_unity_license_set == 'true'
         name: Run all tests ✨
-        runs-on:
-            group: Default
-            labels: ubuntu
+        runs-on: ubuntu-latest
         steps:
             # - name: Free Disk Space (Ubuntu)
             #   uses: jlumbroso/free-disk-space@main
