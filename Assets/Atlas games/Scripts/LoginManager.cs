@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TMPro;
 using System;
 
-public class LoginManager : MonoBehaviour
+public class LoginManager : MonoBehaviour, IKeyboardCall
 {
     public TMP_InputField username, password;
     public Button submit, showPassword;
@@ -15,6 +15,17 @@ public class LoginManager : MonoBehaviour
     public Sprite On, Off;
     public GameObject login;
     public GameObject loading;
+    public KeyCode Key;
+    public KeyCode[] KeyType { get { return new KeyCode[] { Key }; } }
+    public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
+
+    public void KeyDown(KeyCode key) {
+        if (!username.isFocused) {
+            username.Select();
+        } else {
+            password.Select();
+        }
+    }
     // Start is called before the first frame update
     async void Start()
     {
