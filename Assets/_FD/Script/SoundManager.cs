@@ -48,6 +48,12 @@ public class SoundManager : MonoBehaviour
     [Header("OTHER")]
     public AudioClip soundTimeUp;
     public AudioClip soundTimeDown;
+
+    [Header("WORLD SONGS")]
+    public AudioClip world1;
+    public AudioClip world2;
+    public AudioClip world3;
+
     //public AudioClip switchPlayerSound;
 
     //public AudioClip soundCheckpoint;
@@ -91,7 +97,7 @@ public class SoundManager : MonoBehaviour
         //		PlayMusic(musicsGame,musicsGameVolume);
         //		//Check auido and sound
 
-        PlayMusic(musicsGame, musicsGameVolume);
+        //PlayMusic(musicsGame, musicsGameVolume);
     }
 
     public static void Click()
