@@ -41,7 +41,7 @@ jobs:
                   androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
                   androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
                   customParameters: "${{ inputs.customParameters }}"
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-Android
                   path: build

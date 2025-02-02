@@ -35,7 +35,7 @@ jobs:
               with:
                   targetPlatform: WebGL
                   customParameters: "${{ inputs.customParameters }}"
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-WebGL
                   path: build

@@ -43,7 +43,7 @@ jobs:
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
                   targetPlatform: ${{ matrix.targetPlatform }}
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-${{ matrix.targetPlatform }}
                   path: build
@@ -72,7 +72,7 @@ jobs:
                   androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
                   androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
                   androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-Android
                   path: build
@@ -94,7 +94,7 @@ jobs:
     #               UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
     #           with:
     #               targetPlatform: StandaloneOSX
-    #         - uses: actions/upload-artifact@v3
+    #         - uses: actions/upload-artifact@v4
     #           with:
     #               name: Build-StandaloneOSX
     #               path: build
@@ -123,7 +123,7 @@ jobs:
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
                   targetPlatform: ${{ matrix.targetPlatform }}
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-${{ matrix.targetPlatform }}
                   path: build
