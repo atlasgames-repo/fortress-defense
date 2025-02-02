@@ -1,47 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2068260186826028433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8389249335307649525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiPartName: Upgrade
-  isClickable: 0
---- !u!114 &2068260188009662424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6512337755507661351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiPartName: Archer2
-  isClickable: 0
---- !u!114 &2068260188277932610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6240457668871534705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiPartName: AddArcher
-  isClickable: 0
 --- !u!1 &2068260188661768743
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,9 +23,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068260188661768743}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6590284593495180638}
   - {fileID: 6309423692445714546}
@@ -75,13 +35,13 @@ Transform:
   - {fileID: 6309423691656046344}
   - {fileID: 6309423692122086047}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1173495764089217041
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3997092089817157920}
     m_Modifications:
     - target: {fileID: 708281733923537412, guid: d1f8bad16af5bd6408637fda60294854,
@@ -215,6 +175,13 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5343908541588617782, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2068260188009662424}
   m_SourcePrefab: {fileID: 100100000, guid: d1f8bad16af5bd6408637fda60294854, type: 3}
 --- !u!1 &6512337755507661351 stripped
 GameObject:
@@ -222,6 +189,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1173495764089217041}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2068260188009662424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512337755507661351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: Archer2
+  isClickable: 0
 --- !u!4 &6590284593495180638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5421345240620737871, guid: d1f8bad16af5bd6408637fda60294854,
@@ -233,6 +214,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3997092089817157920}
     m_Modifications:
     - target: {fileID: 708281733923537412, guid: d1f8bad16af5bd6408637fda60294854,
@@ -341,6 +323,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1f8bad16af5bd6408637fda60294854, type: 3}
 --- !u!4 &6309423692122086047 stripped
 Transform:
@@ -353,6 +338,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3997092089817157920}
     m_Modifications:
     - target: {fileID: 708281733923537412, guid: d1f8bad16af5bd6408637fda60294854,
@@ -461,6 +447,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1f8bad16af5bd6408637fda60294854, type: 3}
 --- !u!4 &6309423692282413715 stripped
 Transform:
@@ -473,6 +462,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3997092089817157920}
     m_Modifications:
     - target: {fileID: 708281733923537412, guid: d1f8bad16af5bd6408637fda60294854,
@@ -581,6 +571,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1f8bad16af5bd6408637fda60294854, type: 3}
 --- !u!4 &6309423692445714546 stripped
 Transform:
@@ -593,6 +586,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3997092089817157920}
     m_Modifications:
     - target: {fileID: 708281733923537412, guid: d1f8bad16af5bd6408637fda60294854,
@@ -716,6 +710,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5343908541588617782, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2068260188277932610}
+    - targetCorrespondingSourceObject: {fileID: 7556888976348562354, guid: d1f8bad16af5bd6408637fda60294854,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2068260186826028433}
   m_SourcePrefab: {fileID: 100100000, guid: d1f8bad16af5bd6408637fda60294854, type: 3}
 --- !u!1 &6240457668871534705 stripped
 GameObject:
@@ -723,6 +728,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2068260188277932615}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2068260188277932610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6240457668871534705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: AddArcher
+  isClickable: 0
 --- !u!4 &6309423691656046344 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5421345240620737871, guid: d1f8bad16af5bd6408637fda60294854,
@@ -735,3 +754,17 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2068260188277932615}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2068260186826028433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389249335307649525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471613d457aa21e4d9cf625466645bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPartName: Upgrade
+  isClickable: 0
