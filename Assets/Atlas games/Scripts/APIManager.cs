@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using UnityEngine.Android;
 using UnityEditor;
 using UnityEngine.AI;
+using NUnit.Framework.Internal.Builders;
 
 public class APIManager : MonoBehaviour
 {
@@ -64,6 +65,7 @@ public class APIManager : MonoBehaviour
         GameObject top_parent = GameObject.FindGameObjectWithTag("StatusCanvas");
         if (!top_parent) return;
         GameObject root_parent = top_parent.transform.GetChild(0).gameObject;
+        root_parent.SetActive(true);
         Transform root = top_parent.transform.GetChild(0).GetChild(0).GetChild(0);
         if (!root_parent.activeInHierarchy) root_parent.SetActive(true);
         float added_delay = root.childCount;
@@ -72,6 +74,7 @@ public class APIManager : MonoBehaviour
         if (color != null)
             obj.GetComponent<Image>().color = (Color)color;
         await DestroyDelay(obj, status_destroy + added_delay, root);
+        root_parent.SetActive(false);
     }
     public async Task DestroyDelay(GameObject obj, float delay, Transform root)
     {
@@ -120,7 +123,7 @@ public class APIManager : MonoBehaviour
     }
     public async Task<UserResponse> Check_token()
     {
-        UserResponse res = await Get<UserResponse>(route: "/user/details", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        UserResponse res = await Get<UserResponse>(route: "/user/detail", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
     public async Task<UserResponse> GetRXP() {
@@ -247,7 +250,13 @@ public class APIManager : MonoBehaviour
             headers = new Dictionary<string, string>();
         if (auth_token == "")
             auth_token = "null";
-        using UnityWebRequest req = UnityWebRequest.Get(Base_url + route + parameters);
+        string param = "";
+        if (parameters == null) {
+            param = "?legacy=true";
+        } else {
+            param = $"{parameters}&legacy=true";
+        }
+        using UnityWebRequest req = UnityWebRequest.Get(Base_url + route + param);
         foreach (KeyValuePair<string, string> item in headers)
         {
             req.SetRequestHeader(item.Key, item.Value);

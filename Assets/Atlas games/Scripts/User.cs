@@ -101,13 +101,20 @@ public class User : MonoBehaviour
     public static async void Get_user()
     {
         UserResponse user_response = await APIManager.instance.Check_token();
-        UserResponse user_rxp_response = await APIManager.instance.GetRXP();
+        // UserResponse user_rxp_response = await APIManager.instance.GetRXP();
+        user_response.coin = UserProfile.coin;
+        user_response.uxp = UserProfile.points;
+        // user_response.rxp = user_rxp_response.xp;
+        // user_response.points = user_rxp_response.points;
+        user_response.rxpTotal = UserProfile.rxpTotal;
+        // user_response.rank = user_rxp_response.rank;
+        UserProfile = user_response;
+    }
+    public static void Get_user(UserResponse user_response)
+    {
         user_response.coin = UserProfile.coin;
         user_response.uxp = UserProfile.uxp;
-        user_response.rxp = user_rxp_response.xp;
-        user_response.points = user_rxp_response.points;
         user_response.rxpTotal = UserProfile.rxpTotal;
-        user_response.rank = user_rxp_response.rank;
         UserProfile = user_response;
     }
 

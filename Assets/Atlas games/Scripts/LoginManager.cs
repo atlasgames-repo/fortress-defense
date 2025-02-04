@@ -105,7 +105,8 @@ public class LoginManager : MonoBehaviour, IKeyboardCall
             else
             {
                 User.Token = auth_result.token;
-                await auth_with_token();
+                User.Get_user();
+                StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
             }
         }
     }
