@@ -10,17 +10,13 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using UnityEngine.Android;
-using UnityEditor;
-using UnityEngine.AI;
-using NUnit.Framework.Internal.Builders;
 
 public class APIManager : MonoBehaviour
 {
     public static APIManager instance;
     public string timeApiUrl = "https://worldtimeapi.org/api/timezone/Asia/Tehran";
     public string BASE_URL = "https://hokm-url.herokuapp.com", assetbundle_dir = "DownloadedBundles";
-    public static readonly string GAME_ID = "442";
+    public static readonly string GAME_ID = "4";
     public bool IS_DEBUG = true;
     public string DEBUG_BASE_URL = "http://localhost:8080";
     public GameObject status;
@@ -126,8 +122,12 @@ public class APIManager : MonoBehaviour
         UserResponse res = await Get<UserResponse>(route: "/user/detail", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
-    public async Task<UserResponse> GetRXP() {
-        UserResponse res = await Get<UserResponse>(route: "/user/xp", parameters:$"?game_id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+    public async Task<UserResponse> GetUserStats() {
+        UserResponse res = await Get<UserResponse>(route: "/user/stats", parameters:$"?id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        return res;
+    }
+    public async Task<UserResponse> GetUserRank() {
+        UserResponse res = await Get<UserResponse>(route: "/user/rank", parameters:$"?id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
 
@@ -141,18 +141,44 @@ public class APIManager : MonoBehaviour
 
     public async Task<Sprite> Get_rofile_picture(string url)
     {
+        string file_name = Generate_file_name(url);
+        string file_path = Path.Combine(Application.persistentDataPath, file_name);
+        Debug.LogError(Application.persistentDataPath);
+        if (File.Exists(file_path)) {
+            return Load_sprite(file_path);
+        }
         Texture2D texture = await GetTexture(url);
-        Rect rec = new Rect(0, 0, texture.width, texture.height);
-        return Sprite.Create(texture, rec, new Vector2(0, 0), 1);
+        Save_texture(texture, file_path);
+        return Texture_to_sprite(texture);
     }
-
-    public async Task<LeaderBoardResponseModel> Get_leader_board()
+    private void Save_texture(Texture2D texture, string filePath)
+    {
+        byte[] imageBytes = texture.EncodeToPNG();
+        File.WriteAllBytes(filePath, imageBytes);
+    }
+    private Sprite Load_sprite(string filePath)
+    {
+        byte[] imageBytes = File.ReadAllBytes(filePath);
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(imageBytes);
+        return Texture_to_sprite(texture);
+    }
+    private Sprite Texture_to_sprite(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100);
+    }
+    private string Generate_file_name(string url) {
+        return $"{url.GetHashCode()}.png";
+    }
+    public async Task<LeaderBoardResponseModel> Get_leader_board(int page)
     {
         LeaderBoardParams param = new LeaderBoardParams {
-            game_id = GAME_ID,
-            type = "all"
+            page = page
         };
-        return await Get<LeaderBoardResponseModel>(route: "/games/rankings", auth_token: User.Token,parameters:param.ToParams);
+        LeaderboardData[] data = await Get<LeaderboardData[]>(route: $"/game/{GAME_ID}/rank", auth_token: User.Token,parameters:param.ToParams);
+        LeaderBoardResponseModel res = new LeaderBoardResponseModel();
+        res.results = data;
+        return res;
     }
 
    public async Task<TimeAndDateResponseModel> GetCurrentDateAndTime()
@@ -271,7 +297,7 @@ public class APIManager : MonoBehaviour
         {
             await Task.Yield();
         }
-        if (req.responseCode != 200)
+        if (req.responseCode != 200 && req.responseCode != 404)
         {
             CommonErrorResponse error_response = null;
             try
@@ -285,9 +311,7 @@ public class APIManager : MonoBehaviour
             }
             RunStatus(custom_message != null ? custom_message : NetworkStatusError.UNKNOWN_ERROR, ErrorColor);
             throw new System.Net.WebException(message: req.error);
-        }
-        else
-        {
+        } else {
             T res;
             try
             {

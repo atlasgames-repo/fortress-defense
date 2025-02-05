@@ -87,21 +87,21 @@ public class data
 public class LeaderboardData: BaseModel
 {
     // data for leader board that has to change based on postman.
-    public int user_id;
-    public string user_name;
-    public string user_first_name;
-    public string user_last_name;
-    public string user_link;
-    public string user_avatar;
-    public int points;
+    public int uid;
+    public int gid;
+    public string username;
+    public string first_name;
+    public string last_name;
+    public string avatar;
+    public string avatar_url;
+    public int total;
     public int rank;
     //public string imageUrl;
     // public int rxp;
 }
 [Serializable]
 public class LeaderBoardParams: BaseModel {
-    public string game_id;
-    public string type;
+    public int page;
 }
 [Serializable]
 public class LeaderBoardResponseModel : CommonErrorResponse
@@ -179,7 +179,7 @@ public class Authentication : BaseModel
 [Serializable]
 public class UserResponse : BaseModel
 {
-    public string first_name, last_name, display_name, email, username, registered_date, avatar;
+    public string first_name, last_name, name, email, username, nickname, avatar_url, avatar;
     public int coin, gem, uxp, rxp, rxpTotal,xp, rank, points;
 }
 
