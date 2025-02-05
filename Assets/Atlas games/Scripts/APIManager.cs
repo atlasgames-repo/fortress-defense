@@ -10,6 +10,9 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+#if UNITY_ANDROID
+using UnityEngine.Android;
+#endif
 
 public class APIManager : MonoBehaviour
 {
@@ -38,7 +41,7 @@ public class APIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         UnityWebRequest.ClearCookieCache();
         Application.targetFrameRate = 144;
-#if UNITY_ANDROID || UNITY_IPHONE
+#if UNITY_ANDROID
         bool is_read = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead);
         bool is_write = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite);
         if (!is_read || !is_write)
