@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System;
 using Newtonsoft.Json;
 using UnityEngine.AddressableAssets;
+using JetBrains.Annotations;
 
 public class BaseModel
 {
@@ -76,6 +77,13 @@ public class GemResponseModel : CommonErrorResponse
 {
     public int gem, rank;
 }
+[Serializable]
+public class UserStatsResponseModel : CommonErrorResponse
+{
+    public int ID, gid, uid;
+    public float total, value;
+    public string type, create_at;
+}
 
 [Serializable]
 public class data
@@ -129,6 +137,22 @@ public class TimeAndDateResponseModel : CommonErrorResponse
   public  string week_number;
 }
 [Serializable]
+public class USER_STATS_TYPE {
+    public static readonly string GEM = "gem", UXP = "uxp", RXP = "rxp";
+}
+[Serializable]
+public class UserStatsRequestModel : BaseModel
+{
+    public int gid;
+    public float value;
+    public string type;
+    public UserStatsRequestModel(float value, string type) {
+        this.gid = int.Parse(APIManager.GAME_ID);
+        this.value = value;
+        this.type = type;
+    }
+}
+[Serializable]
 public class GemRequestModel : BaseModel
 {
     public string amount = null;
@@ -165,9 +189,7 @@ public class AuthenticationResponse : CommonErrorResponse
 public class CommonErrorResponse : BaseModel
 {
     public string message;
-    public string code;
-    public bool result;
-    public Data data;
+    public string detail;
 }
 [Serializable]
 public class Authentication : BaseModel

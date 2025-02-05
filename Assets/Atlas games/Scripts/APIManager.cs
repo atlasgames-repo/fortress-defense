@@ -99,16 +99,16 @@ public class APIManager : MonoBehaviour
     public async Task<AssetBundleUpdateResponse> Check_for_updates(string type = null)
     {
         string param = type != null ? $"?type={type}" : "";
-        return await Get<AssetBundleUpdateResponse>(route: $"/updates{param}", auth_token: User.Token, custom_message: NetworkStatusError.COULDNT_GET_UPDATES);
+        return await Get<AssetBundleUpdateResponse>(route: $"/updates{param}", custom_message: NetworkStatusError.COULDNT_GET_UPDATES);
     }
     public async Task Updates_achivement(int status = 0, string id = "0")
     {
         string param = new AchievementUpdateModel(_id: id, _status: status).ToParams;
-        await Get<object>(route: "/achivements/add", auth_token: User.Token, parameters: param);
+        await Get<object>(route: "/achivements/add", parameters: param);
     }
     public async Task<AchievementModel> Get_achivements()
     {
-        return await Get<AchievementModel>(route: "/achivements", auth_token: User.Token);
+        return await Get<AchievementModel>(route: "/achivements");
     }
     public async Task DownloadUpdate(string name, string address, IProgress<float> progress)
     {
@@ -122,15 +122,15 @@ public class APIManager : MonoBehaviour
     }
     public async Task<UserResponse> Check_token()
     {
-        UserResponse res = await Get<UserResponse>(route: "/user/detail", auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        UserResponse res = await Get<UserResponse>(route: "/user/detail", custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
     public async Task<UserResponse> GetUserStats() {
-        UserResponse res = await Get<UserResponse>(route: "/user/stats", parameters:$"?id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        UserResponse res = await Get<UserResponse>(route: "/user/stats", parameters:$"?id={GAME_ID}" ,custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
     public async Task<UserResponse> GetUserRank() {
-        UserResponse res = await Get<UserResponse>(route: "/user/rank", parameters:$"?id={GAME_ID}" ,auth_token: User.Token, custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
+        UserResponse res = await Get<UserResponse>(route: "/user/rank", parameters:$"?id={GAME_ID}" ,custom_message: NetworkStatusError.TOKEN_LOGIN_FAIL);
         return res;
     }
 
@@ -139,14 +139,13 @@ public class APIManager : MonoBehaviour
         return await Get<UserResponse>(
         route: "/user/update",
         parameters: userdata.ToParams,
-        auth_token: User.Token, custom_message: NetworkStatusError.USER_UPDATE_FAIL);
+        custom_message: NetworkStatusError.USER_UPDATE_FAIL);
     }
 
     public async Task<Sprite> Get_rofile_picture(string url)
     {
         string file_name = Generate_file_name(url);
         string file_path = Path.Combine(Application.persistentDataPath, file_name);
-        Debug.LogError(Application.persistentDataPath);
         if (File.Exists(file_path)) {
             return Load_sprite(file_path);
         }
@@ -178,7 +177,7 @@ public class APIManager : MonoBehaviour
         LeaderBoardParams param = new LeaderBoardParams {
             page = page
         };
-        LeaderboardData[] data = await Get<LeaderboardData[]>(route: $"/game/{GAME_ID}/rank", auth_token: User.Token,parameters:param.ToParams);
+        LeaderboardData[] data = await Get<LeaderboardData[]>(route: $"/game/{GAME_ID}/rank", parameters:param.ToParams);
         LeaderBoardResponseModel res = new LeaderBoardResponseModel();
         res.results = data;
         return res;
@@ -210,19 +209,27 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    [Obsolete("This method is deprecated. use Request_Stats() instead.")]
     public async Task<GemResponseModel> Request_Gem(GemRequestModel parames = null)
     {
         return await Get<GemResponseModel>(
         route: "/user/gem",
         parameters: parames == null ? new GemRequestModel().ToParams : parames.ToParams,
-        auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
+        custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }
+    public async Task<UserStatsResponseModel> Request_Stats(UserStatsRequestModel body) {
+        return await Post<UserStatsResponseModel>(
+            route: "/user/stats",
+            data: body.ToJson
+        );
+    }
+    [Obsolete("This method is deprecated. use Request_Stats() instead.")]
     public async Task<RxpRequestModel> Request_Rxp(RxpRequestModel parames = null)
     {
         return await Get<RxpRequestModel>(
             route: "/user/xp",
             parameters: parames == null ? new RxpRequestModel().ToParams : parames.ToParams,
-            auth_token: User.Token, custom_message: NetworkStatusError.UNKNOWN_ERROR);
+            custom_message: NetworkStatusError.UNKNOWN_ERROR);
     }
     #endregion
 
@@ -273,24 +280,22 @@ public class APIManager : MonoBehaviour
 
         }
     }
-    private async Task<T> Get<T>(string route, string parameters = null, Dictionary<string, string> headers = null, string auth_token = "null", string custom_message = null)
+    private async Task<T> Get<T>(string route, string parameters = null, Dictionary<string, string> headers = null, string custom_message = null)
     {
         if (headers == null)
             headers = new Dictionary<string, string>();
-        if (auth_token == "")
-            auth_token = "null";
         string param = "";
         if (parameters == null) {
             param = "?legacy=true";
         } else {
             param = $"{parameters}&legacy=true";
         }
-        using UnityWebRequest req = UnityWebRequest.Get(Base_url + route + param);
+        using UnityWebRequest req = UnityWebRequest.Get($"{Base_url}{route}{param}");
         foreach (KeyValuePair<string, string> item in headers)
         {
             req.SetRequestHeader(item.Key, item.Value);
         }
-        req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
+        req.SetRequestHeader("Authorization", $"Bearer {User.Token}");
         // Set the request headers
         req.SetRequestHeader("Content-Type", "application/json");
         req.SetRequestHeader("Accept", "application/json");
@@ -333,7 +338,7 @@ public class APIManager : MonoBehaviour
             return res;
         }
     }
-    private async Task<T> Post<T>(string route, string data = null, Dictionary<string, string> headers = null, string auth_token = "null")
+    private async Task<T> Post<T>(string route, string data = null, Dictionary<string, string> headers = null)
     {
         if (headers == null)
         {
@@ -344,7 +349,7 @@ public class APIManager : MonoBehaviour
         {
             req.SetRequestHeader(item.Key, item.Value);
         }
-        req.SetRequestHeader("Authorization", $"Bearer {auth_token}");
+        req.SetRequestHeader("Authorization", $"Bearer {User.Token}");
         // Set the request headers
         req.SetRequestHeader("Content-Type", "application/json");
         req.SetRequestHeader("Accept", "application/json");
@@ -354,7 +359,7 @@ public class APIManager : MonoBehaviour
         {
             await Task.Yield();
         }
-        if (req.responseCode != 200)
+        if (req.responseCode != 200 && req.responseCode != 404)
         {
             CommonErrorResponse error_response = null;
             try

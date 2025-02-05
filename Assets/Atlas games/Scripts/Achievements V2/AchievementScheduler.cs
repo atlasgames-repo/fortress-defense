@@ -23,6 +23,9 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
         if (Dispacher != null)
             StopCoroutine(Dispacher);
     }
+    private void Awake() {
+        init();
+    }
     void Start()
     {
         if (Dispacher == null)
@@ -47,10 +50,9 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
                     AchievementScheduleModel new_permenent_schedule = new AchievementScheduleModel(schedules.type, schedules.NumberOfMissions, schedules.name);
                     Add(new_permenent_schedule._id, new_permenent_schedule);
                     // generate the permenent models
-                    AchievementModel[] models = data.models.Where(ach => ach.isOneTime == true).ToArray();
-                    for (int i = 0; i < models.Length; i++)
+                    for (int i = 0; i < schedules.NumberOfMissions; i++)
                     {
-                        AchievementModel new_achievement = models[i];
+                        AchievementModel new_achievement = GetRandomPermementAchievemntByType(GetAchievementType);
                         new_achievement._id = Guid.NewGuid();
                         new_achievement.Schedul_id = new_permenent_schedule._id;
                         ChangeModelCheckPoint(ref new_achievement, new_permenent_schedule);
@@ -130,6 +132,10 @@ public class AchievementScheduler : BasePlayerPrefs<AchievementScheduleModel>
     public AchievementModel GetRandomAchievemntByType(AchievementType _type)
     {
         return data.models.Where(achiv => achiv.type == _type && achiv.isOneTime == false).OrderBy(x => UnityEngine.Random.value).First();
+    }
+    public AchievementModel GetRandomPermementAchievemntByType(AchievementType _type)
+    {
+        return data.models.Where(achiv => achiv.type == _type && achiv.isOneTime == true).OrderBy(x => UnityEngine.Random.value).First();
     }
     public AchievementType GetAchievementType
     {
