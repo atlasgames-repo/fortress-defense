@@ -16,7 +16,7 @@ public class APIManager : MonoBehaviour
     public static APIManager instance;
     public string timeApiUrl = "https://worldtimeapi.org/api/timezone/Asia/Tehran";
     public string BASE_URL = "https://hokm-url.herokuapp.com", assetbundle_dir = "DownloadedBundles";
-    public static readonly string GAME_ID = "4";
+    public static readonly string GAME_ID = "1";
     public bool IS_DEBUG = true;
     public string DEBUG_BASE_URL = "http://localhost:8080";
     public GameObject status;
