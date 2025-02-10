@@ -21,6 +21,6 @@ public class LeaderboardListItem : MonoBehaviour
         if (!show_avatar && !image) {
             return;
         };
-        image.sprite = await APIManager.instance.Get_rofile_picture(data.user_avatar);
+        //image.sprite = await APIManager.instance.Get_rofile_picture(data.user_avatar);
     }
 }
