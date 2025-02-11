@@ -11,7 +11,7 @@ public class levelChanges2 : MonoBehaviour
     {
         //GameLevelSetupScr = GameLevelSetupObj.GetComponent<GameLevelSetup>();
 
-        checkWorld();
+        wplayMusic();
     }
 
     void Update()
@@ -25,24 +25,9 @@ public class levelChanges2 : MonoBehaviour
            }
     }
 
-    void checkWorld()
+    void wplayMusic()
     {
-        if(1 <= GlobalValue.levelPlaying && GlobalValue.levelPlaying <= 10)
-       {
-           Debug.Log("hello1");
-           SoundManager.PlaySfx(SoundManager.Instance.world1);
-       }
-       else if(11 <= GlobalValue.levelPlaying && GlobalValue.levelPlaying <= 20)
-       {
-           Debug.Log("hello2");
-           SoundManager.PlaySfx(SoundManager.Instance.world2);
-       }
-       else if(21 <= GlobalValue.levelPlaying && GlobalValue.levelPlaying <= 30)
-       {
-           Debug.Log("hello3");
-           SoundManager.PlaySfx(SoundManager.Instance.world3);
-       }
-
+       SoundManager.PlaySfx(SoundManager.Instance.world[(int)(GlobalValue.levelPlaying/10)]);
        Debug.Log("code is running");      
     }
 }
