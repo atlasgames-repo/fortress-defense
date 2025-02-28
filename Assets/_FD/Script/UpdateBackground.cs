@@ -19,7 +19,7 @@ public class UpdateBackground : MonoBehaviour
     }
 
     void changeBackground()
-    {/*
+    {
         if(1 <= GlobalValue.levelPlaying && GlobalValue.levelPlaying <= 10)
         {
             GetComponent<SpriteRenderer>().sprite = background.b1;
@@ -37,17 +37,6 @@ public class UpdateBackground : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = background.b3;
             Instantiate(detail.worldDetail3, detail.worldDetail3.transform.position, detail.worldDetail3.transform.rotation);
             Instantiate(detail.particle3, detail.particle3.transform.position, detail.particle3.transform.rotation);
-        }*/
-
-        //background
-        GetComponent<SpriteRenderer>().sprite = background.wBackground[(int)(GlobalValue.levelPlaying/10)];
-        //details
-        Instantiate(detail.worldDetail[(int)(GlobalValue.levelPlaying/10)],
-        detail.worldDetail[(int)(GlobalValue.levelPlaying/10)].transform.position,
-        detail.worldDetail[(int)(GlobalValue.levelPlaying/10)].transform.rotation);
-        //particles
-        Instantiate(detail.particle[(int)(GlobalValue.levelPlaying/10)],
-        detail.particle[(int)(GlobalValue.levelPlaying/10)].transform.position,
-        detail.particle[(int)(GlobalValue.levelPlaying/10)].transform.rotation);
+        }
     }
 }
