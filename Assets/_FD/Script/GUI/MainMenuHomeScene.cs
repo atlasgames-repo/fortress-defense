@@ -58,7 +58,7 @@ public class MainMenuHomeScene : MonoBehaviour
         if (Loading != null)
             Loading.SetActive(true);
 
-        StartCoroutine(LoadAsynchronously(playingLevelName));
+        Invoke("newLevelDelay", 3f);
     }
 
     public void LoadScene(string sceneNamage)
@@ -76,12 +76,12 @@ public class MainMenuHomeScene : MonoBehaviour
         {
             GlobalValue.isFirstOpenMainMenu = false;
             SoundManager.Instance.PauseMusic(true);
-            SoundManager.PlaySfx(SoundManager.Instance.beginSoundInMainMenu);
-            yield return new WaitForSeconds(SoundManager.Instance.beginSoundInMainMenu.length);
+            //SoundManager.PlaySfx(SoundManager.Instance.beginSoundInMainMenu);
+            //yield return new WaitForSeconds(SoundManager.Instance.beginSoundInMainMenu.length);
             SoundManager.Instance.PauseMusic(false);
             SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         HomeUI.SetActive(true);
     }
 
@@ -242,5 +242,10 @@ public class MainMenuHomeScene : MonoBehaviour
     {
         if (GameMode.Instance)
             GameMode.Instance.ResetDATA();
+    }
+
+    public void newLevelDelay()
+    {
+        StartCoroutine(LoadAsynchronously(playingLevelName));
     }
 }
