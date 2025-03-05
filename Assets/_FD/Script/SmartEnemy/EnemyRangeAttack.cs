@@ -21,18 +21,34 @@ public class EnemyRangeAttack : MonoBehaviour
     public float damage = 30;
     public float detectDistance = 5;
     public Projectile bullet;
-    [HideInInspector] public float shootingRate = 1;
+    public float shootingRate = 1;
     [HideInInspector] public int multiShoot = 1;
     [HideInInspector] public float multiShootRate = 0.2f;
     float lastShoot = 0;
     [HideInInspector] public GameObject GunObj;
     Vector3 dir = Vector3.right;
+    [Space(3)] [Header("Night Mode")] public float customNightMultiplier = 2f;
+    public bool useCustomNightMultiplierOnly = false;
+    
     public bool isAttacking { get; set; }
 
     WeaponEffect hasWeaponEffect;
     void Start()
     {
-
+        
+            float initialDamage = damage;
+            if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
+            {
+                if (useCustomNightMultiplierOnly)
+                {
+                    damage = customNightMultiplier * initialDamage;
+                }
+                else
+                {
+                    damage = initialDamage * GameLevelSetup.Instance.NightModeXpMultiplier();
+                }
+            }
+        
         if (GetComponent<Enemy>() && GetComponent<Enemy>().upgradedCharacterID)
             hasWeaponEffect = GetComponent<Enemy>().upgradedCharacterID.weaponEffect;
     }
@@ -113,11 +129,11 @@ public class EnemyRangeAttack : MonoBehaviour
 
             float shootAngle = 0;
             shootAngle = isFacingRight ? 0 : 180;
-
+            
             var projectile = SpawnSystemHelper.GetNextObject(bullet.gameObject, false).GetComponent<Projectile>();
             projectile.transform.position = shootingPoint != null ? shootingPoint.position : firePosition();
             projectile.transform.rotation = Quaternion.Euler(0, 0, shootAngle);
-
+            projectile.LayerCollision = enemyLayer;
             Vector3 _dir;
             if (aimTarget)
             {

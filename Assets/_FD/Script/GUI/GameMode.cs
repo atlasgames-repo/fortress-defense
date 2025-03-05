@@ -105,13 +105,14 @@ public class GameMode : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
         {
             GlobalValue.LevelPass = 999999;
+            GlobalValue.WorldPass = 999999;
         }
     }
 
     public void ResetDATA()
     {
         PlayerPrefs.DeleteAll();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        Application.Quit();
     }
 
     void OnGUI()

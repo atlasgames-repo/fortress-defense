@@ -45,6 +45,29 @@ public class User : MonoBehaviour
             UserResponse _UserProfile = UserProfile;
             _UserProfile.uxp += value;
             UserProfile = _UserProfile;
+            Update_uxp(value);
+        }
+    }
+    public static int Rxp
+        {
+            get { return UserProfile.rxp; }
+            set
+            {
+                UserResponse _UserProfile = UserProfile;
+                _UserProfile.rxp += value;
+                UserProfile = _UserProfile;
+                Update_Rxp(value);
+            }
+        }
+
+    public static int RxpTotal
+    {
+        get { return UserProfile.rxpTotal; }
+        set
+        {
+            UserResponse _UserProfile = UserProfile;
+            _UserProfile.rxpTotal += value;
+            UserProfile = _UserProfile;
         }
     }
     public static int Level
@@ -63,7 +86,17 @@ public class User : MonoBehaviour
     }
     private static async void Update_Gem(UserUpdate user)
     {
-        await APIManager.instance.Request_Gem(new GemRequestModel(_amount: user.gem.ToString()));
+        await APIManager.instance.Request_Stats(new UserStatsRequestModel(user.gem, USER_STATS_TYPE.GEM));
+        Get_User_Eeventually();
+    }
+    private static async void Update_uxp(int amount)
+    {
+        await APIManager.instance.Request_Stats(new UserStatsRequestModel(amount, USER_STATS_TYPE.UXP));
+        Get_User_Eeventually();
+    }
+    private static async void Update_Rxp(int amount)
+    {
+        await APIManager.instance.Request_Stats(new UserStatsRequestModel(amount, USER_STATS_TYPE.RXP));
         Get_User_Eeventually();
     }
     public static void Get_User_Eeventually()
@@ -73,10 +106,21 @@ public class User : MonoBehaviour
     public static async void Get_user()
     {
         UserResponse user_response = await APIManager.instance.Check_token();
-        GemResponseModel gems_res = await APIManager.instance.Request_Gem();
-        user_response.gem = gems_res.gem;
+        UserResponse user_rxp_response = await APIManager.instance.GetUserStats();
+        UserResponse user_rank_response = await APIManager.instance.GetUserRank();
+        user_response.coin = UserProfile.coin;
+        user_response.uxp = user_rxp_response.uxp;
+        user_response.rxp = user_rxp_response.rxp;
+        user_response.gem = user_rxp_response.gem;
+        user_response.rxpTotal = UserProfile.rxpTotal;
+        user_response.rank = user_rank_response.rank;
+        UserProfile = user_response;
+    }
+    public static void Get_user(UserResponse user_response)
+    {
         user_response.coin = UserProfile.coin;
         user_response.uxp = UserProfile.uxp;
+        user_response.rxpTotal = UserProfile.rxpTotal;
         UserProfile = user_response;
     }
 
