@@ -90,11 +90,11 @@ public class ShopItem : ScrollItem<ScrollItemData>
                     itemImage.rectTransform.sizeDelta = new Vector2(originalSize.x / aspectRatio, originalSize.y);
                 }
 
-                itemPriceText.text = itemPrice.ToString();
                 int itemCount = GlobalValue.GetChosenShopItem(itemName);
                 itemNameText.text = itemName;
                 itemCountText.text = itemCount.ToString();
             }
+            itemPriceText.text = itemPrice.ToString();
         }
         else
         {

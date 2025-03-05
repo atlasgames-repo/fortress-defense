@@ -48,7 +48,7 @@ public class GlobalValue : MonoBehaviour
     }
     public static string inventoryMagic
     {
-        get { return PlayerPrefs.GetString("InventoryMagic","28,1,2"); }
+        get { return PlayerPrefs.GetString("InventoryMagic","29,30,31"); }
         set { PlayerPrefs.SetString("InventoryMagic", value); }
     }
 
@@ -60,13 +60,13 @@ public class GlobalValue : MonoBehaviour
     
     public static string inventoryPets
     {
-        get { return PlayerPrefs.GetString("InventoryPet", "23"); }
+        get { return PlayerPrefs.GetString("InventoryPet", "46"); }
         set { PlayerPrefs.SetString("InventoryPet", value); }
     }
     
     public static string inventoryTowers
     {
-        get { return PlayerPrefs.GetString("inventoryTowers", "7"); }
+        get { return PlayerPrefs.GetString("inventoryTowers", "33"); }
         set { PlayerPrefs.SetString("inventoryTowers", value); }
     }
     

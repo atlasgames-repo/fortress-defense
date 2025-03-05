@@ -50,7 +50,6 @@ public class Dialog : MonoBehaviour
         dialogImage.gameObject.SetActive(false);
         layoutGroup.padding.left = _initialPaddingLeft;
         layoutGroup.padding.right = _initialPaddingRight;
-        dialogText.alignment = TextAlignmentOptions.Left;
         pictureContentHolder.SetActive(true);
         layoutGroup.childControlWidth = false;
 
@@ -61,7 +60,6 @@ public class Dialog : MonoBehaviour
                 layoutGroup.padding.right = textDialogPadding;
                 layoutGroup.childControlWidth = true;
                 pictureContentHolder.SetActive(false);
-                dialogText.alignment = TextAlignmentOptions.Center;
                 break;
             case DialogContent.Image:
                 dialogImage.gameObject.SetActive(true);
@@ -98,7 +96,6 @@ public class Dialog : MonoBehaviour
             nextLayoutGroup.childControlWidth = false;
             nextLayoutGroup.padding.left = _initialPaddingLeft;
             nextLayoutGroup.padding.right = _initialPaddingRight;
-            dialogText.alignment = TextAlignmentOptions.Left;
             nextPictureContentHolder.SetActive(true);
             dialogTextNext.text = currentTip.tipText;
 
@@ -108,7 +105,6 @@ public class Dialog : MonoBehaviour
                     nextLayoutGroup.padding.left = textDialogPadding;
                     nextLayoutGroup.padding.right = textDialogPadding;
                     nextLayoutGroup.childControlWidth = true;
-                    dialogTextNext.alignment = TextAlignmentOptions.Center;
                     nextPictureContentHolder.SetActive(false);
                     break;
                 case DialogContent.Image:
@@ -162,7 +158,6 @@ public class Dialog : MonoBehaviour
                         layoutGroup.padding.left = textDialogPadding;
                         layoutGroup.padding.right = textDialogPadding;
                         layoutGroup.childControlWidth = true;
-                        dialogText.alignment = TextAlignmentOptions.Center;
                         dialogText.text = currentTip.tipText;
                    pictureContentHolder.SetActive(false);
                     }

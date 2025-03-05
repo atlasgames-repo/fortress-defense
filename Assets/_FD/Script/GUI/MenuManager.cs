@@ -26,6 +26,8 @@ public class MenuManager : MonoBehaviour, IListener
     public Image musicImage;
     public Sprite soundImageOn, soundImageOff, musicImageOn, musicImageOff;
 
+    public bool levelEnd = false;
+
 
     UI_UI uiControl;
     public event Action OnSceneReloaded;
@@ -173,6 +175,8 @@ public class MenuManager : MonoBehaviour, IListener
         if (LevelEnemyManager.Instance.levelType == LevelWave.LevelType.Endless) LeaderBoardUI.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         FailUI.SetActive(true);
+        SoundManager.PlaySfx(SoundManager.Instance.soundFail);
+
         if (LifeTTRSource.Life <= 1)
             FailUI.transform.GetChild(1).GetChild(1).GetComponent<Button>().interactable = false;
 
