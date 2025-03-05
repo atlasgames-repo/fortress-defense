@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
+  is_boss: 0
   useGravity: 0
   gravity: 50
   walkSpeed: 1.5
@@ -283,7 +284,9 @@ MonoBehaviour:
   explosionFX: []
   randomHitPoint: {x: 0.2, y: 0.2}
   randomBloodPuddlePoint: {x: 0.5, y: 0.25}
-  healthBarOffset: {x: 0, y: 1.5}
+  healthBarOffset: {x: 0, y: 1}
+  AutoHealthBarOffset: 0.1
+  IsAutoHealthBar: 1
   enemyState: 0
   weaknessMultiplier: 10
   strengthMultiplier: 0.224
@@ -309,6 +312,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d828c6f696d736348b98d90b6aa3fcb9, type: 3}
   soundDieBlowVol: 0.8
   soundDieBlow: []
+  BossMusic: {fileID: 0}
   soundSpawnVol: 0.5
   soundSpawn: []
   currentHealth: 0
@@ -318,9 +322,29 @@ MonoBehaviour:
   delayChasePlayerWhenDetect: 0
   is_spine: 0
   skeletonAnimation: {fileID: 0}
+  customNightMultiplier: 2
+  useCustomNightMultiplier: 0
+  magnet: 0
+  magnetPos: {x: 0, y: 0, z: 0}
+  magnetAttractionSpeed: 0
+  minMagnetDistance: 1
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   is_targeted: 0
+  spawnFromUnderground: 0
+  undergroundSandPile: {fileID: 2967936131171522836, guid: a8798ad5383bdbd4ca79e8cee187891a,
+    type: 3}
+  characterSprites: []
+  undergroundPileScale: 1
+  climbingTime: 1
+  maskYScale: 2
+  climbDepth: 1
+  xOffset: 0.3
+  secondaryHeight: 0.8
+  xDistanceFromEnemy: 1.5
+  holeAnimationTime: 0.5
+  warriorTag: Warrior
+  shadow: {fileID: 0}
 --- !u!114 &760439294879069736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +371,8 @@ MonoBehaviour:
   soundAttacks:
   - {fileID: 8300000, guid: f0ab3519c32b5214bb094ea00be1b6a9, type: 3}
   - {fileID: 8300000, guid: f9edee600efe0b34aa63df5a9bf16de9, type: 3}
+  customNightMultiplier: 2
+  useCustomNightMultiplierOnly: 0
 --- !u!50 &2942940229510002419
 Rigidbody2D:
   serializedVersion: 4
@@ -382,6 +408,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinGiveMin: 3
   coinGiveMax: 8
+  customNightMultiplier: 2
+  useCustomNightMultiplierOnly: 0
 --- !u!210 &7947831695814233211
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -407,6 +435,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expMin: 5
   expMax: 8
+  customNightMultiplier: 2
+  useCustomNightMultiplierOnly: 0
 --- !u!1 &4573108808307142193
 GameObject:
   m_ObjectHideFlags: 0

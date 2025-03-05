@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8706348508595480197
+--- !u!1 &6056348686631943405
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,76 +8,109 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 100950453862406915}
-  - component: {fileID: 5160583705528464433}
+  - component: {fileID: 1139858410563348182}
+  - component: {fileID: 5777352024512849714}
   m_Layer: 0
-  m_Name: Level 24
+  m_Name: Level 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &100950453862406915
+--- !u!4 &1139858410563348182
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8706348508595480197}
+  m_GameObject: {fileID: 6056348686631943405}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5160583705528464433
+--- !u!114 &5777352024512849714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8706348508595480197}
+  m_GameObject: {fileID: 6056348686631943405}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10855318d3b18864dac9125a2f68e835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 3
-  defaultExp: 250
-  backgroundSprite: {fileID: 21300000, guid: 819a86761329b794f93bb189d863d825, type: 3}
+  enemiesList: []
+  type: 1
+  defaultExp: 220
   Waves:
-  - wait: 0.8
+  - wait: 0
     enemySpawns:
-    - wait: 0.24
-      enemy: {fileID: 3946748681848493890, guid: 76bd4471ba8a6d34cb7b57cb50b197dd,
+    - wait: 0
+      enemy: {fileID: 3697426553599540029, guid: 744cead175a7c9f44ad29de6d5d92aff,
         type: 3}
-      numberEnemy: 2
-      rate: 0.97
+      numberEnemy: 3
+      rate: 0
       customHealth: 0
-      customSpeed: 0
+      customSpeed: 1
       customAttackDmg: 0
       boosType: 0
-      BossScale: 1
-    - wait: 0.84
-      enemy: {fileID: 6766448378530673492, guid: b9166541803a17d43b6bed03d3d60701,
+      BossScale: 0
+      BossMinExp: 0
+      BossMaxExp: 0
+      spawnFromUnderground: 0
+    - wait: 7
+      enemy: {fileID: 3697426553599540029, guid: 2651ab0d41be8ec4182493874540209e,
         type: 3}
-      numberEnemy: 52
-      rate: 0.97
+      numberEnemy: 3
+      rate: 0
       customHealth: 0
-      customSpeed: 0
+      customSpeed: 1
       customAttackDmg: 0
       boosType: 0
-      BossScale: 1
-  - wait: 0.8
+      BossScale: 0
+      BossMinExp: 0
+      BossMaxExp: 0
+      spawnFromUnderground: 0
+  - wait: 5
     enemySpawns:
-    - wait: 0.45
-      enemy: {fileID: 8735511819807008694, guid: 4938ba1c1070b8b4e8cda5c6fb4cf6c0,
+    - wait: 0
+      enemy: {fileID: 3697426553599540029, guid: 50fc1383c12e7f24a8a693dcc9dc70ca,
         type: 3}
-      numberEnemy: 7
-      rate: 1.41
+      numberEnemy: 3
+      rate: 0
       customHealth: 0
-      customSpeed: 0
+      customSpeed: 1.05
       customAttackDmg: 0
-      boosType: 1
-      BossScale: 4
+      boosType: 0
+      BossScale: 0
+      BossMinExp: 0
+      BossMaxExp: 0
+      spawnFromUnderground: 0
+    - wait: 7
+      enemy: {fileID: 3697426553599540029, guid: 171832d2157a48d4bb37a1c6525b5239,
+        type: 3}
+      numberEnemy: 3
+      rate: 0
+      customHealth: 0
+      customSpeed: 1.05
+      customAttackDmg: 0
+      boosType: 0
+      BossScale: 0
+      BossMinExp: 0
+      BossMaxExp: 0
+      spawnFromUnderground: 0
+  increaseEnemySpeedDifficultyRate: 0.05
+  increaseEnemyAttackDifficultyRate: 0.1
+  increaseEnemyHealthDifficultyRate: 0.1
+  increaseEnemyAmountDifficultyRate: 0.4
+  increaseEnemyWaitDifficultyRate: 0.2
+  initialWaitAmount: 1
+  level: 23
+  backgroundSprite: {fileID: 21300000, guid: 16084e46c1bd857498837807db7899ce, type: 3}
+  nightMode: 0
+  nightMultiplierFixedAmount: 2
