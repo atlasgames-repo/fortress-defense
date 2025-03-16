@@ -50,9 +50,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip soundTimeDown;
 
     [Header("WORLD SONGS")]
-    public AudioClip world1;
-    public AudioClip world2;
-    public AudioClip world3;
+    public AudioClip[] world;
 
     //public AudioClip switchPlayerSound;
 
