@@ -2,7 +2,8 @@ name: Unity Build Etra
 
 on:
     workflow_run:
-        workflows: ["Unity Build Addressable Extra"]
+        workflows: 
+            - Unity Build Addressable Extra
         types:
             - completed
     push:
@@ -42,7 +43,7 @@ jobs:
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
                   targetPlatform: ${{ matrix.targetPlatform }}
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-${{ matrix.targetPlatform }}
                   path: build
@@ -71,32 +72,32 @@ jobs:
                   androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
                   androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
                   androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-Android
                   path: build
-    buildForMac:
-        name: Build for StandaloneOSX
-        runs-on: macos-latest
-        steps:
-            - uses: actions/checkout@v3
-              with:
-                  lfs: true
-            - uses: actions/cache@v3
-              with:
-                  path: Library
-                  key: Library-StandaloneOSX
-            - uses: game-ci/unity-builder@v2
-              env:
-                  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-                  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-                  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-              with:
-                  targetPlatform: StandaloneOSX
-            - uses: actions/upload-artifact@v3
-              with:
-                  name: Build-StandaloneOSX
-                  path: build
+    # buildForMac:
+    #     name: Build for StandaloneOSX
+    #     runs-on: macos-latest
+    #     steps:
+    #         - uses: actions/checkout@v3
+    #           with:
+    #               lfs: true
+    #         - uses: actions/cache@v3
+    #           with:
+    #               path: Library
+    #               key: Library-StandaloneOSX
+    #         - uses: game-ci/unity-builder@v2
+    #           env:
+    #               UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+    #               UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+    #               UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    #           with:
+    #               targetPlatform: StandaloneOSX
+    #         - uses: actions/upload-artifact@v4
+    #           with:
+    #               name: Build-StandaloneOSX
+    #               path: build
 
     buildForWindows:
         name: Build for ${{ matrix.targetPlatform }}
@@ -122,7 +123,7 @@ jobs:
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
                   targetPlatform: ${{ matrix.targetPlatform }}
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-${{ matrix.targetPlatform }}
                   path: build

@@ -29,9 +29,9 @@ public class LeaderBoard : MonoBehaviour
     private void OnSubmitData(UserResponse user_data) {
         if (!self_object) return;
         LeaderboardData data = new LeaderboardData(){
-            user_name = user_data.display_name,
+            username = user_data.name,
             rank = user_data.rank,
-            points = user_data.points,
+            total = user_data.points,
         };
         self_object.SetData(data,false);
     }
@@ -65,7 +65,7 @@ public class LeaderBoard : MonoBehaviour
     public async void Get_user()
     {
         if (listOfUsers.data.Length > 0)ShowData();
-        _leaderboardResponse = await APIManager.instance.Get_leader_board();
+        _leaderboardResponse = await APIManager.instance.Get_leader_board(1);
         listOfUsers.data = _leaderboardResponse.results;
         ShowData();
     }
