@@ -30,7 +30,7 @@ jobs:
                 #   buildMethod: UnityBuilderAction.BuildScript.Build
                   targetPlatform: StandaloneWindows
                   customParameters: "${{ inputs.customParameters }}"
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: Build-StandaloneWindows
                   path: build

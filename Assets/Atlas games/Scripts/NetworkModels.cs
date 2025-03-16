@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System;
 using Newtonsoft.Json;
 using UnityEngine.AddressableAssets;
+using JetBrains.Annotations;
 
 public class BaseModel
 {
@@ -76,6 +77,13 @@ public class GemResponseModel : CommonErrorResponse
 {
     public int gem, rank;
 }
+[Serializable]
+public class UserStatsResponseModel : CommonErrorResponse
+{
+    public int ID, gid, uid;
+    public float total, value;
+    public string type, create_at;
+}
 
 [Serializable]
 public class data
@@ -87,21 +95,21 @@ public class data
 public class LeaderboardData: BaseModel
 {
     // data for leader board that has to change based on postman.
-    public int user_id;
-    public string user_name;
-    public string user_first_name;
-    public string user_last_name;
-    public string user_link;
-    public string user_avatar;
-    public int points;
+    public int uid;
+    public int gid;
+    public string username;
+    public string first_name;
+    public string last_name;
+    public string avatar;
+    public string avatar_url;
+    public int total;
     public int rank;
     //public string imageUrl;
     // public int rxp;
 }
 [Serializable]
 public class LeaderBoardParams: BaseModel {
-    public string game_id;
-    public string type;
+    public int page;
 }
 [Serializable]
 public class LeaderBoardResponseModel : CommonErrorResponse
@@ -127,6 +135,22 @@ public class TimeAndDateResponseModel : CommonErrorResponse
   public  string utc_datetime;
   public  string utc_offset ;
   public  string week_number;
+}
+[Serializable]
+public class USER_STATS_TYPE {
+    public static readonly string GEM = "gem", UXP = "uxp", RXP = "rxp";
+}
+[Serializable]
+public class UserStatsRequestModel : BaseModel
+{
+    public int gid;
+    public float value;
+    public string type;
+    public UserStatsRequestModel(float value, string type) {
+        this.gid = int.Parse(APIManager.GAME_ID);
+        this.value = value;
+        this.type = type;
+    }
 }
 [Serializable]
 public class GemRequestModel : BaseModel
@@ -165,9 +189,7 @@ public class AuthenticationResponse : CommonErrorResponse
 public class CommonErrorResponse : BaseModel
 {
     public string message;
-    public string code;
-    public bool result;
-    public Data data;
+    public string detail;
 }
 [Serializable]
 public class Authentication : BaseModel
@@ -179,7 +201,7 @@ public class Authentication : BaseModel
 [Serializable]
 public class UserResponse : BaseModel
 {
-    public string first_name, last_name, display_name, email, username, registered_date, avatar;
+    public string first_name, last_name, name, email, username, nickname, avatar_url, avatar;
     public int coin, gem, uxp, rxp, rxpTotal,xp, rank, points;
 }
 
