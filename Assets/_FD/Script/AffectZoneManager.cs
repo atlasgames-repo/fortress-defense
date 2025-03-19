@@ -85,15 +85,14 @@ public class AffectZoneManager : MonoBehaviour
             zone.gameObject.SetActive(false);
         }
     }
-
     public IEnumerator Cure(AffectZoneButton _pickedBtn, float delay)
     {
 
         if (isChecking)
             yield break;
 
+        isChecking = false;
         isAffectZoneWorking = true;
-
         FindObjectOfType<TheFortrest>().HealFortress(healAmount);
         GameObject[] cureAnimations =  GameObject.FindGameObjectsWithTag("CureAnimation");
         foreach (var cureAnimation in cureAnimations)
