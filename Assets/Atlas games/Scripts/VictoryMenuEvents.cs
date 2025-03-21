@@ -58,7 +58,7 @@ public class VictoryMenuEvents : MonoBehaviour
             float delay = ConvertDelay * ( Speed * Mathf.Exp(1) * (1 / (float)loop) );
             yield return new WaitForSeconds(delay);
             CoinTxt.color = ScaleColor;
-            CoinTxt.fontSize += Scale;
+            //CoinTxt.fontSize += Scale;
             bool res1 = Converter(_ref,amount,Operation.SUBTRACT);
             if (!res1)
                 break;

@@ -68,8 +68,8 @@ public class Menu_Victory : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         Menu.SetActive(true);
-        Restart.SetActive(true);
-
+        //Restart.SetActive(true);
+        //Next.SetActive(true);
         Next.SetActive(GameLevelSetup.Instance && !GameLevelSetup.Instance.isFinalLevel());
     }
 }

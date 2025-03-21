@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_UI : MonoBehaviour
 {
@@ -9,12 +10,12 @@ public class UI_UI : MonoBehaviour
     public float shieldLerpSpeed = 4;
     [Header("PLAYER HEALTHBAR")]
     public Slider healthSlider;
-    public Text health;
+    public TextMeshProUGUI health;
     float healthValue;
     
     [Header("Shield HEALTHBAR")]
     public Slider shieldHealthSlider;
-    public Text shieldHealth;
+    public TextMeshProUGUI shieldHealth;
     float _shieldhealthValue;
     float _shieldHealthValue;
     //[Header("ENEMY HEALTHBAR")]
@@ -28,8 +29,8 @@ public class UI_UI : MonoBehaviour
 
     [Space]
     public Text coinTxt;
-    public Text expTxt;
-    public Text levelName;
+    public TextMeshProUGUI expTxt;
+    public TextMeshProUGUI levelName;
 
   //  void OnEnable()
   //  {
