@@ -4,5 +4,6 @@ using UnityEngine;
 public class background : ScriptableObject
 {
     public Sprite[] wBackground;
+    public Sprite[] endlessBackground;
     
 }

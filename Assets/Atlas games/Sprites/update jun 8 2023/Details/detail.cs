@@ -5,4 +5,6 @@ public class detail : ScriptableObject
 {
     public GameObject[] worldDetail;
     public GameObject[] particle;
+
+    public GameObject[] endlessDetail;
 }

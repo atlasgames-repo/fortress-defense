@@ -39,15 +39,27 @@ public class UpdateBackground : MonoBehaviour
             Instantiate(detail.particle3, detail.particle3.transform.position, detail.particle3.transform.rotation);
         }*/
 
-        //background
-        GetComponent<SpriteRenderer>().sprite = background.wBackground[(int)(GlobalValue.levelPlaying/10)];
-        //details
-        Instantiate(detail.worldDetail[(int)(GlobalValue.levelPlaying/10)],
-        detail.worldDetail[(int)(GlobalValue.levelPlaying/10)].transform.position,
-        detail.worldDetail[(int)(GlobalValue.levelPlaying/10)].transform.rotation);
-        //particles
-        Instantiate(detail.particle[(int)(GlobalValue.levelPlaying/10)],
-        detail.particle[(int)(GlobalValue.levelPlaying/10)].transform.position,
-        detail.particle[(int)(GlobalValue.levelPlaying/10)].transform.rotation);
+        if(GlobalValue.levelPlaying < 150)
+        {
+            //background
+            GetComponent<SpriteRenderer>().sprite = background.wBackground[(int)((GlobalValue.levelPlaying - 0.1)/10)];
+
+            //details
+            Instantiate(detail.worldDetail[(int)((GlobalValue.levelPlaying - 0.1)/10)],
+            detail.worldDetail[(int)((GlobalValue.levelPlaying - 0.1)/10)].transform.position,
+            detail.worldDetail[(int)((GlobalValue.levelPlaying - 0.1)/10)].transform.rotation);
+            //particles
+            Instantiate(detail.particle[(int)((GlobalValue.levelPlaying - 0.1)/10)],
+            detail.particle[(int)((GlobalValue.levelPlaying - 0.1)/10)].transform.position,
+            detail.particle[(int)((GlobalValue.levelPlaying - 0.1)/10)].transform.rotation);
+        }
+        else if(GlobalValue.levelPlaying > 1000)
+        {
+            GetComponent<SpriteRenderer>().sprite = background.endlessBackground[(int)((GlobalValue.levelPlaying) - 1001)];
+            //details
+            Instantiate(detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)],
+            detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)].transform.position,
+            detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)].transform.rotation);
+        }
     }
 }
