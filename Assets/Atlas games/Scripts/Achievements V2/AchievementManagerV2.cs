@@ -31,6 +31,12 @@ public class AchievementManagerV2 : MonoBehaviour
     public Gradient BackgroundColor, OppositeColors;
     public string NameIndex, DescriptionIndex, SliderIndex, ClaimIndex, DoneIndex, StatusIndex, TypeIndex, BackgroundIndex, TimerIndex, RewardIndex;
 
+    int finishedTrophies;
+    public int everyTrophy = 66;
+    public TextMeshProUGUI trophyCount;
+    public Image ringBar;
+    public bool trophycheck;
+
     public void ReloadPage(int index)
     {
         StartCoroutine(StartEnum(index));
@@ -120,6 +126,10 @@ public class AchievementManagerV2 : MonoBehaviour
         if ((int)trophy.status >= (int)TrophyStatus.ACHIEVED)
         {
             SetUpButtons(obj, ClaimIndex);
+            showTrophyNum();
+
+            trophycheck = true;
+            
         }
         else if (is_expired)
         {
@@ -132,6 +142,7 @@ public class AchievementManagerV2 : MonoBehaviour
         if ((int)trophy.status == (int)TrophyStatus.PAYED)
         {
             SetUpButtons(obj, DoneIndex);
+            //allTrophy += 1;
         }
 
     }
@@ -140,6 +151,22 @@ public class AchievementManagerV2 : MonoBehaviour
         ChildInParent.GetChild(obj.transform, ClaimIndex).gameObject.SetActive(state == ClaimIndex);
         ChildInParent.GetChild(obj.transform, SliderIndex).gameObject.SetActive(state == SliderIndex);
         ChildInParent.GetChild(obj.transform, DoneIndex).gameObject.SetActive(state == DoneIndex);
+    }
+
+    void showTrophyNum()
+    {
+        finishedTrophies += 1;
+    }
+
+    void Update()
+    {
+        //Debug.Log(finishedTrophies);
+        //Debug.Log(everyTrophy);
+
+        trophyCount.text = finishedTrophies + " out of " + everyTrophy;
+        ringBar.fillAmount = (float)finishedTrophies / (float)everyTrophy;
+
+        Debug.Log(trophycheck);
     }
 
 }

@@ -143,10 +143,12 @@ public class MenuManager : MonoBehaviour, IListener
             rewardUI.GetComponent<RewardMenu>().Init(reward, this);
             yield break;
         }
+        SoundManager.Instance.PauseMusic(true);
         VictotyUI.SetActive(true);
     }
     public void OpenVictoryMenu()
     {
+        SoundManager.Instance.PauseMusic(true);
         rewardUI.SetActive(false);
         VictotyUI.SetActive(true);
     }

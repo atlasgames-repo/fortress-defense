@@ -50,9 +50,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip soundTimeDown;
 
     [Header("WORLD SONGS")]
-    public AudioClip world1;
-    public AudioClip world2;
-    public AudioClip world3;
+    public AudioClip[] world;
 
     //public AudioClip switchPlayerSound;
 
@@ -168,7 +166,7 @@ public class SoundManager : MonoBehaviour
             audioOut.PlayOneShot(clip, SoundVolume);
     }
 
-    private void PlaySound(AudioClip clip, AudioSource audioOut, float volume)
+    public void PlaySound(AudioClip clip, AudioSource audioOut, float volume)
     {
         if (clip == null)
         {

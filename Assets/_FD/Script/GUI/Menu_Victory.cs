@@ -27,6 +27,7 @@ public class Menu_Victory : MonoBehaviour
 
     IEnumerator Start()
     {
+        SoundManager.Instance.PauseMusic(true);
         SoundManager.PlaySfx(SoundManager.Instance.soundVictoryPanel);
         Star1.SetActive(false);
         Star2.SetActive(false);
