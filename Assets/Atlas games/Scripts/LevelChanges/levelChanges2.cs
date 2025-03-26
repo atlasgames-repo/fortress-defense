@@ -11,7 +11,14 @@ public class levelChanges2 : MonoBehaviour
     {
         //GameLevelSetupScr = GameLevelSetupObj.GetComponent<GameLevelSetup>();
 
-        wplayMusic();
+        if(GlobalValue.levelPlaying < 150)
+        {
+            wplayMusic();
+        }
+        else if(GlobalValue.levelPlaying > 1000)
+        {
+            endlessPlayMusic();
+        }
     }
 
     void Update()
@@ -29,5 +36,10 @@ public class levelChanges2 : MonoBehaviour
     {
        SoundManager.PlayMusic(SoundManager.Instance.world[(int)((GlobalValue.levelPlaying - 0.1)/10)]);
        Debug.Log("code is running");      
+    }
+    
+    void endlessPlayMusic()
+    {
+       SoundManager.PlayMusic(SoundManager.Instance.endlessworld[(int)((GlobalValue.levelPlaying) - 1001)]);    
     }
 }

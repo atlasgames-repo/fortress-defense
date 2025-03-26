@@ -48,9 +48,12 @@ public class SoundManager : MonoBehaviour
     [Header("OTHER")]
     public AudioClip soundTimeUp;
     public AudioClip soundTimeDown;
+    public AudioClip thunderSFX;
+    public AudioClip rain;
 
     [Header("WORLD SONGS")]
     public AudioClip[] world;
+    public AudioClip[] endlessworld;
 
     //public AudioClip switchPlayerSound;
 
