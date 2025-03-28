@@ -74,6 +74,8 @@ public class VictoryMenuEvents : MonoBehaviour
         {
             CoinTxt.color = DefaultColor;
             CoinTxt.fontSize = DefaultScale;
+
+            SoundManager.PlaySfx(SoundManager.Instance.coinCollect2);
         }
         StopSound = true;
         _ref.transform.parent.gameObject.SetActive(false);
@@ -89,7 +91,7 @@ public class VictoryMenuEvents : MonoBehaviour
                 StopSound = false;
                 break;
             }
-            SoundManager.PlaySfx(SoundManager.Instance.coinCollect);
+            //SoundManager.PlaySfx(SoundManager.Instance.coinCollect);
             float delay = 10 * Mathf.Exp(1) * (SoundLength / (time + 20));
             yield return new WaitForSeconds(delay);
             time --;
@@ -103,7 +105,7 @@ public class VictoryMenuEvents : MonoBehaviour
             return false;
         current += value * (int)operation;
         txt.text = current.ToString();
-        return true;     
+        return true;
     }
     // Update is called once per frame
     void Update()

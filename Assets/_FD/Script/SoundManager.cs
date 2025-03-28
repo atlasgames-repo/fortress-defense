@@ -17,6 +17,7 @@ public class SoundManager : MonoBehaviour
     [Tooltip("Place the sound in this to call it in another script by: SoundManager.PlaySfx(soundname);")]
     public AudioClip soundClick;
     public AudioClip coinCollect;
+    public AudioClip coinCollect2;
     [Header("Game State")]
     public AudioClip soundFail;
     public AudioClip soundPause;

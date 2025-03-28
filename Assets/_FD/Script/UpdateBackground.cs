@@ -57,9 +57,9 @@ public class UpdateBackground : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sprite = background.endlessBackground[(int)((GlobalValue.levelPlaying) - 1001)];
             //details
-            Instantiate(detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)],
-            detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)].transform.position,
-            detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)].transform.rotation);
+            //Instantiate(detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)],
+            //detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)].transform.position,
+            //detail.endlessDetail[(int)((GlobalValue.levelPlaying) - 1001)].transform.rotation);
         }
     }
 }
