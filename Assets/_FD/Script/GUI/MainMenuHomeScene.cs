@@ -76,7 +76,7 @@ public class MainMenuHomeScene : MonoBehaviour
         {
             GlobalValue.isFirstOpenMainMenu = false;
             SoundManager.Instance.PauseMusic(true);
-            SoundManager.PlaySfx(SoundManager.Instance.beginSoundInMainMenu);
+            //SoundManager.PlaySfx(SoundManager.Instance.beginSoundInMainMenu);
             yield return new WaitForSeconds(SoundManager.Instance.beginSoundInMainMenu.length);
             SoundManager.Instance.PauseMusic(false);
             SoundManager.PlayMusic(SoundManager.Instance.musicsGame);

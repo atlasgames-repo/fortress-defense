@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8079638873847483270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5966589158631814817}
+  - component: {fileID: 5726088368034107684}
+  m_Layer: 0
+  m_Name: Level 1001
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5966589158631814817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8079638873847483270}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5726088368034107684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8079638873847483270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10855318d3b18864dac9125a2f68e835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemiesList:
+  - enemyObject: {fileID: 3697426553599540029, guid: 572975343a4870a419dcf0199f18e909,
+      type: 3}
+    initialCount: 3
+  - enemyObject: {fileID: 3697426553599540029, guid: 744cead175a7c9f44ad29de6d5d92aff,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: 235ba829479e94e4cb3fb239078a351a,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: 2e50222cbfde71e47998345e19165e32,
+      type: 3}
+    initialCount: 5
+  - enemyObject: {fileID: 3697426553599540029, guid: 2188a8e0fa173ce4fbadcd9fadc71f00,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: c927bb1d07fad444191bb1e7c2a4d79f,
+      type: 3}
+    initialCount: 5
+  - enemyObject: {fileID: 3697426553599540029, guid: b6e35ca08374d5c49aca0e7605899059,
+      type: 3}
+    initialCount: 2
+  - enemyObject: {fileID: 3697426553599540029, guid: bb4a391d19b886c41b2c33129326ffa1,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: b006d3ca4b5a08e4b9cd731509b7125a,
+      type: 3}
+    initialCount: 3
+  - enemyObject: {fileID: 3697426553599540029, guid: cc8abaf918bed6e42808ec4c3ea6bac5,
+      type: 3}
+    initialCount: 2
+  - enemyObject: {fileID: 3697426553599540029, guid: 999b66d64ed51604380b11363eb71682,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: 994da1ea94a8dcf42973976102e4aadc,
+      type: 3}
+    initialCount: 3
+  - enemyObject: {fileID: 3697426553599540029, guid: e2dc2acec4f2e4549b8d01f97e712490,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: fb53cc177136c9c4b8e1708f089864c2,
+      type: 3}
+    initialCount: 5
+  - enemyObject: {fileID: 3697426553599540029, guid: ec07ff112b03a3944927d26d5e19164f,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: f18ce3821ad97414b9976688d59bb52b,
+      type: 3}
+    initialCount: 2
+  - enemyObject: {fileID: 3697426553599540029, guid: 50fc1383c12e7f24a8a693dcc9dc70ca,
+      type: 3}
+    initialCount: 3
+  - enemyObject: {fileID: 3697426553599540029, guid: 3d0a8d84005946c4a8ce081c97a24db9,
+      type: 3}
+    initialCount: 3
+  - enemyObject: {fileID: 3697426553599540029, guid: 180c79bfdbaba294196c606739ee5277,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: a17f083b4628abb47b495c23a0718586,
+      type: 3}
+    initialCount: 5
+  type: 0
+  defaultExp: 250
+  Waves: []
+  increaseEnemySpeedDifficultyRate: 0.1
+  increaseEnemyAttackDifficultyRate: 0.1
+  increaseEnemyHealthDifficultyRate: 0.1
+  increaseEnemyAmountDifficultyRate: 0.5
+  increaseEnemyWaitDifficultyRate: 0.2
+  initialWaitAmount: 1
+  level: 1001
+  backgroundSprite: {fileID: 21300000, guid: fdc33d5c7ce20604ab95d438c07656fb, type: 3}
+  nightMode: 0
+  nightMultiplierFixedAmount: 2

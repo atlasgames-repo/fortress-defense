@@ -85,10 +85,10 @@ public class MapControllerUI : MonoBehaviour
             UpdateLifes();
         }
     }
-    void OnDisable()
-    {
-        SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
-    }
+    // void OnDisable()
+    // {
+    //     SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
+    // }
 
     public void SetCurrentWorld(int world)
     {

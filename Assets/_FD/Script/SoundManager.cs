@@ -11,12 +11,14 @@ public class SoundManager : MonoBehaviour
     [Tooltip("Play music clip when start")]
     public AudioClip musicsGame;
     public AudioClip BossMusicClip;
+    public AudioClip BossDeath;
     [Range(0, 1)]
     public float musicsGameVolume = 0.3f;
 
     [Tooltip("Place the sound in this to call it in another script by: SoundManager.PlaySfx(soundname);")]
     public AudioClip soundClick;
     public AudioClip coinCollect;
+    public AudioClip coinCollect2;
     [Header("Game State")]
     public AudioClip soundFail;
     public AudioClip soundPause;
@@ -48,11 +50,12 @@ public class SoundManager : MonoBehaviour
     [Header("OTHER")]
     public AudioClip soundTimeUp;
     public AudioClip soundTimeDown;
+    public AudioClip thunderSFX;
+    public AudioClip rain;
 
     [Header("WORLD SONGS")]
-    public AudioClip world1;
-    public AudioClip world2;
-    public AudioClip world3;
+    public AudioClip[] world;
+    public AudioClip[] endlessworld;
 
     //public AudioClip switchPlayerSound;
 
@@ -168,7 +171,7 @@ public class SoundManager : MonoBehaviour
             audioOut.PlayOneShot(clip, SoundVolume);
     }
 
-    private void PlaySound(AudioClip clip, AudioSource audioOut, float volume)
+    public void PlaySound(AudioClip clip, AudioSource audioOut, float volume)
     {
         if (clip == null)
         {
