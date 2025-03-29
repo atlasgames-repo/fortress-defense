@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     [Tooltip("Play music clip when start")]
     public AudioClip musicsGame;
     public AudioClip BossMusicClip;
+    public AudioClip BossDeath;
     [Range(0, 1)]
     public float musicsGameVolume = 0.3f;
 
