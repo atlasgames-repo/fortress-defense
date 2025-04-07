@@ -25,7 +25,8 @@ public class CameraController : MonoBehaviour, IKeyboardCall
     public Vector3 target_right = new Vector3(-10, 0, 0);
     public Vector3 target_left = new Vector3(-1, 0, 0);
     public bool allowTouch = false, is_left = true;
-    public Image CameraMove;
+    [DeviceDependent]
+    public DeviceDependentReference CameraMove;
     public Sprite Left, Right;
 
     IEnumerator Start()
@@ -48,14 +49,14 @@ public class CameraController : MonoBehaviour, IKeyboardCall
         {
             target_right.x = transform.position.x + right_camera;
             target = target_right;
-            CameraMove.sprite = Right;
+            CameraMove.type<Image>().sprite = Right;
             is_left = false;
         }
         else // is moving to left
         {
             target_left.x = transform.position.x - left_camera;
             target = target_left;
-            CameraMove.sprite = Left;
+            CameraMove.type<Image>().sprite = Left;
             is_left = true;
         }
     }

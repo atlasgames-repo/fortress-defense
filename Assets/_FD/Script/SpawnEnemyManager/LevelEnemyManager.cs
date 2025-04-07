@@ -11,7 +11,8 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     public Transform[] spawnPositions;
     public Transform[] underground_spawn_positions;
     public EnemyWave[] EnemyWaves;
-    public BossUIManager bossManeger;
+    [DeviceDependent]
+    public DeviceDependentReference bossManeger;
     int currentWave = 0;
     public List<GameObject> listEnemySpawned = new List<GameObject>();
 
@@ -108,22 +109,23 @@ public class LevelEnemyManager : MonoBehaviour, IListener
 
                         if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
                         {
-                            bossManeger.enemy = _temp.GetComponent<Enemy>();
+                            BossUIManager bsmng = bossManeger.type<BossUIManager>();
+                            bsmng.enemy = _temp.GetComponent<Enemy>();
                                 if (enemySpawn.BossScale > 1) {
                                     Vector2 scale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
-                                bossManeger.enemy.gameObject.transform.localScale =
-                                 bossManeger.enemy.gameObject.transform.localScale * scale;
+                                bsmng.enemy.gameObject.transform.localScale =
+                                 bsmng.enemy.gameObject.transform.localScale * scale;
                                 }
-                            bossManeger.bossType = enemySpawn.boosType;
-                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin =
+                            bsmng.bossType = enemySpawn.boosType;
+                            bsmng.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin =
                                 enemySpawn.BossMinExp;
-                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax =
+                            bsmng.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax =
                                 enemySpawn.BossMaxExp;
 
-                            bossManeger.gameObject.SetActive(true);
-                            bossManeger.enemy.is_boss = true;
-                            AudioClip bossMusic = bossManeger.enemy.BossMusic != null
-                                ? bossManeger.enemy.BossMusic
+                            bsmng.gameObject.SetActive(true);
+                            bsmng.enemy.is_boss = true;
+                            AudioClip bossMusic = bsmng.enemy.BossMusic != null
+                                ? bsmng.enemy.BossMusic
                                 : SoundManager.Instance.BossMusicClip;
                             SoundManager.PlayMusic(SoundManager.Instance.BossMusicClip, 0.5f);
                         }

@@ -1,6 +1,9 @@
 name: Unity Build Addressable
 
 on:
+    # push:
+    #     branches:
+    #         - 153-fix-android-home-menu-build
     workflow_dispatch:
         inputs:
             customParameters:
@@ -10,7 +13,7 @@ on:
             build_type:
                 description: "type of content build: update_build/complete_build"
                 required: true
-                default: "update_build"
+                default: "complete_build"
 
 ### Refer to https://game.ci/docs/github/getting-started
 jobs:
@@ -24,7 +27,7 @@ jobs:
             matrix:
                 targetPlatform:
                     - iOS
-                    - WebGL
+                    # - WebGL
         steps:
             # - name: Free Disk Space (Ubuntu)
             #   uses: jlumbroso/free-disk-space@main
@@ -37,13 +40,15 @@ jobs:
               with:
                   path: Library
                   key: Library-${{ matrix.targetPlatform }}
+                  restore-keys: |
+                    Bundles-${{ matrix.targetPlatform }}
             - uses: game-ci/unity-builder@v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                  buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type }}
+                  buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type || 'complete_build' }}
                   targetPlatform: ${{ matrix.targetPlatform }}
             - uses: actions/upload-artifact@v4
               with:
@@ -62,13 +67,15 @@ jobs:
               with:
                   path: Library
                   key: Library-Android
+                  restore-keys: |
+                    Bundles-Android
             - uses: game-ci/unity-builder@v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                  buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type }}
+                  buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type || 'complete_build' }}
                   targetPlatform: Android
                   androidKeystoreName: user.keystore
                   androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -96,7 +103,7 @@ jobs:
     #               UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
     #               UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
     #           with:
-    #               buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type }}
+    #               buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type || 'complete_build' }}
     #               targetPlatform: StandaloneOSX
     #         - uses: actions/upload-artifact@v4
     #           with:
@@ -113,13 +120,15 @@ jobs:
               with:
                   path: Library
                   key: Library-StandaloneWindows
+                  restore-keys: |
+                    Bundles-StandaloneWindows
             - uses: game-ci/unity-builder@v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
                   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
                   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                  buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type }}
+                  buildMethod: UnityBuilderAction.BuildScript.${{ inputs.build_type || 'complete_build' }}
                   targetPlatform: StandaloneWindows
                   customParameters: "${{ inputs.customParameters }}"
             - uses: actions/upload-artifact@v4

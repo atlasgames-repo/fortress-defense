@@ -9,28 +9,33 @@ using System;
 
 public class LoginManager : MonoBehaviour, IKeyboardCall
 {
-    public TMP_InputField username, password;
-    public Button submit, showPassword;
-    public Toggle rememberMe;
+    [DeviceDependent]
+    public DeviceDependentReference username, password;
+    [DeviceDependent]
+    public DeviceDependentReference submit, showPassword;
+    [DeviceDependent]
+    public DeviceDependentReference rememberMe;
     public Sprite On, Off;
-    public GameObject login;
-    public GameObject loading;
+    [DeviceDependent]
+    public DeviceDependentReference login;
+    [DeviceDependent]
+    public DeviceDependentReference loading;
     public KeyCode Key;
     public KeyCode[] KeyType { get { return new KeyCode[] { Key }; } }
     public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
 
     public void KeyDown(KeyCode key) {
-        if (!username.isFocused) {
-            username.Select();
+        if (!username.type<TMP_InputField>().isFocused) {
+            username.type<TMP_InputField>().Select();
         } else {
-            password.Select();
+            password.type<TMP_InputField>().Select();
         }
     }
     // Start is called before the first frame update
     async void Start()
     {
-        submit.onClick.AddListener(submitListener);
-        showPassword.onClick.AddListener(showPasswordListener);
+        submit.type<Button>().onClick.AddListener(submitListener);
+        showPassword.type<Button>().onClick.AddListener(showPasswordListener);
         await Task.Delay(1);
         await auth_with_token();
         // StartCoroutine(LoadAsynchronously("Download"));
@@ -44,17 +49,17 @@ public class LoginManager : MonoBehaviour, IKeyboardCall
     }
     void showPasswordListener()
     {
-        if (password.contentType == TMP_InputField.ContentType.Standard)
+        if (password.type<TMP_InputField>().contentType == TMP_InputField.ContentType.Standard)
         {
-            password.contentType = TMP_InputField.ContentType.Password;
-            showPassword.image.sprite = On;
+            password.type<TMP_InputField>().contentType = TMP_InputField.ContentType.Password;
+            showPassword.type<Button>().image.sprite = On;
         }
         else
         {
-            password.contentType = TMP_InputField.ContentType.Standard;
-            showPassword.image.sprite = Off;
+            password.type<TMP_InputField>().contentType = TMP_InputField.ContentType.Standard;
+            showPassword.type<Button>().image.sprite = Off;
         }
-        password.ForceLabelUpdate();
+        password.type<TMP_InputField>().ForceLabelUpdate();
     }
     async void submitListener()
     {
@@ -62,8 +67,8 @@ public class LoginManager : MonoBehaviour, IKeyboardCall
     }
     private void loadingUI(bool isLoading)
     {
-        submit.interactable = !isLoading;
-        loading.SetActive(isLoading);
+        submit.type<Button>().interactable = !isLoading;
+        loading.Object.SetActive(isLoading);
     }
     public async Task auth_with_token()
     {
@@ -75,7 +80,8 @@ public class LoginManager : MonoBehaviour, IKeyboardCall
         }
         catch (System.Net.WebException)
         {
-            login.SetActive(true);
+            login.Object.SetActive(true);
+            // login.SetActive(true);
             loadingUI(false);
         }
         if (auth_result != null)
@@ -86,8 +92,8 @@ public class LoginManager : MonoBehaviour, IKeyboardCall
     public async Task Auth_with_userpass()
     {
         loadingUI(true);
-        submit.interactable = false;
-        Authentication auth = new Authentication { username = username.text, password = password.text };
+        submit.type<Button>().interactable = false;
+        Authentication auth = new Authentication { username = username.type<TMP_InputField>().text, password = password.type<TMP_InputField>().text };
         AuthenticationResponse auth_result = null;
         try
         {
@@ -95,12 +101,12 @@ public class LoginManager : MonoBehaviour, IKeyboardCall
         }
         catch (System.Net.WebException)
         {
-            submit.interactable = true;
+            submit.type<Button>().interactable = true;
         }
-        submit.interactable = true;
+        submit.type<Button>().interactable = true;
         if (auth_result != null)
         {
-            if (!rememberMe.isOn)
+            if (!rememberMe.type<Toggle>().isOn)
                 StartCoroutine(APIManager.instance.LoadAsynchronously("Download"));
             else
             {

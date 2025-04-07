@@ -18,6 +18,7 @@ public class MainMenuHomeScene : MonoBehaviour
     public string facebookLink;
     public string twitterLink = "https://twitter.com/";
     public string playingLevelName = "Playing atlas";
+    public DeviceType device_type;
 
     public Text[] coinTxt;
 
@@ -29,6 +30,9 @@ public class MainMenuHomeScene : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        if (SystemInfo.deviceType != device_type) {
+            gameObject.SetActive(false);
+        }
         if (HomeUI)
             HomeUI.SetActive(false);
         if (Loading != null)
