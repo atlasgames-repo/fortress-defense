@@ -244,7 +244,7 @@ MonoBehaviour:
   - wait: 0
     enemySpawns:
     - wait: 0
-      enemy: {fileID: 3697426553599540029, guid: 0d97a740b5eb09c4c97077933e330069,
+      enemy: {fileID: 3697426553599540029, guid: d99a00d0f26dfc544b587028360667c4,
         type: 3}
       numberEnemy: 1
       rate: 0
@@ -256,7 +256,9 @@ MonoBehaviour:
       BossMinExp: 0
       BossMaxExp: 0
       spawnFromUnderground: 0
-  bossManeger: {fileID: 0}
+  bossManeger:
+    mobile_object: {fileID: 0}
+    pc_object: {fileID: 0}
   listEnemySpawned: []
   totalEnemy: 0
   currentSpawn: 0
