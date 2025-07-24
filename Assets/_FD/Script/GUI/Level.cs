@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Level : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Level : MonoBehaviour
     public int world = 1;
     public int level = 1;
     public bool isUnlock = false;
-    public Text numberTxt;
+    public TextMeshProUGUI numberTxt;
     public GameObject imgLock, imgOpen, imgPass;
 
     public GameObject starGroup;
