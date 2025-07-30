@@ -25,7 +25,7 @@ public class guideBook : MonoBehaviour
         lockIconStatic = lockIcon;
         coverStatic = cover;
     }
-    public void Update()
+    public void listCo()
     {
         StartCoroutine(enemyListCo());
     }
@@ -33,8 +33,14 @@ public class guideBook : MonoBehaviour
     IEnumerator enemyListCo()
     {
         yield return null;
-        add();
-        unlocked();
+
+        for(int i = 0 ; i <= guideInfo.enemiesInfo.Length ; i++)
+        {
+            add();
+            unlocked();
+
+            Debug.Log(GlobalValue.LevelPass);
+        }
     }
 
     public void add()

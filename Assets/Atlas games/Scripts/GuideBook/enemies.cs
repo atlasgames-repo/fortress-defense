@@ -39,8 +39,6 @@ public class enemies : MonoBehaviour
             
             guideBook.lockIconStatic.SetActive(true);
             guideBook.coverStatic.SetActive(true);
-
-            Debug.Log("ggg");
         }
 
         SoundManager.PlaySfx(SoundManager.Instance.soundClick);
