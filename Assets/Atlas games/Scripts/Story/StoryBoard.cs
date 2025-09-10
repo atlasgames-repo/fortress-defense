@@ -13,6 +13,7 @@ public class StoryBoard : MonoBehaviour
     public float WaitForSkip = 0.5f;
     public ScrollRect scrollRect;
     public string sceneToLoad = "Playing atlas";
+    public bool is_debug = true;
 
     private RectTransform content;
     private RectTransform viewport;
@@ -36,6 +37,8 @@ public class StoryBoard : MonoBehaviour
             if (APIManager.self == null) return;
             APIManager.self.LoadAsynchronously(sceneToLoad);
         });
+        if (is_debug)
+            Init();
     }
     IEnumerator EnableSkip()
     {
