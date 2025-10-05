@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour, IKeyboardCall
 {
     public void KeyDown(KeyCode keyCode)
     {
-        Move();
+        //Move();
     }
     public KeyCode[] KeyType { get { return new KeyCode[] { KeyCode.Space }; } }
     public int KeyObjectID { get { return gameObject.GetInstanceID(); } }
