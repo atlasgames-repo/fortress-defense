@@ -11,4 +11,6 @@ public class buttonCheck : MonoBehaviour
         Debug.Log("pressed");
         Time.timeScale = 1;
     }
+
+
 }

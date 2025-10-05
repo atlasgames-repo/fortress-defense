@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25.66}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 241.73761, y: 35.666534}
+  m_AnchoredPosition: {x: 228.42168, y: 34.12434}
   m_SizeDelta: {x: 122.0559, y: 122.4122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5201349434159104273
@@ -110,7 +110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 71, y: 6.2}
+  m_AnchoredPosition: {x: 57.7, y: 7}
   m_SizeDelta: {x: 184.1201, y: 111.0331}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &586107506300587597
@@ -613,7 +613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25.66}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200.81595, y: 24.042208}
+  m_AnchoredPosition: {x: 187.5, y: 22.5}
   m_SizeDelta: {x: 122.0559, y: 122.4122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8572127626125777987
@@ -757,7 +757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25.66}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 155.9, y: 18.2}
+  m_AnchoredPosition: {x: 142.58406, y: 16.657804}
   m_SizeDelta: {x: 122.0559, y: 122.4122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8346976566415288184
@@ -939,7 +939,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Got it!
+  m_text: Check the Shop!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81a2b324c8221dd458342e1ee2075677, type: 2}
   m_sharedMaterial: {fileID: -3856574555563964670, guid: 81a2b324c8221dd458342e1ee2075677,
@@ -967,10 +967,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.95
-  m_fontSizeBase: 36
+  m_fontSize: 30.8
+  m_fontSizeBase: 30.8
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 10
   m_fontSizeMax: 100
   m_fontStyle: 0
@@ -1013,7 +1013,7 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 0
   farsi: 1
-  originalText: Got it!
+  originalText: Check the Shop!
   fixTags: 1
   forceFix: 0
 --- !u!1 &4932915122111699399
@@ -1126,7 +1126,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25.66}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282.6, y: 41.9}
+  m_AnchoredPosition: {x: 269.28406, y: 40.357807}
   m_SizeDelta: {x: 122.0559, y: 122.4122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6742001290635493529
@@ -1213,6 +1213,7 @@ GameObject:
   - component: {fileID: 6501803091424706307}
   - component: {fileID: 8286840484493674515}
   - component: {fileID: 6841117695291648886}
+  - component: {fileID: 2723137672371135259}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -1237,8 +1238,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 277.29205, y: -47.153}
-  m_SizeDelta: {x: 160, y: 53.5}
+  m_AnchoredPosition: {x: 266.44016, y: -47.153}
+  m_SizeDelta: {x: 242.4907, y: 53.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2204604826762858062
 CanvasRenderer:
@@ -1332,7 +1333,19 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2723137672371135259}
+        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+        m_MethodName: GoToShop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &6841117695291648886
 MonoBehaviour:
@@ -1344,6 +1357,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ea212515e92aca4599054e7c0061ab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2723137672371135259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6466219461963882868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0831938336681bf498ef46c42d30b016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7375850840862615446
@@ -1380,7 +1405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 71, y: 43.9}
+  m_AnchoredPosition: {x: 57.700016, y: 44.699986}
   m_SizeDelta: {x: 184.1201, y: 111.0331}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5278571844005712585
