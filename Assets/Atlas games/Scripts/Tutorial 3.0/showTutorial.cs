@@ -22,6 +22,7 @@ public class showTutorial : MonoBehaviour
     {
         scene = SceneManager.GetActiveScene();
         ResetTutorialFlags();
+        
     }
 
     public void Update()
@@ -53,11 +54,11 @@ public class showTutorial : MonoBehaviour
                 }
                 else if (isTutorialoff2 == false && buttonCheck.press)
                 {
-                    Destroy(newTutorialCLone, 0.1f);
-                    Time.timeScale = 1;
-                    UI.transform.localScale = new Vector2(1, 1);
-                    archerManager.SetActive(true);
-                    blur.SetActive(false);
+                        Destroy(newTutorialCLone, 0.1f);
+                        Time.timeScale = 1;
+                        UI.transform.localScale = new Vector2(1, 1);
+                        archerManager.SetActive(true);
+                        blur.SetActive(false);
 
                     isTutorialoff2 = true;
                     buttonCheck.press = false;
