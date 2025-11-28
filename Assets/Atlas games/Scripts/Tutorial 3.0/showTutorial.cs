@@ -11,6 +11,7 @@ public class showTutorial : MonoBehaviour
     public GameObject blur;
     public GameObject archerManager;
     public CoTu_Timer Timer;
+    public Comics ComicsList;
 
     private Scene scene;
     private GameObject newTutorialClone;
@@ -29,7 +30,7 @@ public class showTutorial : MonoBehaviour
     {
         bool isMenu = scene.name == "Menu atlas Test";
 
-        // ========== Timer Logic Fix ==========
+        // Timer only increases after comic is closed or in menu
         if (Timer.comicClosed || isMenu)
             timer += Time.deltaTime;
 
@@ -50,7 +51,9 @@ public class showTutorial : MonoBehaviour
             {
                 if (levelRef == GlobalValue.levelPlaying && !isTutorialOn)
                 {
-                    if (timer >= delayTime)
+                    bool hasComic = HasComicForLevel(GlobalValue.levelPlaying);
+
+                    if (!hasComic || timer >= delayTime)
                     {
                         newTutorialClone = Instantiate(tutorialObj, transform.position, Quaternion.identity);
 
@@ -75,6 +78,27 @@ public class showTutorial : MonoBehaviour
                     buttonCheck.press = false;
                 }
             }
+
+
+            else if (modelRef == "Endless" && scene.name == "Playing atlas" && GlobalValue.levelType == Level.LeveType.EVENT && !isTutorialOn)
+            {
+                bool hasComic = HasComicForLevel(GlobalValue.levelPlaying);
+
+                if (!hasComic || timer >= delayTime)
+                {
+                    newTutorialClone = Instantiate(tutorialObj, transform.position, Quaternion.identity);
+
+                    UI.transform.localScale = new Vector2(2, 2);
+                    archerManager.SetActive(false);
+                    blur.SetActive(true);
+
+                    isTutorialOn = true;
+                }
+
+
+
+
+                }
 
             // ========================================================
             // ===================== IN MENU ==========================
@@ -103,6 +127,19 @@ public class showTutorial : MonoBehaviour
                 }
             }
         }
+    }
+
+    // ========================================================
+    // =============== CHECK IF COMIC EXISTS ==================
+    // ========================================================
+    private bool HasComicForLevel(int level)
+    {
+        for (int i = 0; i < ComicsList.infoT.Length; i++)
+        {
+            if (ComicsList.infoT[i].LevelNumber == level)
+                return true;
+        }
+        return false;
     }
 
     // ========================================================

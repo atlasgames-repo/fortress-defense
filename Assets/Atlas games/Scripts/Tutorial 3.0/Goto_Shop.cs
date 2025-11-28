@@ -88,7 +88,7 @@ public class Goto_Shop : MonoBehaviour
         press2 = true;
         Debug.Log("pressed");
         Time.timeScale = 1;
-        Debug.LogError(GlobalValue.levelPlaying);
+        //Debug.LogError(GlobalValue.levelPlaying);
 
         if (GlobalValue.levelPlaying == 4)
         {

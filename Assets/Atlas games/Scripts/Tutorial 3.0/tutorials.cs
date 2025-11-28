@@ -7,7 +7,8 @@ public class tutorials : ScriptableObject
     public enum Model
     {
         InGame,
-        InMenu
+        InMenu,
+        Endless
     }
     public enum MenuPart
     {
@@ -17,7 +18,7 @@ public class tutorials : ScriptableObject
         Trophy,
         Events,
         Store,
-        Leaderboard
+        Leaderboard,
     }
 
     [Serializable]
