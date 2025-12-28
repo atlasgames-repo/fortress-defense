@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks.Triggers;
 using DynamicScrollRect;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShopItem : ScrollItem<ScrollItemData>
 {
@@ -11,16 +13,16 @@ public class ShopItem : ScrollItem<ScrollItemData>
     [HideInInspector] public int itemPrice;
     [HideInInspector] public bool hasMaxValue;
     [HideInInspector] public int maxAmount;
-    public Text itemPriceText;
-    public Text itemCountText;
-    public Text itemNameText;
+    public TextMeshProUGUI itemPriceText;
+    public TextMeshProUGUI itemCountText;
+    public TextMeshProUGUI itemNameText;
     public Button purchaseButton;
     public Image itemImage;
     public ShopPopup popup;
     public GameObject coinImage;
     public GameObject expImage;
     private Shop.ItemPurchaseType _purchaseType;
-    public Text levelLockText;
+    public TextMeshProUGUI levelLockText;
     public GameObject itemCountTag;
     public GameObject levelLockBG;
     private bool _oneTimePurchase;
@@ -55,6 +57,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                 itemCountTag.SetActive(false);
                 levelLockBG.SetActive(true);
                 levelLockText.text = "Reach Level " + itemData.levelToUnlock + " To Unlock!";
+                
             }
             else
             {
@@ -74,6 +77,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                 {
                     expImage.SetActive(true);
                     coinImage.SetActive(false);
+
                 }
 
                 Vector2 originalSize =
@@ -109,6 +113,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
             {
                 coinImage.SetActive(true);
                 expImage.SetActive(false);
+
             }
             else
             {
@@ -330,7 +335,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                                 expImage.gameObject.SetActive(false);
                                 coinImage.gameObject.SetActive(false);
                                 itemPriceText.text = "";
-                            GetComponent<TimedItemManager>().ActivateDoubleXp(_duration== TimedItemManager.ItemDuration.Day);
+                            GetComponent<TimedItemManager>().ActivateDoubleXp(_duration);
                                 User.Coin = -itemPrice;
                     }
                     else
@@ -348,7 +353,7 @@ public class ShopItem : ScrollItem<ScrollItemData>
                             expImage.gameObject.SetActive(false);
                             coinImage.gameObject.SetActive(false);
                             itemPriceText.text = "";
-                            GetComponent<TimedItemManager>().ActivateDoubleXp(_duration== TimedItemManager.ItemDuration.Day);
+                            GetComponent<TimedItemManager>().ActivateDoubleXp(_duration);
                             User.Uxp = -itemPrice;
                         
                     }

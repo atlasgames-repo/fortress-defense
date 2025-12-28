@@ -7,42 +7,50 @@ public class levelChanges2 : MonoBehaviour
 
     //public LevelWave[] Levels;
 
+    public GameObject airDrop;
+    bool oneTime = true;
+
     void Start()
     {
         //GameLevelSetupScr = GameLevelSetupObj.GetComponent<GameLevelSetup>();
+        if(GlobalValue.levelPlaying < 1000)
+        {
+            wplayMusic();
+        }
+        else // its equivalent to 1000 or greather
+        {
+            endlessPlayMusic();
+        }
 
-        checkWorld();
+        //for(int i = 0; i < tutorials.Length; i++)
+        //{
+            //spawnPoints[i].SetActive(false);
+            //upgradePoints[i].SetActive(false);
+        //}
     }
 
     void Update()
     {
        //Levels = GameLevelSetupScr.levelWaves.ToArray();
-
        if(Input.GetKey("p"))
            {
                SoundManager.Instance.PauseMusic(true);
                Debug.Log("p is pressed");
            }
+        if(GlobalValue.levelPlaying > 1002 && oneTime)
+        {
+            airDrop.SetActive(true);
+            oneTime = false;
+        }
     }
 
-    void checkWorld()
+    void wplayMusic()
     {
-        if(1 <= GlobalValue.levelPlaying && GlobalValue.levelPlaying <= 10)
-       {
-           Debug.Log("hello1");
-           SoundManager.PlaySfx(SoundManager.Instance.world1);
-       }
-       else if(11 <= GlobalValue.levelPlaying && GlobalValue.levelPlaying <= 20)
-       {
-           Debug.Log("hello2");
-           SoundManager.PlaySfx(SoundManager.Instance.world2);
-       }
-       else if(21 <= GlobalValue.levelPlaying && GlobalValue.levelPlaying <= 30)
-       {
-           Debug.Log("hello3");
-           SoundManager.PlaySfx(SoundManager.Instance.world3);
-       }
-
-       Debug.Log("code is running");      
+       SoundManager.PlayMusic(SoundManager.Instance.world[(int)((GlobalValue.levelPlaying - 0.1)/10)]);
+    }
+    
+    void endlessPlayMusic()
+    {
+       SoundManager.PlayMusic(SoundManager.Instance.endlessworld[(int)((GlobalValue.levelPlaying) - 1001)]);    
     }
 }

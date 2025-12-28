@@ -13,6 +13,7 @@ public class UpgradeStep
 public class UpgradedCharacterParameter : MonoBehaviour
 {
     public string ID = "unique ID";
+    public int levelUnlock = 0;
     public int price = 50;
     [Header("Default")]
     [Range(0, 100)]

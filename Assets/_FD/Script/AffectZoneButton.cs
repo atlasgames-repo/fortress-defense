@@ -29,6 +29,9 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     int XPConsume;
     public string xp_text_prefix = "xp";
     float holdCounter = 0;
+    public GameObject magicActive;
+
+    //public AffectZoneManager AffectZoneManager;
 
     private MagicSlotManager _magicSlotManager;
 
@@ -78,7 +81,7 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
         if ((int)coolDownCounter == 0)
             timerTxt.text = "";
 
-        int fortressHealth = (int)FindObjectOfType<TheFortrest>().maxHealth - (int)FindObjectOfType<TheFortrest>().currentHealth;
+        int fortressHealth = (int)FindFirstObjectByType<TheFortrest>().maxHealth - (int)FindFirstObjectByType<TheFortrest>().currentHealth;
 
         canUse = coolDownCounter <= 0 && canvasGroup.blocksRaycasts && !AffectZoneManager.Instance.isAffectZoneWorking && !AffectZoneManager.Instance.isChecking;
         if (AffectZoneManager.Instance.isZoneUsedFirstTime)
@@ -167,12 +170,13 @@ public class AffectZoneButton : MonoBehaviour, IKeyboardCall
     {
         allowCounting = true;
         coolDownCounter = custom_cooldown > 0 ? custom_cooldown : coolDown;
+        magicActive.SetActive(false);
     }
 
     
     private void OnBtnClick()
     {
-
+        magicActive.SetActive(true);
         _magicSlotManager.OnFirstMagicUse();
         if (!canUse)
             return;

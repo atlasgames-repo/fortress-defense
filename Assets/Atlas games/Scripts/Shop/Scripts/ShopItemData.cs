@@ -25,6 +25,7 @@ public class ShopItemData : ScriptableObject
         public GameObject pet;
         public TimedItemManager.ItemDuration duration;
         public string[] otherTimedItems;
+        public string about;
     }
     public ShopItem[] ShopData;
 }

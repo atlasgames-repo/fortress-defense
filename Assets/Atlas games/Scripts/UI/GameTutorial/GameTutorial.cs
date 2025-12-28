@@ -78,7 +78,7 @@ public class GameTutorial : MonoBehaviour
         dialogBackground.SetActive(false);
         pointerObject.transform.SetParent(transform.parent);
         pointerObject.transform.SetSiblingIndex(transform.parent.childCount - 1);
-        Camera[] cams = FindObjectsOfType<Camera>();
+        Camera[] cams = FindObjectsByType<Camera>(FindObjectsSortMode.None);
         foreach (Camera cam in cams)
         {
             if (cam.name == "Main Camera")
@@ -142,7 +142,7 @@ public class GameTutorial : MonoBehaviour
             TipSetup prevSetup = tipsList[_tipOrder - 1];
             if (prevSetup.uiPartName != "")
             {
-                TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+                TutorialFinder[] uiParts = FindObjectsByType<TutorialFinder>(FindObjectsSortMode.None);
                 foreach (var uiPart in uiParts)
                 {
                     if (uiPart.GetComponent<TutorialFinder>().uiPartName == prevSetup.uiPartName)
@@ -207,7 +207,7 @@ dialogBackground.SetActive(true);
             TipSetup nextSetup = tipsList[_tipOrder];
             if (nextSetup.uiPartName != "")
             {
-                TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+                TutorialFinder[] uiParts = FindObjectsByType<TutorialFinder>(FindObjectsSortMode.None);
                 foreach (var uiPart in uiParts)
                 {
                     if (uiPart.GetComponent<TutorialFinder>().uiPartName == nextSetup.uiPartName)
@@ -402,7 +402,7 @@ dialogBackground.SetActive(true);
         TipSetup prevSetup = tipsList[_tipOrder - 1];
         if (prevSetup.uiPartName != "")
         {
-            TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
+            TutorialFinder[] uiParts = FindObjectsByType<TutorialFinder>(FindObjectsSortMode.None);
             foreach (var uiPart in uiParts)
             {
                 if (uiPart.name == prevSetup.uiPartName)

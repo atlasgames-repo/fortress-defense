@@ -71,6 +71,7 @@ public class TutorialNewInspector : Editor
         {
             tutorial.tutorialLevel = EditorGUILayout.IntField("Tutorial Level", tutorial.tutorialLevel);
         }
+        tutorial.AfterLevel = EditorGUILayout.IntField("After Level", tutorial.AfterLevel);
 
         EditorGUILayout.Space();
 

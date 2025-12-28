@@ -86,17 +86,17 @@ public class User : MonoBehaviour
     }
     private static async void Update_Gem(UserUpdate user)
     {
-        await APIManager.instance.Request_Stats(new UserStatsRequestModel(user.gem, USER_STATS_TYPE.GEM));
+        await APIManager.self.Request_Stats(new UserStatsRequestModel(user.gem, USER_STATS_TYPE.GEM));
         Get_User_Eeventually();
     }
     private static async void Update_uxp(int amount)
     {
-        await APIManager.instance.Request_Stats(new UserStatsRequestModel(amount, USER_STATS_TYPE.UXP));
+        await APIManager.self.Request_Stats(new UserStatsRequestModel(amount, USER_STATS_TYPE.UXP));
         Get_User_Eeventually();
     }
     private static async void Update_Rxp(int amount)
     {
-        await APIManager.instance.Request_Stats(new UserStatsRequestModel(amount, USER_STATS_TYPE.RXP));
+        await APIManager.self.Request_Stats(new UserStatsRequestModel(amount, USER_STATS_TYPE.RXP));
         Get_User_Eeventually();
     }
     public static void Get_User_Eeventually()
@@ -105,9 +105,9 @@ public class User : MonoBehaviour
     }
     public static async void Get_user()
     {
-        UserResponse user_response = await APIManager.instance.Check_token();
-        UserResponse user_rxp_response = await APIManager.instance.GetUserStats();
-        UserResponse user_rank_response = await APIManager.instance.GetUserRank();
+        UserResponse user_response = await APIManager.self.Check_token();
+        UserResponse user_rxp_response = await APIManager.self.GetUserStats();
+        UserResponse user_rank_response = await APIManager.self.GetUserRank();
         user_response.coin = UserProfile.coin;
         user_response.uxp = user_rxp_response.uxp;
         user_response.rxp = user_rxp_response.rxp;

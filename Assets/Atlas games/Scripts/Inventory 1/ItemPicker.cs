@@ -45,11 +45,11 @@ public class ItemPicker : MonoBehaviour
             content.InitScrollContent(contentDatas);
             petData = contentDatas;
             noItemsMessage.SetActive(false);
-            regularButton.SetActive(true);
+            //regularButton.SetActive(true);
         }else if (category == Shop.ItemTypes.Item)
         {
             noItemsMessage.SetActive(true);
-            regularButton.SetActive(false);
+            //regularButton.SetActive(false);
         }
     
         

@@ -22,14 +22,14 @@ public class DownloadManager : MonoBehaviour
         AssetBundleUpdateResponse assets = null;
         try
         {
-            assets = await APIManager.instance.Check_for_updates();
+            assets = await APIManager.self.Check_for_updates();
         }
         catch (System.Exception)
         {
-            APIManager.instance.RunStatus(NetworkStatusError.UNKNOWN_ERROR, APIManager.instance.ErrorColor);
+            APIManager.self.RunStatus(NetworkStatusError.UNKNOWN_ERROR, APIManager.self.ErrorColor);
             User.Token = "";
             await Task.Delay(3 * 1000);
-            APIManager.instance.LoadAsynchronously("Login");
+            APIManager.self.LoadAsynchronously("Login");
         }
         if (assets.list.Length <= 0)
             Application.Quit();
@@ -50,12 +50,12 @@ public class DownloadManager : MonoBehaviour
                 file_path = m.Groups[1].Value;
             }
             if (file_path == "") continue;
-            if (!File.Exists(APIManager.instance.GetFilePath(file_path)))
+            if (!File.Exists(APIManager.self.GetFilePath(file_path)))
             {
-                await APIManager.instance.DownloadUpdate(file_path, item, progress);
+                await APIManager.self.DownloadUpdate(file_path, item, progress);
             }
         }
-        StartCoroutine(APIManager.instance.LoadAsynchronously());
+        StartCoroutine(APIManager.self.LoadAsynchronously());
     }
     public void Add_target_platform(ref string pattern, int index = 2)
     {

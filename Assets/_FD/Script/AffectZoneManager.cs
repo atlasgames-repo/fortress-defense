@@ -94,7 +94,7 @@ public class AffectZoneManager : MonoBehaviour
 
         isAffectZoneWorking = true;
 
-        FindObjectOfType<TheFortrest>().HealFortress(healAmount);
+        FindFirstObjectByType<TheFortrest>().HealFortress(healAmount);
         GameObject[] cureAnimations =  GameObject.FindGameObjectsWithTag("CureAnimation");
         foreach (var cureAnimation in cureAnimations)
         {

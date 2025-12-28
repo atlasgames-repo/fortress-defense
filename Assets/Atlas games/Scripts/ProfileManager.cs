@@ -17,7 +17,7 @@ public class ProfileManager : MonoBehaviour
     public void logout()
     {
         User.Token = "";
-        APIManager.instance.LoadAsynchronously("Login");
+        APIManager.self.LoadAsynchronously("Login");
     }
     public void Start()
     {
@@ -55,6 +55,6 @@ public class ProfileManager : MonoBehaviour
         uxp.text = $"{user.uxp}";
         level.text = $"{User.Level}";
         Level.value = User.Next_Level_Progression;
-        avatar.sprite = await APIManager.instance.Get_rofile_picture(user.avatar);
+        avatar.sprite = await APIManager.self.Get_rofile_picture(user.avatar);
     }
 }

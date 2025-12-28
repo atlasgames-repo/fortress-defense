@@ -18,12 +18,16 @@ public class GameTutorialSetup : MonoBehaviour
 
     public GameObject SceneTutorial() {
         foreach (GameObject obj in tutorials) {
-            if (obj.GetComponent<TutorialNew>().tutorialLevel == GlobalValue.levelPlaying && obj.GetComponent<TutorialNew>().placing == TutorialPlacing.Game) {
+            obj.TryGetComponent(out TutorialNew tutorial);
+            if (tutorial == null) continue;
+            if (
+                tutorial.tutorialLevel == GlobalValue.levelPlaying &&
+                tutorial.placing == TutorialPlacing.Game
+            ) {
                 return obj;
             }
         }
 
         return null;
     }
-    
 }

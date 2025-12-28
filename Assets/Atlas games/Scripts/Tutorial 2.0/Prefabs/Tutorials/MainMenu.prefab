@@ -1203,80 +1203,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialSteps:
-  - tipDirection: 4
+  - tipDirection: 0
+    dialogContentType: 0
+    tipType: 0
+    pointerDirection: 0
+    delay: 0
+    isLastDialog: 0
+    uiPartName: 
+    circleMaskScale: 0
+    isUiInteractible: 0
+    pauseGame: 0
+    tipText: Welcome to the World of Atlas! Here you can challange yourself to protect
+      your poeple from the hands of the devil
+    tipTitle: 
+    dialogImage: {fileID: 0}
+    dialogVideo: {fileID: 0}
+    hintDirection: 0
+  - tipDirection: 2
     dialogContentType: 0
     tipType: 1
     pointerDirection: 0
     delay: 0
     isLastDialog: 0
     uiPartName: SinglePlayer
-    circleMaskScale: 3
+    circleMaskScale: 2
     isUiInteractible: 0
     pauseGame: 0
-    tipText: 'Single player is a level based gameplay that is solo player. '
+    tipText: 'In order to play career mode, select Story.  '
     tipTitle: 
     dialogImage: {fileID: 0}
     dialogVideo: {fileID: 0}
     hintDirection: 0
-  - tipDirection: 5
-    dialogContentType: 0
-    tipType: 1
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: Settings
-    circleMaskScale: 1.689703
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: 'The games socials are availible via the settings page accessible through
-      this button. '
-    tipTitle: 
-    dialogImage: {fileID: 0}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 0
+  - tipDirection: 2
     dialogContentType: 0
     tipType: 1
     pointerDirection: 0
     delay: 0
     isLastDialog: 0
     uiPartName: Events
-    circleMaskScale: 2.291068
+    circleMaskScale: 2
     isUiInteractible: 0
     pauseGame: 0
-    tipText: 'For getting informed for any new events and rewards use the events
-      page. '
-    tipTitle: 
-    dialogImage: {fileID: 0}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 0
-    dialogContentType: 0
-    tipType: 1
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: Challenges
-    circleMaskScale: 2.291068
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: 'For getting more rewards and competing for public challenges go to
-      the challenges page. '
-    tipTitle: 
-    dialogImage: {fileID: 0}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 4
-    dialogContentType: 0
-    tipType: 1
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: Shop
-    circleMaskScale: 3
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: To purchase more gold, gems, and in-game items, go to the game shop.
+    tipText: In order to play the challange mode, select Events.
     tipTitle: 
     dialogImage: {fileID: 0}
     dialogVideo: {fileID: 0}
@@ -1284,6 +1252,7 @@ MonoBehaviour:
   placing: 0
   tutorialName: MainMenu
   tutorialLevel: 16
+  AfterLevel: 0
   circleMask: {fileID: 2059681597314616117}
   pointerObject: {fileID: 7806611968594830293}
   pointerIcon: {fileID: 7806611968427333183}
@@ -1349,7 +1318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.10161972, y: 0}
+  m_AnchoredPosition: {x: -0.101623535, y: 0}
   m_SizeDelta: {x: -0.203, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1282919614465763771
@@ -1457,7 +1426,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ffdd18d0980a3ad49ae4d3753ae8a4b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2018,12 +1987,12 @@ PrefabInstance:
     - target: {fileID: 6562141443933814669, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 921.5
+      value: 2839.814
       objectReference: {fileID: 0}
     - target: {fileID: 6562141443933814669, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -519.78754
+      value: -456.0885
       objectReference: {fileID: 0}
     - target: {fileID: 6562141443971328224, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
@@ -2043,12 +2012,12 @@ PrefabInstance:
     - target: {fileID: 6562141444622895168, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 943.5625
+      value: 2865.2532
       objectReference: {fileID: 0}
     - target: {fileID: 6562141444622895168, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -519.78754
+      value: -455.422
       objectReference: {fileID: 0}
     - target: {fileID: 6562141445316944186, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
@@ -2068,12 +2037,12 @@ PrefabInstance:
     - target: {fileID: 6562141445316944188, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2674.6125
+      value: 1068.203
       objectReference: {fileID: 0}
     - target: {fileID: 6562141445316944188, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -519.78754
+      value: -787.732
       objectReference: {fileID: 0}
     - target: {fileID: 6562141445441558737, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
@@ -2088,12 +2057,12 @@ PrefabInstance:
     - target: {fileID: 6562141445441558737, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2654.707
+      value: 1042.764
       objectReference: {fileID: 0}
     - target: {fileID: 6562141445441558737, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -519.78754
+      value: -786.099
       objectReference: {fileID: 0}
     - target: {fileID: 6562141445441558739, guid: f3d59a576aa214c48a16bbd159141dd5,
         type: 3}

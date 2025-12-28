@@ -39,7 +39,7 @@ public class EnemyThrowAttack : MonoBehaviour
     void Start()
     {
         float initialDamage = damage;
-        if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
+        if (GameLevelSetup.self && GameLevelSetup.self.NightMode())
         {
             if (useCustomNightMultiplierOnly)
             {
@@ -47,7 +47,7 @@ public class EnemyThrowAttack : MonoBehaviour
             }
             else
             {
-                damage = initialDamage * GameLevelSetup.Instance.NightModeXpMultiplier();
+                damage = initialDamage * GameLevelSetup.self.NightModeXpMultiplier();
             }
         }
     }

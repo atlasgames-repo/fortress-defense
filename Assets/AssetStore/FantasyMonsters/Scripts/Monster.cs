@@ -33,7 +33,7 @@ namespace Assets.FantasyMonsters.Scripts
                 }
             }
 
-            GetComponent<LayerManager>().SetSortingGroupOrder((int)-transform.localPosition.y);
+            GetComponent<LayerManager>().SetSortingGroupOrder((int) -transform.localPosition.y);
 
             var stateHandler = Animator.GetBehaviours<StateHandler>().SingleOrDefault(i => i.Name == "Death");
 
@@ -41,6 +41,9 @@ namespace Assets.FantasyMonsters.Scripts
             {
                 stateHandler.StateExit.AddListener(() => SetHead(0));
             }
+
+            Animator.keepAnimatorStateOnDisable = true;
+            //Animator.keepAnimatorControllerStateOnDisable = true;
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace Assets.FantasyMonsters.Scripts
         /// </summary>
         public void SetState(MonsterState state)
         {
-            Animator.SetInteger("State", (int)state);
+            Animator.SetInteger("State", (int) state);
         }
 
         /// <summary>
@@ -86,7 +89,7 @@ namespace Assets.FantasyMonsters.Scripts
         /// </summary>
         public void SetHead(int index)
         {
-            if (index != 2 && Animator.GetBool("isDead") == true) return;
+            //if (index != 2 && Animator.GetInteger("State") == (int) MonsterState.Death) return;
 
             if (index < HeadSprites.Count)
             {

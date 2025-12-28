@@ -13,6 +13,7 @@ public class TutorialNew : MonoBehaviour
     public TutorialPlacing placing;
     [SerializeField] public string tutorialName;
     [SerializeField] public int tutorialLevel;
+    public int AfterLevel = 0;
 
     [Header("UI Elements")]
     [Space(3)]
@@ -56,6 +57,7 @@ public class TutorialNew : MonoBehaviour
     public float initialDelay;
     public Transform environmentPointer;
     private float _maxDistance = 0.01f;
+    private List<GameObject> instanses = new();
 
     [Header("Dev Mode")] public bool devMode;
     void Start()
@@ -84,155 +86,166 @@ public class TutorialNew : MonoBehaviour
 
     public void ApplyNewStep(bool previous)
     {
-            GameObject nextUIPart = new GameObject();
-            Transform buttonParent;
-            int childIndex = 0;
-            if (tutorialSteps[tipOrder].tipType != TipType.Dialog)
+        GameObject nextUIPart = null;
+        instanses.Add(nextUIPart);
+        Transform buttonParent;
+        int childIndex = 0;
+        if (tutorialSteps[tipOrder].tipType != TipType.Dialog)
+        {
+            TutorialFinder[] uiParts = FindObjectsByType<TutorialFinder>(FindObjectsSortMode.None);
+            foreach (var uiPart in uiParts)
             {
-                TutorialFinder[] uiParts = FindObjectsOfType<TutorialFinder>();
-                foreach (var uiPart in uiParts)
+                if (uiPart.GetComponent<TutorialFinder>().uiPartName == tutorialSteps[tipOrder].uiPartName)
                 {
-                    if (uiPart.GetComponent<TutorialFinder>().uiPartName == tutorialSteps[tipOrder].uiPartName)
-                    {
-                        nextUIPart = uiPart.gameObject;
-                    }
+                    nextUIPart = uiPart.gameObject;
+                    break;
                 }
             }
-            clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = !tutorialSteps[tipOrder].isUiInteractible;
-            switch (tutorialSteps[tipOrder].tipType)
-            {
-                case TipType.Dialog:
-                    dialog.DialogChange(tutorialSteps[tipOrder], !previous ? DialogAction.Next : DialogAction.Previous, tutorialSteps[tipOrder], this);
-                    clickPreventer.GetComponent<Image>().color = darkBackground;
-                    circleMask.gameObject.SetActive(false);
-                    Time.timeScale = 0;
+        }
+        clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = !tutorialSteps[tipOrder].isUiInteractible;
+        switch (tutorialSteps[tipOrder].tipType)
+        {
+            case TipType.Dialog:
+                Debug.Log("Opening dialog for step: " + tutorialSteps[tipOrder].uiPartName);
+                dialog.DialogChange(tutorialSteps[tipOrder], !previous ? DialogAction.Next : DialogAction.Previous, tutorialSteps[tipOrder], this);
+                clickPreventer.GetComponent<Image>().color = darkBackground;
+                circleMask.gameObject.SetActive(false);
+                Time.timeScale = 0;
+                break;
+            case TipType.Hint:
+                if (nextUIPart == null) {
+                    Debug.LogError("No UI part found with name: " + tutorialSteps[tipOrder].uiPartName);
                     break;
-                case TipType.Hint:
-                    hint.Show(tutorialSteps[tipOrder].tipText, tutorialSteps[tipOrder].tipDirection,this,   nextUIPart.GetComponent<RectTransform>().position, tutorialSteps[tipOrder].circleMaskScale, tipOrder);
-                    Time.timeScale = 0;
-                    circleMask.gameObject.SetActive(true);
-                    clickPreventer.GetComponent<Image>().color = transparent;
-                    clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                    circleMask.gameObject.SetActive(true);
-                    StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialSteps[tipOrder].circleMaskScale));
+                }
+                hint.Show(tutorialSteps[tipOrder].tipText, tutorialSteps[tipOrder].tipDirection,this,   nextUIPart.GetComponent<RectTransform>().position, tutorialSteps[tipOrder].circleMaskScale, tipOrder);
+                Time.timeScale = 0;
+                circleMask.gameObject.SetActive(true);
+                clickPreventer.GetComponent<Image>().color = transparent;
+                clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                circleMask.gameObject.SetActive(true);
+                StartCoroutine(SmoothTransition(nextUIPart.transform.position, tutorialSteps[tipOrder].circleMaskScale));
+                break;
+            case TipType.Task:
+                if (nextUIPart == null) {
+                    Debug.LogError("No UI part found with name: " + tutorialSteps[tipOrder].uiPartName);
                     break;
-                case TipType.Task:
-                    circleMask.gameObject.SetActive(false);
-                    Time.timeScale = tutorialSteps[tipOrder].pauseGame ? 0 : 1;
-                                        if (!tutorialSteps[tipOrder].isUiInteractible && nextUIPart.GetComponent<Button>())
+                }
+                circleMask.gameObject.SetActive(false);
+                Time.timeScale = tutorialSteps[tipOrder].pauseGame ? 0 : 1;
+                                    if (!tutorialSteps[tipOrder].isUiInteractible && nextUIPart.GetComponent<Button>())
+                {
+                    buttonParent = nextUIPart.transform.parent;
+                    childIndex = nextUIPart.transform.GetSiblingIndex();
+                    clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts =
+                        !tutorialSteps[tipOrder].isUiInteractible;
+                    GameObject uiPartClone = Instantiate(nextUIPart, nextUIPart.transform.position,
+                        nextUIPart.transform.rotation,
+                        nextUIPart.transform.parent);
+                    nextUIPart.transform.transform.SetParent(transform);
+                    nextUIPart.transform.SetSiblingIndex(transform.childCount-1);
+                //    nextUIPart.GetComponent<Button>().onClick.AddListener(NextStep);
+                    pointerObject.gameObject.SetActive(true);
+                    pointerIcon.gameObject.SetActive(true);
+                }
+                nextUIPart.GetComponent<TutorialFinder>().isClickable = true;
+                if (nextUIPart.GetComponent<Button>())
+                {
+                    nextUIPart.transform.GetComponent<Button>().onClick.AddListener(NextStep);
+                    pointerObject.transform.position = nextUIPart.transform.position;
+                    pointerIcon.gameObject.SetActive(true);
+                    float rotationAngle=0f;
+                    Vector3 targetPos = new Vector3();
+                    switch (tutorialSteps[tipOrder].pointerDirection)
                     {
-                        buttonParent = nextUIPart.transform.parent;
-                        childIndex = nextUIPart.transform.GetSiblingIndex();
-                        clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts =
-                            !tutorialSteps[tipOrder].isUiInteractible;
-                        GameObject uiPartClone = Instantiate(nextUIPart, nextUIPart.transform.position,
-                            nextUIPart.transform.rotation,
-                            nextUIPart.transform.parent);
-                        nextUIPart.transform.transform.SetParent(transform);
-                        nextUIPart.transform.SetSiblingIndex(transform.childCount-1);
-                    //    nextUIPart.GetComponent<Button>().onClick.AddListener(NextStep);
-                        pointerObject.gameObject.SetActive(true);
-                        pointerIcon.gameObject.SetActive(true);
+                        case Direction.Bottom:
+                            targetPos= BM_Pos.position;
+                            rotationAngle = 180f;
+                            break;
+                        case Direction.Left :
+                            targetPos = L_Pos.position;
+                            rotationAngle = 90f;
+                            break;
+                        case Direction.Right : 
+                            targetPos = R_Pos.position;
+                            rotationAngle = -90f;
+                            break;
+                        case Direction.Top:
+                            targetPos = TM_Pos.position;
+                            rotationAngle = 0f;
+                            break;
+                        case Direction.BottomLeft:
+                            targetPos = BL_Pos.position;
+                            rotationAngle = -135f;
+                            break;
+                        case Direction.BottomRight:
+                            targetPos = BR_Pos.position;
+                            rotationAngle = 135f;
+                            break;
+                        case Direction.UpperLeft:
+                            targetPos = TL_Pos.position;
+                            rotationAngle = -45f;
+                            break;
+                        case Direction.UpperRight:
+                            targetPos = TR_Pos.position;
+                            rotationAngle = 45f;
+                            break;
                     }
-                    nextUIPart.GetComponent<TutorialFinder>().isClickable = true;
-                    if (nextUIPart.GetComponent<Button>())
-                    {
-                        nextUIPart.transform.GetComponent<Button>().onClick.AddListener(NextStep);
-                        pointerObject.transform.position = nextUIPart.transform.position;
-                        pointerIcon.gameObject.SetActive(true);
-                        float rotationAngle=0f;
-                        Vector3 targetPos = new Vector3();
-                        switch (tutorialSteps[tipOrder].pointerDirection)
-                        {
-                            case Direction.Bottom:
-                                targetPos= BM_Pos.position;
-                                rotationAngle = 180f;
-                                break;
-                            case Direction.Left :
-                                targetPos = L_Pos.position;
-                                rotationAngle = 90f;
-                                break;
-                            case Direction.Right : 
-                                targetPos = R_Pos.position;
-                                rotationAngle = -90f;
-                                break;
-                            case Direction.Top:
-                                targetPos = TM_Pos.position;
-                                rotationAngle = 0f;
-                                break;
-                            case Direction.BottomLeft:
-                                targetPos = BL_Pos.position;
-                                rotationAngle = -135f;
-                                break;
-                            case Direction.BottomRight:
-                                targetPos = BR_Pos.position;
-                                rotationAngle = 135f;
-                                break;
-                            case Direction.UpperLeft:
-                                targetPos = TL_Pos.position;
-                                rotationAngle = -45f;
-                                break;
-                            case Direction.UpperRight:
-                                targetPos = TR_Pos.position;
-                                rotationAngle = 45f;
-                                break;
-                        }
-                        Quaternion pointerRotation = Quaternion.Euler(0, 0, rotationAngle);
-                        pointerIcon.GetComponent<RectTransform>().position = targetPos;
-                        pointerIcon.GetComponent<RectTransform>().rotation = pointerRotation;
-                    }
-                    else
-                    {
-                        pointerPlacerEnvironment.SetParent(null);
-                        environmentPointer.SetParent(null);
-                        environmentPointer.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-                        pointerPlacerEnvironment.transform.position = nextUIPart.transform.position;
-                             float rotationAngle = 0f;
-                             Vector3 targetPosition = new Vector3();
-                             switch (tutorialSteps[tipOrder].pointerDirection)
-                             {
-                                 case Direction.Top:
-                                     rotationAngle = 0f;
-                                     targetPosition = TM_Pos_env.position;
-                                     break;
-                                 case Direction.Bottom:
-                                     rotationAngle = 180f;
-                                     targetPosition = BM_Pos_env.position;
-                                     break;
-                                 case Direction.Left:
-                                     rotationAngle = 90f;
-                                     targetPosition = L_Pos_env.position;
-                                     break;
-                                 case Direction.Right:
-                                     rotationAngle = -90f;
-                                     targetPosition = R_Pos_env.position;
-                                     break;
-                                 case Direction.UpperLeft:
-                                     rotationAngle = -45f;
-                                     targetPosition = TL_Pos_env.position;
-                                     break;
-                                 case Direction.UpperRight:
-                                     targetPosition = TR_Pos_env.position;
-                                     rotationAngle = 45f;
-                                     break;
-                                 case Direction.BottomLeft:
-                                     rotationAngle = -135f;
-                                     targetPosition = BL_Pos_env.position;
-                                     break;
-                                 case Direction.BottomRight:
-                                     rotationAngle = 135f;
-                                     targetPosition = BR_Pos_env.position;
-                                     break;
-                             }
+                    Quaternion pointerRotation = Quaternion.Euler(0, 0, rotationAngle);
+                    pointerIcon.GetComponent<RectTransform>().position = targetPos;
+                    pointerIcon.GetComponent<RectTransform>().rotation = pointerRotation;
+                }
+                else
+                {
+                    pointerPlacerEnvironment.SetParent(null);
+                    environmentPointer.SetParent(null);
+                    environmentPointer.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+                    pointerPlacerEnvironment.transform.position = nextUIPart.transform.position;
+                            float rotationAngle = 0f;
+                            Vector3 targetPosition = new Vector3();
+                            switch (tutorialSteps[tipOrder].pointerDirection)
+                            {
+                                case Direction.Top:
+                                    rotationAngle = 0f;
+                                    targetPosition = TM_Pos_env.position;
+                                    break;
+                                case Direction.Bottom:
+                                    rotationAngle = 180f;
+                                    targetPosition = BM_Pos_env.position;
+                                    break;
+                                case Direction.Left:
+                                    rotationAngle = 90f;
+                                    targetPosition = L_Pos_env.position;
+                                    break;
+                                case Direction.Right:
+                                    rotationAngle = -90f;
+                                    targetPosition = R_Pos_env.position;
+                                    break;
+                                case Direction.UpperLeft:
+                                    rotationAngle = -45f;
+                                    targetPosition = TL_Pos_env.position;
+                                    break;
+                                case Direction.UpperRight:
+                                    targetPosition = TR_Pos_env.position;
+                                    rotationAngle = 45f;
+                                    break;
+                                case Direction.BottomLeft:
+                                    rotationAngle = -135f;
+                                    targetPosition = BL_Pos_env.position;
+                                    break;
+                                case Direction.BottomRight:
+                                    rotationAngle = 135f;
+                                    targetPosition = BR_Pos_env.position;
+                                    break;
+                            }
 
-                             Quaternion pointerRotation = Quaternion.Euler(0, 0, rotationAngle);
-                             environmentPointer.transform.rotation = pointerRotation;
-                             environmentPointer.transform.position = targetPosition;
-                    }
+                            Quaternion pointerRotation = Quaternion.Euler(0, 0, rotationAngle);
+                            environmentPointer.transform.rotation = pointerRotation;
+                            environmentPointer.transform.position = targetPosition;
+                }
 
-                    clickPreventer.GetComponent<Image>().color = transparent;
-                    circleMask.gameObject.SetActive(false);
-                    break;
+                clickPreventer.GetComponent<Image>().color = transparent;
+                circleMask.gameObject.SetActive(false);
+                break;
         }
     }
 
@@ -258,6 +271,9 @@ public class TutorialNew : MonoBehaviour
             Destroy(gameObject);
             clickPreventer.GetComponent<Image>().enabled = false;
             clickPreventer.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            foreach (GameObject item in instanses) {
+                Destroy(item);
+            }
         }
     }
 
@@ -265,7 +281,6 @@ public class TutorialNew : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(tutorialSteps[tipOrder].delay);
         ApplyNewStep(false);
-
     }
 
     public void PreviousStep()

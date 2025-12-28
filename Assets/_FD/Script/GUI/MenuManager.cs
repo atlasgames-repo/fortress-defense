@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour, IListener
     public GameObject LoadingUI;
     public GameObject HelperUI;
     public GameObject Boss;
+    public StoryBoard StoryBoard;
     public string HomeMenuName = "Menu atlas";
     [Header("Sound and Music")]
     public Image soundImage;
@@ -38,7 +39,8 @@ public class MenuManager : MonoBehaviour, IListener
     
     private void Awake()
     {
-        Instance = this;
+        if (gameObject.activeInHierarchy)
+            Instance = this;
         StartUI.SetActive(false);
         VictotyUI.SetActive(false);
         FailUI.SetActive(false);
@@ -92,23 +94,27 @@ public class MenuManager : MonoBehaviour, IListener
     }
 
     float currentTimeScale;
-    public void Pause()
+    public void Pause(bool include_ui)
     {
         SoundManager.PlaySfx(SoundManager.Instance.soundPause);
         if (Time.timeScale != 0)
         {
             currentTimeScale = Time.timeScale;
             Time.timeScale = 0;
-            UI.SetActive(false);
-            PauseUI.SetActive(true);
+            //UI.SetActive(false);
+            UI.transform.localScale = new Vector2(2, 2);
+            if (include_ui)
+                PauseUI.SetActive(true);
             GameManager.Instance.State = GameManager.GameState.Pause;
             // SoundManager.Instance.PauseMusic(true);
         }
         else
         {
             Time.timeScale = currentTimeScale;
-            UI.SetActive(true);
-            PauseUI.SetActive(false);
+            //UI.SetActive(true);
+            UI.transform.localScale = new Vector2(1, 1);
+            if (include_ui)
+                PauseUI.SetActive(false);
             SoundManager.Instance.PauseMusic(false);
             GameManager.Instance.State = GameManager.GameState.Playing;
         }
@@ -143,10 +149,21 @@ public class MenuManager : MonoBehaviour, IListener
             rewardUI.GetComponent<RewardMenu>().Init(reward, this);
             yield break;
         }
+        SoundManager.Instance.PauseMusic(true);
         VictotyUI.SetActive(true);
+        if (StoryBoard.storyBoardData.GetStoryBoardDataSet(GlobalValue.levelPlaying).Length > 0)
+        {
+            StoryBoard.gameObject.SetActive(true);
+            StoryBoard.Init();
+        }
+    }
+    public void VictoryReward()
+    {
+
     }
     public void OpenVictoryMenu()
     {
+        SoundManager.Instance.PauseMusic(true);
         rewardUI.SetActive(false);
         VictotyUI.SetActive(true);
     }
@@ -176,6 +193,7 @@ public class MenuManager : MonoBehaviour, IListener
         yield return new WaitForSeconds(1.5f);
         FailUI.SetActive(true);
         SoundManager.PlaySfx(SoundManager.Instance.soundFail);
+        Time.timeScale = 0;
 
         if (LifeTTRSource.Life <= 1)
             FailUI.transform.GetChild(1).GetChild(1).GetComponent<Button>().interactable = false;
@@ -184,13 +202,13 @@ public class MenuManager : MonoBehaviour, IListener
         if (LifeTTRSource.Life > 0)
         {
             // remove a life from player
-            APIManager.instance.lifeTTR.addLifeTTR(LifeTTRSource.Life);
+            APIManager.self.lifeTTR.addLifeTTR(LifeTTRSource.Life);
             LifeTTRSource.Life -= 1;
         }
         if (LifeTTRSource.Life <= 0)
         {
             // reset the level reached to the first of world
-            GlobalValue.LevelPass = GlobalValue.WorldPass * 10 - 10;
+            // GlobalValue.LevelPass = GlobalValue.WorldPass * 10 - 10;
             //GlobalValue.Life = 2;
         }
     }
@@ -244,10 +262,24 @@ public class MenuManager : MonoBehaviour, IListener
 
     public void LoadNextLevel()
     {
-        SoundManager.Click();
+
+       SoundManager.Click();
         GlobalValue.levelPlaying++;
         OnSceneReloaded?.Invoke();
         StartCoroutine(LoadAsynchronously(SceneManager.GetActiveScene().name));
+        ComplexDestroy();
+ 
+    }
+    public void ComplexDestroy()
+    {
+        Destroy(Instance);
+        Destroy(this);
+        Destroy(this.gameObject);
+
+    }
+    public void LoadShop()
+    {
+        GoShopPressed();
     }
 
     [Header("Load scene")]
@@ -278,6 +310,86 @@ public class MenuManager : MonoBehaviour, IListener
     {
         SoundManager.Click();
         HelperUI.SetActive(open);
-        Pause();
+        Pause(false);
     }
+
+
+    #region Goto_Shop
+
+    private bool press = false;
+    private bool press2 = false;
+
+    private void AwakeGotoShop()
+    {
+        DontDestroyOnLoad(this.gameObject);
+        SceneManager.sceneLoaded += OnShopSceneLoaded;
+    }
+
+    private void OnDisableGotoShop()
+    {
+        SceneManager.sceneLoaded -= OnShopSceneLoaded;
+    }
+
+    private void OnShopSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Scene Loaded: " + scene.name);
+        if (scene.name == "Menu Atlas Test")
+        {
+            Debug.Log("Shop Scene Loaded!");
+            StartCoroutine(WaitAndFindHomeMenu());
+        }
+    }
+
+    private IEnumerator WaitAndFindHomeMenu()
+    {
+        yield return new WaitForSeconds(1f);
+
+        GameObject homeMenu = GameObject.Find("HomeMenu-PC");
+        if (homeMenu == null)
+        {
+            Debug.LogError("Home Menu NOT FOUND");
+        }
+        else
+        {
+            Debug.Log("Home Menu Found");
+            var script = homeMenu.GetComponent<MainMenuHomeScene>();
+            if (script != null)
+            {
+                script.Store(true);
+                Debug.Log("Store function called!");
+                Destroy(this);
+            }
+            else
+            {
+                Debug.LogWarning("Script with Store() not found on HomeMenu-PC!");
+            }
+        }
+    }
+
+    private void ShopOpener()
+    {
+        Debug.Log("Opening Shop Scene...");
+        SceneManager.sceneLoaded += (scene, mode) => StartCoroutine(WaitAndFindHomeMenu());
+        SceneManager.LoadScene("Menu Atlas Test");
+    }
+
+    private void GoShopPressed()
+    {
+        press = true;
+        press2 = true;
+        Debug.Log("pressed");
+        Time.timeScale = 1;
+
+        int levelReached = PlayerPrefs.GetInt("LevelReached", 1);
+        if (levelReached == 4)
+        {
+            ShopOpener();
+        }
+    }
+
+    #endregion
+
+
+
+
 }

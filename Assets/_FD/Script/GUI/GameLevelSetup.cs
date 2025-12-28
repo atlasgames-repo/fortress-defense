@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class GameLevelSetup : MonoBehaviour
 {
-    public static GameLevelSetup Instance;
+    public static GameLevelSetup self;
     public List<LevelWave> levelWaves = new List<LevelWave>();
 
     private void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+       if (self == null) {
+           self = this;
+           DontDestroyOnLoad(gameObject);
+       } else {
+           Destroy(gameObject);
+       }
     }
 
     public LevelWave.LevelType type()

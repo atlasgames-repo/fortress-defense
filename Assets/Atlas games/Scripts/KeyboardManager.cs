@@ -28,7 +28,7 @@ public class KeyboardManager : MonoBehaviour, IKeyboardCall
     }
     public void Start()
     {
-        var ikeyboardcalls = FindObjectsOfType<MonoBehaviour>().OfType<IKeyboardCall>();
+        var ikeyboardcalls = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IKeyboardCall>();
         foreach (IKeyboardCall caller in ikeyboardcalls)
         {
             calls.Add(caller.KeyObjectID, caller);

@@ -12,7 +12,7 @@ public class GiveCoinWhenDie : MonoBehaviour
     {
         int initialMinCoin = coinGiveMin;
         int initialMaxCoin = coinGiveMax;
-        if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
+        if (GameLevelSetup.self && GameLevelSetup.self.NightMode())
         {
             if (useCustomNightMultiplierOnly)
             {
@@ -21,8 +21,8 @@ public class GiveCoinWhenDie : MonoBehaviour
             }
             else
             {
-                coinGiveMax =  Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier() * initialMaxCoin);
-                coinGiveMin = Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier() * initialMinCoin);
+                coinGiveMax =  Mathf.RoundToInt(GameLevelSetup.self.NightModeXpMultiplier() * initialMaxCoin);
+                coinGiveMin = Mathf.RoundToInt(GameLevelSetup.self.NightModeXpMultiplier() * initialMinCoin);
             }
         }
     }

@@ -31,12 +31,22 @@ public class AchievementManagerV2 : MonoBehaviour
     public Gradient BackgroundColor, OppositeColors;
     public string NameIndex, DescriptionIndex, SliderIndex, ClaimIndex, DoneIndex, StatusIndex, TypeIndex, BackgroundIndex, TimerIndex, RewardIndex;
 
+    int finishedTrophies;
+    public int everyTrophy = 66;
+    public TextMeshProUGUI trophyCount;
+    public Image ringBar;
+    public bool trophycheck;
+    public GameObject LoadingCover;
+
     public void ReloadPage(int index)
     {
         StartCoroutine(StartEnum(index));
     }
     IEnumerator StartEnum(int index)
     {
+        // Show loading cover
+        LoadingCover?.SetActive(true);
+
         // Get all child objects
         GameObject[] children = new GameObject[parent.transform.childCount];
         for (int i = 0; i < parent.transform.childCount; i++)
@@ -75,11 +85,13 @@ public class AchievementManagerV2 : MonoBehaviour
             Add(model);
             yield return null;
         }
+        // Hide loading cover
+        LoadingCover?.SetActive(false);
     }
     public void ClaimAchievement(AchievementModel foundedModel, GameObject obj)
     {
         if (foundedModel == null || !foundedModel.isActive || !((int)foundedModel.status >= 2)) return;
-        User.Coin = foundedModel.reward;
+        User.Gem = foundedModel.reward;
         foundedModel.status = TrophyStatus.PAYED;
         BasePlayerPrefs<AchievementModel>.Update(foundedModel._id, foundedModel);
         SetUpButtons(obj, DoneIndex);
@@ -88,8 +100,9 @@ public class AchievementManagerV2 : MonoBehaviour
     {
         GameObject obj = Instantiate(rootObject, parent, false);
         ChildInParent.GetChild(obj.transform, NameIndex).GetComponent<TextMeshProUGUI>().text = trophy.name;
-        ChildInParent.GetChild(obj.transform, DescriptionIndex).GetComponent<TextMeshProUGUI>().text = trophy.description.Replace(TextPlaceHolder, ColorTag.Replace(ColorTagPlaceHolder, trophy.checkpoint.ToString()));
-        ChildInParent.GetChild(obj.transform, BackgroundIndex).GetComponent<Image>().color = BackgroundColor.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
+        //ChildInParent.GetChild(obj.transform, DescriptionIndex).GetComponent<TextMeshProUGUI>().text = trophy.description.Replace(TextPlaceHolder, ColorTag.Replace(ColorTagPlaceHolder, trophy.checkpoint.ToString()));
+        ChildInParent.GetChild(obj.transform, DescriptionIndex).GetComponent<TextMeshProUGUI>().text = trophy.description.Replace(TextPlaceHolder, trophy.checkpoint.ToString());
+        //ChildInParent.GetChild(obj.transform, BackgroundIndex).GetComponent<Image>().color = BackgroundColor.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
         ChildInParent.GetChild(obj.transform, RewardIndex).GetComponent<TextMeshProUGUI>().text = RewardPrefix + trophy.reward.ToString();
         ChildInParent.GetChild(obj.transform, RewardIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
 
@@ -106,7 +119,7 @@ public class AchievementManagerV2 : MonoBehaviour
             }
             else
                 ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<AvhievementTimerClock>().StartTheClock(scheduleModel.ExpireDate);
-            ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
+            //ChildInParent.GetChild(obj.transform, TimerIndex).GetComponent<TextMeshProUGUI>().color = OppositeColors.Evaluate((float)trophy.type / (float)AchievementType.LEGENDARY);
         }
 
         AchievementTasksV2.self.TryGetEvent(trophy._id, out AchievementEventsV2 Events);
@@ -120,6 +133,10 @@ public class AchievementManagerV2 : MonoBehaviour
         if ((int)trophy.status >= (int)TrophyStatus.ACHIEVED)
         {
             SetUpButtons(obj, ClaimIndex);
+            // showTrophyNum();
+
+            trophycheck = true;
+            
         }
         else if (is_expired)
         {
@@ -132,6 +149,7 @@ public class AchievementManagerV2 : MonoBehaviour
         if ((int)trophy.status == (int)TrophyStatus.PAYED)
         {
             SetUpButtons(obj, DoneIndex);
+            //allTrophy += 1;
         }
 
     }
@@ -139,7 +157,26 @@ public class AchievementManagerV2 : MonoBehaviour
     {
         ChildInParent.GetChild(obj.transform, ClaimIndex).gameObject.SetActive(state == ClaimIndex);
         ChildInParent.GetChild(obj.transform, SliderIndex).gameObject.SetActive(state == SliderIndex);
-        ChildInParent.GetChild(obj.transform, DoneIndex).gameObject.SetActive(state == DoneIndex);
+        //ChildInParent.GetChild(obj.transform, DoneIndex).gameObject.SetActive(state == DoneIndex);
+    }
+
+    int TotalTrophies()
+    {
+        return BasePlayerPrefs<AchievementModel>.DictArray.Count();
+    }
+    int AchievedTrophies()
+    {
+        return BasePlayerPrefs<AchievementModel>.DictArray.Where(k => k.status == TrophyStatus.ACHIEVED || k.status == TrophyStatus.PAYED).Count();
+    }
+
+    void Update()
+    {
+        //Debug.Log(finishedTrophies);
+        //Debug.Log(everyTrophy);
+
+        trophyCount.text = AchievedTrophies() + " out of " + TotalTrophies();
+        ringBar.fillAmount = (float)AchievedTrophies() / (float)TotalTrophies();
+
     }
 
 }

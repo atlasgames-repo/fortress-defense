@@ -8,7 +8,7 @@ public class UITutorialTrigger : MonoBehaviour
     public bool runAutomatically = false;
     public void OpenTutorial(string name)
     {
-        FindObjectOfType<GameTutorialManager>().StartTutorialInMenu(name);
+        FindFirstObjectByType<GameTutorialManager>().StartTutorialInMenu(name);
 
     }
 
@@ -16,7 +16,7 @@ public class UITutorialTrigger : MonoBehaviour
     {
         if (runAutomatically)
         {
-            FindObjectOfType<GameTutorialManager>().StartTutorialInMenu(tutorialName);
+            FindFirstObjectByType<GameTutorialManager>().StartTutorialInMenu(tutorialName);
         }
     }
 }

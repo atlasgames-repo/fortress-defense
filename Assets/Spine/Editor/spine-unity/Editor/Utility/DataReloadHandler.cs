@@ -68,7 +68,7 @@ namespace Spine.Unity.Editor {
 
 				var skeletonDataAssetsToReload = new HashSet<SkeletonDataAsset>();
 
-				var activeSkeletonRenderers = GameObject.FindObjectsOfType<SkeletonRenderer>();
+				var activeSkeletonRenderers = GameObject.FindObjectsByType<SkeletonRenderer>(FindObjectsSortMode.None);
 				foreach (var sr in activeSkeletonRenderers) {
 					var skeletonDataAsset = sr.skeletonDataAsset;
 					if (skeletonDataAsset != null) skeletonDataAssetsToReload.Add(skeletonDataAsset);
@@ -79,7 +79,7 @@ namespace Spine.Unity.Editor {
 				// by the instance of the ScriptableObject being destroyed but still assigned.
 				// Here we save the skeletonGraphic.skeletonDataAsset asset path in order
 				// to restore it later.
-				var activeSkeletonGraphics = GameObject.FindObjectsOfType<SkeletonGraphic>();
+				var activeSkeletonGraphics = GameObject.FindObjectsByType<SkeletonGraphic>(FindObjectsSortMode.None);
 				foreach (var sg in activeSkeletonGraphics) {
 					var skeletonDataAsset = sg.skeletonDataAsset;
 					if (skeletonDataAsset != null) {
@@ -118,12 +118,12 @@ namespace Spine.Unity.Editor {
 				if (EditorApplication.isCompiling) return;
 				if (EditorApplication.isPlayingOrWillChangePlaymode) return;
 
-				var activeSkeletonRenderers = GameObject.FindObjectsOfType<SkeletonRenderer>();
+				var activeSkeletonRenderers = GameObject.FindObjectsByType<SkeletonRenderer>(FindObjectsSortMode.None);
 				foreach (var sr in activeSkeletonRenderers) {
 					if (sr.isActiveAndEnabled && sr.skeletonDataAsset == skeletonDataAsset) sr.Initialize(true);
 				}
 
-				var activeSkeletonGraphics = GameObject.FindObjectsOfType<SkeletonGraphic>();
+				var activeSkeletonGraphics = GameObject.FindObjectsByType<SkeletonGraphic>(FindObjectsSortMode.None);
 				foreach (var sg in activeSkeletonGraphics) {
 					if (sg.isActiveAndEnabled && sg.skeletonDataAsset == skeletonDataAsset) sg.Initialize(true);
 				}

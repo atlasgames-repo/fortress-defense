@@ -181,6 +181,8 @@ MonoBehaviour:
   useGravity: 0
   gravity: 35
   walkSpeed: 1.5
+  walkSpeed2: 1
+  enemyScaleSelf: 1
   attackType: 1
   startBehavior: 3
   dieBehavior: 0
@@ -188,6 +190,7 @@ MonoBehaviour:
   spawnDelay: 1
   multipleSpeed: 1
   health: 30
+  health2: 100
   dieFX: {fileID: 0}
   hitFX: {fileID: 0}
   disableFX: {fileID: 6338145615417356351, guid: 2e064da420e915d45ae6569a3ed46339,
@@ -237,6 +240,7 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 0}
   customNightMultiplier: 2
   useCustomNightMultiplier: 0
+  isPet: 0
   magnet: 0
   magnetPos: {x: 0, y: 0, z: 0}
   magnetAttractionSpeed: 0
@@ -384,7 +388,7 @@ SortingGroup:
   m_GameObject: {fileID: 3449677795528492924}
   m_Enabled: 1
   m_SortingLayerID: -565348741
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!114 &-342216148099046069
@@ -403,6 +407,7 @@ MonoBehaviour:
   expMax: 5
   customNightMultiplier: 2
   useCustomNightMultiplierOnly: 0
+  affectedItems: []
 --- !u!1 &4630672108160834399
 GameObject:
   m_ObjectHideFlags: 0

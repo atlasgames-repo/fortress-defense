@@ -10,26 +10,26 @@ public class TimedItemManager : MonoBehaviour
 {
     public Text counterText;
     public Text buttonText;
-    [HideInInspector]public string itemName;
+    [HideInInspector] public string itemName;
 
-  [HideInInspector]  public bool isInit;
-  [HideInInspector] public bool isTimed;
-  public Image coinSprite;
-  public Image expSprite;
-  [HideInInspector] public bool purchaseWithCoin;
+    [HideInInspector] public bool isInit;
+    [HideInInspector] public bool isTimed;
+    public Image coinSprite;
+    public Image expSprite;
+    [HideInInspector] public bool purchaseWithCoin;
+
     public enum ItemDuration
     {
-        Day,
-        Hour
+        Minute,
+        Second
     }
 
-
-    [HideInInspector]public ItemDuration duration;
-    [HideInInspector]public string[] allTimedItems;
+    [HideInInspector] public ItemDuration duration;
+    [HideInInspector] public string[] allTimedItems;
     private bool _activeItem;
     private string _activeItemName;
 
-    public void Init(string name, ItemDuration dur,string[] otherItems,bool coinWithPurchase)
+    public void Init(string name, ItemDuration dur, string[] otherItems, bool coinWithPurchase)
     {
         purchaseWithCoin = coinWithPurchase;
         coinSprite.gameObject.SetActive(purchaseWithCoin);
@@ -39,6 +39,7 @@ public class TimedItemManager : MonoBehaviour
         itemName = name;
         duration = dur;
         _activeItem = false;
+
         for (int i = 0; i < allTimedItems.Length; i++)
         {
             if (GlobalValue.GetItemState(allTimedItems[i]))
@@ -48,6 +49,7 @@ public class TimedItemManager : MonoBehaviour
                 break;
             }
         }
+
         if (_activeItem)
         {
             isInit = true;
@@ -63,7 +65,7 @@ public class TimedItemManager : MonoBehaviour
             coinSprite.gameObject.SetActive(purchaseWithCoin);
         }
     }
-    
+
     public void UpdateWithTimeTick()
     {
         _activeItem = false;
@@ -78,49 +80,62 @@ public class TimedItemManager : MonoBehaviour
                 }
             }
         }
+
         if (_activeItem && !isInit)
         {
             isInit = true;
             buttonText.gameObject.SetActive(false);
             counterText.gameObject.SetActive(true);
         }
+
         if (isInit)
         {
-                counterText.text = CountDownText();
-                if (ConvertedStringToDate(TimeChecker.Instance.GetCurrentDateTimeString()) >
-                    ConvertedStringToDate(GlobalValue.ItemOpened(_activeItemName))
-                        .AddHours(itemDuration()) && _activeItemName == itemName)
-                {
-                    TimeChecker.Instance.InitTimedItems();
-                    isInit = false;
-                    coinSprite.gameObject.SetActive(purchaseWithCoin);
-                    expSprite.gameObject.SetActive(!purchaseWithCoin);
-                    GlobalValue.SetItemState(false, itemName);
-                    buttonText.gameObject.SetActive(true);
-                    counterText.gameObject.SetActive(false);
-                }
+            counterText.text = CountDownText();
+
+            if (ConvertedStringToDate(TimeChecker.Instance.GetCurrentDateTimeString()) >
+                ConvertedStringToDate(GlobalValue.ItemOpened(_activeItemName))
+                    .AddSeconds(itemDuration()) && _activeItemName == itemName)
+            {
+                TimeChecker.Instance.InitTimedItems();
+                isInit = false;
+                coinSprite.gameObject.SetActive(purchaseWithCoin);
+                expSprite.gameObject.SetActive(!purchaseWithCoin);
+                GlobalValue.SetItemState(false, itemName);
+                buttonText.gameObject.SetActive(true);
+                counterText.gameObject.SetActive(false);
+            }
         }
     }
-    
-     double itemDuration()
-    {
-        return duration == ItemDuration.Day ? 24 : 1;
-    }
 
+    int itemDuration()
+    {
+        switch (duration)
+        {
+            case ItemDuration.Minute:
+                return 60;
+            case ItemDuration.Second:
+                return 1;
+            default:
+                return 0;
+        }
+    }
 
     static DateTime ConvertedStringToDate(string insertedTime)
     {
         DateTime parsedDate;
-      parsedDate=   DateTime.ParseExact(insertedTime, "M/dd/yyyy h:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture); 
+        parsedDate = DateTime.ParseExact(insertedTime, "M/dd/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
         return parsedDate;
     }
 
-     string CountDownText()
+    string CountDownText()
     {
-        return (ConvertedStringToDate(GlobalValue.ItemOpened(_activeItemName)).AddHours(GlobalValue.ItemDuration(_activeItemName)) -
-                ConvertedStringToDate(TimeChecker.Instance.GetCurrentDateTimeString())).ToString();
+        TimeSpan remaining = ConvertedStringToDate(GlobalValue.ItemOpened(_activeItemName))
+            .AddSeconds(GlobalValue.ItemDuration(_activeItemName)) -
+            ConvertedStringToDate(TimeChecker.Instance.GetCurrentDateTimeString());
+
+        return remaining.ToString(@"hh\:mm\:ss");
     }
-    
+
     public void GetTime(ItemDuration duration)
     {
         GlobalValue.SetItemActivationTime(itemName, TimeChecker.Instance.GetCurrentDateTimeString());
@@ -129,29 +144,30 @@ public class TimedItemManager : MonoBehaviour
         counterText.gameObject.SetActive(true);
         buttonText.gameObject.SetActive(false);
         TimeChecker.Instance.InitTimedItems();
-        GlobalValue.SetItemDuration(itemName, duration == ItemDuration.Day ? 24 : 1);
+
+        switch (duration)
+        {
+            case ItemDuration.Minute:
+                GlobalValue.SetItemDuration(itemName, 60);
+                break;
+            case ItemDuration.Second:
+                GlobalValue.SetItemDuration(itemName, 1);
+                break;
+        }
     }
 
-
-    public void ActivateDoubleXp(bool h24duration)
+    public void ActivateDoubleXp(ItemDuration dur)
     {
         if (!GlobalValue.GetItemState(itemName) && !isInit)
         {
             isInit = true;
             buttonText.gameObject.SetActive(false);
             counterText.gameObject.SetActive(true);
+
             if (!GlobalValue.GetItemState(itemName))
             {
-                if (h24duration)
-                {
-                    GetTime(ItemDuration.Day);
-                }
-                else
-                {
-                    GetTime(ItemDuration.Hour);
-                }
+                GetTime(dur);
             }
         }
     }
 }
-

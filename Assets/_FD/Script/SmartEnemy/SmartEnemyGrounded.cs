@@ -35,6 +35,9 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     EnemyCallMinion callMinion;
     SpawnItemHelper spawnItem;
 
+    [Header("Other")]
+    //public bool isPet;
+
 
     [Space(3)] [Header("Spawning from Underground")]
     public bool spawnFromUnderground;
@@ -55,6 +58,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
     private float _zPos;
     public GameObject shadow;
     private float _initialMoveSpeed;
+
     IEnumerator Climb()
     {
         yield return new WaitForSeconds(climbingTime);
@@ -413,6 +417,7 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
                     else if (!meleeAttack.isAttacking && enemyState == ENEMYSTATE.ATTACK)
                     {
                         SetEnemyState(ENEMYSTATE.WALK);
+                        SetSkeletonAnimation(ANIMATION_STATE.WALK, true);
                     }
                 }
 
@@ -486,6 +491,10 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
 
     public override void Die()
     {
+        if (isPet)
+        {
+            SetSkeletonAnimation(ANIMATION_STATE.WALK, true);
+        }
         if (isDead)
             return;
 
@@ -574,6 +583,19 @@ public class SmartEnemyGrounded : Enemy, ICanTakeDamage, IGetTouchEvent
         if (disableFX)
             SpawnSystemHelper.GetNextObject(disableFX, true).transform.position =
                 spawnDisableFX != null ? spawnDisableFX.position : transform.position;
+
+        //GameObject grave = SpawnSystemHelper.GetNextObject(LevelEnemyManager.Instance.GraveHit, true);
+        //grave.SetActive(true);
+        //grave.transform.position = new Vector3(transform.position.x, transform.position.y + 0.55f, transform.position.z);
+        //grave.transform.GetChild(0).TryGetComponent(out Animator animator);
+        /*if (animator != null) {
+            animator.SetTrigger("play");
+        }*/
+        
+        yield return new WaitForSeconds(0.1f);
+        //grave.transform.position = new Vector3(0, 100, grave.transform.position.z);
+        //grave.SetActive(false);
+
         gameObject.SetActive(false);
     }
 

@@ -27,13 +27,14 @@ public class Menu_Victory : MonoBehaviour
 
     IEnumerator Start()
     {
+        SoundManager.Instance.PauseMusic(true);
         SoundManager.PlaySfx(SoundManager.Instance.soundVictoryPanel);
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
 
 
-        var theFortress = FindObjectsOfType<TheFortrest>();
+        var theFortress = FindObjectsByType<TheFortrest>(FindObjectsSortMode.None);
         foreach (var fortrest in theFortress)
         {
             //if (fortrest.healthCharacter == HEALTH_CHARACTER.PLAYER)
@@ -68,8 +69,8 @@ public class Menu_Victory : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         Menu.SetActive(true);
-        Restart.SetActive(true);
-
-        Next.SetActive(GameLevelSetup.Instance && !GameLevelSetup.Instance.isFinalLevel());
+        //Restart.SetActive(true);
+        //Next.SetActive(true);
+        Next.SetActive(GameLevelSetup.self && !GameLevelSetup.self.isFinalLevel());
     }
 }

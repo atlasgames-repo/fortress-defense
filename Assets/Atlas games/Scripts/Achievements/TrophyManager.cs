@@ -58,7 +58,7 @@ public class TrophyManager : MonoBehaviour
             obj.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = trophy.details;
             Image image = obj.transform.GetChild(1).GetComponent<Image>();
 
-            image.sprite = await APIManager.instance.Get_rofile_picture(trophy.imageURL);
+            image.sprite = await APIManager.self.Get_rofile_picture(trophy.imageURL);
             if ((int)trophy.status > (int)TrophyStatus.ACHIEVED)
             {
                 image.color = Enable;

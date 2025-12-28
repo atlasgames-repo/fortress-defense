@@ -1,0 +1,641 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2125a85b2c38000499b04ad23c05fd37, type: 3}
+  m_Name: CharacterClasses
+  m_EditorClassIdentifier: 
+  List:
+  - Name: Archer 1
+    index: 0
+    Speed: 1
+    Damage: 10
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 1547295944305074330, guid: fa061c184d3100549998950097134371,
+      type: 3}
+    levelUnlocked: 0
+  - Name: Archer 2
+    index: 1
+    Speed: 2
+    Damage: 20
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 7980839109703495272, guid: 298bf80a795dc2e4f9c4be07affdff47,
+      type: 3}
+    levelUnlocked: 0
+  - Name: Archer 3
+    index: 2
+    Speed: 0
+    Damage: 30
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -7267113828242623266, guid: f038c8ba39858fb44a74040e6346e23e,
+      type: 3}
+    levelUnlocked: 0
+  - Name: Archer4
+    index: 3
+    Speed: 1
+    Damage: 40
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 5130789003670922724, guid: b85b8e95b0831a945896d92ed88c57bf,
+      type: 3}
+    levelUnlocked: 0
+  - Name: Archer5
+    index: 4
+    Speed: 1
+    Damage: 50
+    Power: 1
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 6928526022128024784, guid: 8df00e6ab23f6764696fbcd2dfdc0117,
+      type: 3}
+    levelUnlocked: 0
+  - Name: Mushroom
+    index: 5
+    Speed: 1
+    Damage: 119
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 357749872346554099, guid: deb8ccd4304bc424b96119557adf8a6a,
+      type: 3}
+    levelUnlocked: 1
+  - Name: Salamander
+    index: 6
+    Speed: 1
+    Damage: 130
+    Power: 1
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -6473013637101471423, guid: f7a741f2753bbac489c7010b5cf1f6c4,
+      type: 3}
+    levelUnlocked: 1
+  - Name: Sea Snail
+    index: 7
+    Speed: 0
+    Damage: 118
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -6207193392188836992, guid: 8eef48ad9e5a3844ab0515493cb0a28c,
+      type: 3}
+    levelUnlocked: 1
+  - Name: Red Snail
+    index: 8
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 471059364061778222, guid: c3bd25e96a44d93438dd5225047350ff,
+      type: 3}
+    levelUnlocked: 2
+  - Name: Slime
+    index: 9
+    Speed: 1
+    Damage: 125
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 368543389579951487, guid: 7c80703cbed0d3c4a80b82382a2c897d,
+      type: 3}
+    levelUnlocked: 2
+  - Name: Floating Stone
+    index: 10
+    Speed: 1
+    Damage: 128
+    Power: 1
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 5725184139431673129, guid: 6801664e0d2092d40a6d671ee8ec3b01,
+      type: 3}
+    levelUnlocked: 2
+  - Name: Charged Salamander
+    index: 11
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 8804129568815082524, guid: fe841f5fe558951439cd204c4a44180d,
+      type: 3}
+    levelUnlocked: 2
+  - Name: Hamy Alsapphire
+    index: 12
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 8335237616190842701, guid: 6b7d009250a88c948bbb9a1585d68b66,
+      type: 3}
+    levelUnlocked: 2
+  - Name: Blue Slime
+    index: 13
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 4446251027073045399, guid: d8dd576e1f9f8b845a4f1f8334405ac1,
+      type: 3}
+    levelUnlocked: 3
+  - Name: Dark Mushroom
+    index: 14
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -5988552170479798878, guid: 97ee7c086e9c9cb43bfddc41071d1ed1,
+      type: 3}
+    levelUnlocked: 3
+  - Name: Blue Book
+    index: 15
+    Speed: 2
+    Damage: 135
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 3843231544584785974, guid: cb57e2d50e5716444aa31bf554bfc1b8,
+      type: 3}
+    levelUnlocked: 3
+  - Name: Floating Ice
+    index: 16
+    Speed: 1
+    Damage: 100
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 6151530317621550917, guid: f8ca188fe90f81b44b867c641a1ea09a,
+      type: 3}
+    levelUnlocked: 3
+  - Name: Polar Wolf
+    index: 17
+    Speed: 1
+    Damage: 130
+    Power: 1
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 7444046612802208997, guid: 2ed7e07db92f97a439b633ce1a5e47c7,
+      type: 3}
+    levelUnlocked: 3
+  - Name: Water Wabbit
+    index: 18
+    Speed: 0
+    Damage: 130
+    Power: 1
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -1011906909398878210, guid: 03b7597e16d8c7a48a2471fa6df075ae,
+      type: 3}
+    levelUnlocked: 3
+  - Name: Skeleton
+    index: 19
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -964824239653993824, guid: c309dc6d131230e439d836cf32b3ee26,
+      type: 3}
+    levelUnlocked: 4
+  - Name: Mummy
+    index: 20
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 465063712599069340, guid: dac19f6ac57f0754f825122e002e6812,
+      type: 3}
+    levelUnlocked: 4
+  - Name: Fire Dragon
+    index: 21
+    Speed: 2
+    Damage: 140
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 3428391033546482049, guid: 04fece57a31b5134391c924bccac6a22,
+      type: 3}
+    levelUnlocked: 4
+  - Name: Armomred Book
+    index: 22
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -4932836262602389724, guid: 18e54883d26eefe49901b4f011448e63,
+      type: 3}
+    levelUnlocked: 4
+  - Name: Wolf
+    index: 23
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -1878048272300145514, guid: 159cba038d886fe4193768f151f28a2b,
+      type: 3}
+    levelUnlocked: 4
+  - Name: Rabbit
+    index: 24
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 7218306763558851453, guid: 3535610c7f72820459105ca6110b4571,
+      type: 3}
+    levelUnlocked: 4
+  - Name: Beast Yeti
+    index: 25
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: -1322526978013775785, guid: e32f8447bd7751844a15f8d302cf53bb,
+      type: 3}
+    levelUnlocked: 4
+  - Name: Locked
+    index: 26
+    Speed: 1
+    Damage: 16
+    Power: 0
+    Type: 0
+    Weakness: 1
+    Strength: 2
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 22
+  - Name: Locked
+    index: 27
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 28
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 1
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000
+  - Name: Locked
+    index: 29
+    Speed: 1
+    Damage: 0
+    Power: 0
+    Type: 0
+    Weakness: 0
+    Strength: 0
+    EnemyProfile: {fileID: 21300000, guid: 1d86c2f82d1fd43e7835e0539015ccd5, type: 3}
+    levelUnlocked: 1000

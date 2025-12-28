@@ -37,7 +37,7 @@ public class EnemyRangeAttack : MonoBehaviour
     {
         
             float initialDamage = damage;
-            if (GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
+            if (GameLevelSetup.self && GameLevelSetup.self.NightMode())
             {
                 if (useCustomNightMultiplierOnly)
                 {
@@ -45,7 +45,7 @@ public class EnemyRangeAttack : MonoBehaviour
                 }
                 else
                 {
-                    damage = initialDamage * GameLevelSetup.Instance.NightModeXpMultiplier();
+                    damage = initialDamage * GameLevelSetup.self.NightModeXpMultiplier();
                 }
             }
         

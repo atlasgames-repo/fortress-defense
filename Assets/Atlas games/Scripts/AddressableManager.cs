@@ -40,7 +40,7 @@ public class AddressableManager : MonoBehaviour
             StartCoroutine(HandleObject(handle.Result));
         }
         else {
-            APIManager.instance.RunStatus("Couldn't download assets! try later.",Color.red);
+            APIManager.self.RunStatus("Couldn't download assets! try later.",Color.red);
         }
     }
     IEnumerator HandleObject(GameObject obj) {

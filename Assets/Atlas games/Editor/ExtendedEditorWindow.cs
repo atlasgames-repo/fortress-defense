@@ -122,7 +122,7 @@ public class ExtendedEditorWindow : EditorWindow
     protected void RunTestScene(LevelEnemyManager LEM)
     {
         Apply();
-        GameManager gameManager = FindObjectOfType<GameManager>();
+        GameManager gameManager = FindFirstObjectByType<GameManager>();
         SpriteRenderer background = GameObject.FindGameObjectWithTag("BackGroundLEM").GetComponent<SpriteRenderer>();
         LevelData obj = serializedObject.targetObject as LevelData;
 

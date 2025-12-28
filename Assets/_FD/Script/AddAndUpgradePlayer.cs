@@ -14,9 +14,11 @@ public class AddAndUpgradePlayer : MonoBehaviour, IGetTouchEvent, IKeyboardCall
     public int beginPlayer = 0;
     public GameObject addIcon, upgradeIcon;
     public GameObject upgradeFX;
+    private bool isUpgrade;
     List<int> prices = new List<int>();
     //public int[] prices;
     public Player_Archer[] Players;
+    public Animator anim;
 
     int currentPlayer = -1;
 
@@ -45,15 +47,27 @@ public class AddAndUpgradePlayer : MonoBehaviour, IGetTouchEvent, IKeyboardCall
             currentPlayer = beginPlayer;
             SetPlayer();
         }
-        InvokeRepeating("CheckStatus", 0, 0.2f);
+        InvokeRepeating("CheckAddStatus", 0, 0.01f);
+        InvokeRepeating("CheckUpdateStatus", 0, 0.01f);
     }
 
-    private void CheckStatus()
+    private void CheckAddStatus()
     {
-        addIcon.SetActive(Players[0].upgradedCharacterID.price <= GameManager.Instance.currentExp && currentPlayer == -1);
+        bool is_addIcon = Players[0].upgradedCharacterID.price <= GameManager.Instance.currentExp && currentPlayer == -1;
+        addIcon.SetActive(is_addIcon);
+    }
+
+    private void CheckUpdateStatus()
+    {
         upgradeIcon.SetActive((currentPlayer + 1 < Players.Length)
             && (Players[currentPlayer + 1].upgradedCharacterID.price <= GameManager.Instance.currentExp)
-            && currentPlayer > -1);
+            && currentPlayer > -1
+            && Players[currentPlayer + 1].upgradedCharacterID.levelUnlock <= GlobalValue.levelPlaying);
+
+        anim.SetBool("upgradeFlash", (currentPlayer + 1 < Players.Length)
+            && (Players[currentPlayer + 1].upgradedCharacterID.price <= GameManager.Instance.currentExp)
+            && currentPlayer > -1
+            && Players[currentPlayer + 1].upgradedCharacterID.levelUnlock <= GlobalValue.levelPlaying);
     }
 
     void SetPlayer()
@@ -80,9 +94,8 @@ public class AddAndUpgradePlayer : MonoBehaviour, IGetTouchEvent, IKeyboardCall
             SetPlayer();
             SoundManager.PlaySfx(currentPlayer == 0 ? SoundManager.Instance.soundAddArcher : SoundManager.Instance.soundUpgradeArcher);
         }
-        if (GetComponent<TutorialFinder>())
-        {
-            GetComponent<TutorialFinder>().InitiateTutorialClick();
-        }
+        TryGetComponent(out TutorialFinder tutorialFinder);
+        if (tutorialFinder == null) return;
+        tutorialFinder.InitiateTutorialClick();
     }
 }

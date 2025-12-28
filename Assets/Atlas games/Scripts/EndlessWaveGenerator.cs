@@ -35,14 +35,14 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     int _totalEnemy, _currentSpawn;
 
     private void Start() {
-        if (GameLevelSetup.Instance)
+        if (GameLevelSetup.self)
         {
-        levelType = GameLevelSetup.Instance.type();
+        levelType = GameLevelSetup.self.type();
             if (levelType == LevelWave.LevelType.Normal) {
                 this.enabled = false;
                 return;
             }
-            EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
+            EnemyWaves = GameLevelSetup.self.GetLevelWave();
         }
 
         //calculate number of enemies
@@ -63,9 +63,9 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
     }
     void Awake()
     {
-        if (GameLevelSetup.Instance)
+        if (GameLevelSetup.self)
         {
-        levelType = GameLevelSetup.Instance.type();
+        levelType = GameLevelSetup.self.type();
             if (levelType == LevelWave.LevelType.Normal) {
                 this.enabled = false;
                 return;
@@ -73,13 +73,13 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
                 WaveCountUI.SetActive(true);
             }
 
-            enemiesList = GameLevelSetup.Instance.EndlessInitialWave();
-            increaseEnemySpeedDifficultyRate = GameLevelSetup.Instance.IncreaseEnemySpeedDifficultyRate();
-            increaseEnemyAttackDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAttackDifficultyRate();
-            increaseEnemyHealthDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyHealthDifficultyRate();
-            increaseEnemyAmountDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyAmountDifficultyRate();
-            increaseEnemyWaitDifficultyRate = GameLevelSetup.Instance.IncreaseEnemyWaitDifficultyRate();
-            initialWaitAmount = GameLevelSetup.Instance.InitialWaitAmount();
+            enemiesList = GameLevelSetup.self.EndlessInitialWave();
+            increaseEnemySpeedDifficultyRate = GameLevelSetup.self.IncreaseEnemySpeedDifficultyRate();
+            increaseEnemyAttackDifficultyRate = GameLevelSetup.self.IncreaseEnemyAttackDifficultyRate();
+            increaseEnemyHealthDifficultyRate = GameLevelSetup.self.IncreaseEnemyHealthDifficultyRate();
+            increaseEnemyAmountDifficultyRate = GameLevelSetup.self.IncreaseEnemyAmountDifficultyRate();
+            increaseEnemyWaitDifficultyRate = GameLevelSetup.self.IncreaseEnemyWaitDifficultyRate();
+            initialWaitAmount = GameLevelSetup.self.InitialWaitAmount();
         }
 
         _enemies = new GameObject[enemiesList.Length];
@@ -219,19 +219,21 @@ public class EndlessWaveGenerator : LevelEnemyManager, IListener
 
                         if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
                         {
-                            bossManeger.enemy = _temp.GetComponent<Enemy>();
+                            BossUIManager bsmng = bossManeger.type<BossUIManager>();
+                            bsmng.enemy = _temp.GetComponent<Enemy>();
                             if (enemySpawn.BossScale > 1)
-                                bossManeger.enemy.gameObject.transform.localScale =
+                                bsmng.enemy.gameObject.transform.localScale =
                                     new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
-                            bossManeger.bossType = enemySpawn.boosType;
-                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin =
-                                enemySpawn.BossMinExp;
-                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax =
-                                enemySpawn.BossMaxExp;
-                            bossManeger.gameObject.SetActive(true);
-                            bossManeger.enemy.is_boss = true;
-                            AudioClip bossMusic = bossManeger.enemy.BossMusic != null
-                                ? bossManeger.enemy.BossMusic
+                            bsmng.bossType = enemySpawn.boosType;
+                            bsmng.enemy.gameObject.TryGetComponent<GiveExpWhenDie>(out GiveExpWhenDie component);
+                            if (component) {
+                                component.expMin = enemySpawn.BossMinExp;
+                                component.expMax = enemySpawn.BossMaxExp;
+                            }
+                            bsmng.gameObject.SetActive(true);
+                            bsmng.enemy.is_boss = true;
+                            AudioClip bossMusic = bsmng.enemy.BossMusic != null
+                                ? bsmng.enemy.BossMusic
                                 : SoundManager.Instance.BossMusicClip;
                             SoundManager.PlayMusic(bossMusic, 0.5f);
                         }

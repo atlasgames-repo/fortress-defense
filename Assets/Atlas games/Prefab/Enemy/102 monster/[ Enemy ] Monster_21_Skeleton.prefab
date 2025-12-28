@@ -98,7 +98,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.63, y: -2.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.58, y: 0.58, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5302841712264848057}
@@ -117,7 +117,7 @@ SortingGroup:
   m_GameObject: {fileID: 3697426553599540029}
   m_Enabled: 1
   m_SortingLayerID: -565348741
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!95 &3697426553599540030
@@ -209,7 +209,7 @@ MonoBehaviour:
   checkPoint: {fileID: 1315889782}
   maxTargetPerHit: 1
   radiusCheck: 1
-  dealDamage: 20
+  dealDamage: 50
   criticalPercent: 10
   meleeRate: 2
   MeleeObj: {fileID: 0}
@@ -233,6 +233,7 @@ MonoBehaviour:
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
   is_boss: 0
+  boss_ui: {fileID: 0}
   useGravity: 0
   gravity: 35
   walkSpeed: 1
@@ -258,7 +259,7 @@ MonoBehaviour:
   enemyState: 0
   weaknessMultiplier: 1
   strengthMultiplier: 1
-  weakness: 0
+  weakness: 3
   strength: 0
   canBeFreeze: 1
   dieFrozenFX: {fileID: 0}
@@ -292,6 +293,7 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 7295495812901167507}
   customNightMultiplier: 2
   useCustomNightMultiplier: 0
+  isPet: 0
   magnet: 0
   magnetPos: {x: 0, y: 0, z: 0}
   magnetAttractionSpeed: 0
@@ -345,6 +347,7 @@ MonoBehaviour:
   expMax: 6
   customNightMultiplier: 2
   useCustomNightMultiplierOnly: 0
+  affectedItems: []
 --- !u!61 &1950496934
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -480,6 +483,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -501,6 +506,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -594,6 +600,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -615,6 +623,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
@@ -641,6 +650,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: target
+      objectReference: {fileID: 0}
+    - target: {fileID: 1438046594576658157, guid: 4c79c1b537c6fcf4da407c934d03d329,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}

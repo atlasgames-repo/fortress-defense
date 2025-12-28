@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0c63251d9deb8134ca2bae3a83486d32, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0c63251d9deb8134ca2bae3a83486d32, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -307,53 +307,7 @@ MonoBehaviour:
     circleMaskScale: 0
     isUiInteractible: 0
     pauseGame: 0
-    tipText: Archers are a crucial asset when fighting enemies. Here's how to use them.
-    tipTitle: 
-    dialogImage: {fileID: 0}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 0
-    dialogContentType: 2
-    tipType: 0
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: 
-    circleMaskScale: 0
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: 'Youll see these add buttons that move at start of the game.  '
-    tipTitle: 
-    dialogImage: {fileID: 21300000, guid: 24b1d671f80114c4f8c02a29fffe86cf, type: 3}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 0
-    dialogContentType: 2
-    tipType: 0
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: 
-    circleMaskScale: 0
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: After clicking this button an archer will spawn at the desired spot.
-      lets try it out !
-    tipTitle: 
-    dialogImage: {fileID: 21300000, guid: 1cfc530041a6ce241805b4e2e1971fb3, type: 3}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 0
-    dialogContentType: 0
-    tipType: 2
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: AddArcher
-    circleMaskScale: 0
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: 
+    tipText: In order to place an archer, press the Add button.
     tipTitle: 
     dialogImage: {fileID: 0}
     dialogVideo: {fileID: 0}
@@ -361,6 +315,7 @@ MonoBehaviour:
   placing: 1
   tutorialName: 
   tutorialLevel: 1
+  AfterLevel: 0
   circleMask: {fileID: 1834032460820314285}
   pointerObject: {fileID: 7615612770633535565}
   pointerIcon: {fileID: 7615612769996285351}
@@ -1643,7 +1598,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 847306227
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0f6da50733ee7264cbe710d781aa99a8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1784,7 +1739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0c63251d9deb8134ca2bae3a83486d32, type: 2}
   m_Color: {r: 0, g: 0, b: 0, a: 0.44705883}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2098,6 +2053,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7597236454273870747}
     m_Modifications:
+    - target: {fileID: 291197844775520701, guid: f30531c8afdc0064ea1ae787c295fda1,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 0c63251d9deb8134ca2bae3a83486d32, type: 2}
+    - target: {fileID: 291197844823662704, guid: f30531c8afdc0064ea1ae787c295fda1,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 0c63251d9deb8134ca2bae3a83486d32, type: 2}
     - target: {fileID: 6186013543279369216, guid: f30531c8afdc0064ea1ae787c295fda1,
         type: 3}
       propertyPath: m_Pivot.x

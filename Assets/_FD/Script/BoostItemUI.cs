@@ -62,6 +62,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     //  public Text FA_timerTxt;
     
     public int FA_Time = 30;
+    int animCheck = 0;
     [ReadOnly] public float FA_TimeCounter = 0;
 
     [Header("Boost Item")]
@@ -70,8 +71,8 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     public float boostItemautoHide = 3;
     
     [Header("Slowdown Enemies")]
-    public float SD_Rate = 0.3f;
-    public float SD_Time = 3f;
+    public float SD_Rate = 0f;
+    public float SD_Time = 5f;
     
     [Header("Log item")]
     public GameObject TL_Prefab;
@@ -137,6 +138,8 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
                 itemButtons[i].image.sprite = GetItemData(_chosenItems[i]).buttonImage;
                 itemRemainingTexts[i].text = "x" + GlobalValue.GetChosenShopItem(GetItemData(_chosenItems[i]).itemName);
             }
+
+            boostItemAnim.SetInteger("show/hide", 3);
         }
         
     //   DA_remainTxt.text = "x" + GlobalValue.ItemDoubleArrow;
@@ -228,9 +231,17 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
                 StartCoroutine(RunCoolDown(fixedCoolDownTime ? coolDownTime : AD_Time));
                 break;
             case "SlowDown":
-                SlowDownEnemies();
+                /*SlowDownEnemies();
                 StartCoroutine(RunTimerCo(itemIcons[index],itemTimerTexts[index],SD_Time,index,itemButtons[index],GetItemData(_chosenItems[index]).id));
-                StartCoroutine(RunCoolDown(fixedCoolDownTime ? coolDownTime : SD_Time));
+                StartCoroutine(RunCoolDown(fixedCoolDownTime ? coolDownTime : SD_Time));*/
+            case "Add25XP":
+                add25XP();
+                break;
+            case "Add50XP":
+                add50XP();
+                break;
+            case "Add75XP":
+                add75XP();
                 break;
         }
         GlobalValue.DecrementChosenShopItem(GetItemData(_chosenItems[index]).itemName);
@@ -421,7 +432,7 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
     IEnumerator BoostItemHideCoDo;
     public void BoostItem()
     {
-        if (boostItemAnim.GetBool("show"))
+        /*if (boostItemAnim.GetBool("show"))
         {
             HideBoostPanel();
         }
@@ -431,7 +442,20 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
             boostItemAnim.SetBool("show", true);
             boostButtonAnim.SetBool("on", true);
             RunTimerAutoHideBoostPanel();
+        }*/
+        if(animCheck == 0)
+        {
+            boostItemAnim.SetInteger("show/hide", 1);
+            animCheck = 1;
         }
+        else if(animCheck == 1)
+        {
+            boostItemAnim.SetInteger("show/hide", 2);
+            animCheck = 0;
+        }
+
+        Debug.Log("pressed");
+        //animCheck = 1;
     }
 
     void RunTimerAutoHideBoostPanel()
@@ -481,7 +505,22 @@ public class BoostItemUI : MonoBehaviour, IKeyboardCall
 
     public void ActivateFortressShield()
     {
-        FindObjectOfType<TheFortrest>().ActivateShield(FS_health);
+        FindFirstObjectByType<TheFortrest>().ActivateShield(FS_health);
+    }
+    #endregion
+
+    #region Fortress Shield
+    public void add25XP()
+    {
+        GameManager.Instance.currentExp += 25;
+    }
+    public void add50XP()
+    {
+        GameManager.Instance.currentExp += 50;
+    }
+    public void add75XP()
+    {
+        GameManager.Instance.currentExp += 75;
     }
     #endregion
     

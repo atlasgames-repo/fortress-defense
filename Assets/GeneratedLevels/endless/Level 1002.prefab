@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8937940931405583362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6934663164909155963}
+  - component: {fileID: 454968658821755353}
+  m_Layer: 0
+  m_Name: Level 1002
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6934663164909155963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8937940931405583362}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &454968658821755353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8937940931405583362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10855318d3b18864dac9125a2f68e835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemiesList:
+  - enemyObject: {fileID: 3697426553599540029, guid: 7dfdda48220dd5944b956539ff4680ee,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: ad3c9fb4b2945fb498fa1479e92a5f03,
+      type: 3}
+    initialCount: 5
+  - enemyObject: {fileID: 3697426553599540029, guid: 27bba435961afe240b40b456adade0db,
+      type: 3}
+    initialCount: 3
+  - enemyObject: {fileID: 3697426553599540029, guid: b2f6fb48edaece2488a54de4c7f54173,
+      type: 3}
+    initialCount: 4
+  - enemyObject: {fileID: 3697426553599540029, guid: ebf5b7a6fb18dad4c971446be774d569,
+      type: 3}
+    initialCount: 6
+  - enemyObject: {fileID: 3697426553599540029, guid: 845e2df4539fa2843af77a0c331c1484,
+      type: 3}
+    initialCount: 5
+  - enemyObject: {fileID: 3697426553599540029, guid: 126cff94c6aa80f428ec3a8f88d6cb2f,
+      type: 3}
+    initialCount: 6
+  - enemyObject: {fileID: 3697426553599540029, guid: 688999ab3046d2048ba7e3e680f4e863,
+      type: 3}
+    initialCount: 6
+  type: 0
+  defaultExp: 300
+  Waves: []
+  increaseEnemySpeedDifficultyRate: 0.2
+  increaseEnemyAttackDifficultyRate: 0.2
+  increaseEnemyHealthDifficultyRate: 0.1
+  increaseEnemyAmountDifficultyRate: 0.5
+  increaseEnemyWaitDifficultyRate: 0.2
+  initialWaitAmount: 1
+  level: 1002
+  backgroundSprite: {fileID: 21300000, guid: 16084e46c1bd857498837807db7899ce, type: 3}
+  nightMode: 1
+  nightMultiplierFixedAmount: 2

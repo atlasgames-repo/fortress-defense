@@ -24,7 +24,7 @@ public class RewardToolTip : MonoBehaviour
     public float rewardToolTipDelay = 1f;
     void Start()
     {
-        _rewardAnimator = rewardTooltip.GetComponent<Animator>();
+        //_rewardAnimator = rewardTooltip.GetComponent<Animator>();
         _rewardImageScaler = rewardImage.GetComponent<NativeAspectRatio>();
         List<int> levelsDefined = new List<int>();
         foreach (Reward reward in rewardList.rewards)
@@ -65,7 +65,7 @@ public class RewardToolTip : MonoBehaviour
             mysteryGiftIcon.SetActive(false);
             amountText.gameObject.SetActive(true);
             amountText.text = "x" + _currentReward.amount;
-            rewardTooltip.SetActive(true);
+            //rewardTooltip.SetActive(true);
             rewardImage.gameObject.SetActive(true);
             rewardTick.SetActive(true);
         }
@@ -87,12 +87,12 @@ public class RewardToolTip : MonoBehaviour
             if (enteredMap == _levelToReward/11 && !_isOpen)
             {
                 _isOpen = true;
-                Invoke("OpenTooltip",isDelayed?rewardToolTipDelay:0f);
+                //Invoke("OpenTooltip",isDelayed?rewardToolTipDelay:0f);
             }
             else if(_isOpen)
             {
                 _isOpen = false;
-                _rewardAnimator.SetTrigger("Close");
+                //_rewardAnimator.SetTrigger("Close");
             }
         }
     }

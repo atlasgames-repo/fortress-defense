@@ -18,7 +18,7 @@ public class Tutorial : MonoBehaviour
 
     void CheckFireOrNot()
     {
-        if (FindObjectOfType<ArrowProjectile>())
+        if (FindFirstObjectByType<ArrowProjectile>())
         {
             CancelInvoke();
             gameObject.SetActive(false);

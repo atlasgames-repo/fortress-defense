@@ -16,6 +16,8 @@ public class IncreaseGameSpeed : MonoBehaviour, IKeyboardCall
     public GameObject blinkingObj;
     public Text speedTxt;
     public GameObject helperObj;
+    public Image speedImage;
+    public Sprite speedUp, speedDown;
     private void Start()
     {
         speedTxt.text = "Speed x1";
@@ -37,6 +39,7 @@ public class IncreaseGameSpeed : MonoBehaviour, IKeyboardCall
             StartCoroutine(BlinkingCo());
             speedTxt.text = "Speed x" + timeSpeedUp;
             SoundManager.PlaySfx(SoundManager.Instance.soundTimeUp);
+            speedImage.sprite = speedDown;
         }
         else
         {
@@ -45,6 +48,7 @@ public class IncreaseGameSpeed : MonoBehaviour, IKeyboardCall
             StopAllCoroutines();
             speedTxt.text = "Speed x1";
             SoundManager.PlaySfx(SoundManager.Instance.soundTimeDown);
+            speedImage.sprite = speedUp;
         }
 
         PlayerPrefs.SetInt("IncreaseGameSpeedDontShowAgain", 1);

@@ -28,12 +28,12 @@ public class AssetBundleManager : MonoBehaviour
     {
         string bundle_name = bundles[i].name;
         Add_target_platform(ref bundle_name, 0);
-        var updates = await APIManager.instance.Check_for_updates(type: bundle_name);
+        var updates = await APIManager.self.Check_for_updates(type: bundle_name);
         string file_name = Address_to_name(updates.list[0]);
         if (file_name == "") return;
-        if (File.Exists(APIManager.instance.GetFilePath(file_name)))
+        if (File.Exists(APIManager.self.GetFilePath(file_name)))
         {
-            AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(APIManager.instance.GetFilePath(file_name));
+            AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(APIManager.self.GetFilePath(file_name));
 
             while (!bundle.isDone)
             {

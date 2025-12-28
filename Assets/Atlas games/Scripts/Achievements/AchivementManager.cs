@@ -49,7 +49,7 @@ public class AchivementManager : MonoBehaviour
         // Task.Run(async () =>
         // {
         // });
-        obj.transform.GetChild(2).GetComponent<Image>().sprite = await APIManager.instance.Get_rofile_picture(trophy.imageURL);
+        obj.transform.GetChild(2).GetComponent<Image>().sprite = await APIManager.self.Get_rofile_picture(trophy.imageURL);
         obj.GetComponent<Animator>().SetTrigger("In");
         Destroy(obj, Destroy_delay);
     }

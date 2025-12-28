@@ -7,7 +7,7 @@ public class ResetData : MonoBehaviour {
 	public bool ResetRemoveAd = false;
 
 	void Start(){
-		soundManager = FindObjectOfType<SoundManager> ();
+		soundManager = FindFirstObjectByType<SoundManager> ();
 	}
 
 	public void Reset(){
@@ -20,7 +20,7 @@ public class ResetData : MonoBehaviour {
 		SoundManager.PlaySfx (soundManager.soundClick);
 
 		//if (DefaultValue.Instance)
-		//	FindObjectOfType<DefaultValue> ().ResetDefaultValue ();
+		//	FindFirstObjectByType<DefaultValue> ().ResetDefaultValue ();
         GlobalValue.isNewGame = false;
         GlobalValue.LevelPass = 0;
 
@@ -42,7 +42,7 @@ public class ResetData : MonoBehaviour {
         GlobalValue.RemoveAds = ResetRemoveAd ? false : isRemoveAd;
 
 		//if (DefaultValue.Instance)
-		//	FindObjectOfType<DefaultValue> ().ResetDefaultValue ();
+		//	FindFirstObjectByType<DefaultValue> ().ResetDefaultValue ();
 
 //		Reset();
 

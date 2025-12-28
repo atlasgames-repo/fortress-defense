@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DynamicScrollRect;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,13 +10,21 @@ public class InventoryItem : ScrollItem<ScrollItemData>
     public Image itemImage;
     public Inventory inventory;
     public GameObject selectedHighlight;
+    public GameObject txt;
     private ShopItemData.ShopItem _itemData;
     private bool _isChosen;
     private Vector2 originalSize;
+    public string about;
+    public TextMeshProUGUI info;
+    public int idInstance;
+
+    public Image profilePic;
     void Init(ShopItemData.ShopItem data)
     {
-        selectedHighlight.SetActive(false);
+        //selectedHighlight.SetActive(false);
         itemImage.sprite = data.itemImage;
+        idInstance = data.id;
+
         _itemData = data;
         switch (data.type)
         {
@@ -75,8 +84,25 @@ public class InventoryItem : ScrollItem<ScrollItemData>
                     }
                 }
                 break;
+            case Shop.ItemTypes.Archer:
+                for (int i = 0; i < inventory.chosenArcher.Length; i++)
+                {
+                    if (data.id == inventory.chosenArcher[i])
+                    {
+                        _isChosen = true;
+                        break;
+                    }
+                    else
+                    {
+                        _isChosen = false;
+                        //_isChosen = true;
+                        break;
+                    }
+                }
+                break;
         }
-        selectedHighlight.SetActive(_isChosen);
+        about = data.about;
+        //selectedHighlight.SetActive(_isChosen);
          originalSize =
             new Vector2(itemImage.rectTransform.sizeDelta.x, itemImage.rectTransform.sizeDelta.y);
         itemImage.SetNativeSize();
@@ -98,14 +124,21 @@ public class InventoryItem : ScrollItem<ScrollItemData>
     }
     public void ChooseItem()
     {
-        if (!_isChosen)
+        //info.text = data2.about;
+        Debug.Log(idInstance);
+        profilePic.sprite = itemImage.sprite;
+        info.text = about;
+        /*if (!_isChosen)
         {
             inventory.ChangeChosenItem(_itemData);
-            SoundManager.Click(); 
+            SoundManager.Click();
         }
         else
         {
+            Debug.Log("you have not chosen yet!");
             SoundManager.Click();
-        }
+        }*/
+        inventory.ChangeChosenItem(_itemData);
+        SoundManager.Click();
     }
 }

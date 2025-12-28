@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 781253065}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.27, y: 0.91, z: 0}
+  m_LocalPosition: {x: -0.713, y: 0.642, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 1950496933}
   m_Layer: 10
   m_Name: '[ Enemy ] Monster_39_Polar Wolf'
-  m_TagString: Untagged
+  m_TagString: enemyArmed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.63, y: -2.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.68, y: 0.68, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5302841712264848057}
@@ -117,7 +117,7 @@ SortingGroup:
   m_GameObject: {fileID: 3697426553599540029}
   m_Enabled: 1
   m_SortingLayerID: -565348741
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!95 &3697426553599540030
@@ -183,7 +183,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  checkPoint: {fileID: 781253066}
+  checkPoint: {fileID: 3697426553599540031}
   detectDistance: 5
   width: 2.65
   numberLineCheck: 5
@@ -209,7 +209,7 @@ MonoBehaviour:
   checkPoint: {fileID: 1315889782}
   maxTargetPerHit: 1
   radiusCheck: 1
-  dealDamage: 20
+  dealDamage: 50
   criticalPercent: 10
   meleeRate: 2
   MeleeObj: {fileID: 0}
@@ -233,6 +233,7 @@ MonoBehaviour:
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
   is_boss: 0
+  boss_ui: {fileID: 0}
   useGravity: 0
   gravity: 35
   walkSpeed: 1
@@ -258,7 +259,7 @@ MonoBehaviour:
   enemyState: 0
   weaknessMultiplier: 1
   strengthMultiplier: 1
-  weakness: 0
+  weakness: 1
   strength: 0
   canBeFreeze: 1
   dieFrozenFX: {fileID: 0}
@@ -272,8 +273,8 @@ MonoBehaviour:
   timeShocking: 2
   soundHitVol: 0.5
   soundHit:
-  - {fileID: 8300000, guid: 469ffde304f832d429663c5d6f928d51, type: 3}
-  - {fileID: 8300000, guid: d828c6f696d736348b98d90b6aa3fcb9, type: 3}
+  - {fileID: 8300000, guid: 6dc1a674304cdcc47b0a1897cc519ec0, type: 3}
+  - {fileID: 8300000, guid: 6dc1a674304cdcc47b0a1897cc519ec0, type: 3}
   soundDieVol: 0.5
   soundDie:
   - {fileID: 8300000, guid: 469ffde304f832d429663c5d6f928d51, type: 3}
@@ -292,6 +293,7 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 8966327528936450407}
   customNightMultiplier: 2
   useCustomNightMultiplier: 0
+  isPet: 0
   magnet: 0
   magnetPos: {x: 0, y: 0, z: 0}
   magnetAttractionSpeed: 0
@@ -345,6 +347,7 @@ MonoBehaviour:
   expMax: 6
   customNightMultiplier: 2
   useCustomNightMultiplierOnly: 0
+  affectedItems: []
 --- !u!61 &1950496934
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -470,6 +473,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -491,6 +496,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
@@ -567,6 +573,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -588,6 +596,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -628,7 +637,7 @@ MonoBehaviour:
   disableRenderingOnOverride: 1
   _animationName: Idle
   loop: 1
-  timeScale: 1
+  timeScale: 1.2
 --- !u!1001 &1576318056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -641,6 +650,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: target
+      objectReference: {fileID: 0}
+    - target: {fileID: 3457596577293859471, guid: 4c79c1b537c6fcf4da407c934d03d329,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302841713383904977, guid: 4c79c1b537c6fcf4da407c934d03d329,
         type: 3}

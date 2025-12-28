@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Spine.Unity;
 public enum ATTACKTYPE
 {
@@ -79,6 +80,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     public UpgradedCharacterParameter upgradedCharacterID;
     [HideInInspector] public ENEMYTYPE enemyType;
     public bool is_boss = false;
+    public BossUIManager boss_ui;
     [Header("Setup")]
     public bool useGravity = false;
     [ReadOnly] public float gravity = 35f;
@@ -105,6 +107,8 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     public Vector2 healthBarOffset = new Vector2(0, 1.5f);
     public float AutoHealthBarOffset = 0.2f;
     public bool IsAutoHealthBar = true;
+
+    public static bool isAlive = true;
 
     [ReadOnly] public ENEMYSTATE enemyState = ENEMYSTATE.IDLE;
     protected ENEMYEFFECT enemyEffect;
@@ -199,7 +203,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
     public virtual void Start()
     {
         int initialHealth = health;
-        if (GameLevelSetup.Instance && GameLevelSetup.Instance && GameLevelSetup.Instance.NightMode())
+        if (GameLevelSetup.self && GameLevelSetup.self && GameLevelSetup.self.NightMode())
         {
             if (useCustomNightMultiplier)
             {
@@ -207,7 +211,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
             }
             else
             {
-                health = Mathf.RoundToInt(GameLevelSetup.Instance.NightModeXpMultiplier());
+                health = Mathf.RoundToInt(GameLevelSetup.self.NightModeXpMultiplier());
             }
         }
         
@@ -378,6 +382,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     public virtual void Die()
     {
+        isAlive = false;
         isPlaying = false;
         GameManager.Instance.RemoveListener(this);
         isPlayerDetected = false;
@@ -424,11 +429,12 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
             SoundManager.PlaySfx(soundDieBlow, soundDieBlowVol);
         }
+        else if (is_boss)
+            SoundManager.PlaySfx(SoundManager.Instance.BossDeath);
         else
             SoundManager.PlaySfx(soundDie, soundDieVol);
 
         if (is_boss)
-            SoundManager.PlayMusic(SoundManager.Instance.musicsGame);
 
         GlobalValue.KillCount += 1;
 
@@ -436,7 +442,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
 
     private void CheckDamagePerFrame(float _damage)
     {
-        
+
         if (enemyState == ENEMYSTATE.DEATH)
             return;
         currentHealth -= (int)_damage;
@@ -798,6 +804,14 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
         if (effect == strength)
             _damage *= strengthMultiplier;
         currentHealth -= (int)_damage;
+        if (this.tag == "enemyArmed")
+        {
+            //Debug.Log("armedenemy");
+        }
+        else
+        {
+            //Debug.Log("enemy");
+        }
         FloatingTextManager.Instance.ShowText("" + (int)_damage, healthBarOffset, Color.red, transform.position);
 
         //if (_bodyPart == BODYPART.HEAD)
@@ -812,7 +826,9 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
                 (Vector2)transform.position + new Vector2(Random.Range(-randomBloodPuddlePoint.x, randomBloodPuddlePoint.x), Random.Range(-randomBloodPuddlePoint.y, randomBloodPuddlePoint.y));
 
 
-        if (healthBar)
+        // Add boss check for damage
+        if (boss_ui) boss_ui.UpdateHealthBar(currentHealth / (float)health);
+        else if (healthBar)
             healthBar.UpdateValue(currentHealth / (float)health);
         //		Debug.LogError (isExplosion + "BLOW" + (dieBehavior == DIEBEHAVIOR.BLOWUP));
         if (currentHealth <= 0)
@@ -830,7 +846,6 @@ public class Enemy : MonoBehaviour, ICanTakeDamage, IListener
                 if (owner.criticalRateTemp >= 0.8f)
                     owner.criticalRateTemp = owner.criticalRate;
             }
-
             Die();
         }
         else

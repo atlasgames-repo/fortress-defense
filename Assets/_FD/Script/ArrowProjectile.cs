@@ -22,6 +22,7 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
     public GameObject ExplosionObj;
     float timeToLiveCounter = 0;
     public bool parentToHitObject = true;
+    public GameObject vfxEffect;
 
     bool isHit = false;
     Rigidbody2D rig;
@@ -79,9 +80,21 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
 
         if (hit.Length > 0)
         {
-            isHit = Hit(hit);
+             foreach (RaycastHit2D item in hit)
+            {
+                if (item.transform.gameObject.tag == "enemyArmed")
+                {
+                    isHit = false;
+                    Debug.Log("hit armed");
+                    //SoundManager.PlaySfx(SoundManager.Instance.hitArmor);
+                }
+                else
+                {
+                    isHit = Hit(hit);
+                }
+            }
         }
-
+        
         oldPos = transform.position;
 
         if ((timeToLiveCounter -= Time.deltaTime) <= 0)
@@ -96,6 +109,10 @@ public class ArrowProjectile : Projectile, IListener, ICanTakeDamage
                 SoundManager.PlaySfx(soundHitNothing, soundHitNothingVolume);
                 StartCoroutine(DestroyProjectile(3));
                 isHit = true;
+            }
+            if(vfxEffect != null)
+            {
+                Instantiate(vfxEffect, transform.position, transform.rotation);
             }
         }
         //check hit

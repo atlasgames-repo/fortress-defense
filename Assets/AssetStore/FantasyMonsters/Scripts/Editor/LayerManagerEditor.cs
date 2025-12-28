@@ -15,28 +15,14 @@ namespace Assets.FantasyMonsters.Scripts.Editor
 
             var script = (LayerManager) target;
 
-            EditorGUILayout.LabelField("By Sorting Order", EditorStyles.boldLabel);
-
-            if (GUILayout.Button("Read Current Order"))
+            if (GUILayout.Button("Read Sorting Order"))
             {
-                script.ReadCurrentOrderBySortingOrder();
+                script.GetSpritesBySortingOrder();
             }
 
-            if (GUILayout.Button("Set Order"))
+            if (GUILayout.Button("Set Sorting Order"))
             {
-                script.SetOrderBySortingOrder();
-            }
-
-            EditorGUILayout.LabelField("By Z Coortidate", EditorStyles.boldLabel);
-
-            if (GUILayout.Button("Read Current Order"))
-            {
-                script.ReadCurrentOrderByZCoordinate();
-            }
-
-            if (GUILayout.Button("Set Order"))
-            {
-                script.SetOrderByZCoordinate();
+                script.SetSpritesBySortingOrder();
             }
         }
     }

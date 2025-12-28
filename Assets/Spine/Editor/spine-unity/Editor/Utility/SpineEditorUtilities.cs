@@ -313,19 +313,19 @@ namespace Spine.Unity.Editor {
 				boundingBoxFollowerTable.Clear();
 				boundingBoxFollowerGraphicTable.Clear();
 
-				SkeletonRenderer[] arr = Object.FindObjectsOfType<SkeletonRenderer>();
+				SkeletonRenderer[] arr = Object.FindObjectsByType<SkeletonRenderer>(FindObjectsSortMode.None);
 				foreach (SkeletonRenderer r in arr)
 					skeletonRendererTable[r.gameObject.GetInstanceID()] = r.gameObject;
 
-				SkeletonUtilityBone[] boneArr = Object.FindObjectsOfType<SkeletonUtilityBone>();
+				SkeletonUtilityBone[] boneArr = Object.FindObjectsByType<SkeletonUtilityBone>(FindObjectsSortMode.None);
 				foreach (SkeletonUtilityBone b in boneArr)
 					skeletonUtilityBoneTable[b.gameObject.GetInstanceID()] = b;
 
-				BoundingBoxFollower[] bbfArr = Object.FindObjectsOfType<BoundingBoxFollower>();
+				BoundingBoxFollower[] bbfArr = Object.FindObjectsByType<BoundingBoxFollower>(FindObjectsSortMode.None);
 				foreach (BoundingBoxFollower bbf in bbfArr)
 					boundingBoxFollowerTable[bbf.gameObject.GetInstanceID()] = bbf;
 
-				BoundingBoxFollowerGraphic[] bbfgArr = Object.FindObjectsOfType<BoundingBoxFollowerGraphic>();
+				BoundingBoxFollowerGraphic[] bbfgArr = Object.FindObjectsByType<BoundingBoxFollowerGraphic>(FindObjectsSortMode.None);
 				foreach (BoundingBoxFollowerGraphic bbf in bbfgArr)
 					boundingBoxFollowerGraphicTable[bbf.gameObject.GetInstanceID()] = bbf;
 			}

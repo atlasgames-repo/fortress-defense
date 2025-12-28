@@ -20,23 +20,30 @@ public class TimeChecker : MonoBehaviour
     private List<ShopItemData.ShopItem>  _timedItems = new List<ShopItemData.ShopItem>();
     [HideInInspector]public TimedItemManager[] _items;
     public static TimeChecker Instance { get; private set; }
+    private Coroutine _syncCoroutine;
     async void Awake()
     {
         _items = new TimedItemManager[0];
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
+        if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+        } else {
+            if (_syncCoroutine != null) 
+                StopCoroutine(_syncCoroutine);
+            Destroy(gameObject);
+            return;
         }
 
         while (!_fetchedTime)
         {
-            APIManager apiManager = FindObjectOfType<APIManager>();
-            _globalDate = await apiManager.GetCurrentDateAndTime();
+            if (APIManager.self == null) {// If APIManager is not initialized, we can use a fallback
+                Debug.LogWarning("APIManager not initialized, using local time as fallback.");
+                TimeAndDateResponseModel time = new TimeAndDateResponseModel();
+                time.datetime = DateTime.Now.ToString();
+                _globalDate = time;
+                break;
+            }
+            _globalDate = await APIManager.self.GetCurrentDateAndTime();
             if (_globalDate.datetime != null)
             {
                 _fetchedTime = true;
@@ -46,7 +53,7 @@ public class TimeChecker : MonoBehaviour
         }
         extractedDate = _syncedGlobalDateTime.ToString("yyyy-MM-dd");
         extractedTime = _syncedGlobalDateTime.ToString("HH:mm:ss");
-        StartCoroutine(SyncTimeEverySecond());
+        _syncCoroutine = StartCoroutine(SyncTimeEverySecond());
         
         for (int i = 0; i < data.ShopData.Length; i++)
         {
@@ -70,7 +77,7 @@ public class TimeChecker : MonoBehaviour
 
     public void SyncTimers()
     {
-        _items = FindObjectsOfType<TimedItemManager>();
+        _items = FindObjectsByType<TimedItemManager>(FindObjectsSortMode.None);
        if (_items.Length > 0)
        {
            for (int i = 0; i < _items.Length; i++)
@@ -100,7 +107,7 @@ public class TimeChecker : MonoBehaviour
         {
             if (ConvertedStringToDate(GetCurrentDateTimeString()) >
                 ConvertedStringToDate(GlobalValue.ItemOpened(currentData.itemName))
-                    .AddHours(currentData.duration == TimedItemManager.ItemDuration.Day?24:1))
+                    .AddHours(currentData.duration == TimedItemManager.ItemDuration.Minute?60:1))
             {
                 GlobalValue.SetItemState(false,currentData.itemName);
             }
@@ -115,7 +122,7 @@ public class TimeChecker : MonoBehaviour
 
     public void InitTimedItems()
     {
-        _items = FindObjectsOfType<TimedItemManager>();
+        _items = FindObjectsByType<TimedItemManager>(FindObjectsSortMode.None);
         for (int i = 0; i < _items.Length; i++)
         {
             _items[i].Init(_items[i].itemName,_items[i].duration,_items[i].allTimedItems,_items[i].purchaseWithCoin);

@@ -23,9 +23,9 @@ public class LeaderboardListItem : MonoBehaviour
             return;
         };
         if (data.avatar_url != "")
-            image.sprite = await APIManager.instance.Get_rofile_picture(data.avatar_url);
+            image.sprite = await APIManager.self.Get_rofile_picture(data.avatar_url);
         else if (data.avatar != "")
-            image.sprite = await APIManager.instance.Get_rofile_picture(data.avatar);
+            image.sprite = await APIManager.self.Get_rofile_picture(data.avatar);
         else
             image.sprite = _default;
     }

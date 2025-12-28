@@ -87,14 +87,14 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        //menuManager = FindObjectOfType<MenuManager> ();
+        //menuManager = FindFirstObjectByType<MenuManager> ();
 
-        //soundManager = FindObjectOfType<SoundManager> ();
+        //soundManager = FindFirstObjectByType<SoundManager> ();
         //		if (AdsController.instance)
         //			AdsController.instance.HideBanner ();
 
-        if (GameLevelSetup.Instance)
-            currentExp = GameLevelSetup.Instance.GetCurrentLevelExp();
+        if (GameLevelSetup.self)
+            currentExp = GameLevelSetup.self.GetCurrentLevelExp();
 
 
 
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 
         //Get all objects that have IListener
 
-        var listener_ = FindObjectsOfType<MonoBehaviour>().OfType<IListener>();
+        var listener_ = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IListener>();
         foreach (var _listener in listener_)
         {
             listeners.Add(_listener);

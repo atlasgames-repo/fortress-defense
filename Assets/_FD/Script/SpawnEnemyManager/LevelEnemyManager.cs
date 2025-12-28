@@ -5,13 +5,14 @@ using UnityEngine;
 public class LevelEnemyManager : MonoBehaviour, IListener
 {
     public static LevelEnemyManager Instance;
-    public GameObject FX_Smoke, FX_Blow;
+    public GameObject FX_Smoke, FX_Blow, GraveHit;
     public SimpleProjectile bullet;
     public Transform BossSpawnPoint;
     public Transform[] spawnPositions;
     public Transform[] underground_spawn_positions;
     public EnemyWave[] EnemyWaves;
-    public BossUIManager bossManeger;
+    [DeviceDependent]
+    public DeviceDependentReference bossManeger;
     int currentWave = 0;
     public List<GameObject> listEnemySpawned = new List<GameObject>();
 
@@ -25,14 +26,14 @@ public class LevelEnemyManager : MonoBehaviour, IListener
     // Start is called before the first frame update
     void Start()
     {
-        if (GameLevelSetup.Instance)
+        if (GameLevelSetup.self)
         {
-        levelType = GameLevelSetup.Instance.type();
+        levelType = GameLevelSetup.self.type();
             if (levelType == LevelWave.LevelType.Endless) {
                 this.enabled = false;
                 return;
             }
-            EnemyWaves = GameLevelSetup.Instance.GetLevelWave();
+            EnemyWaves = GameLevelSetup.self.GetLevelWave();
         }
 
         //calculate number of enemies
@@ -65,9 +66,10 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                 {
                     Vector2 spawnPos = Vector2.zero;
                     if (enemySpawn.boosType == EnemySpawn.isBoss.NONE)
-                        spawnPos = (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position;
+                    spawnPos = (Vector2)spawnPositions[Random.Range(0, spawnPositions.Length)].position;
                     else
-                        spawnPos = (Vector2)BossSpawnPoint.position;
+                    { spawnPos = (Vector2)BossSpawnPoint.position; Debug.Log("ght");}
+                        yield return new WaitForSeconds(3/(j+1));
                     GameObject _temp = Instantiate(enemySpawn.enemy,spawnPos,Quaternion.identity) as GameObject;
                     var isEnemy = (Enemy)_temp.GetComponent(typeof(Enemy));
                     if (isEnemy != null)
@@ -76,7 +78,7 @@ public class LevelEnemyManager : MonoBehaviour, IListener
                         if (enemySpawn.customHealth > 0)
                             isEnemy.health = enemySpawn.customHealth;
                         if (enemySpawn.customSpeed > 0)
-                            isEnemy.walkSpeed = enemySpawn.customSpeed;
+                                isEnemy.walkSpeed = enemySpawn.customSpeed;
                         if (enemySpawn.customAttackDmg > 0)
                         {
                             var rangeAttack = _temp.GetComponent<EnemyRangeAttack>();
@@ -108,24 +110,31 @@ public class LevelEnemyManager : MonoBehaviour, IListener
 
                         if (enemySpawn.boosType != EnemySpawn.isBoss.NONE)
                         {
-                            bossManeger.enemy = _temp.GetComponent<Enemy>();
-                                if (enemySpawn.BossScale > 1) {
-                                    Vector2 scale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
-                                bossManeger.enemy.gameObject.transform.localScale =
-                                 bossManeger.enemy.gameObject.transform.localScale * scale;
-                                }
-                            bossManeger.bossType = enemySpawn.boosType;
-                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMin =
-                                enemySpawn.BossMinExp;
-                            bossManeger.enemy.gameObject.GetComponent<GiveExpWhenDie>().expMax =
-                                enemySpawn.BossMaxExp;
-
-                            bossManeger.gameObject.SetActive(true);
-                            bossManeger.enemy.is_boss = true;
-                            AudioClip bossMusic = bossManeger.enemy.BossMusic != null
-                                ? bossManeger.enemy.BossMusic
-                                : SoundManager.Instance.BossMusicClip;
-                            SoundManager.PlayMusic(bossMusic, 0.5f);
+                            //Debug.Log("The enemy is boss");
+                            BossUIManager bsmng = bossManeger.type<BossUIManager>();
+                            bsmng.enemy = _temp.GetComponent<Enemy>();
+                            if (enemySpawn.BossScale > 1)
+                            {
+                                Vector2 scale = new Vector2(enemySpawn.BossScale, enemySpawn.BossScale);
+                                bsmng.enemy.gameObject.transform.localScale =
+                                 bsmng.enemy.gameObject.transform.localScale * scale;
+                            }
+                            bsmng.bossType = enemySpawn.boosType;
+                            bsmng.enemy.gameObject.TryGetComponent<GiveExpWhenDie>(out GiveExpWhenDie component);
+                            if (component)
+                            {
+                                component.expMin = enemySpawn.BossMinExp;
+                                component.expMax = enemySpawn.BossMaxExp;
+                            }
+                            bsmng.gameObject.SetActive(true);
+                            bsmng.enemy.is_boss = true;
+                            bsmng.enemy.boss_ui = bsmng;
+                            /*AudioClip bossMusic = bsmng.enemy.BossMusic != null
+                                ? bsmng.enemy.BossMusic
+                                : SoundManager.Instance.BossMusicClip;*/
+                            //SoundManager.Instance.PauseMusic(true);
+                            //SoundManager.PlaySfx(SoundManager.Instance.musicsMap);
+                            //SoundManager.PlayMusic(SoundManager.Instance.BossMusicClip, 0.5f);
                         }
                     }
 
@@ -145,7 +154,6 @@ public class LevelEnemyManager : MonoBehaviour, IListener
             }
 
             //check all enemy killed
-
             while (isEnemyAlive())
             {
                 yield return new WaitForSeconds(0.1f);

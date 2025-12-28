@@ -31,6 +31,8 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
     [ReadOnly] public float gravityScale = 3.5f;
     [ReadOnly] public bool onlyShootTargetInFront = true;
     public ArrowProjectile arrow;
+    public Transform Arrow;
+    public float ArrowScale;
     [Range(0, 1)]
     public float criticalRate = 0.1f;
     public float criticalRateTemp = 0.1f;
@@ -471,6 +473,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
         WeaponEffect _finalWeaponEffect = weaponEffect;
 
         //_tempArrow = Instantiate(arrow, fromPosition, Quaternion.identity);
+        Arrow.transform.localScale = new Vector2(ArrowScale, ArrowScale);
         NumberArrow _finalNumberArrow = BoostItemUI.Instance && BoostItemUI.Instance.currentNumberOfArrows == NumberArrow.Double ? NumberArrow.Double : numberArrow;
         switch (_finalNumberArrow)
         {
@@ -482,6 +485,7 @@ public class Player_Archer : Enemy, ICanTakeDamage, IListener
                 _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle - 1.5f), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y, criticalMultiplier, this.gameObject);
                 break;
             default:
+                Debug.Log("arrow");
                 _tempArrow = Instantiate(arrow, fromPosition, Quaternion.identity);
                 _tempArrow.Init(damageMin, damageMax, force * AngleToVector2(beginAngle), gravityScale, isCritical, weaponEffect, BoostItemUI.Instance.currentEffect, target.y, criticalMultiplier, this.gameObject);
                 break;

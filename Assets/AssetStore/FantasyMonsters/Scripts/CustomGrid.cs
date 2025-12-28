@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.FantasyMonsters.Scripts
+namespace Assets.FantasyMonsters.Scripts.EditorScripts
 {
     [ExecuteInEditMode, DisallowMultipleComponent]
     public class CustomGrid : MonoBehaviour

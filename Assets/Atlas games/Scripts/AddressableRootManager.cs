@@ -36,7 +36,7 @@ public class AddressableRootManager : MonoBehaviour
             //load next scene
             // StartCoroutine(APIManager.instance.LoadAsynchronously("Menu atlas"));
             is_download_complete = true;
-            StartCoroutine(APIManager.instance.LoadAsynchronously());
+            StartCoroutine(APIManager.self.LoadAsynchronously());
         }
         if (loading) loading.value = percent / (float)addressables.Length;
     }

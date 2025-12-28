@@ -26,12 +26,12 @@ public class LifeTTR
     }
     public void Inintilize()
     {
-        APIManager.instance.StartCoroutine(coroutine);
+        APIManager.self.StartCoroutine(coroutine);
     }
     // This class must be somewhere that only destroies when the Game Quit
     ~LifeTTR()
     {
-        APIManager.instance.StopCoroutine(coroutine);
+        APIManager.self.StopCoroutine(coroutine);
     }
     public void addLifeTTR(int key)
     {

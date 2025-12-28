@@ -132,32 +132,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialSteps:
-  - tipDirection: 2
+  - tipDirection: 0
     dialogContentType: 0
-    tipType: 1
+    tipType: 0
     pointerDirection: 0
     delay: 0
     isLastDialog: 0
-    uiPartName: HalfWorld
-    circleMaskScale: 1.7076
+    uiPartName: 
+    circleMaskScale: 0
     isUiInteractible: 0
     pauseGame: 0
-    tipText: At the middle level of every world you'll have a mini boss fight.
-    tipTitle: 
-    dialogImage: {fileID: 0}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 6
-    dialogContentType: 0
-    tipType: 1
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: FinalLevel
-    circleMaskScale: 1.7076
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: At the last level of every world you'll have a boss fight.
+    tipText: This map shows every battlefield that you have to fight your enemies
+      in
     tipTitle: 
     dialogImage: {fileID: 0}
     dialogVideo: {fileID: 0}
@@ -172,47 +158,15 @@ MonoBehaviour:
     circleMaskScale: 0
     isUiInteractible: 0
     pauseGame: 0
-    tipText: The number of stars you get after finishing a level indicates better
-      performance in the level.
+    tipText: In order to enter the first battle zone, select lvl1.
     tipTitle: 
     dialogImage: {fileID: 0}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 0
-    dialogContentType: 2
-    tipType: 0
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: 
-    circleMaskScale: 0
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: 'By killing enemies and finishing levels you''ll earn gold coins. You
-      can use them to upgrade and purchase items. '
-    tipTitle: 
-    dialogImage: {fileID: 21300000, guid: 3250f154c00fbeb4fb17086a901a5a64, type: 3}
-    dialogVideo: {fileID: 0}
-    hintDirection: 0
-  - tipDirection: 0
-    dialogContentType: 2
-    tipType: 0
-    pointerDirection: 0
-    delay: 0
-    isLastDialog: 0
-    uiPartName: 
-    circleMaskScale: 0
-    isUiInteractible: 0
-    pauseGame: 0
-    tipText: By killing enemies and finishing levels you'll earn XP and you can use
-      it in increasing your global rank.
-    tipTitle: 
-    dialogImage: {fileID: 21300000, guid: 0ff358643dea9a54aae53a4d3ff1434e, type: 3}
     dialogVideo: {fileID: 0}
     hintDirection: 0
   placing: 0
   tutorialName: Map
   tutorialLevel: 16
+  AfterLevel: 0
   circleMask: {fileID: 8670678974485738760}
   pointerObject: {fileID: 619153895097834984}
   pointerIcon: {fileID: 619153894661941250}
@@ -1223,7 +1177,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 847306227
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0f6da50733ee7264cbe710d781aa99a8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1636,7 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0c63251d9deb8134ca2bae3a83486d32, type: 2}
   m_Color: {r: 0, g: 0, b: 0, a: 0.44705883}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

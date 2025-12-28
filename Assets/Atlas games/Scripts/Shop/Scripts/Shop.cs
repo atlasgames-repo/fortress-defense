@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DynamicScrollRect;
+using TMPro;
 using UnityEngine;
 
 public class Shop : MonoBehaviour
@@ -10,9 +11,10 @@ public class Shop : MonoBehaviour
     public DynamicScrollRect.DynamicScrollRect dynamicScrollRect;
     public ScrollContent content;
     public Transform scrollContentParent;
+    public TextMeshProUGUI ShopTab;
     public enum ItemTypes
     {
-        Pet,Item,Magic,Monster,Website,Towers
+        Pet,Item,Magic,Monster,Website,Towers,Archer
     }
 
     public enum ItemPurchaseType
@@ -24,26 +26,42 @@ public class Shop : MonoBehaviour
     ItemTypes _chosenType;
     public void OpenMenu(string menuName)
     {
-        SoundManager.Instance.PauseMusic(true);
+        //SoundManager.Instance.PauseMusic(true);
         switch (menuName)
         {
             case "pets":
                 _chosenType = ItemTypes.Pet;
+                ShopTab.SetText("Pets");
                 break;
             case "items":
                 _chosenType = ItemTypes.Item;
+                ShopTab.SetText("Items");
                 break;
             case "magics":
                 _chosenType = ItemTypes.Magic;
+                ShopTab.SetText("Magics");
+
                 break;
             case "monsters":
                 _chosenType = ItemTypes.Monster;
+                ShopTab.SetText("Monsters");
+
                 break;
             case "website":
                 _chosenType = ItemTypes.Website;
+                ShopTab.SetText("Website");
+
                 break;
             case "tower":
                 _chosenType = ItemTypes.Towers;
+                ShopTab.SetText("Towers");
+
+                break;
+
+            case "archer":
+                _chosenType = ItemTypes.Archer;
+                ShopTab.SetText("Archers");
+
                 break;
         }
         List<ScrollItemData> contentDatas = new List<ScrollItemData>();
@@ -80,3 +98,4 @@ public class Shop : MonoBehaviour
         User.Coin = 1000;
     }
 }
+

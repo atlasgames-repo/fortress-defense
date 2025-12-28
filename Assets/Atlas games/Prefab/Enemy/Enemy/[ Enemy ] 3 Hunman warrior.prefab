@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -565348741
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b08ed747ebec2774ca51bc2f74a9b669, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -295,6 +295,7 @@ MonoBehaviour:
   upgradedCharacterID: {fileID: 0}
   enemyType: 0
   is_boss: 0
+  boss_ui: {fileID: 0}
   useGravity: 0
   gravity: 35
   walkSpeed: 1
@@ -354,6 +355,7 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 0}
   customNightMultiplier: 2
   useCustomNightMultiplier: 0
+  isPet: 0
   magnet: 0
   magnetPos: {x: 0, y: 0, z: 0}
   magnetAttractionSpeed: 0
@@ -439,7 +441,7 @@ SortingGroup:
   m_GameObject: {fileID: 7410894354902345084}
   m_Enabled: 1
   m_SortingLayerID: -565348741
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!114 &6353062143766197766
@@ -474,6 +476,7 @@ MonoBehaviour:
   expMax: 15
   customNightMultiplier: 2
   useCustomNightMultiplierOnly: 0
+  affectedItems: []
 --- !u!1 &7410894355869459245
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.ComponentModel;
 
 public class Level : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class Level : MonoBehaviour
     public int world = 1;
     public int level = 1;
     public bool isUnlock = false;
-    public Text numberTxt;
+    public TextMeshProUGUI numberTxt;
     public GameObject imgLock, imgOpen, imgPass;
 
     public GameObject starGroup;
@@ -24,6 +26,7 @@ public class Level : MonoBehaviour
     public GameObject bossGroup;
     public GameObject miniBoss;
     public GameObject boss;
+
     public IsBoss is_boss = IsBoss.NONE;
 
     public bool loadSceneManual = false;
@@ -72,13 +75,14 @@ public class Level : MonoBehaviour
     {
 
         //check if this level > allowing level then disable it
-        if (GameLevelSetup.Instance && level > GameLevelSetup.Instance.getTotalLevels())
+        if (GameLevelSetup.self && level > GameLevelSetup.self.getTotalLevels())
         {
             gameObject.SetActive(false);
             return;
         }
 
-        numberTxt.text = level + "";
+        if (numberTxt)
+            numberTxt.text = level + "";
         var openLevel = isUnlock ? true : GlobalValue.LevelPass + 1 >= level;
         //		var levelUnlocked = isUnlock ? true : GlobalValue.isLevelUnlocked (levelSceneName);	
         var stars = GlobalValue.LevelStar(level);       //get the stars of the current level
@@ -98,7 +102,7 @@ public class Level : MonoBehaviour
             if (GlobalValue.LevelPass + 1 == level)
             {
                 imgOpen.SetActive(true);
-                FindObjectOfType<MapControllerUI>().SetCurrentWorld(world);
+                //FindFirstObjectByType<MapControllerUI>().SetCurrentWorld(world);
             }
             else
             {
@@ -133,6 +137,8 @@ public class Level : MonoBehaviour
 
     public void Play()
     {
+        Debug.Log("play");
+        SoundManager.Click();
         GlobalValue.levelPlaying = level;
         GlobalValue.levelType = levelType;
        // GlobalValue.NightMode = nightMode;
@@ -145,12 +151,13 @@ public class Level : MonoBehaviour
 
         if (LifeTTRSource.Life > 0)
             MainMenuHomeScene.Instance.LoadScene();
+        else
+            MainMenuHomeScene.warningSt.SetActive(true);
 
     }
 
     public void Play(string _levelSceneName = null)
     {
-
         SoundManager.Click();
         //if (loadSceneManual && GlobalValue.showComicBossLevel)
         //{

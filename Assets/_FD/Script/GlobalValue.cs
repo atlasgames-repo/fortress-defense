@@ -3,6 +3,7 @@ using System;
 public class GlobalValue : MonoBehaviour
 {
     public static bool isFirstOpenMainMenu = true;
+    public static string menuPart = "Null";
     public static int worldPlaying = 1;
     
     public static int levelPlaying = 1;
@@ -68,6 +69,12 @@ public class GlobalValue : MonoBehaviour
     {
         get { return PlayerPrefs.GetString("inventoryTowers", "33"); }
         set { PlayerPrefs.SetString("inventoryTowers", value); }
+    }
+
+    public static string inventoryArchers
+    {
+        get { return PlayerPrefs.GetString("inventoryArchers", "50, 50, 50, 50, 50"); }
+        set { PlayerPrefs.SetString("inventoryArchers", value); }
     }
     
     public static int GetTutorialState(string tutorialName)
@@ -263,7 +270,11 @@ public class GlobalValue : MonoBehaviour
     {
         get { return PlayerPrefs.GetInt("LightningUsage", 0); }
         set { PlayerPrefs.SetInt("LightningUsage", value); }
+
     }
+
+ 
+
 
     public static int GameStartTimerMinutes
     {
