@@ -8,5 +8,5 @@
 2) In your local development area any changes related to that issue should be in the branch related to that issue, please switch to ```correct branch``` for changes.
 3) Please push your latest stable changes to the branch every day.
 4) Create a PR (```Pull Request```) from that branch from the ```issue branch [ex. fix-something-something]``` to ```major update branch [ex. update-v0.3.x-alpha]```.
-5) After your are comfortable with your changes, request a review to [@m-nt](https://github.com/m-nt) for testing and discussing the changes.
+5) After you are comfortable with your changes, request a review to [@m-nt](https://github.com/m-nt) for testing and discussing the changes.
 6) After everything goes as intended we will merge the changes with the update branch and so on.
